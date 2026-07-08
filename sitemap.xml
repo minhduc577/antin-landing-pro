@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Trang Landing Page chính thức (Khi anh đưa lên tên miền riêng hoặc Google Sites) -->
+  <url>
+    <loc>https://sites.google.com/view/antinco</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- Đường dẫn trực tiếp đến file PDF Ebook trên Google Drive (Để Bot tìm kiếm dễ định vị tài liệu) -->
+  <url>
+    <loc>https://drive.google.com/file/d/1Ttq5W7xj0hY377XyirGQh01zHUxm_el-/view</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Đường dẫn đến phiên bản Sách lật trang trực quan Heyzine Flipbook -->
+  <url>
+    <loc>https://heyzine.com/flip-book/8833ce7e3f.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+</urlset>

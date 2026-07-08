@@ -1,0 +1,10 @@
+# robots.txt cho chiến dịch Ebook 50 Sai Lầm Khi Lắp Camera - AN TÍN
+User-agent: *
+Allow: /
+
+# Loại bỏ các đường dẫn nháp hoặc quản trị nếu có
+Disallow: /admin/
+Disallow: /draft/
+
+# Khai báo đường dẫn Sitemap (Nếu anh cấu hình tên miền riêng sau này, hãy thay bằng tên miền đó)
+Sitemap: https://sites.google.com/view/antinco/sitemap.xml
