@@ -243,4 +243,32 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+
+    // ==========================================================================
+    // 8. Xử lý Logic Phân Nhánh Kịch Bản Thông Minh (AI Smart Branching Engine)
+    // ==========================================================================
+    const aiBranchingNodes = document.querySelectorAll("[data-ai-node]");
+    
+    if (aiBranchingNodes.length > 0) {
+        aiBranchingNodes.forEach(node => {
+            node.addEventListener("click", function(e) {
+                const targetScript = this.getAttribute("data-next-script");
+                const conditionCheck = this.getAttribute("data-condition");
+
+                if (targetScript) {
+                    e.preventDefault();
+                    console.log(`[AI Branching] Kích hoạt nhánh kịch bản tiếp theo: ${targetScript} dưới điều kiện: ${conditionCheck || "Bình thường"}`);
+                    
+                    // Thực thi chuyển đổi luồng giao diện mượt mà không load lại trang
+                    const nextSection = document.getElementById(targetScript);
+                    if (nextSection) {
+                        nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                        
+                        // Đánh dấu trạng thái tương tác để AI thu thập dữ liệu hành vi nếu cần
+                        nextSection.classList.add("ai-active-route");
+                    }
+                }
+            });
+        });
+    }
 });
