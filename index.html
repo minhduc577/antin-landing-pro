@@ -496,14 +496,37 @@
     <!-- Iframe ẩn tránh reload trang -->
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
+<!-- Dòng này là thẻ form ở phía trên trang -->
+<form action="..." method="POST" target="hidden_iframe" id="an-tin-form" onsubmit="tuVanCamera()">
+    <!-- Nội dung form của anh -->
+    <button type="submit">NHẬN PHƯƠNG ÁN & BÁO GIÁ AI</button>
+</form>
+
+<!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
-    document.getElementById('an-tin-form').addEventListener('submit', function() {
-        // Sau khi bấm gửi 0.5 giây, hiện thông báo thành công
+    function tuVanCamera() {
+        // Lấy giá trị loại không gian đã chọn
+        const loaiKhongGian = document.getElementById('space_input').value;
+        
+        // Dữ liệu báo giá
+        const data = {
+            'Nhà ở': { danhMuc: 'Camera Wifi + Chuông cửa', gia: '2.500.000đ', khuyenMai: 'Tặng thẻ nhớ 64GB' },
+            'Cửa hàng': { danhMuc: 'Camera IP + Đầu ghi 8 kênh', gia: '8.500.000đ', khuyenMai: 'Miễn phí lắp đặt' },
+            'Kho bãi': { danhMuc: 'Camera Bullet + Đầu ghi 16 kênh', gia: '15.000.000đ', khuyenMai: 'Bảo hành 2 năm' }
+        };
+
+        const result = data[loaiKhongGian] || { danhMuc: 'Tư vấn chuyên sâu', gia: 'Liên hệ khảo sát', khuyenMai: 'Khảo sát miễn phí' };
+        
+        // Hiện thông báo
         setTimeout(function() {
-            alert('Cảm ơn anh! Thông tin đã được gửi tới AN TÍN.');
-            document.getElementById('an-tin-form').reset(); // Xóa sạch dữ liệu trong form
+            alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
+                  "- Danh mục: " + result.danhMuc + "\n" +
+                  "- Giá tạm tính: " + result.gia + "\n" +
+                  "- Khuyến mãi: " + result.khuyenMai + "\n\n" +
+                  "Thông tin chi tiết đã được gửi về hệ thống AN TÍN!");
         }, 500);
-    });
+    }
 </script>
-</body>
+
+</body> <!-- Thẻ kết thúc -->
 </html>
