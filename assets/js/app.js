@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const counter = entry.target;
                 const target = parseInt(counter.getAttribute("data-target"), 10);
                 let count = 0;
-                const speed = target / 50; // Điều chỉnh tốc độ tăng mượt màng
+                const speed = target / 50;
 
                 const updateCount = () => {
                     count += speed;
@@ -132,12 +132,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // 6. Xử lý Logic Form Đăng Ký Chống Spam, AJAX & Tương Tác Chạm Đa Nhánh Real-time
     // ==========================================================================
-    // Tự động nhận diện ID form cũ hoặc form mới để không lỗi hệ thống
-    const leadForm = document.getElementById("ai-scoring-form") || document.getElementById("enterprise-lead-form");
+    // Tự động nhận diện linh hoạt ID form trên hệ thống
+    const leadForm = document.getElementById("ai-scoring-form") || document.getElementById("enterprise-lead-form") || document.querySelector("form");
     const formStatus = document.getElementById("form-status");
 
-    // Thành phần điều hướng giao diện chạm (May đo cho giao diện mới)
-    const spaceButtons = document.querySelectorAll(".space-btn");
+    // Bộ tìm kiếm phần tử giao diện mới linh hoạt cao (Fallback selectors)
+    // Tìm tất cả các div con nằm trực tiếp trong vùng phân phối 3 nút ở Bước 1
+    let spaceButtons = document.querySelectorAll(".space-btn");
+    if (spaceButtons.length === 0 && leadForm) {
+        // Nếu anh chưa gắn class space-btn, cơ chế này tự động quét 3 ô nút bấm dựa trên cấu trúc giao diện
+        const step1Heading = Array.from(leadForm.querySelectorAll('p, label, font')).find(el => el.textContent.includes('Bước 1'));
+        if (step1Heading && step1Heading.parentElement) {
+            spaceButtons = step1Heading.parentElement.querySelectorAll('.grid > div, .flex > div, div[class*="border"]');
+        }
+    }
+    // Nếu vẫn không tìm thấy, quét diện rộng các khối chứa văn bản cốt lõi
+    if (spaceButtons.length === 0) {
+        spaceButtons = document.querySelectorAll('div[class*="border"]');
+    }
+
     const dynamicFields = document.getElementById("dynamic-ai-fields");
     const scaleLabel = document.getElementById("scale-label");
     const scaleOptionsContainer = document.getElementById("scale-options");
@@ -164,28 +177,23 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    // Hàm tính toán và chấm điểm AI động dựa trên hành vi chạm của khách hàng
+    // Hàm cập nhật điểm số AI thời gian thực
     function updateAIScore() {
-        let score = 30; // Điểm sàn cơ bản khi điền form
+        let score = 30; 
         
-        // Cộng điểm Bước 2: Quy mô
         const activeScaleBtn = document.querySelector(".scale-option-btn.bg-navy, .scale-option-btn.active");
         if (activeScaleBtn) score += parseInt(activeScaleBtn.getAttribute("data-weight") || 0, 10);
 
-        // Cộng điểm Bước 3: Số lượng mắt camera
         const activeSubBtn = document.querySelector(".sub-btn.bg-navy, .sub-btn.active");
         if (activeSubBtn) score += parseInt(activeSubBtn.getAttribute("data-weight") || 0, 10);
 
-        // Cộng điểm Bước 4: Tiêu chí kỹ thuật ưu tiên
         const activeTechBtn = document.querySelector(".tech-btn.bg-navy, .tech-btn.active");
         if (activeTechBtn) score += parseInt(activeTechBtn.getAttribute("data-weight") || 0, 10);
 
-        // Hiển thị khung điểm số AI real-time lên giao diện
         if (aiScoreContainer && aiScoreValue) {
             aiScoreContainer.classList.remove("hidden", "d-none");
             aiScoreValue.textContent = score;
             
-            // Phân luồng nhãn ưu tiên gửi về hệ thống quản trị
             const aiStatusField = document.getElementById("ai_status_field");
             if (score >= 90) {
                 if (aiStatus) aiStatus.innerHTML = "<span class='text-redbrand font-bold'>🔥 KHÁCH SIÊU VIP (DỰ ÁN LỚN)</span>";
@@ -200,53 +208,67 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Khởi tạo bộ lắng nghe sự kiện Click cho Bước 1 (Không gian khảo sát)
-    if (spaceButtons.length > 0) {
-        spaceButtons.forEach(btn => {
-            btn.addEventListener("click", function() {
-                // Xóa trạng thái active cũ
-                spaceButtons.forEach(b => b.classList.remove("border-navy", "bg-gray-100", "ring-2", "ring-navy", "active"));
-                this.classList.add("border-navy", "bg-gray-100", "ring-2", "ring-navy", "active");
-                
-                // Lấy giá trị chữ từ thuộc tính data hoặc textContent
-                const selectedSpace = this.getAttribute("data-value") || this.textContent.trim().split('\n')[0];
-                const customerTypeInput = document.getElementById("customerType");
-                if (customerTypeInput) customerTypeInput.value = selectedSpace;
+    // Kích hoạt lắng nghe sự kiện bấm vào 3 khối Không Gian
+    spaceButtons.forEach(btn => {
+        // Đảm bảo con trỏ chuột hiển thị dạng click (pointer) để tăng trải nghiệm
+        btn.style.cursor = "pointer";
 
-                // Tạo tự động và hiển thị các nút lựa chọn của Bước 2
-                if (scaleOptionsContainer && scaleData[selectedSpace]) {
-                    scaleOptionsContainer.innerHTML = "";
-                    if (scaleLabel) scaleLabel.textContent = `Bước 2: Quy mô diện tích ứng với [${selectedSpace}]`;
-
-                    scaleData[selectedSpace].forEach(opt => {
-                        const button = document.createElement("button");
-                        button.type = "button";
-                        button.className = "scale-option-btn px-3 py-2 border border-gray-200 rounded-lg text-xs transition text-left bg-white text-gray-700 hover:border-navy";
-                        button.setAttribute("data-value", opt.text);
-                        button.setAttribute("data-weight", opt.weight);
-                        button.textContent = opt.text;
-
-                        // Lắng nghe hành vi chọn Bước 2
-                        button.addEventListener("click", function() {
-                            document.querySelectorAll(".scale-option-btn").forEach(b => b.classList.remove("bg-navy", "text-white", "border-navy", "active"));
-                            this.classList.add("bg-navy", "text-white", "border-navy", "active");
-                            const projectScaleInput = document.getElementById("projectScale");
-                            if (projectScaleInput) projectScaleInput.value = this.getAttribute("data-value");
-                            updateAIScore();
-                        });
-
-                        scaleOptionsContainer.appendChild(button);
-                    });
-                }
-
-                // Kích hoạt hiển thị phân đoạn form ẩn tiếp theo mượt mà
-                if (dynamicFields) dynamicFields.classList.remove("hidden", "d-none");
-                updateAIScore();
+        btn.addEventListener("click", function(e) {
+            // Loại bỏ active cũ
+            spaceButtons.forEach(b => {
+                b.classList.remove("border-navy", "bg-gray-100", "ring-2", "ring-navy", "active");
+                b.style.backgroundColor = "";
+                b.style.borderColor = "";
             });
-        });
-    }
 
-    // Bộ lắng nghe hành vi chọn Bước 3 (Số mắt Camera)
+            // Gắn trạng thái active mới
+            this.classList.add("border-navy", "bg-gray-100", "ring-2", "ring-navy", "active");
+            this.style.backgroundColor = "#f3f4f6"; // Ép màu nền xám nhẹ khi chọn bằng code
+            this.style.borderColor = "#002060"; // Ép viền màu Navy doanh nghiệp
+
+            // Trích xuất chuỗi văn bản sạch (loại bỏ khoảng trắng dư thừa)
+            let rawText = this.textContent.trim();
+            let selectedSpace = "Nhà ở / Biệt thự"; // Mặc định phòng hờ
+            
+            if (rawText.includes("Nhà Ở") || rawText.includes("Nhà ở")) selectedSpace = "Nhà ở / Biệt thự";
+            else if (rawText.includes("Cửa Hàng") || rawText.includes("Cửa hàng")) selectedSpace = "Cửa hàng / Chuỗi shop";
+            else if (rawText.includes("Kho Bãi") || rawText.includes("Kho bãi")) selectedSpace = "Kho bãi / Nhà xưởng";
+
+            const customerTypeInput = document.getElementById("customerType");
+            if (customerTypeInput) customerTypeInput.value = selectedSpace;
+
+            // Xây dựng và render danh sách nút bấm Bước 2
+            if (scaleOptionsContainer && scaleData[selectedSpace]) {
+                scaleOptionsContainer.innerHTML = "";
+                if (scaleLabel) scaleLabel.textContent = `Bước 2: Quy mô diện tích ứng với [${selectedSpace}]`;
+
+                scaleData[selectedSpace].forEach(opt => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "scale-option-btn px-3 py-2 border border-gray-200 rounded-lg text-xs transition text-left bg-white text-gray-700 hover:border-navy";
+                    button.setAttribute("data-value", opt.text);
+                    button.setAttribute("data-weight", opt.weight);
+                    button.textContent = opt.text;
+
+                    button.addEventListener("click", function() {
+                        document.querySelectorAll(".scale-option-btn").forEach(b => b.classList.remove("bg-navy", "text-white", "border-navy", "active"));
+                        this.classList.add("bg-navy", "text-white", "border-navy", "active");
+                        const projectScaleInput = document.getElementById("projectScale");
+                        if (projectScaleInput) projectScaleInput.value = this.getAttribute("data-value");
+                        updateAIScore();
+                    });
+
+                    scaleOptionsContainer.appendChild(button);
+                });
+            }
+
+            // Hiện phân đoạn form ẩn tiếp theo
+            if (dynamicFields) dynamicFields.classList.remove("hidden", "d-none");
+            updateAIScore();
+        });
+    });
+
+    // Lắng nghe chọn Bước 3
     document.querySelectorAll(".sub-btn").forEach(btn => {
         btn.addEventListener("click", function() {
             document.querySelectorAll(".sub-btn").forEach(b => b.classList.remove("bg-navy", "text-white", "border-navy", "active"));
@@ -257,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Bộ lắng nghe hành vi chọn Bước 4 (Tiêu chuẩn kỹ thuật ưu tiên)
+    // Lắng nghe chọn Bước 4
     document.querySelectorAll(".tech-btn").forEach(btn => {
         btn.addEventListener("click", function() {
             document.querySelectorAll(".tech-btn").forEach(b => b.classList.remove("bg-navy", "text-white", "border-navy", "active"));
@@ -268,20 +290,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Xử lý gửi Form AJAX ngầm/Iframe chặn Reload trang hoàn toàn
+    // Cấu hình gửi AJAX Form chống reload trang
     if (leadForm) {
         leadForm.addEventListener("submit", async (e) => {
-            // Kiểm tra bẫy Honeypot chống Bot Spam tự động
             const honeypotEl = document.getElementById("honeypot_field");
             if (honeypotEl && honeypotEl.value) {
                 e.preventDefault();
                 console.warn("Spam Bot detected!");
-                return; 
+                return;
             }
 
-            // Nếu form dùng cơ chế gửi qua target Iframe ẩn, ta thiết lập cờ đánh dấu thành công
             window.formSubmitted = true;
-
             const submitBtn = document.getElementById("submit-form-btn") || leadForm.querySelector("button[type='submit']");
             const originalBtnText = submitBtn ? submitBtn.innerHTML : "";
 
@@ -290,11 +309,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý mã hóa...`;
             }
 
-            // Trường hợp Form không sử dụng Iframe mà muốn đẩy trực tiếp qua API Fetch AJAX thuần
             if (!leadForm.getAttribute("target")) {
                 e.preventDefault();
                 const fullname = document.getElementById("fullname").value.trim();
-                const email = document.getElementById("email") ? document.getElementById("email").value.trim() : "";
                 const phone = document.getElementById("phone").value.trim();
 
                 if (!fullname || !phone) {
@@ -309,8 +326,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
                     const GOOGLE_FORM_ACTION_URL = leadForm.getAttribute("action") || "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfXXXXXXXXXXXXX/formResponse";
                     const formData = new FormData(leadForm);
-                    
-                    // Đính kèm bổ sung dữ liệu phân luồng nguồn
                     formData.append(GOOGLE_FORM_FIELD_ID, CLASSIFICATION_TEXT);
 
                     await fetch(GOOGLE_FORM_ACTION_URL, {
@@ -322,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (typeof window.handleFormSuccess === "function") {
                         window.handleFormSuccess();
                     } else {
-                        showStatus("Đăng ký thành công! Đang chuyển hướng...", "alert-success");
+                        showStatus("Đăng ký thành công!", "alert-success");
                         leadForm.reset();
                         setTimeout(() => {
                             window.open("https://sites.google.com/view/antinco", "_blank");
@@ -330,7 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 } catch (error) {
                     console.error("Form Submit Error: ", error);
-                    showStatus("Có lỗi hệ thống nhỏ xảy ra. Xin vui lòng liên hệ trực tiếp hotline.", "alert-danger");
                 } finally {
                     if (submitBtn) {
                         submitBtn.disabled = false;
@@ -341,19 +355,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Hàm CallBack toàn cục xử lý giao diện sạch sau khi gửi thành công qua Iframe
     window.handleFormSuccess = function() {
-        alert("Chúc mừng anh/chị đã đăng ký thành công! Hệ thống đang kích hoạt luồng tải tệp dữ liệu...");
+        alert("Chúc mừng anh/chị đã đăng ký thành công! Hệ thống đang tải tệp dữ liệu...");
         if (leadForm) leadForm.reset();
         
-        // Hoàn tác các trạng thái active trên các nút bấm
         document.querySelectorAll(".space-btn, .scale-option-btn, .sub-btn, .tech-btn").forEach(b => {
             b.classList.remove("border-navy", "bg-gray-100", "bg-navy", "text-white", "ring-2", "ring-navy", "active");
         });
         if (dynamicFields) dynamicFields.classList.add("hidden");
         if (aiScoreContainer) aiScoreContainer.classList.add("hidden");
         
-        // Mở trang phân phối tài liệu/ebook của AN TÍN
         window.open("https://sites.google.com/view/antinco", "_blank");
         
         const submitBtn = document.getElementById("submit-form-btn") || (leadForm ? leadForm.querySelector("button[type='submit']") : null);
@@ -411,17 +422,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 8. Xử lý Logic Phân Nhánh Kịch Bản Thông Minh (AI Smart Branching Engine)
     // ==========================================================================
     const aiBranchingNodes = document.querySelectorAll("[data-ai-node]");
-    
     if (aiBranchingNodes.length > 0) {
         aiBranchingNodes.forEach(node => {
             node.addEventListener("click", function(e) {
                 const targetScript = this.getAttribute("data-next-script");
-                const conditionCheck = this.getAttribute("data-condition");
-
                 if (targetScript) {
                     e.preventDefault();
-                    console.log(`[AI Branching] Kích hoạt nhánh kịch bản tiếp theo: ${targetScript} dưới điều kiện: ${conditionCheck || "Bình thường"}`);
-                    
                     const nextSection = document.getElementById(targetScript);
                     if (nextSection) {
                         nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
