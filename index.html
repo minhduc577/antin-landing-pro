@@ -412,24 +412,37 @@
                 <div class="text-xs italic text-gray-500" id="ai-status">Đang quét luồng phân tích hành vi dữ liệu...</div>
             </div>
 
-  <form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" target="hidden_iframe">
+<form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" target="hidden_iframe" id="an-tin-form">
     
-    <input type="text" name="entry.1000001" placeholder="Họ và tên *" required class="w-full ...">
-    <input type="tel" name="entry.1000003" placeholder="Số điện thoại *" required class="w-full ...">
-    
+    <div class="space-y-4 mb-6">
+        <input type="text" name="entry.1000001" placeholder="Họ và tên *" required class="w-full p-3 border border-gray-300 rounded-xl">
+        <input type="tel" name="entry.1000003" placeholder="Số điện thoại *" required class="w-full p-3 border border-gray-300 rounded-xl">
+    </div>
+
     <input type="hidden" name="entry.1000002" id="space_input" value="">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <button type="button" onclick="document.getElementById('space_input').value='Nhà ở'; this.style.borderColor='navy'; this.style.backgroundColor='#f0f4f8';" class="space-btn p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 transition text-center focus:outline-none">
+            <i class="fas fa-home text-xl text-navy"></i>
+            <span class="font-semibold text-xs text-navy">Nhà ở / Biệt thự</span>
+        </button>
+        <button type="button" onclick="document.getElementById('space_input').value='Cửa hàng'; this.style.borderColor='navy'; this.style.backgroundColor='#f0f4f8';" class="space-btn p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 transition text-center focus:outline-none">
+            <i class="fas fa-store text-xl text-gold"></i>
+            <span class="font-semibold text-xs text-navy">Cửa Hàng / Chuỗi Shop</span>
+        </button>
+        <button type="button" onclick="document.getElementById('space_input').value='Kho bãi'; this.style.borderColor='navy'; this.style.backgroundColor='#f0f4f8';" class="space-btn p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 transition text-center focus:outline-none">
+            <i class="fas fa-industry text-xl text-gray-600"></i>
+            <span class="font-semibold text-xs text-navy">Kho Bãi / Nhà Xưởng</span>
+        </button>
+    </div>
 
-    <button type="button" onclick="document.getElementById('space_input').value='Nhà ở'" ...>Nhà ở</button>
-    <button type="button" onclick="document.getElementById('space_input').value='Cửa hàng'" ...>Cửa hàng</button>
-    <button type="button" onclick="document.getElementById('space_input').value='Kho bãi'" ...>Kho bãi</button>
-
-    <button type="submit" class="w-full bg-red-600 ...">
+    <button type="submit" class="w-full bg-red-600 text-white font-bold py-4 rounded-xl">
         NHẬN PHƯƠNG ÁN THIẾT KẾ MAY ĐO & FILE EBOOK
     </button>
 </form>
 
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){alert('Gửi thành công!');}"></iframe>
-<script type="text/javascript">var submitted=false; document.getElementById('ai-scoring-form').onsubmit = function(){submitted=true;}</script>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){alert('Đã gửi thông tin!');}"></iframe>
+<script type="text/javascript">var submitted=false; document.getElementById('an-tin-form').onsubmit = function(){submitted=true;}</script>
+          
         </div>
     </section>
 
