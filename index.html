@@ -503,12 +503,16 @@
 </form>
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
+
 <script>
-    function tuVanCamera() {
-        // Lấy giá trị loại không gian đã chọn
-        const loaiKhongGian = document.getElementById('space_input').value;
+    // 1. Lắng nghe nút Gửi - dùng cách này để không xung đột với Form của anh
+    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
         
-        // Dữ liệu báo giá
+        // 2. Lấy giá trị từ ô ẩn mà anh đã dùng để lưu Không gian
+        var spaceInput = document.getElementById('space_input');
+        var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
+
+        // 3. Logic tư vấn
         const data = {
             'Nhà ở': { danhMuc: 'Camera Wifi + Chuông cửa', gia: '2.500.000đ', khuyenMai: 'Tặng thẻ nhớ 64GB' },
             'Cửa hàng': { danhMuc: 'Camera IP + Đầu ghi 8 kênh', gia: '8.500.000đ', khuyenMai: 'Miễn phí lắp đặt' },
@@ -516,17 +520,16 @@
         };
 
         const result = data[loaiKhongGian] || { danhMuc: 'Tư vấn chuyên sâu', gia: 'Liên hệ khảo sát', khuyenMai: 'Khảo sát miễn phí' };
-        
-        // Hiện thông báo
+
+        // 4. Hiện thông báo sau 1 giây (để dữ liệu kịp gửi về Google trước)
         setTimeout(function() {
             alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
                   "- Danh mục: " + result.danhMuc + "\n" +
                   "- Giá tạm tính: " + result.gia + "\n" +
                   "- Khuyến mãi: " + result.khuyenMai + "\n\n" +
                   "Thông tin chi tiết đã được gửi về hệ thống AN TÍN!");
-        }, 500);
-    }
-</script>
-
+        }, 1000);
+    });
+</script>  
 </body> <!-- Thẻ kết thúc -->
 </html>
