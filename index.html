@@ -494,13 +494,55 @@
         </div>
     </section>
 
-    <footer class="bg-navy text-gray-400 py-8 px-4 text-center text-xs border-t border-gray-800">
-        <div class="max-w-6xl mx-auto space-y-2">
-            <p class="font-bold text-gray-300 text-sm">© 2026 CTY KỸ THUẬT CÔNG NGHỆ AN TÍN. All rights reserved.</p>
-            <p>Văn phòng: Toà nhà River Garden, Số 170 Nguyễn Văn Hưởng, Phường Thảo Điền, Thành phố Thủ Đức, TP. Hồ Chí Minh.</p>
-            <p>Hotline kỹ thuật hỗ trợ: 090X.XXX.XXX | Email liên hệ ban điều phối: info@antinco.com</p>
+    <!-- Footer CHUẨN AN TÍN -->
+    <footer class="bg-navy text-white pt-16 pb-8 px-4 border-t-4 border-gold">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <!-- Thông tin công ty -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-10 h-10 bg-gold rounded-lg flex items-center justify-center text-navy font-bold text-xl shadow-md">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="font-bold tracking-wider text-sm leading-tight">CTY TNHH KỸ THUẬT<br>CÔNG NGHỆ AN TÍN</h3>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <i class="fas fa-map-marker-alt text-gold mr-2"></i> 85/19 Lê Liễu, P. Tân Sơn Nhì, TP. HCM.
+                </p>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <i class="fas fa-phone-alt text-gold mr-2"></i> Tel: (028) 3849 3575
+                </p>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <i class="fab fa-whatsapp text-gold mr-2"></i> Hotline/Zalo: 0914 060 339
+                </p>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <i class="fas fa-envelope text-gold mr-2"></i> ctyantinco@gmail.com
+                </p>
+            </div>
+
+            <!-- Hệ thống Website -->
+            <div>
+                <h4 class="font-bold text-lg mb-6 border-l-4 border-gold pl-3">Hệ Thống Website</h4>
+                <ul class="space-y-3 text-sm text-gray-400">
+                    <li><a href="https://antinco.com" target="_blank" class="hover:text-gold transition flex items-center"><i class="fas fa-chevron-right mr-2 text-[10px]"></i> antinco.com</a></li>
+                    <li><a href="https://ebook.antinco.com" target="_blank" class="hover:text-gold transition flex items-center"><i class="fas fa-chevron-right mr-2 text-[10px]"></i> ebook.antinco.com</a></li>
+                    <li><a href="https://khuyenmaicamera.blogspot.com" target="_blank" class="hover:text-gold transition flex items-center"><i class="fas fa-chevron-right mr-2 text-[10px]"></i> khuyenmaicamera.blogspot.com</a></li>
+                </ul>
+            </div>
+
+            <!-- Kết nối & Bản quyền -->
+            <div>
+                <h4 class="font-bold text-lg mb-6 border-l-4 border-gold pl-3">Kết Nối</h4>
+                <div class="flex gap-3 mb-6">
+                    <a href="https://antinco.com" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gold hover:text-navy transition"><i class="fas fa-globe"></i></a>
+                    <a href="https://zalo.me/0914060339" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gold hover:text-navy transition"><i class="fas fa-comment-dots"></i></a>
+                </div>
+                <p class="text-gray-500 text-[10px] uppercase">© 2026 CTY TNHH KỸ THUẬT CÔNG NGHỆ AN TÍN.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Iframe ẩn tránh reload trang -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    
 </body>
 </html>
