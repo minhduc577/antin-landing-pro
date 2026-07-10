@@ -412,7 +412,7 @@
                 <div class="text-xs italic text-gray-500" id="ai-status">Đang quét luồng phân tích hành vi dữ liệu...</div>
             </div>
 
-         <form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" id="ai-scoring-form" target="hidden_iframe" class="space-y-5 text-sm">
+          <form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" id="ai-scoring-form" target="hidden_iframe" class="space-y-5 text-sm">
                 
                 <input type="hidden" id="ai_status_field" name="entry.444444444" value="Khách trung bình">
                 <input type="text" id="honeypot_field" value="" class="hidden" style="display:none !important">
@@ -489,85 +489,6 @@
                     <i class="fas fa-file-invoice text-sm"></i> NHẬN PHƯƠNG ÁN THIẾT KẾ MAY ĐO & FILE EBOOK
                 </button>
             </form>
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-                <input type="hidden" id="ai_status_field" name="entry.444444444" value="Khách trung bình">
-                <input type="text" id="honeypot_field" value="" class="hidden" style="display:none !important">
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-1.5" for="fullName">Họ và tên <span class="text-redbrand">*</span></label>
-                        <input type="text" id="fullName" name="entry.1000001" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none transition bg-white text-gray-800">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-1.5" for="phoneNumber">Số điện thoại (Zalo) <span class="text-redbrand">*</span></label>
-                        <input type="tel" id="phoneNumber" name="entry.1000002" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none transition bg-white text-gray-800">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2.5">Bước 1: Chọn Không Gian Cần Khảo Sát & Thiết Kế <span class="text-redbrand">*</span></label>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="space-selector-group">
-                        <button type="button" onclick="window.open('LINK_GOOGLE_FORM_CUA_ANH', '_blank')" class="p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 hover:border-navy hover:bg-gray-50 transition text-center focus:outline-none w-full">
-    <i class="fas fa-home text-xl text-navy"></i>
-    <span class="font-semibold text-xs text-navy">Nhà ở / Biệt thự</span>
-</button>
-
-<button type="button" onclick="window.open('LINK_GOOGLE_FORM_CUA_ANH', '_blank')" class="p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 hover:border-navy hover:bg-gray-50 transition text-center focus:outline-none w-full">
-    <i class="fas fa-store text-xl text-gold"></i>
-    <span class="font-semibold text-xs text-navy">Cửa Hàng / Chuỗi Shop</span>
-</button>
-
-<button type="button" onclick="window.open('LINK_GOOGLE_FORM_CUA_ANH', '_blank')" class="p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 hover:border-navy hover:bg-gray-50 transition text-center focus:outline-none w-full">
-    <i class="fas fa-industry text-xl text-gray-600"></i>
-    <span class="font-semibold text-xs text-navy">Kho Bãi / Nhà Xưởng</span>
-</button>
-                    </div>
-                    <input type="hidden" id="customerType" name="entry.1000003" required>
-                </div>
-
-                <div id="dynamic-ai-fields" class="hidden border-t border-dashed border-gray-200 pt-4 space-y-4">
-                    
-                    <div>
-                        <label id="scale-label" class="block text-gray-700 font-medium mb-2">Bước 2: Quy mô công trình cụ thể</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="scale-options">
-                            </div>
-                        <input type="hidden" id="projectScale" name="entry.1000004">
-                    </div>
-
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Bước 3: Số lượng mắt Camera anh/chị dự kiến lắp đặt?</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="button" data-value="1 - 3 mắt" data-weight="10" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">1 - 3 Mắt</button>
-                            <button type="button" data-value="4 - 8 mắt" data-weight="20" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">4 - 8 Mắt</button>
-                            <button type="button" data-value="9 - 16 mắt" data-weight="35" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">9 - 16 Mắt</button>
-                            <button type="button" data-value="Trên 16 mắt (Cần giải pháp lớn)" data-weight="50" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">Trên 16 Mắt (Dự án)</button>
-                        </div>
-                        <input type="hidden" id="cameraQty" name="entry.1000005">
-                    </div>
-
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Bước 4: Tiêu chí kỹ thuật nào anh/chị ưu tiên hàng đầu?</label>
-                        <div class="grid grid-cols-1 gap-2">
-                            <button type="button" data-value="Tối ưu chi phí, rẻ, chạy ổn định" data-weight="10" class="tech-btn p-3 border border-gray-200 rounded-lg text-xs text-left bg-white text-gray-700 transition flex items-center gap-2">
-                                <i class="fas fa-wallet text-gray-400 w-4 text-center"></i> Tiết kiệm chi phí đầu tư tối đa
-                            </button>
-                            <button type="button" data-value="Hình ảnh sắc nét, có màu ban đêm, nhận diện AI" data-weight="25" class="tech-btn p-3 border border-gray-200 rounded-lg text-xs text-left bg-white text-gray-700 transition flex items-center gap-2">
-                                <i class="fas fa-bolt text-amber-500 w-4 text-center"></i> Hình ảnh Siêu nét & Công nghệ AI thông minh
-                            </button>
-                            <button type="button" data-value="Bảo mật dữ liệu tuyệt đối, chống hack, chống xem lén" data-weight="40" class="tech-btn p-3 border border-gray-200 rounded-lg text-xs text-left bg-white text-gray-700 transition flex items-center gap-2">
-                                <i class="fas fa-user-shield text-redbrand w-4 text-center"></i> Bảo mật mã hóa dữ liệu, Chống xem lén
-                            </button>
-                        </div>
-                        <input type="hidden" id="techPriority" name="entry.1000006">
-                    </div>
-
-                </div>
-
-                <button type="submit" id="submit-form-btn" class="w-full bg-redbrand hover:bg-red-700 text-white font-bold py-3.5 px-6 rounded-xl text-center shadow-lg transition duration-300 flex items-center justify-center gap-2 text-base">
-                    <i class="fas fa-file-invoice text-sm"></i> NHẬN PHƯƠNG ÁN THIẾT KẾ MAY ĐO & FILE EBOOK
-                </button>
-            </form>
-
             <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof formSubmitted !== 'undefined' && formSubmitted) { handleFormSuccess(); }"></iframe>
         </div>
     </section>
