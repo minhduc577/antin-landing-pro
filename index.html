@@ -105,9 +105,15 @@
         }
         .fade-in { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Custom scrollbar mượt cho cửa sổ chat */
+        .chat-scrollbar::-webkit-scrollbar { width: 5px; }
+        .chat-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .chat-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .chat-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased fade-in">
+<body class="bg-gray-50 text-gray-800 antialiased fade-in relative">
 
     <nav class="sticky top-0 z-50 bg-navy/95 backdrop-blur text-white border-b border-gray-800 py-3 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
@@ -248,7 +254,7 @@
                 <div class="p-6 bg-gray-50 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center hover:shadow-md transition">
                     <div class="text-4xl mb-3"><i class="fas fa-coffee text-redbrand"></i></div>
                     <h4 class="font-bold text-navy mb-1 text-sm md:text-base">Chủ Nhà Hàng / Quán Cafe</h4>
-                    <p class="text-xs text-gray-500 leading-relaxed">Kiểm soát tốt lưu lượng khách khứa, khu vực pha chế, kho lưu trữ nguyên vật liệu từ xa linh hoạt 24/7 qua điện thoại.</p>
+                    <p class="text-xs text-gray-500 leading-relaxed">Kiểm soát tốt lưu lượng khách khứa, khu vực pha chế, khu vực kho lưu trữ nguyên vật liệu từ xa linh hoạt 24/7 qua điện thoại.</p>
                 </div>
                 <div class="p-6 bg-gray-50 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center hover:shadow-md transition">
                     <div class="text-4xl mb-3"><i class="fas fa-industry text-gray-700"></i></div>
@@ -433,173 +439,106 @@
                     </select>
                 </div>
 
-                <div id="fields-home" style="display: none;" class="p-4 bg-blue-50/50 rounded-xl border border-blue-100 space-y-4">
-                    <p class="text-xs text-blue-600 font-semibold italic"><i class="fas fa-robot"></i> AI đang tối ưu câu hỏi cho Không gian nhà ở...</p>
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-1" for="homeFloors">Số tầng của ngôi nhà?</label>
-                        <input type="number" id="homeFloors" name="entry.1000004" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none bg-white">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-1">Bạn có cần lắp đặt ở khu vực ngoài trời (sân vườn, cổng rào) không?</label>
-                        <select id="homeOutdoor" name="entry.1000005" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none bg-white">
-                            <option value="">-- Chọn trạng thái --</option>
-                            <option value="Có outdoor">Có, cần loại camera chống nước chịu nhiệt</option>
-                            <option value="Chỉ trong nhà">Không, tôi chỉ lắp camera ở trong nhà thôi</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Nút Submit Form -->
-                <button type="submit" id="submit-btn" class="w-full bg-redbrand hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition duration-300 flex items-center justify-center gap-2 text-base">
-                    <i class="fas fa-paper-plane"></i> ĐĂNG KÝ GỬI THÔNG TIN
-                </button>
+                <div id="fields-home" style="display: none;"></div>
             </form>
         </div>
     </section>
 
-    <!-- Iframe ẩn để nhận dữ liệu submit không reload trang -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof formSubmitted !== 'undefined' && formSubmitted) { handleFormSuccess(); }"></iframe>
-
     <!-- ==========================================================================
-         MODULE JAVASCRIPT: LOGIC AI SCORING REAL-TIME & GOOGLE FORM INTERACTION
+         WIDGET CHATBOT AI THÔNG MINH (BỔ SUNG MỚI GÓC DƯỚI PHẢI MÀNH HÌNH)
          ========================================================================== -->
+    <div id="ai-chatbot-widget" class="fixed bottom-6 right-6 z-50 font-sans">
+        <!-- Nút bấm Bong bóng Chat (Toggle Button) -->
+        <button id="chat-toggle-btn" class="w-14 h-14 bg-navy hover:bg-opacity-95 text-white rounded-full flex items-center justify-center shadow-2xl transition duration-300 transform hover:scale-105 focus:outline-none relative border-2 border-gold/30">
+            <span class="absolute -top-1 -right-1 bg-redbrand w-3 h-3 rounded-full animate-ping"></span>
+            <span class="absolute -top-1 -right-1 bg-redbrand w-3 h-3 rounded-full"></span>
+            <i id="chat-icon" class="fas fa-robot text-xl text-gold"></i>
+        </button>
+
+        <!-- Khung Cửa Sổ Hội Thoại AI Chatbot -->
+        <div id="chat-window" class="hidden absolute bottom-16 right-0 w-[350px] md:w-[400px] h-[520px] bg-white rounded-2xl shadow-2xl border border-gray-200/80 flex flex-col overflow-hidden transition-all duration-300 scale-95 opacity-0 origin-bottom-right">
+            <!-- Header của Chatbot -->
+            <div class="bg-navy p-4 text-white flex items-center justify-between border-b border-gray-800">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 bg-gold rounded-full flex items-center justify-center text-navy font-bold text-sm shadow">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xs md:text-sm tracking-wide text-white leading-tight">AN TÍN AI Assistant</h4>
+                        <span class="text-[10px] text-emerald-400 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span> Hệ thống đang trực tuyến
+                        </span>
+                    </div>
+                </div>
+                <button id="chat-close-btn" class="text-gray-400 hover:text-white transition focus:outline-none px-2 py-1">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Panel Log Phân Tích Hành Vi Real-time Thượng Tầng Enterprise -->
+            <div class="bg-gray-900 px-3 py-1.5 text-[10px] text-gray-400 font-mono border-b border-gray-800 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                    <i class="fas fa-terminal text-gold text-[9px]"></i>
+                    <span id="ai-chat-status">STATUS: IDLE (Chờ tương tác)</span>
+                </div>
+                <div class="text-gold font-bold">
+                    SCORE: <span id="ai-chat-score">0</span>/100
+                </div>
+            </div>
+
+            <!-- Vùng Hiển Thị Nội Dung Tin Nhắn (Chat Logs) -->
+            <div id="chat-messages-box" class="flex-1 p-4 overflow-y-auto space-y-3.5 bg-gray-50/50 chat-scrollbar text-xs md:text-sm">
+                <!-- Tin nhắn Chào mừng Mặc định của Hệ Thống -->
+                <div class="flex items-start gap-2.5 max-w-[85%]">
+                    <div class="w-7 h-7 rounded-full bg-navy/10 flex items-center justify-center text-navy flex-shrink-0 mt-0.5 text-xs">
+                        <i class="fas fa-robot text-navy/70"></i>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-gray-200/60 shadow-sm text-gray-700 leading-relaxed">
+                        Xin chào! Tôi là Trợ lý AI thế hệ mới của <b>AN TÍN</b>. Tôi có thể giúp anh/chị bóc tách nhanh các lỗi hệ thống Camera hoặc chấm điểm độ an toàn công trình của mình ngay lập tức. Anh/chị cần tôi tư vấn không gian nào?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Khu Vực Form Gửi Tin Nhắn Khách Hàng -->
+            <div class="p-3 border-t border-gray-100 bg-white">
+                <form id="chat-input-form" class="flex items-center gap-2">
+                    <input type="text" id="chat-user-input" placeholder="Nhập câu hỏi của bạn tại đây..." required autocomplete="off" class="flex-1 bg-gray-100 text-gray-800 text-xs md:text-sm px-4 py-2.5 rounded-xl border border-transparent focus:bg-white focus:border-navy focus:outline-none transition">
+                    <button type="submit" class="w-10 h-10 bg-redbrand hover:bg-red-700 text-white rounded-xl flex items-center justify-center shadow-md transition flex-shrink-0 focus:outline-none">
+                        <i class="fas fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+                <div class="text-center text-[9px] text-gray-400 mt-1.5 font-sans italic">
+                    Phát triển độc quyền bởi phòng giải pháp công nghệ AN TÍN © 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đoạn mã script nội bộ điều khiển UI đóng mở Widget Chatbot nhanh -->
     <script>
-        let startTime = Date.now();
-        let currentScore = 70;
-        let displayedScore = 70;
-        let hasInteracted = false;
-        let animationFrameId = null;
-        let formSubmitted = false;
+        const chatToggleBtn = document.getElementById('chat-toggle-btn');
+        const chatWindow = document.getElementById('chat-window');
+        const chatCloseBtn = document.getElementById('chat-close-btn');
 
-        // Hàm ẩn hiện các trường biểu mẫu động của anh Đức
-        function toggleAIFields() {
-            const customerType = document.getElementById("customerType").value;
-            const fieldsHome = document.getElementById("fields-home");
-            
-            if (customerType === "Nhà ở / Biệt thự") {
-                fieldsHome.style.display = "block";
+        function toggleChat() {
+            if (chatWindow.classList.contains('hidden')) {
+                chatWindow.classList.remove('hidden');
+                setTimeout(() => {
+                    chatWindow.classList.remove('scale-95', 'opacity-0');
+                    chatWindow.classList.add('scale-100', 'opacity-100');
+                }, 10);
             } else {
-                fieldsHome.style.display = "none";
-            }
-            // Gọi cập nhật điểm số ngay khi thay đổi lựa chọn không gian
-            calculateAIScore();
-        }
-
-        // Tạo hiệu ứng nhảy số tăng dần mượt mà chuẩn Enterprise ( requestAnimationFrame )
-        function animateScoreValue(target) {
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-
-            const step = () => {
-                if (displayedScore < target) {
-                    displayedScore += 1;
-                    const scoreValueElem = document.getElementById("ai-score-value");
-                    if (scoreValueElem) scoreValueElem.innerText = displayedScore;
-                    animationFrameId = requestAnimationFrame(step);
-                } else if (displayedScore > target) {
-                    displayedScore -= 1;
-                    const scoreValueElem = document.getElementById("ai-score-value");
-                    if (scoreValueElem) scoreValueElem.innerText = displayedScore;
-                    animationFrameId = requestAnimationFrame(step);
-                }
-            };
-            animationFrameId = requestAnimationFrame(step);
-        }
-
-        // Bộ máy thuật toán phân loại & tính điểm hồ sơ khách hàng
-        function calculateAIScore() {
-            if (!hasInteracted) {
-                hasInteracted = true;
-                startTime = Date.now();
-                // Xuất hiện hộp điểm số AI khi khách bắt đầu tương tác
-                document.getElementById("ai-score-container").classList.remove("hidden");
-            }
-
-            let targetScore = 70; // Điểm sàn mặc định
-            const nameElem = document.getElementById("fullName");
-            const customerType = document.getElementById("customerType").value;
-
-            // Thuật toán 1: Kiểm định độ dài ký tự tên (Độ tin cậy)
-            if (nameElem && nameElem.value.trim().length > 2) {
-                const nameLength = nameElem.value.trim().length;
-                if (nameLength > 15) targetScore += 12;
-                else if (nameLength > 7) targetScore += 6;
-                else targetScore += 2;
-            }
-
-            // Thuật toán 2: Kiểm định tính cấp thiết theo Không gian lựa chọn
-            if (customerType !== "") {
-                if (customerType === "Kho bãi / Nhà xưởng") targetScore += 10; // Tập khách hàng doanh nghiệp lớn
-                else if (customerType === "Cửa hàng / Chuỗi shop") targetScore += 7;
-                else targetScore += 5;
-            }
-
-            // Thuật toán 3: Phân tích tốc độ phản xạ điền form (Time-to-Action)
-            const timeElapsed = (Date.now() - startTime) / 1000;
-            if (timeElapsed > 3 && timeElapsed < 20) {
-                targetScore += 8;
-            } else if (timeElapsed >= 20) {
-                targetScore += 4;
-            }
-
-            // Giới hạn trần điểm tối đa
-            if (targetScore > 99) targetScore = 99;
-            currentScore = targetScore;
-
-            // Chạy hiệu ứng số tăng
-            animateScoreValue(currentScore);
-
-            // PHÂN LOẠI DỮ LIỆU ĐỂ ĐẨY VỀ CỘT TRẠNG THÁI GOOGLE SHEET
-            const statusElem = document.getElementById("ai-status");
-            const hiddenStatusField = document.getElementById("ai_status_field");
-
-            if (currentScore >= 88) {
-                if (statusElem) statusElem.innerHTML = "⚡ <b class='text-green-600'>Hồ sơ Xuất sắc!</b> Hệ thống đã ưu tiên phân phối luồng tới Kỹ sư trưởng Phan Minh Đức.";
-                if (hiddenStatusField) hiddenStatusField.value = "🔥 KHÁCH NÓNG";
-            } else if (currentScore >= 78) {
-                if (statusElem) statusElem.innerHTML = "✓ <b class='text-blue-600'>Hồ sơ Chất lượng.</b> Đang chuẩn bị kích hoạt quyền truy xuất cẩm nang.";
-                if (hiddenStatusField) hiddenStatusField.value = "⭐ Khách Tiềm Năng";
-            } else {
-                if (statusElem) statusElem.innerText = "🔍 AI đang phân tích luồng dữ liệu kiến trúc an ninh công trình...";
-                if (hiddenStatusField) hiddenStatusField.value = "Khách Trung Bình";
+                chatWindow.classList.remove('scale-100', 'opacity-100');
+                chatWindow.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    chatWindow.classList.add('hidden');
+                }, 300);
             }
         }
 
-        // Lắng nghe hành vi người dùng trên Form để tính điểm trực tiếp
-        const formElement = document.getElementById("ai-scoring-form");
-        if (formElement) {
-            formElement.addEventListener("input", calculateAIScore);
-            formElement.addEventListener("change", calculateAIScore);
-            
-            // Đánh dấu trạng thái bắt đầu submit dữ liệu ngầm
-            formElement.addEventListener("submit", () => {
-                formSubmitted = true;
-                const submitBtn = document.getElementById("submit-btn");
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>Đang mã hóa thông tin...`;
-                }
-            });
-        }
-
-        // Hàm xử lý khi gửi form thành công trỏ từ hidden_iframe về
-        function handleFormSuccess() {
-            alert("Chúc mừng! Đăng ký thành công. Hệ thống đang kích hoạt link chuyển hướng cẩm nang an ninh.");
-            if (formElement) formElement.reset();
-            
-            // Reset điểm số về mặc định
-            displayedScore = 70;
-            currentScore = 70;
-            document.getElementById("ai-score-container").classList.add("hidden");
-            formSubmitted = false;
-
-            const submitBtn = document.getElementById("submit-btn");
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ĐĂNG KÝ GỬI THÔNG TIN`;
-            }
-            
-            // Tự động mở link PDF hoặc Google Site sau khi gửi thành công
-            window.open("https://drive.google.com/file/d/1Ttq5W7xj0hY377XyirGQh01zHUxm_el-/view", "_blank");
+        if (chatToggleBtn && chatWindow && chatCloseBtn) {
+            chatToggleBtn.addEventListener('click', toggleChat);
+            chatCloseBtn.addEventListener('click', toggleChat);
         }
     </script>
 </body>
