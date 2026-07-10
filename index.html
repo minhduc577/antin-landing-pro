@@ -412,8 +412,22 @@
                 <div class="text-xs italic text-gray-500" id="ai-status">Đang quét luồng phân tích hành vi dữ liệu...</div>
             </div>
 
-            <form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" id="ai-scoring-form" target="hidden_iframe" class="space-y-5 text-sm">
-                
+          <form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" id="ai-scoring-form" target="hidden_iframe" class="space-y-5 text-sm" onsubmit="alert('Đã gửi thông tin!');">
+    
+    <input type="text" name="entry.1000001" placeholder="Họ và tên *" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300">
+    <input type="tel" name="entry.1000002" placeholder="Số điện thoại *" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300">
+    
+    <input type="hidden" name="entry.1000003" id="space_input" value="Chưa chọn">
+    <div class="grid grid-cols-3 gap-2">
+        <button type="button" onclick="document.getElementById('space_input').value='Nhà ở'; alert('Đã chọn: Nhà ở');" class="p-3 border-2 rounded-xl text-xs font-bold">Nhà ở</button>
+        <button type="button" onclick="document.getElementById('space_input').value='Cửa hàng'; alert('Đã chọn: Cửa hàng');" class="p-3 border-2 rounded-xl text-xs font-bold">Cửa hàng</button>
+        <button type="button" onclick="document.getElementById('space_input').value='Kho bãi'; alert('Đã chọn: Kho bãi');" class="p-3 border-2 rounded-xl text-xs font-bold">Kho bãi</button>
+    </div>
+
+    <button type="submit" class="w-full bg-red-600 text-white font-bold py-4 rounded-xl">NHẬN PHƯƠNG ÁN THIẾT KẾ</button>
+</form>
+
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 <input type="hidden" id="ai_status_field" name="entry.444444444" value="Khách trung bình">
                 <input type="text" id="honeypot_field" value="" class="hidden" style="display:none !important">
 
