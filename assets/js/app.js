@@ -132,23 +132,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // 6. Xử lý Logic Form Đăng Ký Chống Spam, AJAX & Tương Tác Chạm Đa Nhánh Real-time
     // ==========================================================================
-    // Tự động nhận diện linh hoạt ID form trên hệ thống
     const leadForm = document.getElementById("ai-scoring-form") || document.getElementById("enterprise-lead-form") || document.querySelector("form");
     const formStatus = document.getElementById("form-status");
 
-    // Bộ tìm kiếm phần tử giao diện mới linh hoạt cao (Fallback selectors)
-    // Tìm tất cả các div con nằm trực tiếp trong vùng phân phối 3 nút ở Bước 1
-    let spaceButtons = document.querySelectorAll(".space-btn");
-    if (spaceButtons.length === 0 && leadForm) {
-        // Nếu anh chưa gắn class space-btn, cơ chế này tự động quét 3 ô nút bấm dựa trên cấu trúc giao diện
-        const step1Heading = Array.from(leadForm.querySelectorAll('p, label, font')).find(el => el.textContent.includes('Bước 1'));
-        if (step1Heading && step1Heading.parentElement) {
-            spaceButtons = step1Heading.parentElement.querySelectorAll('.grid > div, .flex > div, div[class*="border"]');
+    // Lấy động danh sách các nút Bước 1 bằng cơ chế quét thông minh theo từ khóa text nội dung
+    let spaceButtons = [];
+    document.querySelectorAll('div[class*="border"], div[class*="rounded"]').forEach(el => {
+        const text = el.textContent.trim();
+        // Chỉ chọn những khối cha trực tiếp chứa tiêu đề không gian và không bọc quá rộng
+        if ((text.includes("Nhà Ở") || text.includes("Cửa Hàng") || text.includes("Kho Bãi") || text.includes("Nhà ở") || text.includes("Cửa hàng") || text.includes("Kho bãi")) && el.children.length > 0 && el.children.length < 10) {
+            if (!spaceButtons.includes(el) && !el.parentElement.textContent.trim().startsWith("Bước 1")) {
+                spaceButtons.push(el);
+            }
         }
-    }
-    // Nếu vẫn không tìm thấy, quét diện rộng các khối chứa văn bản cốt lõi
+    });
+
+    // Nếu không quét được tự động, gán dự phòng theo class chuẩn danh định
     if (spaceButtons.length === 0) {
-        spaceButtons = document.querySelectorAll('div[class*="border"]');
+        spaceButtons = Array.from(document.querySelectorAll(".space-btn"));
     }
 
     const dynamicFields = document.getElementById("dynamic-ai-fields");
@@ -208,36 +209,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Kích hoạt lắng nghe sự kiện bấm vào 3 khối Không Gian
+    // Kích hoạt xử lý click an toàn tuyệt đối cho Bước 1
     spaceButtons.forEach(btn => {
-        // Đảm bảo con trỏ chuột hiển thị dạng click (pointer) để tăng trải nghiệm
         btn.style.cursor = "pointer";
+        // Chống hiệu ứng bấm trượt chữ hoặc icon con bên trong bằng Pointer-events cứu cánh
+        Array.from(btn.children).forEach(child => {
+            child.style.pointerEvents = "none";
+        });
 
         btn.addEventListener("click", function(e) {
-            // Loại bỏ active cũ
             spaceButtons.forEach(b => {
                 b.classList.remove("border-navy", "bg-gray-100", "ring-2", "ring-navy", "active");
                 b.style.backgroundColor = "";
                 b.style.borderColor = "";
             });
 
-            // Gắn trạng thái active mới
             this.classList.add("border-navy", "bg-gray-100", "ring-2", "ring-navy", "active");
-            this.style.backgroundColor = "#f3f4f6"; // Ép màu nền xám nhẹ khi chọn bằng code
-            this.style.borderColor = "#002060"; // Ép viền màu Navy doanh nghiệp
+            this.style.backgroundColor = "#f3f4f6"; 
+            this.style.borderColor = "#002060"; 
 
-            // Trích xuất chuỗi văn bản sạch (loại bỏ khoảng trắng dư thừa)
             let rawText = this.textContent.trim();
-            let selectedSpace = "Nhà ở / Biệt thự"; // Mặc định phòng hờ
+            let selectedSpace = "Nhà ở / Biệt thự"; 
             
-            if (rawText.includes("Nhà Ở") || rawText.includes("Nhà ở")) selectedSpace = "Nhà ở / Biệt thự";
-            else if (rawText.includes("Cửa Hàng") || rawText.includes("Cửa hàng")) selectedSpace = "Cửa hàng / Chuỗi shop";
-            else if (rawText.includes("Kho Bãi") || rawText.includes("Kho bãi")) selectedSpace = "Kho bãi / Nhà xưởng";
+            if (rawText.includes("Nhà") || rawText.includes("Biệt thự")) selectedSpace = "Nhà ở / Biệt thự";
+            else if (rawText.includes("Cửa Hàng") || rawText.includes("Cửa hàng") || rawText.includes("Shop")) selectedSpace = "Cửa hàng / Chuỗi shop";
+            else if (rawText.includes("Kho") || rawText.includes("Xưởng")) selectedSpace = "Kho bãi / Nhà xưởng";
 
             const customerTypeInput = document.getElementById("customerType");
             if (customerTypeInput) customerTypeInput.value = selectedSpace;
 
-            // Xây dựng và render danh sách nút bấm Bước 2
             if (scaleOptionsContainer && scaleData[selectedSpace]) {
                 scaleOptionsContainer.innerHTML = "";
                 if (scaleLabel) scaleLabel.textContent = `Bước 2: Quy mô diện tích ứng với [${selectedSpace}]`;
@@ -262,7 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
-            // Hiện phân đoạn form ẩn tiếp theo
             if (dynamicFields) dynamicFields.classList.remove("hidden", "d-none");
             updateAIScore();
         });
