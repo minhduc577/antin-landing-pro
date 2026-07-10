@@ -106,7 +106,6 @@
         .fade-in { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Custom scrollbar mượt cho cửa sổ chat */
         .chat-scrollbar::-webkit-scrollbar { width: 5px; }
         .chat-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .chat-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -397,149 +396,111 @@
     </section>
 
     <section id="register-form" class="py-16 px-4 bg-white relative scroll-mt-16">
-        <div class="max-w-xl mx-auto bg-gray-50 p-8 rounded-2xl shadow-xl border border-gray-200/60">
+        <div class="max-w-xl mx-auto bg-gray-50 p-6 md:p-8 rounded-2xl shadow-xl border border-gray-200/60">
             <div class="text-center mb-6">
                 <h3 class="text-xl md:text-2xl font-bold text-navy">Đăng Ký Tư Vấn & Nhận Tài Liệu</h3>
-                <p class="text-xs text-gray-500 mt-1">Dữ liệu được AI phân tích để tối ưu phương án lắp đặt cho bạn</p>
+                <p class="text-xs text-gray-500 mt-1">Hệ thống phân tích hồ sơ "may đo" phương án kỹ thuật tối ưu theo thời gian thực</p>
             </div>
 
-            <!-- CHÈN COMPONENT HIỂN THỊ ĐIỂM AI CHẤM CHUẨN ENTERPRISE TẠI ĐÂY -->
-            <div id="ai-score-container" class="mb-4 p-3 text-center rounded-xl border bg-opacity-10 shadow-sm transition-all duration-300 hidden" style="background-color: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.25);">
-                <div class="font-semibold text-uppercase tracking-wider text-navy" style="font-size: 11px; color: #D4AF37;">
+            <div id="ai-score-container" class="mb-5 p-3 text-center rounded-xl border bg-opacity-10 shadow-sm transition-all duration-300 hidden" style="background-color: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.25);">
+                <div class="font-semibold tracking-wider text-navy uppercase" style="font-size: 11px; color: #D4AF37;">
                     <i class="fas fa-robot text-gold animate-pulse mr-1"></i> AI Profile Rating Real-time
                 </div>
                 <div class="my-1 text-navy" style="font-size: 14px;">
-                    Điểm số hồ sơ tối ưu: <span id="ai-score-value" class="font-bold text-2xl text-primary" style="color: #D4AF37 !important;">70</span>/100 Pts
+                    Điểm số hồ sơ tối ưu: <span id="ai-score-value" class="font-bold text-2xl" style="color: #D4AF37 !important;">30</span>/100 Pts
                 </div>
                 <div class="text-xs italic text-gray-500" id="ai-status">Đang quét luồng phân tích hành vi dữ liệu...</div>
             </div>
 
-            <form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" id="ai-scoring-form" target="hidden_iframe" class="space-y-4 text-sm">
+            <form action="https://docs.google.com/forms/d/e/1vnl5nIcYFgG0IUaP61yF77b6fCTjXC07tBoYglLThPs/formResponse" method="POST" id="ai-scoring-form" target="hidden_iframe" class="space-y-5 text-sm">
                 
-                <!-- TRƯỜNG ẨN GỬI TRẠNG THÁI AI_STATUS VỀ GOOGLE SHEET -->
                 <input type="hidden" id="ai_status_field" name="entry.444444444" value="Khách trung bình">
+                <input type="text" id="honeypot_field" value="" class="hidden" style="display:none !important">
 
-                <div>
-                    <label class="block text-gray-700 font-medium mb-1" for="fullName">Họ và tên <span class="text-redbrand">*</span></label>
-                    <input type="text" id="fullName" name="entry.1000001" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none transition">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-1.5" for="fullName">Họ và tên <span class="text-redbrand">*</span></label>
+                        <input type="text" id="fullName" name="entry.1000001" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none transition bg-white text-gray-800">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-1.5" for="phoneNumber">Số điện thoại (Zalo) <span class="text-redbrand">*</span></label>
+                        <input type="tel" id="phoneNumber" name="entry.1000002" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none transition bg-white text-gray-800">
+                    </div>
                 </div>
 
                 <div>
-                    <label class="block text-gray-700 font-medium mb-1" for="phoneNumber">Số điện thoại (Zalo) <span class="text-redbrand">*</span></label>
-                    <input type="tel" id="phoneNumber" name="entry.1000002" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none transition">
+                    <label class="block text-gray-700 font-medium mb-2.5">Bước 1: Chọn Không Gian Cần Khảo Sát & Thiết Kế <span class="text-redbrand">*</span></label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="space-selector-group">
+                        <button type="button" data-value="Nhà ở / Biệt thự" class="space-btn p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 hover:border-navy hover:bg-gray-50 transition text-center focus:outline-none">
+                            <i class="fas fa-home text-xl text-navy"></i>
+                            <span class="font-semibold text-xs text-navy">Nhà Ở / Biệt Thự</span>
+                        </button>
+                        <button type="button" data-value="Cửa hàng / Chuỗi shop" class="space-btn p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 hover:border-navy hover:bg-gray-50 transition text-center focus:outline-none">
+                            <i class="fas fa-store text-xl text-gold"></i>
+                            <span class="font-semibold text-xs text-navy">Cửa Hàng / Chuỗi Shop</span>
+                        </button>
+                        <button type="button" data-value="Kho bãi / Nhà xưởng" class="space-btn p-4 border-2 border-gray-200 rounded-xl flex flex-col items-center gap-2 hover:border-navy hover:bg-gray-50 transition text-center focus:outline-none">
+                            <i class="fas fa-industry text-xl text-gray-600"></i>
+                            <span class="font-semibold text-xs text-navy">Kho Bãi / Nhà Xưởng</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="customerType" name="entry.1000003" required>
                 </div>
 
-                <div>
-                    <label class="block text-gray-700 font-medium mb-1" for="customerType">Nhu cầu lắp đặt chính của bạn là gì? <span class="text-redbrand">*</span></label>
-                    <select id="customerType" name="entry.1000003" required onchange="toggleAIFields()" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:outline-none bg-white transition">
-                        <option value="">-- Vui lòng chọn không gian --</option>
-                        <option value="Nhà ở / Biệt thự">Nhà ở / Biệt thự gia đình</option>
-                        <option value="Cửa hàng / Chuỗi shop">Cửa hàng / Chuỗi shop thời trang / Quán ăn</option>
-                        <option value="Kho bãi / Nhà xưởng">Kho bãi / Nhà xưởng sản xuất lớn</option>
-                    </select>
+                <div id="dynamic-ai-fields" class="hidden border-t border-dashed border-gray-200 pt-4 space-y-4">
+                    
+                    <div>
+                        <label id="scale-label" class="block text-gray-700 font-medium mb-2">Bước 2: Quy mô công trình cụ thể</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="scale-options">
+                            </div>
+                        <input type="hidden" id="projectScale" name="entry.1000004">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Bước 3: Số lượng mắt Camera anh/chị dự kiến lắp đặt?</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" data-value="1 - 3 mắt" data-weight="10" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">1 - 3 Mắt</button>
+                            <button type="button" data-value="4 - 8 mắt" data-weight="20" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">4 - 8 Mắt</button>
+                            <button type="button" data-value="9 - 16 mắt" data-weight="35" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">9 - 16 Mắt</button>
+                            <button type="button" data-value="Trên 16 mắt (Cần giải pháp lớn)" data-weight="50" class="sub-btn px-3 py-2 border border-gray-200 rounded-lg text-xs hover:border-navy bg-white text-gray-700 transition">Trên 16 Mắt (Dự án)</button>
+                        </div>
+                        <input type="hidden" id="cameraQty" name="entry.1000005">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Bước 4: Tiêu chí kỹ thuật nào anh/chị ưu tiên hàng đầu?</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <button type="button" data-value="Tối ưu chi phí, rẻ, chạy ổn định" data-weight="10" class="tech-btn p-3 border border-gray-200 rounded-lg text-xs text-left bg-white text-gray-700 transition flex items-center gap-2">
+                                <i class="fas fa-wallet text-gray-400 w-4 text-center"></i> Tiết kiệm chi phí đầu tư tối đa
+                            </button>
+                            <button type="button" data-value="Hình ảnh sắc nét, có màu ban đêm, nhận diện AI" data-weight="25" class="tech-btn p-3 border border-gray-200 rounded-lg text-xs text-left bg-white text-gray-700 transition flex items-center gap-2">
+                                <i class="fas fa-bolt text-amber-500 w-4 text-center"></i> Hình ảnh Siêu nét & Công nghệ AI thông minh
+                            </button>
+                            <button type="button" data-value="Bảo mật dữ liệu tuyệt đối, chống hack, chống xem lén" data-weight="40" class="tech-btn p-3 border border-gray-200 rounded-lg text-xs text-left bg-white text-gray-700 transition flex items-center gap-2">
+                                <i class="fas fa-user-shield text-redbrand w-4 text-center"></i> Bảo mật mã hóa dữ liệu, Chống xem lén
+                            </button>
+                        </div>
+                        <input type="hidden" id="techPriority" name="entry.1000006">
+                    </div>
+
                 </div>
 
-                <div id="fields-home" style="display: none;"></div>
+                <button type="submit" id="submit-form-btn" class="w-full bg-redbrand hover:bg-red-700 text-white font-bold py-3.5 px-6 rounded-xl text-center shadow-lg transition duration-300 flex items-center justify-center gap-2 text-base">
+                    <i class="fas fa-file-invoice text-sm"></i> NHẬN PHƯƠNG ÁN THIẾT KẾ MAY ĐO & FILE EBOOK
+                </button>
             </form>
+
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof formSubmitted !== 'undefined' && formSubmitted) { handleFormSuccess(); }"></iframe>
         </div>
     </section>
 
-    <!-- ==========================================================================
-         WIDGET CHATBOT AI THÔNG MINH (BỔ SUNG MỚI GÓC DƯỚI PHẢI MÀNH HÌNH)
-         ========================================================================== -->
-    <div id="ai-chatbot-widget" class="fixed bottom-6 right-6 z-50 font-sans">
-        <!-- Nút bấm Bong bóng Chat (Toggle Button) -->
-        <button id="chat-toggle-btn" class="w-14 h-14 bg-navy hover:bg-opacity-95 text-white rounded-full flex items-center justify-center shadow-2xl transition duration-300 transform hover:scale-105 focus:outline-none relative border-2 border-gold/30">
-            <span class="absolute -top-1 -right-1 bg-redbrand w-3 h-3 rounded-full animate-ping"></span>
-            <span class="absolute -top-1 -right-1 bg-redbrand w-3 h-3 rounded-full"></span>
-            <i id="chat-icon" class="fas fa-robot text-xl text-gold"></i>
-        </button>
-
-        <!-- Khung Cửa Sổ Hội Thoại AI Chatbot -->
-        <div id="chat-window" class="hidden absolute bottom-16 right-0 w-[350px] md:w-[400px] h-[520px] bg-white rounded-2xl shadow-2xl border border-gray-200/80 flex flex-col overflow-hidden transition-all duration-300 scale-95 opacity-0 origin-bottom-right">
-            <!-- Header của Chatbot -->
-            <div class="bg-navy p-4 text-white flex items-center justify-between border-b border-gray-800">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 bg-gold rounded-full flex items-center justify-center text-navy font-bold text-sm shadow">
-                        <i class="fas fa-user-astronaut"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-xs md:text-sm tracking-wide text-white leading-tight">AN TÍN AI Assistant</h4>
-                        <span class="text-[10px] text-emerald-400 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span> Hệ thống đang trực tuyến
-                        </span>
-                    </div>
-                </div>
-                <button id="chat-close-btn" class="text-gray-400 hover:text-white transition focus:outline-none px-2 py-1">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
-            </div>
-
-            <!-- Panel Log Phân Tích Hành Vi Real-time Thượng Tầng Enterprise -->
-            <div class="bg-gray-900 px-3 py-1.5 text-[10px] text-gray-400 font-mono border-b border-gray-800 flex items-center justify-between">
-                <div class="flex items-center gap-1.5">
-                    <i class="fas fa-terminal text-gold text-[9px]"></i>
-                    <span id="ai-chat-status">STATUS: IDLE (Chờ tương tác)</span>
-                </div>
-                <div class="text-gold font-bold">
-                    SCORE: <span id="ai-chat-score">0</span>/100
-                </div>
-            </div>
-
-            <!-- Vùng Hiển Thị Nội Dung Tin Nhắn (Chat Logs) -->
-            <div id="chat-messages-box" class="flex-1 p-4 overflow-y-auto space-y-3.5 bg-gray-50/50 chat-scrollbar text-xs md:text-sm">
-                <!-- Tin nhắn Chào mừng Mặc định của Hệ Thống -->
-                <div class="flex items-start gap-2.5 max-w-[85%]">
-                    <div class="w-7 h-7 rounded-full bg-navy/10 flex items-center justify-center text-navy flex-shrink-0 mt-0.5 text-xs">
-                        <i class="fas fa-robot text-navy/70"></i>
-                    </div>
-                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-gray-200/60 shadow-sm text-gray-700 leading-relaxed">
-                        Xin chào! Tôi là Trợ lý AI thế hệ mới của <b>AN TÍN</b>. Tôi có thể giúp anh/chị bóc tách nhanh các lỗi hệ thống Camera hoặc chấm điểm độ an toàn công trình của mình ngay lập tức. Anh/chị cần tôi tư vấn không gian nào?
-                    </div>
-                </div>
-            </div>
-
-            <!-- Khu Vực Form Gửi Tin Nhắn Khách Hàng -->
-            <div class="p-3 border-t border-gray-100 bg-white">
-                <form id="chat-input-form" class="flex items-center gap-2">
-                    <input type="text" id="chat-user-input" placeholder="Nhập câu hỏi của bạn tại đây..." required autocomplete="off" class="flex-1 bg-gray-100 text-gray-800 text-xs md:text-sm px-4 py-2.5 rounded-xl border border-transparent focus:bg-white focus:border-navy focus:outline-none transition">
-                    <button type="submit" class="w-10 h-10 bg-redbrand hover:bg-red-700 text-white rounded-xl flex items-center justify-center shadow-md transition flex-shrink-0 focus:outline-none">
-                        <i class="fas fa-paper-plane text-xs"></i>
-                    </button>
-                </form>
-                <div class="text-center text-[9px] text-gray-400 mt-1.5 font-sans italic">
-                    Phát triển độc quyền bởi phòng giải pháp công nghệ AN TÍN © 2026
-                </div>
-            </div>
+    <footer class="bg-navy text-gray-400 py-8 px-4 text-center text-xs border-t border-gray-800">
+        <div class="max-w-6xl mx-auto space-y-2">
+            <p class="font-bold text-gray-300 text-sm">© 2026 CTY KỸ THUẬT CÔNG NGHỆ AN TÍN. All rights reserved.</p>
+            <p>Văn phòng: Toà nhà River Garden, Số 170 Nguyễn Văn Hưởng, Phường Thảo Điền, Thành phố Thủ Đức, TP. Hồ Chí Minh.</p>
+            <p>Hotline kỹ thuật hỗ trợ: 090X.XXX.XXX | Email liên hệ ban điều phối: info@antinco.com</p>
         </div>
-    </div>
+    </footer>
 
-    <!-- Đoạn mã script nội bộ điều khiển UI đóng mở Widget Chatbot nhanh -->
-    <script>
-        const chatToggleBtn = document.getElementById('chat-toggle-btn');
-        const chatWindow = document.getElementById('chat-window');
-        const chatCloseBtn = document.getElementById('chat-close-btn');
-
-        function toggleChat() {
-            if (chatWindow.classList.contains('hidden')) {
-                chatWindow.classList.remove('hidden');
-                setTimeout(() => {
-                    chatWindow.classList.remove('scale-95', 'opacity-0');
-                    chatWindow.classList.add('scale-100', 'opacity-100');
-                }, 10);
-            } else {
-                chatWindow.classList.remove('scale-100', 'opacity-100');
-                chatWindow.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    chatWindow.classList.add('hidden');
-                }, 300);
-            }
-        }
-
-        if (chatToggleBtn && chatWindow && chatCloseBtn) {
-            chatToggleBtn.addEventListener('click', toggleChat);
-            chatCloseBtn.addEventListener('click', toggleChat);
-        }
-    </script>
 </body>
 </html>
