@@ -507,7 +507,7 @@
     // 1. Lắng nghe sự kiện click nút Gửi
     document.querySelector('button[type="submit"]').addEventListener('click', function() {
         
-        // 2. Lấy dữ liệu tư vấn (phòng trường hợp input không có giá trị)
+        // 2. Lấy giá trị loại không gian
         var spaceInput = document.getElementById('space_input');
         var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
         
@@ -519,15 +519,17 @@
 
         const result = data[loaiKhongGian] || { danhMuc: 'Tư vấn chuyên sâu', gia: 'Liên hệ khảo sát', khuyenMai: 'Khảo sát miễn phí' };
 
-        // 3. Hiện thông báo (Báo giá AI)
+        // 3. Hiện thông báo với số Zalo mới
         setTimeout(function() {
             alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
-                  "- DanhMuc: " + result.danhMuc + "\n" +
-                  "- Giá: " + result.gia + "\n" +
+                  "- Danh mục: " + result.danhMuc + "\n" +
+                  "- Giá tạm tính: " + result.gia + "\n" +
                   "- Khuyến mãi: " + result.khuyenMai + "\n\n" +
-                  "Thông tin chi tiết đã được gửi về AN TÍN!");
+                  "---------------------------\n" +
+                  "THÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.\n" +
+                  "Hỗ trợ nhanh qua Zalo: 0914060339");
             
-            // 4. Sau khi bấm OK ở thông báo, tự làm mới trang
+            // 4. Làm mới trang sau khi khách bấm OK
             window.location.reload(); 
         }, 1000);
     });
