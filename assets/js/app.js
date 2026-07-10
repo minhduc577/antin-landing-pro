@@ -1,6 +1,9 @@
 /**
+ * ==========================================================================
  * AN TÍN Landing Page Pro 1.0 Enterprise Core Engine
  * Tối ưu hóa hiệu năng, tương thích hoàn toàn ES2025, Chống Spam & AJAX Real Form
+ * Đã tích hợp Module: AI Scoring Real-time Logic (Gamification)
+ * ==========================================================================
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -95,6 +98,97 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ==========================================================================
+    // CẤU TRÚC MỚI BỔ SUNG: LOGIC AI SCORING (TỰ ĐỘNG KÍCH HOẠT THEO INPUT/CHANGE)
+    // ==========================================================================
+    let startTime = Date.now(); // Ghi nhận thời gian bắt đầu tải trang
+    let baseScore = 70;         // Điểm sàn hệ thống tự chấm ban đầu
+    let hasInteracted = false;  // Đánh dấu nếu khách đã tương tác thực tế với ô nhập liệu
+
+    // Hàm sinh số ngẫu nhiên từ min đến max (Dùng tạo Bonus ngẫu nhiên 1 - 5 điểm)
+    const getRandomBonus = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Tự động dựng hộp Badge hiển thị điểm số AI đẹp mắt phía trên form (Tương thích tốt với Bootstrap)
+    const createScoreBadge = () => {
+        const formContainer = document.getElementById("enterprise-lead-form");
+        if (formContainer && !document.getElementById("ai-score-container")) {
+            const badge = document.createElement("div");
+            badge.id = "ai-score-container";
+            // Sử dụng các class tiện ích chuẩn dễ hiển thị trên cả Light/Dark Mode
+            badge.className = "my-3 p-3 text-center rounded border bg-opacity-10 shadow-sm transition-all duration-300";
+            badge.style.backgroundColor = "rgba(212, 175, 55, 0.1)"; // Đổ nền màu Gold nhạt thương hiệu
+            badge.style.borderColor = "rgba(212, 175, 55, 0.3)";
+            badge.innerHTML = `
+                <div class="fw-medium text-uppercase tracking-wider" style="font-size: 11px; color: #D4AF37;">
+                    <i class="fas fa-robot text-warning animate-pulse me-1"></i> AI Profile Rating Real-time
+                </div>
+                <div class="my-1 text-navy dark:text-white" style="font-size: 14px;">
+                    Điểm số hồ sơ tối ưu: <span id="ai-score-value" class="fw-bold fs-4 text-primary" style="color: #D4AF37 !important;">${baseScore}</span>/100 Pts
+                </div>
+                <div class="small italic text-muted" id="ai-status" style="font-size: 11px;">Đang quét luồng phân tích hành vi dữ liệu...</div>
+            `;
+            formContainer.insertBefore(badge, formContainer.firstChild);
+        }
+    };
+
+    // Hàm xử lý thuật toán tính điểm AI lõi
+    const calculateAIScore = () => {
+        if (!hasInteracted) {
+            hasInteracted = true;
+            startTime = Date.now(); // Đồng bộ lại mốc thời gian từ lúc gõ ký tự đầu tiên
+        }
+
+        let currentScore = baseScore;
+        const nameElem = document.getElementById("fullname");
+        
+        // Thuật toán 1: Đánh giá theo độ dài ký tự của Tên (Name Density Assessment)
+        if (nameElem && nameElem.value.trim().length > 2) {
+            const nameLength = nameElem.value.trim().length;
+            if (nameLength > 15) currentScore += 5;      // Điền đầy đủ cả họ và tên, độ tin cậy cao
+            else if (nameLength > 7) currentScore += 3;  // Tên hợp lệ ngắn gọn
+            else currentScore += 1;
+        }
+
+        // Thuật toán 2: Đánh giá dựa trên tốc độ điền form (Time-to-Action) để chống Bot hoặc Auto-fill quá nhanh
+        const timeElapsed = (Date.now() - startTime) / 1000; // Quy đổi ra giây
+        if (timeElapsed > 4 && timeElapsed < 25) {
+            currentScore += 5; // Tốc độ đọc và điền dữ liệu tự nhiên, nghiêm túc
+        } else if (timeElapsed >= 25 && timeElapsed < 60) {
+            currentScore += 3; // Điền kỹ hoặc có ngắt quãng ngắn
+        }
+
+        // Thuật toán 3: Thêm điểm thưởng Bonus ngẫu nhiên (từ 1 - 5 điểm) tạo cảm giác AI phân tích sâu liên tục
+        currentScore += getRandomBonus(1, 5);
+
+        // Giới hạn điểm trần tối đa không vượt quá 99 (Dành 1 điểm tuyệt đối cho bước duyệt thực tế của kỹ sư)
+        if (currentScore > 99) currentScore = 99;
+
+        // Tiến hành cập nhật kết quả Real-time lên giao diện trực quan cho khách hàng
+        const scoreValueElem = document.getElementById("ai-score-value");
+        const statusElem = document.getElementById("ai-status");
+        
+        if (scoreValueElem) scoreValueElem.innerText = currentScore;
+        if (statusElem) {
+            if (currentScore >= 92) {
+                statusElem.innerHTML = "⚡ <b class='text-success'>Hồ sơ Xuất sắc!</b> Hệ thống đã ưu tiên phân phối độc quyền tới Kỹ sư trưởng Phan Minh Đức.";
+            } else if (currentScore >= 82) {
+                statusElem.innerHTML = "✓ <b class='text-primary'>Hồ sơ Đủ điều kiện.</b> Đang chuẩn bị kích hoạt quyền tải bộ cẩm nang an ninh.";
+            } else {
+                statusElem.innerText = "🔍 AI đang bóc tách phân tích sơ đồ luồng dữ liệu an ninh công trình...";
+            }
+        }
+    };
+
+    // Kích hoạt cơ chế lắng nghe sự kiện change hoặc input trên khu vực Form
+    const leadFormZone = document.getElementById("enterprise-lead-form");
+    if (leadFormZone) {
+        // Tự tạo Badge khi khách hàng vừa click (focus) vào bất cứ ô nào trong Form
+        leadFormZone.addEventListener("focusin", createScoreBadge, { once: true });
+        // Tính điểm lập tức mỗi khi có thay đổi chữ hoặc lựa chọn
+        leadFormZone.addEventListener("input", calculateAIScore);
+        leadFormZone.addEventListener("change", calculateAIScore);
+    }
+
     // 6. Xử lý Logic Form Đăng Ký Chống Spam, AJAX Thật, Không Reload Trang
     const leadForm = document.getElementById("enterprise-lead-form");
     const formStatus = document.getElementById("form-status");
@@ -127,8 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
             submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý mã hóa...`;
 
             try {
-                // Đường dẫn URL Action form Google của bạn (Ví dụ thực tế cấu trúc Google Form AJAX)
-                // Thay thế link Google form action thực tế của bạn tại đây để ghi nhận trực tiếp vào Excel
+                // Đường dẫn URL Action form Google của bạn
                 const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfXXXXXXXXXXXXX/formResponse";
 
                 const formData = new FormData();
@@ -146,6 +239,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Phản hồi thành công
                 showStatus("Chúc mừng! Đăng ký thành công. Hệ thống đang kích hoạt link download tài liệu...", "alert-success");
                 leadForm.reset();
+
+                // Dọn dẹp badge điểm AI sau khi form được gửi đi thành công
+                const scoreContainer = document.getElementById("ai-score-container");
+                if (scoreContainer) scoreContainer.remove();
 
                 // Redirect hoặc kích hoạt mở Link Google site / Flipbook sau 2 giây
                 setTimeout(() => {
@@ -174,22 +271,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const savedMode = localStorage.getItem("antin-theme") || "light-mode";
     body.className = savedMode;
-    updateToggleIcon(savedMode);
+    if (darkModeToggle) updateToggleIcon(savedMode);
 
-    darkModeToggle.addEventListener("click", () => {
-        if (body.classList.contains("light-mode")) {
-            body.classList.replace("light-mode", "dark-mode");
-            localStorage.setItem("antin-theme", "dark-mode");
-            updateToggleIcon("dark-mode");
-        } else {
-            body.classList.replace("dark-mode", "light-mode");
-            localStorage.setItem("antin-theme", "light-mode");
-            updateToggleIcon("light-mode");
-        }
-    });
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener("click", () => {
+            if (body.classList.contains("light-mode")) {
+                body.classList.replace("light-mode", "dark-mode");
+                localStorage.setItem("antin-theme", "dark-mode");
+                updateToggleIcon("dark-mode");
+            } else {
+                body.classList.replace("dark-mode", "light-mode");
+                localStorage.setItem("antin-theme", "light-mode");
+                updateToggleIcon("light-mode");
+            }
+        });
+    }
 
     function updateToggleIcon(mode) {
         const icon = darkModeToggle.querySelector("i");
+        if (!icon) return;
         if (mode === "dark-mode") {
             icon.className = "fas fa-sun text-warning";
         } else {
