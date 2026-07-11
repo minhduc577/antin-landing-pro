@@ -339,13 +339,12 @@ try {
                     const loaiHinh = document.getElementById('space_input') ? document.getElementById('space_input').value : "không gian của bạn";
                     localStorage.setItem('loai_hinh', loaiHinh);
                     window.location.href = "tu-van-ai.html";
+                    
                 } catch (error) {
                     console.error("Form Submit Error: ", error);
                     showStatus("Có lỗi xảy ra, vui lòng thử lại!", "alert-danger");
-                }
-                } catch (error) {
-                    console.error("Form Submit Error: ", error);
                 } finally {
+                    // Khôi phục nút bấm sau khi đã gửi xong hoặc khi có lỗi
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.innerHTML = originalBtnText;
