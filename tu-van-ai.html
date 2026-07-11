@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Phương án Tư vấn AI - AN TÍN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-6 text-center">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+        <h1 class="text-2xl font-bold text-navy mb-4">Kết quả Phân tích AI</h1>
+        <p class="mb-6">Dựa trên dữ liệu anh vừa cung cấp, đây là phương án tối ưu cho không gian của anh:</p>
+        
+        <div id="ai-result-content" class="p-6 bg-blue-50 rounded-xl border border-blue-200 mb-6 text-left">
+            <p>Đang phân tích...</p>
+        </div>
+
+        <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl">
+            NHẬN TÀI LIỆU CHI TIẾT & HOÀN TẤT
+        </a>
+    </div>
+
+    <script>
+        // Hiển thị dữ liệu từ LocalStorage (được truyền từ trang chủ)
+        const loaiHinh = localStorage.getItem('loai_hinh') || "không gian của bạn";
+        document.getElementById('ai-result-content').innerHTML = `
+            <h3 class="font-bold">Loại hình: ${loaiHinh}</h3>
+            <ul class="list-disc ml-5 mt-2">
+                <li>Tối ưu hóa diện tích sử dụng 30%.</li>
+                <li>Tiết kiệm chi phí đầu tư hạ tầng điện.</li>
+                <li>Giải pháp "may đo" riêng biệt cho AN TÍN.</li>
+            </ul>
+        `;
+    </script>
+</body>
+</html>
