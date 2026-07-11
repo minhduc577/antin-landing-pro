@@ -504,7 +504,7 @@
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
-    // Lắng nghe sự kiện SUBMIT của form
+    // Lắng nghe sự kiện SUBMIT của form (Giữ nguyên cấu trúc anh đã quen)
     document.getElementById('an-tin-form').addEventListener('submit', function(event) {
         
         // 1. Lấy dữ liệu từ Form
@@ -513,7 +513,6 @@
         
         var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
         var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
-        // Lấy Email
         var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : "";
 
         // Map tên gọi
@@ -524,25 +523,14 @@
         };
         const tenGoiChuan = mapLoai[loaiKhongGian] || loaiKhongGian;
         
-        // Gọi hàm tính toán từ app.js
+        // Gọi hàm tính toán
         const result = (typeof window.tinhToanBaoGia === 'function') 
                         ? window.tinhToanBaoGia(tenGoiChuan) 
                         : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
 
         // --- TÍNH ĐIỂM LEAD SCORING ---
-        let diemLead = 0;
-        let nhanLead = "Khách hàng mới";
-        
-        if (loaiKhongGian === 'Kho bãi') {
-            diemLead = 95; 
-            nhanLead = "🔥 KHÁCH NÓNG";
-        } else if (loaiKhongGian === 'Cửa hàng') {
-            diemLead = 70;
-            nhanLead = "⚡ KHÁCH TIỀM NĂNG";
-        } else {
-            diemLead = 40;
-            nhanLead = "👤 KHÁCH DÂN DỤNG";
-        }
+        let diemLead = (loaiKhongGian === 'Kho bãi') ? 95 : (loaiKhongGian === 'Cửa hàng' ? 70 : 40);
+        let nhanLead = (loaiKhongGian === 'Kho bãi') ? "🔥 KHÁCH NÓNG" : (loaiKhongGian === 'Cửa hàng' ? "⚡ KHÁCH TIỀM NĂNG" : "👤 KHÁCH DÂN DỤNG");
 
         // 2. TÍCH HỢP Gửi về Google Sheet
         const duLieuGuiVeSheet = {
@@ -557,7 +545,7 @@
             timestamp: new Date().toLocaleString()
         };
 
-        // Gửi dữ liệu tới Web App của anh
+        // Gửi dữ liệu
         fetch("https://script.google.com/macros/s/AKfycbxlRWutimMxoa58Gc24QQ_T93VSpJvWM_fj7hIqUnP33sFAbAnXNSHgEhXWNKexHkjODw/exec", {
             method: 'POST',
             mode: 'no-cors',
@@ -578,6 +566,6 @@
             window.location.href = "thankyou.html"; 
         }, 1000);
     });
-</script>    
+</script>     
 </body> <!-- Thẻ kết thúc -->
 </html>
