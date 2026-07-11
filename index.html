@@ -505,43 +505,29 @@
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
-    document.getElementById('an-tin-form').addEventListener('submit', function(event) {
-        event.preventDefault(); 
-        
-        // 1. Lấy dữ liệu từ Form (GIỮ FULL 100%)
-        var spaceInput = document.getElementById('space_input');
-        var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
-        var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
-        var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
-        var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : "";
+document.getElementById('an-tin-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Chặn hành động mặc định
 
-        const mapLoai = {'Nhà ở': 'Nhà ở / Biệt thự', 'Cửa hàng': 'Cửa hàng / Chuỗi shop', 'Kho bãi': 'Kho bãi / Nhà xưởng'};
-        const tenGoiChuan = mapLoai[loaiKhongGian] || loaiKhongGian;
-        const result = (typeof window.tinhToanBaoGia === 'function') ? window.tinhToanBaoGia(tenGoiChuan) : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
+    // 1. Lấy dữ liệu trực tiếp từ ID
+    var data = {
+        ho_ten: document.getElementById('ho_ten').value,
+        so_dien_thoai: document.getElementById('so_dien_thoai').value,
+        email: document.getElementById('email_khach').value,
+        loai_hinh: document.getElementById('space_input') ? document.getElementById('space_input').value : "Chưa chọn",
+        timestamp: new Date().toLocaleString()
+    };
 
-        let diemLead = (loaiKhongGian === 'Kho bãi') ? 95 : (loaiKhongGian === 'Cửa hàng' ? 70 : 40);
-        let nhanLead = (loaiKhongGian === 'Kho bãi') ? "🔥 KHÁCH NÓNG" : (loaiKhongGian === 'Cửa hàng' ? "⚡ KHÁCH TIỀM NĂNG" : "👤 KHÁCH DÂN DỤNG");
+    // 2. Gửi đi (Link WebApp Google)
+    var url = "https://script.google.com/macros/s/AKfycbyZ5dEjpEF5lKMXFRU8Hj_eU8AAfGsxqNfNhC9SFCpA3FigEcxLZgpjUJFKBSNMFDFjPw/exec";
+    var params = new URLSearchParams(data);
 
-        // 2. GỬI DỮ LIỆU
-        var url = "https://script.google.com/macros/s/AKfycbyZ5dEjpEF5lKMXFRU8Hj_eU8AAfGsxqNfNhC9SFCpA3FigEcxLZgpjUJFKBSNMFDFjPw/exec";
-        var formData = new URLSearchParams({
-            ho_ten: hoTen,
-            so_dien_thoai: sdt,
-            email: emailKhach,
-            loai_hinh: tenGoiChuan,
-            gia: result.giaHienThi,
-            khuyen_mai: result.khuyenMai,
-            diem_lead: diemLead,
-            nhan_lead: nhanLead,
-            timestamp: new Date().toLocaleString()
-        });
-
-        fetch(url + "?" + formData.toString())
-            .then(response => {
-                alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n- Danh mục: " + result.danhMuc + "\n- Giá tạm tính: " + result.giaHienThi + "\n- Khuyến mãi: " + result.khuyenMai + "\n\nTHÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.");
-                window.location.href = "thankyou.html";
-            })
-            .catch(err => {
+    fetch(url + "?" + params.toString())
+        .then(res => {
+            alert("Đã gửi thành công!");
+            window.location.href = "thankyou.html"; // Chuyển trang
+        })
+        .catch(err => alert("Lỗi gửi dữ liệu!"));
+});
                 console.error("Lỗi:", err);
                 alert("Có lỗi xảy ra, vui lòng thử lại!");
             });
