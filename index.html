@@ -522,13 +522,24 @@
         let nhanLead = (loaiKhongGian === 'Kho bãi') ? "🔥 KHÁCH NÓNG" : (loaiKhongGian === 'Cửa hàng' ? "⚡ KHÁCH TIỀM NĂNG" : "👤 KHÁCH DÂN DỤNG");
 
         // 2. TÍCH HỢP gửi dữ liệu (ĐÃ THAY LINK MỚI NHẤT)
-        var url = "https://script.google.com/macros/s/AKfycbyZ5dEjpEF5lKMXFRU8Hj_eU8AAfGsxqNfNhC9SFCpA3FigEcxLZgpjUJFKBSNMFDFjPw/exec";
-        var params = new URLSearchParams({
-            ho_ten: hoTen, so_dien_thoai: sdt, email: emailKhach,
-            loai_hinh: tenGoiChuan, gia: result.giaHienThi, khuyen_mai: result.khuyenMai,
-            diem_lead: diemLead, nhan_lead: nhanLead, timestamp: new Date().toLocaleString()
-        });
+var url = "https://script.google.com/macros/s/AKfycbyZ5dEjpEF5lKMXFRU8Hj_eU8AAfGsxqNfNhC9SFCpA3FigEcxLZgpjUJFKBSNMFDFjPw/exec";
+var formData = new URLSearchParams({
+    ho_ten: hoTen, // Biến này anh đã có trong code cũ
+    so_dien_thoai: sdt,
+    email: emailKhach,
+    loai_hinh: tenGoiChuan,
+    gia: result.giaHienThi,
+    khuyen_mai: result.khuyenMai,
+    diem_lead: diemLead,
+    nhan_lead: nhanLead,
+    timestamp: new Date().toLocaleString()
+});
 
+fetch(url + "?" + formData.toString(), {
+    method: 'GET'
+}).then(response => {
+    console.log("Dữ liệu đã gửi thành công!");
+});
         // Sử dụng fetch phương thức GET để đảm bảo luôn đổ dữ liệu
         fetch(url + "?" + params.toString())
             .then(response => console.log("Gửi thành công!"))
