@@ -504,73 +504,38 @@
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
-    // Lắng nghe sự kiện SUBMIT của form
     document.getElementById('an-tin-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Chặn hành động mặc định để xử lý an toàn
+        event.preventDefault(); 
         
-        // 1. Lấy dữ liệu từ Form (GIỮ FULL)
+        // 1. Lấy dữ liệu từ Form (GIỮ FULL 100%)
         var spaceInput = document.getElementById('space_input');
         var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
-        
         var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
         var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
         var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : "";
 
-        // Map tên gọi (GIỮ FULL)
-        const mapLoai = {
-            'Nhà ở': 'Nhà ở / Biệt thự',
-            'Cửa hàng': 'Cửa hàng / Chuỗi shop',
-            'Kho bãi': 'Kho bãi / Nhà xưởng'
-        };
+        const mapLoai = {'Nhà ở': 'Nhà ở / Biệt thự', 'Cửa hàng': 'Cửa hàng / Chuỗi shop', 'Kho bãi': 'Kho bãi / Nhà xưởng'};
         const tenGoiChuan = mapLoai[loaiKhongGian] || loaiKhongGian;
-        
-        // Gọi hàm tính toán (GIỮ FULL)
-        const result = (typeof window.tinhToanBaoGia === 'function') 
-                        ? window.tinhToanBaoGia(tenGoiChuan) 
-                        : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
+        const result = (typeof window.tinhToanBaoGia === 'function') ? window.tinhToanBaoGia(tenGoiChuan) : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
 
-        // --- TÍNH ĐIỂM LEAD SCORING (GIỮ FULL) ---
-        let diemLead = 0;
-        let nhanLead = "Khách hàng mới";
-        
-        if (loaiKhongGian === 'Kho bãi') {
-            diemLead = 95; 
-            nhanLead = "🔥 KHÁCH NÓNG";
-        } else if (loaiKhongGian === 'Cửa hàng') {
-            diemLead = 70;
-            nhanLead = "⚡ KHÁCH TIỀM NĂNG";
-        } else {
-            diemLead = 40;
-            nhanLead = "👤 KHÁCH DÂN DỤNG";
-        }
+        let diemLead = (loaiKhongGian === 'Kho bãi') ? 95 : (loaiKhongGian === 'Cửa hàng' ? 70 : 40);
+        let nhanLead = (loaiKhongGian === 'Kho bãi') ? "🔥 KHÁCH NÓNG" : (loaiKhongGian === 'Cửa hàng' ? "⚡ KHÁCH TIỀM NĂNG" : "👤 KHÁCH DÂN DỤNG");
 
-        // 2. Gửi dữ liệu về Google Sheet (Sử dụng FormData để vá lỗi lệch cột)
-        var formData = new FormData();
-        formData.append('ho_ten', hoTen);
-        formData.append('so_dien_thoai', sdt);
-        formData.append('email', emailKhach);
-        formData.append('loai_hinh', tenGoiChuan);
-        formData.append('gia', result.giaHienThi);
-        formData.append('khuyen_mai', result.khuyenMai);
-        formData.append('diem_lead', diemLead);
-        formData.append('nhan_lead', nhanLead);
-        formData.append('timestamp', new Date().toLocaleString());
+        // 2. TÍCH HỢP gửi dữ liệu (Sử dụng URLSearchParams để tránh lỗi kết nối)
+        var url = "https://script.google.com/macros/s/AKfycbzCV8Oy_sCQC5W-IVOm2Q2k7RLQoAU4sxJscK-a-3SMMn9WdwTrQOHx-NjaPrP6URjHdg/exec";
+        var params = new URLSearchParams({
+            ho_ten: hoTen, so_dien_thoai: sdt, email: emailKhach,
+            loai_hinh: tenGoiChuan, gia: result.giaHienThi, khuyen_mai: result.khuyenMai,
+            diem_lead: diemLead, nhan_lead: nhanLead, timestamp: new Date().toLocaleString()
+        });
 
-        fetch("https://script.google.com/macros/s/AKfycbzKDpjeZx0-FPCGHnnTZJ2XkQVYqPcUSMELjBgk4gm7mbkQ8gC14IAH4RXHJOCUZlQZag/exec", {
-            method: 'POST',
-            body: formData
-        }).catch(err => console.error("Lỗi gửi Sheet:", err));
+        fetch(url + "?" + params.toString())
+            .then(() => console.log("Gửi thành công!"))
+            .catch(err => console.error("Lỗi gửi:", err));
 
-        // 3. Hiện thông báo và chuyển trang (GIỮ FULL)
+        // 3. Hiện thông báo (GIỮ FULL 100%)
         setTimeout(function() {
-            alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
-                  "- Danh mục: " + result.danhMuc + "\n" +
-                  "- Giá tạm tính: " + result.giaHienThi + "\n" +
-                  "- Khuyến mãi: " + result.khuyenMai + "\n\n" +
-                  "---------------------------\n" +
-                  "THÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.\n" +
-                  "Hỗ trợ nhanh qua Zalo: 0914060339");
-            
+            alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n- Danh mục: " + result.danhMuc + "\n- Giá tạm tính: " + result.giaHienThi + "\n- Khuyến mãi: " + result.khuyenMai + "\n\nTHÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.");
             window.location.href = "thankyou.html"; 
         }, 1000);
     });
