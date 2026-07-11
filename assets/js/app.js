@@ -312,7 +312,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.preventDefault();
                 const fullname = document.getElementById("fullname").value.trim();
                 const phone = document.getElementById("phone").value.trim();
-
+                const emailKhach = document.getElementById("email_khach") ? document.getElementById("email_khach").value.trim() : "";
+                
                 if (!fullname || !phone) {
                     showStatus("Vui lòng điền đầy đủ Họ tên và Số điện thoại.", "alert-danger");
                     if (submitBtn) {
