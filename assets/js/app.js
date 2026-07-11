@@ -355,7 +355,6 @@ try {
         });
     }
 
-/* ... */
         // 5. KHÔI PHỤC NÚT GỬI
         const submitBtn = document.getElementById("submit-form-btn") || (leadForm ? leadForm.querySelector("button[type='submit']") : null);
         if (submitBtn) {
