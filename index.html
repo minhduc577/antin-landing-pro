@@ -503,17 +503,19 @@
 </form>
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
-<script>
-    // Lắng nghe sự kiện SUBMIT của form (đảm bảo form hợp lệ mới chạy)
-    document.getElementById('an-tin-form').addEventListener('submit', function() {
+ <script>
+    // Lắng nghe sự kiện SUBMIT của form
+    document.getElementById('an-tin-form').addEventListener('submit', function(event) {
         
-        // 1. Lấy giá trị loại không gian
+        // 1. Lấy dữ liệu từ Form
         var spaceInput = document.getElementById('space_input');
         var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
         
-        // 2. Gọi hàm tính toán đã khai báo trong app.js
-        // Nếu anh chọn "Nhà ở" ở HTML, app.js sẽ nhận "Nhà ở / Biệt thự"
-        // Vì vậy ta cần map nhẹ (ánh xạ) lại tên gọi cho khớp
+        // Lấy thêm thông tin từ các input khác (Anh nhớ thay ID cho đúng với Ladipage)
+        var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
+        var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
+
+        // Map tên gọi
         const mapLoai = {
             'Nhà ở': 'Nhà ở / Biệt thự',
             'Cửa hàng': 'Cửa hàng / Chuỗi shop',
@@ -521,12 +523,29 @@
         };
         const tenGoiChuan = mapLoai[loaiKhongGian] || loaiKhongGian;
         
-        // Gọi hàm từ app.js
+        // Gọi hàm tính toán từ app.js
         const result = (typeof window.tinhToanBaoGia === 'function') 
-                       ? window.tinhToanBaoGia(tenGoiChuan) 
-                       : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
+                        ? window.tinhToanBaoGia(tenGoiChuan) 
+                        : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
 
-        // 3. Hiện thông báo và chuyển trang
+        // 2. TÍCH HỢP MỚI: Gửi ngầm về Google Sheet (Không làm gián đoạn luồng)
+        const duLieuGuiVeSheet = {
+            ho_ten: hoTen,
+            so_dien_thoai: sdt,
+            loai_hinh: tenGoiChuan,
+            gia: result.giaHienThi,
+            khuyen_mai: result.khuyenMai,
+            timestamp: new Date().toLocaleString()
+        };
+
+        fetch("URL_WEB_APP_GOOGLE_SCRIPT_CUA_ANH", {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(duLieuGuiVeSheet)
+        }).catch(err => console.error("Lỗi gửi Sheet:", err));
+
+        // 3. Hiện thông báo và chuyển trang như cũ
         setTimeout(function() {
             alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
                   "- Danh mục: " + result.danhMuc + "\n" +
