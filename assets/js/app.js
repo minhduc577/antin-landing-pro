@@ -355,31 +355,7 @@ try {
         });
     }
 
-   window.handleFormSuccess = function() {
-        // 1. TÍNH TOÁN BÁO GIÁ AI
-        const loai = document.getElementById("customerType") ? document.getElementById("customerType").value : "Chưa chọn";
-        const ketQua = window.tinhToanBaoGia(loai);
-        
-        // 2. HIỂN THỊ BÁO GIÁ CHO KHÁCH
-        alert(`THÔNG BÁO TỪ AN TÍN AI:\n\n` +
-              `Danh mục: ${ketQua.danhMuc}\n` +
-              `Giá trọn gói: ${ketQua.giaHienThi}\n` +
-              `Ưu đãi: ${ketQua.khuyenMai}\n\n` +
-              `Hệ thống sẽ chuyển hướng bạn đến tài liệu ngay...`);
-
-        // 3. RESET FORM VÀ GIAO DIỆN
-        if (leadForm) leadForm.reset();
-        
-        document.querySelectorAll(".space-btn, .scale-option-btn, .sub-btn, .tech-btn").forEach(b => {
-            b.classList.remove("border-navy", "bg-gray-100", "bg-navy", "text-white", "ring-2", "ring-navy", "active");
-        });
-        
-        if (dynamicFields) dynamicFields.classList.add("hidden");
-        if (aiScoreContainer) aiScoreContainer.classList.add("hidden");
-        
-        // 4. CHUYỂN TRANG
-        window.open("https://sites.google.com/view/antinco", "_blank");
-        
+/* ... */
         // 5. KHÔI PHỤC NÚT GỬI
         const submitBtn = document.getElementById("submit-form-btn") || (leadForm ? leadForm.querySelector("button[type='submit']") : null);
         if (submitBtn) {
