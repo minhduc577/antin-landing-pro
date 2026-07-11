@@ -506,6 +506,7 @@
 <script>
     // Lắng nghe sự kiện SUBMIT của form
     document.getElementById('an-tin-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Chặn hành động mặc định để xử lý an toàn
         
         // 1. Lấy dữ liệu từ Form (GIỮ FULL)
         var spaceInput = document.getElementById('space_input');
@@ -556,12 +557,13 @@
             timestamp: new Date().toLocaleString()
         };
 
-        // Gửi dữ liệu (Cập nhật để Sheet nhận đúng định dạng)
+        // Gửi dữ liệu (Sử dụng FormData để đảm bảo Sheet nhận đủ cột)
+        var formData = new FormData();
+        for (var key in duLieuGuiVeSheet) { formData.append(key, duLieuGuiVeSheet[key]); }
+
         fetch("https://script.google.com/macros/s/AKfycbxlRWutimMxoa58Gc24QQ_T93VSpJvWM_fj7hIqUnP33sFAbAnXNSHgEhXWNKexHkjODw/exec", {
             method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(duLieuGuiVeSheet)
+            body: formData
         }).catch(err => console.error("Lỗi gửi Sheet:", err));
 
         // 3. Hiện thông báo và chuyển trang (GIỮ FULL)
