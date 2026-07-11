@@ -504,10 +504,10 @@
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
-    // Lắng nghe sự kiện SUBMIT của form (Giữ nguyên cấu trúc anh đã quen)
+    // Lắng nghe sự kiện SUBMIT của form
     document.getElementById('an-tin-form').addEventListener('submit', function(event) {
         
-        // 1. Lấy dữ liệu từ Form
+        // 1. Lấy dữ liệu từ Form (GIỮ FULL)
         var spaceInput = document.getElementById('space_input');
         var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
         
@@ -515,7 +515,7 @@
         var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
         var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : "";
 
-        // Map tên gọi
+        // Map tên gọi (GIỮ FULL)
         const mapLoai = {
             'Nhà ở': 'Nhà ở / Biệt thự',
             'Cửa hàng': 'Cửa hàng / Chuỗi shop',
@@ -523,16 +523,27 @@
         };
         const tenGoiChuan = mapLoai[loaiKhongGian] || loaiKhongGian;
         
-        // Gọi hàm tính toán
+        // Gọi hàm tính toán (GIỮ FULL)
         const result = (typeof window.tinhToanBaoGia === 'function') 
                         ? window.tinhToanBaoGia(tenGoiChuan) 
                         : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
 
-        // --- TÍNH ĐIỂM LEAD SCORING ---
-        let diemLead = (loaiKhongGian === 'Kho bãi') ? 95 : (loaiKhongGian === 'Cửa hàng' ? 70 : 40);
-        let nhanLead = (loaiKhongGian === 'Kho bãi') ? "🔥 KHÁCH NÓNG" : (loaiKhongGian === 'Cửa hàng' ? "⚡ KHÁCH TIỀM NĂNG" : "👤 KHÁCH DÂN DỤNG");
+        // --- TÍNH ĐIỂM LEAD SCORING (GIỮ FULL) ---
+        let diemLead = 0;
+        let nhanLead = "Khách hàng mới";
+        
+        if (loaiKhongGian === 'Kho bãi') {
+            diemLead = 95; 
+            nhanLead = "🔥 KHÁCH NÓNG";
+        } else if (loaiKhongGian === 'Cửa hàng') {
+            diemLead = 70;
+            nhanLead = "⚡ KHÁCH TIỀM NĂNG";
+        } else {
+            diemLead = 40;
+            nhanLead = "👤 KHÁCH DÂN DỤNG";
+        }
 
-        // 2. TÍCH HỢP Gửi về Google Sheet
+        // 2. TÍCH HỢP Gửi về Google Sheet (GIỮ FULL)
         const duLieuGuiVeSheet = {
             ho_ten: hoTen,
             so_dien_thoai: sdt,
@@ -545,7 +556,7 @@
             timestamp: new Date().toLocaleString()
         };
 
-        // Gửi dữ liệu
+        // Gửi dữ liệu (Cập nhật để Sheet nhận đúng định dạng)
         fetch("https://script.google.com/macros/s/AKfycbxlRWutimMxoa58Gc24QQ_T93VSpJvWM_fj7hIqUnP33sFAbAnXNSHgEhXWNKexHkjODw/exec", {
             method: 'POST',
             mode: 'no-cors',
@@ -553,7 +564,7 @@
             body: JSON.stringify(duLieuGuiVeSheet)
         }).catch(err => console.error("Lỗi gửi Sheet:", err));
 
-        // 3. Hiện thông báo và chuyển trang
+        // 3. Hiện thông báo và chuyển trang (GIỮ FULL)
         setTimeout(function() {
             alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
                   "- Danh mục: " + result.danhMuc + "\n" +
@@ -566,6 +577,6 @@
             window.location.href = "thankyou.html"; 
         }, 1000);
     });
-</script>     
+</script>       
 </body> <!-- Thẻ kết thúc -->
 </html>
