@@ -522,9 +522,10 @@
         let nhanLead = (loaiKhongGian === 'Kho bãi') ? "🔥 KHÁCH NÓNG" : (loaiKhongGian === 'Cửa hàng' ? "⚡ KHÁCH TIỀM NĂNG" : "👤 KHÁCH DÂN DỤNG");
 
         // 2. TÍCH HỢP gửi dữ liệu (ĐÃ THAY LINK MỚI NHẤT)
+// DÁN ĐOẠN NÀY VÀO CHỖ VỪA XÓA:
 var url = "https://script.google.com/macros/s/AKfycbyZ5dEjpEF5lKMXFRU8Hj_eU8AAfGsxqNfNhC9SFCpA3FigEcxLZgpjUJFKBSNMFDFjPw/exec";
 var formData = new URLSearchParams({
-    ho_ten: hoTen, // Biến này anh đã có trong code cũ
+    ho_ten: hoTen,
     so_dien_thoai: sdt,
     email: emailKhach,
     loai_hinh: tenGoiChuan,
@@ -535,21 +536,16 @@ var formData = new URLSearchParams({
     timestamp: new Date().toLocaleString()
 });
 
-fetch(url + "?" + formData.toString(), {
-    method: 'GET'
-}).then(response => {
-    console.log("Dữ liệu đã gửi thành công!");
-});
-        // Sử dụng fetch phương thức GET để đảm bảo luôn đổ dữ liệu
-        fetch(url + "?" + params.toString())
-            .then(response => console.log("Gửi thành công!"))
-            .catch(err => console.error("Lỗi gửi:", err));
-
-        // 3. Hiện thông báo (GIỮ FULL 100%)
-        setTimeout(function() {
-            alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n- Danh mục: " + result.danhMuc + "\n- Giá tạm tính: " + result.giaHienThi + "\n- Khuyến mãi: " + result.khuyenMai + "\n\nTHÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.");
-            window.location.href = "thankyou.html"; 
-        }, 1000);
+fetch(url + "?" + formData.toString())
+    .then(response => {
+        // Thông báo cho khách
+        alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n- Danh mục: " + result.danhMuc + "\n- Giá tạm tính: " + result.giaHienThi + "\n- Khuyến mãi: " + result.khuyenMai + "\n\nTHÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.");
+        // Chuyển trang
+        window.location.href = "thankyou.html";
+    })
+    .catch(err => {
+        console.error("Lỗi:", err);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
     });
 </script>            
 </body> <!-- Thẻ kết thúc -->
