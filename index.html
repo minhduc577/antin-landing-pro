@@ -527,20 +527,30 @@
                         ? window.tinhToanBaoGia(tenGoiChuan) 
                         : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
 
-        // --- BỔ SUNG MỚI: TÍNH ĐIỂM LEAD SCORING ---
+        // --- TÍNH ĐIỂM LEAD SCORING ---
         let diemLead = 0;
-        if (loaiKhongGian === 'Kho bãi') diemLead = 95;      // Khách nóng (Doanh nghiệp)
-        else if (loaiKhongGian === 'Cửa hàng') diemLead = 70; // Khách tiềm năng
-        else diemLead = 40;                                  // Khách dân dụng
+        let nhanLead = "Khách hàng mới";
+        
+        if (loaiKhongGian === 'Kho bãi') {
+            diemLead = 95; 
+            nhanLead = "🔥 KHÁCH NÓNG";
+        } else if (loaiKhongGian === 'Cửa hàng') {
+            diemLead = 70;
+            nhanLead = "⚡ KHÁCH TIỀM NĂNG";
+        } else {
+            diemLead = 40;
+            nhanLead = "👤 KHÁCH DÂN DỤNG";
+        }
 
-        // 2. TÍCH HỢP Gửi ngầm về Google Sheet (bao gồm cả điểm số)
+        // 2. TÍCH HỢP Gửi ngầm về Google Sheet
         const duLieuGuiVeSheet = {
             ho_ten: hoTen,
             so_dien_thoai: sdt,
             loai_hinh: tenGoiChuan,
             gia: result.giaHienThi,
             khuyen_mai: result.khuyenMai,
-            diem_lead: diemLead, // Điểm số đẩy về Sheet
+            diem_lead: diemLead,
+            nhan_lead: nhanLead, // BỔ SUNG MỚI: Nhãn dán trực tiếp về Sheet
             timestamp: new Date().toLocaleString()
         };
 
