@@ -513,6 +513,8 @@
         
         var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
         var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
+        // BỔ SUNG MỚI: Lấy Email
+        var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : "";
 
         // Map tên gọi
         const mapLoai = {
@@ -546,11 +548,12 @@
         const duLieuGuiVeSheet = {
             ho_ten: hoTen,
             so_dien_thoai: sdt,
+            email: emailKhach, // BỔ SUNG MỚI: Đẩy email về Sheet
             loai_hinh: tenGoiChuan,
             gia: result.giaHienThi,
             khuyen_mai: result.khuyenMai,
             diem_lead: diemLead,
-            nhan_lead: nhanLead, // BỔ SUNG MỚI: Nhãn dán trực tiếp về Sheet
+            nhan_lead: nhanLead,
             timestamp: new Date().toLocaleString()
         };
 
