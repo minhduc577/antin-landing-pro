@@ -504,10 +504,10 @@
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
-    // 1. Lắng nghe sự kiện click nút Gửi
-    document.querySelector('button[type="submit"]').addEventListener('click', function() {
+    // Lắng nghe sự kiện SUBMIT của form (đảm bảo form hợp lệ mới chạy)
+    document.getElementById('an-tin-form').addEventListener('submit', function() {
         
-        // 2. Lấy giá trị loại không gian
+        // Lấy giá trị loại không gian
         var spaceInput = document.getElementById('space_input');
         var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
         
@@ -519,7 +519,7 @@
 
         const result = data[loaiKhongGian] || { danhMuc: 'Tư vấn chuyên sâu', gia: 'Liên hệ khảo sát', khuyenMai: 'Khảo sát miễn phí' };
 
-        // 3. Hiện thông báo với số Zalo mới
+        // Hiện thông báo và chuyển trang
         setTimeout(function() {
             alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
                   "- Danh mục: " + result.danhMuc + "\n" +
@@ -529,7 +529,6 @@
                   "THÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.\n" +
                   "Hỗ trợ nhanh qua Zalo: 0914060339");
             
-            // 4. Làm mới trang sau khi khách bấm OK
             window.location.href = "thankyou.html"; 
         }, 1000);
     });
