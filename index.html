@@ -503,7 +503,7 @@
 </form>
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
- <script>
+<script>
     // Lắng nghe sự kiện SUBMIT của form
     document.getElementById('an-tin-form').addEventListener('submit', function(event) {
         
@@ -511,7 +511,6 @@
         var spaceInput = document.getElementById('space_input');
         var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
         
-        // Lấy thêm thông tin từ các input khác (Anh nhớ thay ID cho đúng với Ladipage)
         var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
         var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
 
@@ -528,13 +527,20 @@
                         ? window.tinhToanBaoGia(tenGoiChuan) 
                         : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
 
-        // 2. TÍCH HỢP MỚI: Gửi ngầm về Google Sheet (Không làm gián đoạn luồng)
+        // --- BỔ SUNG MỚI: TÍNH ĐIỂM LEAD SCORING ---
+        let diemLead = 0;
+        if (loaiKhongGian === 'Kho bãi') diemLead = 95;      // Khách nóng (Doanh nghiệp)
+        else if (loaiKhongGian === 'Cửa hàng') diemLead = 70; // Khách tiềm năng
+        else diemLead = 40;                                  // Khách dân dụng
+
+        // 2. TÍCH HỢP Gửi ngầm về Google Sheet (bao gồm cả điểm số)
         const duLieuGuiVeSheet = {
             ho_ten: hoTen,
             so_dien_thoai: sdt,
             loai_hinh: tenGoiChuan,
             gia: result.giaHienThi,
             khuyen_mai: result.khuyenMai,
+            diem_lead: diemLead, // Điểm số đẩy về Sheet
             timestamp: new Date().toLocaleString()
         };
 
