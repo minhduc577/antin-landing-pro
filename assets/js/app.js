@@ -322,31 +322,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     return;
                 }
-
-                try {
+try {
                     const GOOGLE_FORM_ACTION_URL = leadForm.getAttribute("action") || "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfXXXXXXXXXXXXX/formResponse";
                     const formData = new FormData(leadForm);
                     if (emailKhach) formData.append("email", emailKhach);
                     formData.append(GOOGLE_FORM_FIELD_ID, CLASSIFICATION_TEXT);
 
+                    // 1. Gửi dữ liệu về Google
                     await fetch(GOOGLE_FORM_ACTION_URL, {
                         method: "POST",
                         mode: "no-cors",
                         body: formData
                     });
-                const loaiHinh = document.getElementById('space_input') ? document.getElementById('space_input').value : "không gian của bạn";
-                localStorage.setItem('loai_hinh', loaiHinh);
-                window.location.href = "tu-van-ai.html";
-                    
-                    if (typeof window.handleFormSuccess === "function") {
-                        window.handleFormSuccess();
-                    } else {
-                        showStatus("Đăng ký thành công!", "alert-success");
-                        leadForm.reset();
-                        setTimeout(() => {
-                            window.open("https://sites.google.com/view/antinco", "_blank");
-                        }, 2000);
-                    }
+
+                    // 2. Chuyển sang trang tư vấn AI ngay sau khi gửi xong
+                    const loaiHinh = document.getElementById('space_input') ? document.getElementById('space_input').value : "không gian của bạn";
+                    localStorage.setItem('loai_hinh', loaiHinh);
+                    window.location.href = "tu-van-ai.html";
+                } catch (error) {
+                    console.error("Form Submit Error: ", error);
+                    showStatus("Có lỗi xảy ra, vui lòng thử lại!", "alert-danger");
+                }
                 } catch (error) {
                     console.error("Form Submit Error: ", error);
                 } finally {
