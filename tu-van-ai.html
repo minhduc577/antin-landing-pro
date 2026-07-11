@@ -20,16 +20,37 @@
     </div>
 
     <script>
-        // Hiển thị dữ liệu từ LocalStorage (được truyền từ trang chủ)
-        const loaiHinh = localStorage.getItem('loai_hinh') || "không gian của bạn";
-        document.getElementById('ai-result-content').innerHTML = `
-            <h3 class="font-bold">Loại hình: ${loaiHinh}</h3>
-            <ul class="list-disc ml-5 mt-2">
-                <li>Tối ưu hóa diện tích sử dụng 30%.</li>
-                <li>Tiết kiệm chi phí đầu tư hạ tầng điện.</li>
-                <li>Giải pháp "may đo" riêng biệt cho AN TÍN.</li>
-            </ul>
-        `;
-    </script>
+    // 1. Lấy dữ liệu từ trang chủ
+    const loaiHinh = localStorage.getItem('loai_hinh') || "không gian của bạn";
+    
+    // 2. Thiết lập nội dung tư vấn dựa trên loại hình khách chọn
+    let noiDungTuVan = "";
+    
+    if (loaiHinh === 'Nhà ở') {
+        noiDungTuVan = `<li>Tối ưu hóa không gian sống hiện đại, thông minh.</li>
+                        <li>Giải pháp chiếu sáng tiết kiệm điện cho biệt thự.</li>
+                        <li>Thiết kế điện thẩm mỹ, an toàn tuyệt đối cho gia đình.</li>`;
+    } else if (loaiHinh === 'Cửa hàng') {
+        noiDungTuVan = `<li>Hệ thống đèn làm nổi bật sản phẩm trưng bày.</li>
+                        <li>Giải pháp điện vận hành chuỗi shop 24/7 ổn định.</li>
+                        <li>Giám sát từ xa giúp quản lý cửa hàng hiệu quả.</li>`;
+    } else if (loaiHinh === 'Kho bãi') {
+        noiDungTuVan = `<li>Hệ thống điện công suất lớn, vận hành chịu tải cao.</li>
+                        <li>Giải pháp chiếu sáng nhà xưởng đạt chuẩn quốc tế.</li>
+                        <li>Hệ thống chống cháy nổ và an toàn công nghiệp.</li>`;
+    } else {
+        noiDungTuVan = `<li>Giải pháp thiết kế điện "may đo" cho mọi công trình.</li>
+                        <li>Tiết kiệm 30% chi phí vận hành.</li>
+                        <li>Hỗ trợ kỹ thuật 24/7 từ đội ngũ AN TÍN.</li>`;
+    }
+
+    // 3. Hiển thị ra màn hình
+    document.getElementById('ai-result-content').innerHTML = `
+        <h3 class="font-bold text-xl mb-3 text-navy">Kết quả cho: ${loaiHinh}</h3>
+        <ul class="list-disc ml-5 mt-2 text-left space-y-2">
+            ${noiDungTuVan}
+        </ul>
+    `;
+</script>
 </body>
 </html>
