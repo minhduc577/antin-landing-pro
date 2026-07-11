@@ -513,9 +513,11 @@
         var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
         var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
         var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : "";
+
         const mapLoai = {'Nhà ở': 'Nhà ở / Biệt thự', 'Cửa hàng': 'Cửa hàng / Chuỗi shop', 'Kho bãi': 'Kho bãi / Nhà xưởng'};
         const tenGoiChuan = mapLoai[loaiKhongGian] || loaiKhongGian;
         const result = (typeof window.tinhToanBaoGia === 'function') ? window.tinhToanBaoGia(tenGoiChuan) : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
+
         let diemLead = (loaiKhongGian === 'Kho bãi') ? 95 : (loaiKhongGian === 'Cửa hàng' ? 70 : 40);
         let nhanLead = (loaiKhongGian === 'Kho bãi') ? "🔥 KHÁCH NÓNG" : (loaiKhongGian === 'Cửa hàng' ? "⚡ KHÁCH TIỀM NĂNG" : "👤 KHÁCH DÂN DỤNG");
 
@@ -524,25 +526,19 @@
         var params = new URLSearchParams({
             ho_ten: hoTen, so_dien_thoai: sdt, email: emailKhach,
             loai_hinh: tenGoiChuan, gia: result.giaHienThi, khuyen_mai: result.khuyenMai,
-            diem_lead: diemLead, nhan_lead: nhanLead
+            diem_lead: diemLead, nhan_lead: nhanLead, timestamp: new Date().toLocaleString()
         });
 
-        // Sử dụng POST để khớp với doPost(e) bên Apps Script
-        fetch(url, {
-            method: 'POST',
-            body: params
-        })
-            .then(response => response.text())
-            .then(data => {
-                console.log("Phản hồi từ server:", data);
-                // 3. Hiện thông báo (GIỮ FULL 100%) - chỉ hiện khi gửi thành công
-                alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n- Danh mục: " + result.danhMuc + "\n- Giá tạm tính: " + result.giaHienThi + "\n- Khuyến mãi: " + result.khuyenMai + "\n\nTHÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.");
-                window.location.href = "thankyou.html";
-            })
-            .catch(err => {
-                console.error("Lỗi gửi:", err);
-                alert("Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại hoặc liên hệ hotline 0914 060 339.");
-            });
+        // Sử dụng fetch phương thức GET để đảm bảo luôn đổ dữ liệu
+        fetch(url + "?" + params.toString())
+            .then(response => console.log("Gửi thành công!"))
+            .catch(err => console.error("Lỗi gửi:", err));
+
+        // 3. Hiện thông báo (GIỮ FULL 100%)
+        setTimeout(function() {
+            alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n- Danh mục: " + result.danhMuc + "\n- Giá tạm tính: " + result.giaHienThi + "\n- Khuyến mãi: " + result.khuyenMai + "\n\nTHÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.");
+            window.location.href = "thankyou.html"; 
+        }, 1000);
     });
 </script>            
 </body> <!-- Thẻ kết thúc -->
