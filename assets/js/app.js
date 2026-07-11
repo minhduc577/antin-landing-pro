@@ -436,4 +436,39 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+    // ==========================================================================
+    // 9. ENGINE BÁO GIÁ AI (TÍNH TOÁN & KẾT XUẤT TRONG 5 GIÂY)
+    // ==========================================================================
+    window.tinhToanBaoGia = function(loaiKhongGian) {
+        // Ma trận giá chuẩn hóa - Dễ dàng điều chỉnh tỷ lệ chiết khấu
+        const bangGia = {
+            'Nhà ở / Biệt thự': { 
+                danhMuc: 'Camera Wifi + Chuông cửa', 
+                giaGoc: 3000000, tyLeGiam: 0.16, noiDungKM: 'Tặng thẻ nhớ 64GB' 
+            },
+            'Cửa hàng / Chuỗi shop': { 
+                danhMuc: 'Camera IP + Đầu ghi 8 kênh', 
+                giaGoc: 10000000, tyLeGiam: 0.15, noiDungKM: 'Miễn phí lắp đặt' 
+            },
+            'Kho bãi / Nhà xưởng': { 
+                danhMuc: 'Camera Bullet + Đầu ghi 16 kênh', 
+                giaGoc: 18000000, tyLeGiam: 0.16, noiDungKM: 'Bảo hành 2 năm' 
+            }
+        };
+
+        const thongTin = bangGia[loaiKhongGian] || { 
+            danhMuc: 'Tư vấn chuyên sâu', giaGoc: 0, tyLeGiam: 0, noiDungKM: 'Khảo sát miễn phí' 
+        };
+
+        const giaSauKM = thongTin.giaGoc * (1 - thongTin.tyLeGiam);
+
+        return {
+            danhMuc: thongTin.danhMuc,
+            giaHienThi: giaSauKM.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+            khuyenMai: thongTin.noiDungKM
+        };
+    };
+
+    // Tích hợp vào sự kiện thành công của Form (trong window.handleFormSuccess)
+    // Anh có thể gọi: const ketQua = tinhToanBaoGia(customerTypeInput.value);
 });
