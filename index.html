@@ -544,24 +544,19 @@
             nhanLead = "👤 KHÁCH DÂN DỤNG";
         }
 
-        // 2. TÍCH HỢP Gửi về Google Sheet (GIỮ FULL)
-        const duLieuGuiVeSheet = {
-            ho_ten: hoTen,
-            so_dien_thoai: sdt,
-            email: emailKhach,
-            loai_hinh: tenGoiChuan,
-            gia: result.giaHienThi,
-            khuyen_mai: result.khuyenMai,
-            diem_lead: diemLead,
-            nhan_lead: nhanLead,
-            timestamp: new Date().toLocaleString()
-        };
-
-        // Gửi dữ liệu (Sử dụng FormData để đảm bảo Sheet nhận đủ cột)
+        // 2. Gửi dữ liệu về Google Sheet (Sử dụng FormData để vá lỗi lệch cột)
         var formData = new FormData();
-        for (var key in duLieuGuiVeSheet) { formData.append(key, duLieuGuiVeSheet[key]); }
+        formData.append('ho_ten', hoTen);
+        formData.append('so_dien_thoai', sdt);
+        formData.append('email', emailKhach);
+        formData.append('loai_hinh', tenGoiChuan);
+        formData.append('gia', result.giaHienThi);
+        formData.append('khuyen_mai', result.khuyenMai);
+        formData.append('diem_lead', diemLead);
+        formData.append('nhan_lead', nhanLead);
+        formData.append('timestamp', new Date().toLocaleString());
 
-        fetch("https://script.google.com/macros/s/AKfycby2Hxi4F3rlseq55SizUSgdO4nwkMw3sHYXr5kxzRy4zNgBqUixpTsgwjWalbQvoGWcsw/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbzKDpjeZx0-FPCGHnnTZJ2XkQVYqPcUSMELjBgk4gm7mbkQ8gC14IAH4RXHJOCUZlQZag/exec", {
             method: 'POST',
             body: formData
         }).catch(err => console.error("Lỗi gửi Sheet:", err));
@@ -579,6 +574,6 @@
             window.location.href = "thankyou.html"; 
         }, 1000);
     });
-</script>           
+</script>            
 </body> <!-- Thẻ kết thúc -->
 </html>
