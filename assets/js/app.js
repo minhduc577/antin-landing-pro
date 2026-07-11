@@ -334,7 +334,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         mode: "no-cors",
                         body: formData
                     });
-
+                const loaiHinh = document.getElementById('space_input') ? document.getElementById('space_input').value : "không gian của bạn";
+                localStorage.setItem('loai_hinh', loaiHinh);
+                window.location.href = "tu-van-ai.html";
+                    
                     if (typeof window.handleFormSuccess === "function") {
                         window.handleFormSuccess();
                     } else {
