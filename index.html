@@ -507,23 +507,30 @@
     // Lắng nghe sự kiện SUBMIT của form (đảm bảo form hợp lệ mới chạy)
     document.getElementById('an-tin-form').addEventListener('submit', function() {
         
-        // Lấy giá trị loại không gian
+        // 1. Lấy giá trị loại không gian
         var spaceInput = document.getElementById('space_input');
         var loaiKhongGian = spaceInput ? spaceInput.value : "Chưa chọn";
         
-        const data = {
-            'Nhà ở': { danhMuc: 'Camera Wifi + Chuông cửa', gia: '2.500.000đ', khuyenMai: 'Tặng thẻ nhớ 64GB' },
-            'Cửa hàng': { danhMuc: 'Camera IP + Đầu ghi 8 kênh', gia: '8.500.000đ', khuyenMai: 'Miễn phí lắp đặt' },
-            'Kho bãi': { danhMuc: 'Camera Bullet + Đầu ghi 16 kênh', gia: '15.000.000đ', khuyenMai: 'Bảo hành 2 năm' }
+        // 2. Gọi hàm tính toán đã khai báo trong app.js
+        // Nếu anh chọn "Nhà ở" ở HTML, app.js sẽ nhận "Nhà ở / Biệt thự"
+        // Vì vậy ta cần map nhẹ (ánh xạ) lại tên gọi cho khớp
+        const mapLoai = {
+            'Nhà ở': 'Nhà ở / Biệt thự',
+            'Cửa hàng': 'Cửa hàng / Chuỗi shop',
+            'Kho bãi': 'Kho bãi / Nhà xưởng'
         };
+        const tenGoiChuan = mapLoai[loaiKhongGian] || loaiKhongGian;
+        
+        // Gọi hàm từ app.js
+        const result = (typeof window.tinhToanBaoGia === 'function') 
+                       ? window.tinhToanBaoGia(tenGoiChuan) 
+                       : { danhMuc: 'Đang cập nhật', giaHienThi: 'Liên hệ', khuyenMai: 'Liên hệ' };
 
-        const result = data[loaiKhongGian] || { danhMuc: 'Tư vấn chuyên sâu', gia: 'Liên hệ khảo sát', khuyenMai: 'Khảo sát miễn phí' };
-
-        // Hiện thông báo và chuyển trang
+        // 3. Hiện thông báo và chuyển trang
         setTimeout(function() {
             alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
                   "- Danh mục: " + result.danhMuc + "\n" +
-                  "- Giá tạm tính: " + result.gia + "\n" +
+                  "- Giá tạm tính: " + result.giaHienThi + "\n" +
                   "- Khuyến mãi: " + result.khuyenMai + "\n\n" +
                   "---------------------------\n" +
                   "THÔNG TIN ĐÃ ĐƯỢC GỬI VỀ AN TÍN.\n" +
@@ -532,6 +539,6 @@
             window.location.href = "thankyou.html"; 
         }, 1000);
     });
-</script>
+</script>  
 </body> <!-- Thẻ kết thúc -->
 </html>
