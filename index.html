@@ -561,7 +561,7 @@
         var formData = new FormData();
         for (var key in duLieuGuiVeSheet) { formData.append(key, duLieuGuiVeSheet[key]); }
 
-        fetch("https://script.google.com/macros/s/AKfycbxKZgIV6H5duKJJiq_gDsP_R0ev9hjmQZmvl8O-qua6GrEsIe-tWqiu5iabpQzXmOSVFQ/exec", {
+        fetch("https://script.google.com/macros/s/AKfycby2Hxi4F3rlseq55SizUSgdO4nwkMw3sHYXr5kxzRy4zNgBqUixpTsgwjWalbQvoGWcsw/exec", {
             method: 'POST',
             body: formData
         }).catch(err => console.error("Lỗi gửi Sheet:", err));
