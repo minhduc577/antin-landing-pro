@@ -412,12 +412,12 @@
                 <div class="text-xs italic text-gray-500" id="ai-status">Đang quét luồng phân tích hành vi dữ liệu...</div>
             </div>
 
-<form action="https://docs.google.com/forms/d/e/1FAIpQLSfWhXKyklYU0adBZtVFFALPgkXzGRLpmD6aQXu8XznfNes_4g/formResponse" method="POST" target="hidden_iframe" id="an-tin-form">
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSfWhXKyklYU0adBZtVFFALPgkXzGRLpmD6aQXu8XznfNes_4g/formResponse" method="POST" target="hidden_iframe" id="an-tin-form" onsubmit="submitted=true;">
     
     <div class="space-y-4 mb-6">
-    <input type="text" id="ho_ten" placeholder="Họ và tên *" required class="w-full p-3 border border-gray-300 rounded-xl">
-    <input type="tel" id="so_dien_thoai" placeholder="Số điện thoại *" required class="w-full p-3 border border-gray-300 rounded-xl">
-    <input type="email" id="email_khach" name="email_khach" required placeholder="Email của bạn *" class="w-full p-3 border border-gray-300 rounded-xl">
+        <input type="text" id="ho_ten" name="entry.2005620554" placeholder="Họ và tên *" required class="w-full p-3 border border-gray-300 rounded-xl">
+        <input type="tel" id="so_dien_thoai" name="entry.1045781291" placeholder="Số điện thoại *" required class="w-full p-3 border border-gray-300 rounded-xl">
+        <input type="email" id="email_khach" name="entry.1065046570" required placeholder="Email của bạn *" class="w-full p-3 border border-gray-300 rounded-xl">
     </div>
 
     <input type="hidden" name="entry.554271876" id="space_input" value="">
@@ -441,7 +441,11 @@
         NHẬN PHƯƠNG ÁN THIẾT KẾ MAY ĐO & FILE EBOOK
     </button>
 </form>
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){alert('Đã gửi thông tin!');}"></iframe>
+
+<script type="text/javascript">
+    var submitted = false;
+</script>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){window.location='thankyou.html';}"></iframe>
 <script type="text/javascript">var submitted=false; document.getElementById('an-tin-form').onsubmit = function(){submitted=true;}</script>
           
         </div>
