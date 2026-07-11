@@ -513,7 +513,7 @@
         
         var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : "Khách hàng";
         var sdt = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : "Chưa nhập SĐT";
-        // BỔ SUNG MỚI: Lấy Email
+        // Lấy Email
         var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : "";
 
         // Map tên gọi
@@ -544,11 +544,11 @@
             nhanLead = "👤 KHÁCH DÂN DỤNG";
         }
 
-        // 2. TÍCH HỢP Gửi ngầm về Google Sheet
+        // 2. TÍCH HỢP Gửi về Google Sheet
         const duLieuGuiVeSheet = {
             ho_ten: hoTen,
             so_dien_thoai: sdt,
-            email: emailKhach, // BỔ SUNG MỚI: Đẩy email về Sheet
+            email: emailKhach,
             loai_hinh: tenGoiChuan,
             gia: result.giaHienThi,
             khuyen_mai: result.khuyenMai,
@@ -557,14 +557,15 @@
             timestamp: new Date().toLocaleString()
         };
 
-        fetch("URL_WEB_APP_GOOGLE_SCRIPT_CUA_ANH", {
+        // Gửi dữ liệu tới Web App của anh
+        fetch("https://script.google.com/macros/s/AKfycbxlRWutimMxoa58Gc24QQ_T93VSpJvWM_fj7hIqUnP33sFAbAnXNSHgEhXWNKexHkjODw/exec", {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(duLieuGuiVeSheet)
         }).catch(err => console.error("Lỗi gửi Sheet:", err));
 
-        // 3. Hiện thông báo và chuyển trang như cũ
+        // 3. Hiện thông báo và chuyển trang
         setTimeout(function() {
             alert("Đã nhận yêu cầu! Báo giá nhanh cho " + loaiKhongGian + ":\n\n" +
                   "- Danh mục: " + result.danhMuc + "\n" +
@@ -577,6 +578,6 @@
             window.location.href = "thankyou.html"; 
         }, 1000);
     });
-</script>  
+</script>    
 </body> <!-- Thẻ kết thúc -->
 </html>
