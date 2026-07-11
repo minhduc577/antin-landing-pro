@@ -326,6 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
                     const GOOGLE_FORM_ACTION_URL = leadForm.getAttribute("action") || "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfXXXXXXXXXXXXX/formResponse";
                     const formData = new FormData(leadForm);
+                    if (emailKhach) formData.append("email", emailKhach);
                     formData.append(GOOGLE_FORM_FIELD_ID, CLASSIFICATION_TEXT);
 
                     await fetch(GOOGLE_FORM_ACTION_URL, {
