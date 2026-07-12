@@ -25,21 +25,21 @@ document.addEventListener("DOMContentLoaded", function() {
     let space = urlParams.get('space') || 'Nhà ở / Biệt thự';
     space = decodeURIComponent(space); // Đảm bảo không bị lỗi font %20
 
-    // Định vị chính xác hộp màu xanh dựa trên ID vừa thêm
-    const resultBox = document.getElementById('ai-result-box');
+    // Đổi lại gọi ĐÚNG tên id="ai-result-content" có sẵn ở dòng 13 của anh
+    const resultBox = document.getElementById('ai-result-content');
     if (!resultBox) return; 
 
     let titleText = `Kết quả cho không gian: ${space}`;
     let aiRecommendations = [];
 
-    // 2. Logic phân tích chuyên sâu đúng mảng kinh doanh cốt lõi của AN TÍN
+    // 2. Logic phân tích chuyên sâu đúng mảng kinh doanh của AN TÍN
     if (space.includes("Nhà ở") || space.includes("Biệt thự")) {
         aiRecommendations = [
             "Hệ thống Camera AI giám sát vòng ngoài chống góc chết, tích hợp hồng ngoại ban đêm siêu sắc nét.",
             "Khóa cửa vân tay thông minh bảo mật đa tầng, tự động gửi cảnh báo cạy phá về điện thoại real-time.",
             "Giải pháp mạng Wifi Mesh phủ xanh mọi tầng lầu, đảm bảo kết nối mượt mà cho các thiết bị thông minh."
         ];
-    } else if (space.includes("Cửa Hàng") || space.includes("Shop") || space.includes("Cửa hàng")) {
+    } else if (space.includes("Cửa Hàng") || space.includes("Shop") || space.includes("Cửa hàng") || space.includes("Chuỗi")) {
         aiRecommendations = [
             "Camera AI độ phân giải cao giám sát quầy thu ngân chặt chẽ và hỗ trợ đếm lượt khách ra vào.",
             "Mạng Wifi chuyên dụng chịu tải cao cho khách hàng, tách biệt phân quyền bảo mật dữ liệu nội bộ.",
@@ -61,15 +61,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 3. Bơm trực tiếp cấu trúc HTML mới vào trong hộp màu xanh
     resultBox.innerHTML = `
-        <h3 class="text-xl font-bold text-blue-900 mb-4 text-center md:text-left">${titleText}</h3>
-        <ul class="space-y-3 text-left list-none pl-0">
-            ${aiRecommendations.map(item => `
-                <li class="flex items-start">
-                    <span class="text-red-600 mr-2 font-bold text-lg">•</span>
-                    <span class="text-gray-700 font-medium text-base">${item}</span>
-                </li>
-            `).join('')}
-        </ul>
+        <div class="w-full">
+            <h3 class="text-xl font-bold text-blue-900 mb-4 text-center md:text-left">${titleText}</h3>
+            <ul class="space-y-3 text-left list-none pl-0">
+                ${aiRecommendations.map(item => `
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-2 font-bold text-lg">•</span>
+                        <span class="text-gray-700 font-medium text-base">${item}</span>
+                    </li>
+                `).join('')}
+            </ul>
+        </div>
     `;
 });
 </script>
