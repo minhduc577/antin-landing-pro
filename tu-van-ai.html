@@ -17,53 +17,52 @@
     NHẬN TÀI LIỆU CHI TIẾT & HOÀN TẤT
 </a>
     </div>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. Lấy và giải mã tiếng Việt từ URL cực chuẩn
     const urlParams = new URLSearchParams(window.location.search);
-    let space = urlParams.get('space') || 'Nhà ở / Biệt thự';
-    space = decodeURIComponent(space); // Đảm bảo không bị lỗi font %20
+    let space = decodeURIComponent(urlParams.get('space') || 'Nhà ở / Biệt thự');
 
-    // Đổi lại gọi ĐÚNG tên id="ai-result-content" có sẵn ở dòng 13 của anh
     const resultBox = document.getElementById('ai-result-content');
     if (!resultBox) return; 
 
-    let titleText = `Kết quả cho không gian: ${space}`;
+    let titleText = `Giải pháp & Ước tính ngân sách cho: ${space}`;
     let aiRecommendations = [];
+    let comboPrice = "";
 
-    // 2. Logic phân tích chuyên sâu đúng mảng kinh doanh của AN TÍN
     if (space.includes("Nhà ở") || space.includes("Biệt thự")) {
         aiRecommendations = [
-            "Hệ thống Camera AI giám sát vòng ngoài chống góc chết, tích hợp hồng ngoại ban đêm siêu sắc nét.",
-            "Khóa cửa vân tay thông minh bảo mật đa tầng, tự động gửi cảnh báo cạy phá về điện thoại real-time.",
-            "Giải pháp mạng Wifi Mesh phủ xanh mọi tầng lầu, đảm bảo kết nối mượt mà cho các thiết bị thông minh."
+            "Hệ thống Camera AI giám sát vòng ngoài chống góc chết, tích hợp khóa cửa thông minh bảo mật vân tay đa tầng.",
+            "Giải pháp mạng Wi-Fi Mesh phủ xanh mọi ngóc ngách và lắp đặt hệ thống điện thông minh (Smart Home) tự động hóa.",
+            "Thiết kế, thi công điện dân dụng an toàn, bảo trì định kỳ thiết bị điện gia đình (bếp điện, quạt, nồi điện)."
         ];
-    } else if (space.includes("Cửa Hàng") || space.includes("Shop") || space.includes("Cửa hàng") || space.includes("Chuỗi")) {
+        comboPrice = "Từ 4.500.000đ - 12.000.000đ (Trọn gói lắp đặt + Thiết bị)";
+    } else if (space.includes("Cửa Hàng") || space.includes("Shop") || space.includes("Chuỗi")) {
         aiRecommendations = [
-            "Camera AI độ phân giải cao giám sát quầy thu ngân chặt chẽ và hỗ trợ đếm lượt khách ra vào.",
-            "Mạng Wifi chuyên dụng chịu tải cao cho khách hàng, tách biệt phân quyền bảo mật dữ liệu nội bộ.",
-            "Hệ thống báo động chống trộm, cảm biến hồng ngoại tự động kích hoạt loa hú khi hết giờ làm việc."
+            "Camera AI giám sát quầy thu ngân kết hợp kiểm soát ra vào, chấm công vân tay nhân viên chính xác.",
+            "Hạ tầng mạng Wi-Fi chuyên dụng chịu tải cao, thiết kế Website bán hàng và hệ thống Cloud Server vận hành ổn định.",
+            "Hệ thống báo động chống trộm hồng ngoại kết hợp cảnh báo cháy tự động khi hết giờ làm việc."
         ];
-    } else if (space.includes("Kho Bãi") || space.includes("Nhà Xưởng") || space.includes("Kho bãi")) {
+        comboPrice = "Từ 6.800.000đ - 18.000.000đ (Tối ưu hạ tầng mạng và an ninh)";
+    } else if (space.includes("Kho Bãi") || space.includes("Nhà Xưởng")) {
         aiRecommendations = [
-            "Camera IP thân trụ chuẩn chống nước IP67, tầm xa hồng ngoại 50m-80m chuyên dụng cho không gian lớn.",
-            "Hạ tầng mạng CNTT băng thông lớn, kết nối hệ thống tủ rack và máy chủ vận hành ổn định.",
-            "Hàng rào điện tử và cảm biến báo động đột nhập vùng biên, bảo vệ tài sản doanh nghiệp 24/7."
+            "Camera IP thân trụ hồng ngoại tầm xa 80m chuẩn IP67 và giải pháp chống đột nhập vùng biên 24/7.",
+            "Hạ tầng CNTT máy tính, tủ rack chuyên nghiệp cùng mạng Wi-Fi diện rộng cho nhà xưởng quản lý số liệu.",
+            "Thi công, đấu nối tủ điện công nghiệp công suất lớn và bảo trì hệ thống tự động hóa thiết bị điện nhà xưởng."
         ];
+        comboPrice = "Từ 15.000.000đ - 45.000.000đ (Chuyên dụng cho không gian lớn)";
     } else {
         aiRecommendations = [
-            "Hệ thống Camera giám sát và thiết bị an ninh tích hợp AI tiên tiến nhất.",
-            "Hạ tầng mạng Wifi công nghệ mới và hệ thống CNTT tối ưu hóa hiệu năng.",
-            "Giải pháp khóa cửa vân tay và báo động chống trộm toàn diện từ chuyên gia AN TÍN."
+            "Tích hợp trọn gói giải pháp Công nghệ thông tin: Camera an ninh, Wi-Fi tốc độ cao, Tổng đài và Hạ tầng mạng CNTT.",
+            "Giải pháp An toàn & Tiện ích: Hệ thống báo cháy tự động, khóa thông minh và Smart Home nâng tầm cuộc sống.",
+            "Dịch vụ Kỹ thuật điện trọn gói: Thi công điện dân dụng/công nghiệp, sửa chữa thiết bị điện gia dụng nhanh từ 3-24h."
         ];
+        comboPrice = "Liên hệ hotline để nhận báo giá may đo chính xác nhất";
     }
 
-    // 3. Bơm trực tiếp cấu trúc HTML mới vào trong hộp màu xanh
     resultBox.innerHTML = `
         <div class="w-full">
             <h3 class="text-xl font-bold text-blue-900 mb-4 text-center md:text-left">${titleText}</h3>
-            <ul class="space-y-3 text-left list-none pl-0">
+            <ul class="space-y-3 text-left list-none pl-0 mb-6">
                 ${aiRecommendations.map(item => `
                     <li class="flex items-start">
                         <span class="text-red-600 mr-2 font-bold text-lg">•</span>
@@ -71,6 +70,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     </li>
                 `).join('')}
             </ul>
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-left">
+                <p class="text-amber-900 font-bold text-lg mb-1">💰 Ngân sách Combo dự kiến (Gồm Camera, Đầu ghi, Lắp đặt, Bảo trì):</p>
+                <p class="text-red-600 font-extrabold text-xl">${comboPrice}</p>
+                <p class="text-gray-500 text-xs mt-2">* Chi phí thực tế phụ thuộc vào khảo sát tận nơi và số lượng mắt camera yêu cầu.</p>
+            </div>
         </div>
     `;
 });
