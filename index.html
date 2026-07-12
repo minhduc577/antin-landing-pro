@@ -518,16 +518,16 @@
             window.showAIScore();
         }
 
-        fetch(url + "?" + params.toString())
-            .then(res => {
-                setTimeout(function() {
-                    window.location.href = "tu-van-ai.html";
-                }, 4000); 
-            })
-            .catch(err => {
-                window.location.href = "tu-van-ai.html";
-            });
+       fetch(url + "?" + params.toString())
+    .then(res => {
+        // Lấy giá trị khách chọn (Nhà ở, Cửa hàng, Kho bãi...)
+        var selectedSpace = document.getElementById('space_input') ? document.getElementById('space_input').value : 'Nhà ở / Biệt thự';
+        // Chuyển hướng kèm tham số không gian
+        setTimeout(function() {
+            window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+        }, 4000); 
+    })
+    .catch(err => {
+        var selectedSpace = document.getElementById('space_input') ? document.getElementById('space_input').value : 'Nhà ở / Biệt thự';
+        window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
     });
-</script>
-</body>
-</html>
