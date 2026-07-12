@@ -18,39 +18,40 @@
 </a>
     </div>
 
-   <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. Đọc loại không gian từ URL khách vừa chọn
+    // 1. Lấy và giải mã tiếng Việt từ URL cực chuẩn
     const urlParams = new URLSearchParams(window.location.search);
     let space = urlParams.get('space') || 'Nhà ở / Biệt thự';
-    
-    // Tìm các phần tử giao diện để thay đổi nội dung (Cấu hình theo class/id thực tế của anh)
-    const titleElement = document.querySelector('.card h3') || document.body; 
-    const listContainer = document.querySelector('ul'); 
+    space = decodeURIComponent(space); // Đảm bảo không bị lỗi font %20
 
+    // Định vị chính xác hộp màu xanh dựa trên ID vừa thêm
+    const resultBox = document.getElementById('ai-result-box');
+    if (!resultBox) return; 
+
+    let titleText = `Kết quả cho không gian: ${space}`;
     let aiRecommendations = [];
 
-    // 2. Bộ não phân tích logic chuẩn mảng kinh doanh AN TÍN TECHNOLOGY
+    // 2. Logic phân tích chuyên sâu đúng mảng kinh doanh cốt lõi của AN TÍN
     if (space.includes("Nhà ở") || space.includes("Biệt thự")) {
         aiRecommendations = [
             "Hệ thống Camera AI giám sát vòng ngoài chống góc chết, tích hợp hồng ngoại ban đêm siêu sắc nét.",
             "Khóa cửa vân tay thông minh bảo mật đa tầng, tự động gửi cảnh báo cạy phá về điện thoại real-time.",
             "Giải pháp mạng Wifi Mesh phủ xanh mọi tầng lầu, đảm bảo kết nối mượt mà cho các thiết bị thông minh."
         ];
-    } else if (space.includes("Cửa Hàng") || space.includes("Shop")) {
+    } else if (space.includes("Cửa Hàng") || space.includes("Shop") || space.includes("Cửa hàng")) {
         aiRecommendations = [
             "Camera AI độ phân giải cao giám sát quầy thu ngân chặt chẽ và hỗ trợ đếm lượt khách ra vào.",
             "Mạng Wifi chuyên dụng chịu tải cao cho khách hàng, tách biệt phân quyền bảo mật dữ liệu nội bộ.",
             "Hệ thống báo động chống trộm, cảm biến hồng ngoại tự động kích hoạt loa hú khi hết giờ làm việc."
         ];
-    } else if (space.includes("Kho Bãi") || space.includes("Nhà Xưởng")) {
+    } else if (space.includes("Kho Bãi") || space.includes("Nhà Xưởng") || space.includes("Kho bãi")) {
         aiRecommendations = [
             "Camera IP thân trụ chuẩn chống nước IP67, tầm xa hồng ngoại 50m-80m chuyên dụng cho không gian lớn.",
             "Hạ tầng mạng CNTT băng thông lớn, kết nối hệ thống tủ rack và máy chủ vận hành ổn định.",
             "Hàng rào điện tử và cảm biến báo động đột nhập vùng biên, bảo vệ tài sản doanh nghiệp 24/7."
         ];
     } else {
-        // Phương án tổng hợp mặc định của AN TÍN
         aiRecommendations = [
             "Hệ thống Camera giám sát và thiết bị an ninh tích hợp AI tiên tiến nhất.",
             "Hạ tầng mạng Wifi công nghệ mới và hệ thống CNTT tối ưu hóa hiệu năng.",
@@ -58,15 +59,18 @@ document.addEventListener("DOMContentLoaded", function() {
         ];
     }
 
-    // 3. Render dữ liệu ra màn hình một cách mượt mà
-    if (listContainer) {
-        listContainer.innerHTML = aiRecommendations.map(item => `
-            <li class="flex items-start space-x-2 text-gray-700">
-                <span class="text-red-600 mr-2">•</span>
-                <span>${item}</span>
-            </li>
-        `).join('');
-    }
+    // 3. Bơm trực tiếp cấu trúc HTML mới vào trong hộp màu xanh
+    resultBox.innerHTML = `
+        <h3 class="text-xl font-bold text-blue-900 mb-4 text-center md:text-left">${titleText}</h3>
+        <ul class="space-y-3 text-left list-none pl-0">
+            ${aiRecommendations.map(item => `
+                <li class="flex items-start">
+                    <span class="text-red-600 mr-2 font-bold text-lg">•</span>
+                    <span class="text-gray-700 font-medium text-base">${item}</span>
+                </li>
+            `).join('')}
+        </ul>
+    `;
 });
 </script>
 </body>
