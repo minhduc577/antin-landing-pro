@@ -355,13 +355,66 @@ if (leadForm) {
         });
     }
 
-    function showStatus(message, className) {
-        if (formStatus) {
-            formStatus.textContent = message;
-            formStatus.className = `alert ${className}`;
-            formStatus.classList.remove("d-none");
-        }
+  // 1. BUỘC JS PHẢI ĐỢI HTML TẢI XONG TOÀN BỘ
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // 2. TÌM CHÍNH XÁC FORM (Anh nhớ thay 'an-tin-form' bằng đúng ID form của anh nếu khác nhé)
+    const leadForm = document.getElementById("an-tin-form"); 
+
+    // 3. RADAR DÒ LỖI: Nếu không tìm thấy form, báo lỗi đỏ ngay lập tức
+    if (!leadForm) {
+        console.error("🚨 CHƯA TÌM THẤY FORM! Hãy kiểm tra lại id trong thẻ <form> của file HTML.");
+        return; 
     }
+
+    // 4. BẮT ĐẦU XỬ LÝ KHI ĐÃ TÌM THẤY FORM
+    leadForm.addEventListener("submit", async (e) => {
+        // Khóa cứng hành động mặc định của HTML
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        // Kiểm tra Spam
+        const honeypotEl = document.getElementById("honeypot_field");
+        if (honeypotEl && honeypotEl.value) return;
+
+        // Xử lý UI
+        const submitBtn = document.getElementById("submit-form-btn") || leadForm.querySelector("button[type='submit']");
+        const fullname = document.getElementById("fullname")?.value.trim();
+        const phone = document.getElementById("phone")?.value.trim();
+        
+        if (!fullname || !phone) {
+            alert("Vui lòng điền đầy đủ Họ tên và Số điện thoại.");
+            return;
+        }
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý mã hóa...`;
+        }
+
+        // Gửi dữ liệu đi
+        try {
+            const formData = new FormData(leadForm);
+            const emailKhach = document.getElementById("email_khach")?.value.trim();
+            if (emailKhach) formData.append("email", emailKhach);
+            
+            const actionUrl = leadForm.getAttribute("action");
+
+            await fetch(actionUrl, {
+                method: "POST",
+                mode: "no-cors",
+                body: formData
+            });
+
+            // Lệnh chuyển trang do chúng ta kiểm soát
+            window.location.href = "tu-van-ai.html";
+            
+        } catch (error) {
+            console.error("Lỗi:", error);
+            if (submitBtn) submitBtn.disabled = false;
+        }
+    });
+});
 
     // ==========================================================================
     // 7. Chuyển Đổi Dark Mode / Light Mode mượt mà lưu Cache LocalStorage
