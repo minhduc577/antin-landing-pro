@@ -501,41 +501,33 @@
 
 <!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
-document.getElementById('an-tin-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Chặn reload
+    document.getElementById('an-tin-form').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    // 1. Lấy dữ liệu
-    var data = {
-        ho_ten: document.getElementById('ho_ten').value,
-        so_dien_thoai: document.getElementById('so_dien_thoai').value,
-        email: document.getElementById('email_khach').value,
-        loai_hinh: document.getElementById('space_input') ? document.getElementById('space_input').value : "Chưa chọn"
-    };
+        var data = {
+            ho_ten: document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : '',
+            so_dien_thoai: document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : '',
+            email: document.getElementById('email_khach') ? document.getElementById('email_khach').value : '',
+            loai_hinh: document.getElementById('space_input') ? document.getElementById('space_input').value : 'Chưa chọn'
+        };
 
-    // 2. Gửi dữ liệu đi
-    var url = "https://script.google.com/macros/s/AKfycbxtS7NM5ddOafIWItG8GRc2Y2xpcDDW1qNlk_uedORhfuqcazQGPu-AGBR_YrPTpPtuMw/exec";
-    var params = new URLSearchParams(data);
+        var url = "https://script.google.com/macros/s/AKfycbxtS7NM5ddOafIWItG8GRc2Y2xpcDDW1qNlk_uedORhfuqcazQGPu-AGBR_YrPTpPtuMw/exec";
+        var params = new URLSearchParams(data);
 
-    fetch(url + "?" + params.toString())
-        .then(res => {
-            // A. HIỆN BẢNG TƯ VẤN AI TRƯỚC
-            if (typeof window.showAIScore === 'function') {
-                window.showAIScore(); 
-                console.log("Đã kích hoạt bảng AI tư vấn");
-            } else {
-                alert("Đã gửi thông tin! Đang chuẩn bị phương án...");
-            }
+        if (typeof window.showAIScore === 'function') {
+            window.showAIScore();
+        }
 
-            // B. ĐỢI 5 GIÂY ĐỂ KHÁCH XEM KẾT QUẢ RỒI MỚI CHUYỂN TRANG
-            setTimeout(function() {
-                window.location.href = "thankyou.html";
-            }, 5000); 
-        })
-        .catch(err => {
-            console.error("Lỗi:", err);
-            alert("Có lỗi xảy ra, vui lòng thử lại!");
-        });
-});
-</script>            
-</body> <!-- Thẻ kết thúc -->
+        fetch(url + "?" + params.toString())
+            .then(res => {
+                setTimeout(function() {
+                    window.location.href = "tu-van-ai.html";
+                }, 4000); 
+            })
+            .catch(err => {
+                window.location.href = "tu-van-ai.html";
+            });
+    });
+</script>
+</body>
 </html>
