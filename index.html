@@ -499,35 +499,64 @@
     <button type="submit">NHẬN PHƯƠNG ÁN & BÁO GIÁ AI</button>
 </form>
 
-<!-- Đoạn script tư vấn (Dán vào đây, trước </body>) -->
 <script>
     document.getElementById('an-tin-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+        e.preventDefault(); // Chặn hành vi load lại trang mặc định
+
+        // 1. Đổi chữ trên nút lập tức để khách biết hệ thống đang xử lý, không bị cảm giác "đứng hình"
+        var submitBtn = e.target.querySelector('button[type="submit"]') || document.querySelector('button');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = "Đang phân tích dữ liệu AI...";
+        }
+
+        // 2. Lấy dữ liệu an toàn tuyệt đối (Không lo lỗi null crash script)
+        var hoTen = document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : '';
+        var soDienThoai = document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : '';
+        var emailKhach = document.getElementById('email_khach') ? document.getElementById('email_khach').value : '';
+        
+        // Tự động nhận diện loại không gian dựa trên nút đang được kích hoạt (active)
+        var selectedSpace = 'Nhà ở / Biệt thự';
+        var spaceInput = document.getElementById('space_input');
+        if (spaceInput && spaceInput.value) {
+            selectedSpace = spaceInput.value;
+        } else {
+            // Mẹo quét nhanh phần tử đang được chọn dựa trên viền xanh/đậm của Class
+            var activeCard = document.querySelector('.border-blue-600, .border-primary, [class*="active"], [class*="selected"]');
+            if (activeCard) {
+                selectedSpace = activeCard.innerText.trim().split('\n')[0];
+            }
+        }
 
         var data = {
-            ho_ten: document.getElementById('ho_ten') ? document.getElementById('ho_ten').value : '',
-            so_dien_thoai: document.getElementById('so_dien_thoai') ? document.getElementById('so_dien_thoai').value : '',
-            email: document.getElementById('email_khach') ? document.getElementById('email_khach').value : '',
-            loai_hinh: document.getElementById('space_input') ? document.getElementById('space_input').value : 'Chưa chọn'
+            ho_ten: hoTen,
+            so_dien_thoai: soDienThoai,
+            email: emailKhach,
+            loai_hinh: selectedSpace
         };
 
         var url = "https://script.google.com/macros/s/AKfycbxtS7NM5ddOafIWItG8GRc2Y2xpcDDW1qNlk_uedORhfuqcazQGPu-AGBR_YrPTpPtuMw/exec";
         var params = new URLSearchParams(data);
 
+        // Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
         if (typeof window.showAIScore === 'function') {
             window.showAIScore();
         }
 
-       fetch(url + "?" + params.toString())
-    .then(res => {
-        // Lấy giá trị khách chọn (Nhà ở, Cửa hàng, Kho bãi...)
-        var selectedSpace = document.getElementById('space_input') ? document.getElementById('space_input').value : 'Nhà ở / Biệt thự';
-        // Chuyển hướng kèm tham số không gian
+        // 3. Gửi dữ liệu đi với chế độ 'no-cors' để vượt qua cơ chế chặn của Google Script
+        fetch(url + "?" + params.toString(), { mode: 'no-cors' })
+            .then(function() {
+                window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+            })
+            .catch(function() {
+                window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+            });
+
+        // 4. ĐỘI CỨU HỘ KHẨN CẤP: Nếu quá 3 giây mạng lag chưa phản hồi, tự động chuyển hướng luôn
         setTimeout(function() {
             window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
-        }, 4000); 
-    })
-    .catch(err => {
-        var selectedSpace = document.getElementById('space_input') ? document.getElementById('space_input').value : 'Nhà ở / Biệt thự';
-        window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+        }, 3000);
     });
+</script>
+</body> <!-- Thẻ kết thúc -->
+</html>
