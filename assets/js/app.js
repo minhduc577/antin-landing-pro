@@ -355,14 +355,6 @@ if (leadForm) {
         });
     }
 
-        // 5. KHÔI PHỤC NÚT GỬI
-        const submitBtn = document.getElementById("submit-form-btn") || (leadForm ? leadForm.querySelector("button[type='submit']") : null);
-        if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `<i class="fas fa-file-invoice text-sm"></i> NHẬN PHƯƠNG ÁN THIẾT KẾ MAY ĐO & FILE EBOOK`;
-        }
-   };
-
     function showStatus(message, className) {
         if (formStatus) {
             formStatus.textContent = message;
