@@ -18,38 +18,56 @@
 </a>
     </div>
 
-    <script>
-    // 1. Lấy dữ liệu từ trang chủ
-    const loaiHinh = localStorage.getItem('loai_hinh') || "không gian của bạn";
+   <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Đọc loại không gian từ URL khách vừa chọn
+    const urlParams = new URLSearchParams(window.location.search);
+    let space = urlParams.get('space') || 'Nhà ở / Biệt thự';
     
-    // 2. Thiết lập nội dung tư vấn dựa trên loại hình khách chọn
-    let noiDungTuVan = "";
-    
-    if (loaiHinh === 'Nhà ở') {
-        noiDungTuVan = `<li>Tối ưu hóa không gian sống hiện đại, thông minh.</li>
-                        <li>Giải pháp chiếu sáng tiết kiệm điện cho biệt thự.</li>
-                        <li>Thiết kế điện thẩm mỹ, an toàn tuyệt đối cho gia đình.</li>`;
-    } else if (loaiHinh === 'Cửa hàng') {
-        noiDungTuVan = `<li>Hệ thống đèn làm nổi bật sản phẩm trưng bày.</li>
-                        <li>Giải pháp điện vận hành chuỗi shop 24/7 ổn định.</li>
-                        <li>Giám sát từ xa giúp quản lý cửa hàng hiệu quả.</li>`;
-    } else if (loaiHinh === 'Kho bãi') {
-        noiDungTuVan = `<li>Hệ thống điện công suất lớn, vận hành chịu tải cao.</li>
-                        <li>Giải pháp chiếu sáng nhà xưởng đạt chuẩn quốc tế.</li>
-                        <li>Hệ thống chống cháy nổ và an toàn công nghiệp.</li>`;
+    // Tìm các phần tử giao diện để thay đổi nội dung (Cấu hình theo class/id thực tế của anh)
+    const titleElement = document.querySelector('.card h3') || document.body; 
+    const listContainer = document.querySelector('ul'); 
+
+    let aiRecommendations = [];
+
+    // 2. Bộ não phân tích logic chuẩn mảng kinh doanh AN TÍN TECHNOLOGY
+    if (space.includes("Nhà ở") || space.includes("Biệt thự")) {
+        aiRecommendations = [
+            "Hệ thống Camera AI giám sát vòng ngoài chống góc chết, tích hợp hồng ngoại ban đêm siêu sắc nét.",
+            "Khóa cửa vân tay thông minh bảo mật đa tầng, tự động gửi cảnh báo cạy phá về điện thoại real-time.",
+            "Giải pháp mạng Wifi Mesh phủ xanh mọi tầng lầu, đảm bảo kết nối mượt mà cho các thiết bị thông minh."
+        ];
+    } else if (space.includes("Cửa Hàng") || space.includes("Shop")) {
+        aiRecommendations = [
+            "Camera AI độ phân giải cao giám sát quầy thu ngân chặt chẽ và hỗ trợ đếm lượt khách ra vào.",
+            "Mạng Wifi chuyên dụng chịu tải cao cho khách hàng, tách biệt phân quyền bảo mật dữ liệu nội bộ.",
+            "Hệ thống báo động chống trộm, cảm biến hồng ngoại tự động kích hoạt loa hú khi hết giờ làm việc."
+        ];
+    } else if (space.includes("Kho Bãi") || space.includes("Nhà Xưởng")) {
+        aiRecommendations = [
+            "Camera IP thân trụ chuẩn chống nước IP67, tầm xa hồng ngoại 50m-80m chuyên dụng cho không gian lớn.",
+            "Hạ tầng mạng CNTT băng thông lớn, kết nối hệ thống tủ rack và máy chủ vận hành ổn định.",
+            "Hàng rào điện tử và cảm biến báo động đột nhập vùng biên, bảo vệ tài sản doanh nghiệp 24/7."
+        ];
     } else {
-        noiDungTuVan = `<li>Giải pháp thiết kế điện "may đo" cho mọi công trình.</li>
-                        <li>Tiết kiệm 30% chi phí vận hành.</li>
-                        <li>Hỗ trợ kỹ thuật 24/7 từ đội ngũ AN TÍN.</li>`;
+        // Phương án tổng hợp mặc định của AN TÍN
+        aiRecommendations = [
+            "Hệ thống Camera giám sát và thiết bị an ninh tích hợp AI tiên tiến nhất.",
+            "Hạ tầng mạng Wifi công nghệ mới và hệ thống CNTT tối ưu hóa hiệu năng.",
+            "Giải pháp khóa cửa vân tay và báo động chống trộm toàn diện từ chuyên gia AN TÍN."
+        ];
     }
 
-    // 3. Hiển thị ra màn hình
-    document.getElementById('ai-result-content').innerHTML = `
-        <h3 class="font-bold text-xl mb-3 text-navy">Kết quả cho: ${loaiHinh}</h3>
-        <ul class="list-disc ml-5 mt-2 text-left space-y-2">
-            ${noiDungTuVan}
-        </ul>
-    `;
+    // 3. Render dữ liệu ra màn hình một cách mượt mà
+    if (listContainer) {
+        listContainer.innerHTML = aiRecommendations.map(item => `
+            <li class="flex items-start space-x-2 text-gray-700">
+                <span class="text-red-600 mr-2">•</span>
+                <span>${item}</span>
+            </li>
+        `).join('');
+    }
+});
 </script>
 </body>
 </html>
