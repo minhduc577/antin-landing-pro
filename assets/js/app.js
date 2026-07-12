@@ -290,56 +290,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Cấu hình gửi AJAX Form chống reload trang
-  if (leadForm) {
+if (leadForm) {
     leadForm.addEventListener("submit", async (e) => {
-        // 1. Chặn đứng mọi hành động mặc định của trình duyệt
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        // 2. Kiểm tra spam
-        const honeypotEl = document.getElementById("honeypot_field");
-        if (honeypotEl && honeypotEl.value) return;
+        // 1. Kiểm tra Spam (Honeypot)
+        const honeypot = document.getElementById("honeypot_field");
+        if (honeypot && honeypot.value) return;
 
-        // 3. Kiểm tra dữ liệu (Logic cũ của anh)
-        const submitBtn = document.getElementById("submit-form-btn") || leadForm.querySelector("button[type='submit']");
+        // 2. Xác định các trường dữ liệu
+        const submitBtn = document.getElementById("submit-form-btn");
         const fullname = document.getElementById("fullname")?.value.trim();
         const phone = document.getElementById("phone")?.value.trim();
-        
+        const emailKhach = document.getElementById("email_khach")?.value.trim();
+
+        // 3. Validation
         if (!fullname || !phone) {
-            showStatus("Vui lòng điền đầy đủ Họ tên và Số điện thoại.", "alert-danger");
+            alert("Vui lòng điền đầy đủ Họ tên và Số điện thoại.");
             return;
         }
 
         // 4. Xử lý UI
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý mã hóa...`;
+            submitBtn.innerHTML = "Đang xử lý mã hóa...";
         }
 
-        // 5. Gửi dữ liệu
+        // 5. Gửi dữ liệu (AJAX)
         try {
             const formData = new FormData(leadForm);
-            const emailKhach = document.getElementById("email_khach")?.value.trim();
             if (emailKhach) formData.append("email", emailKhach);
-            
-            // Lấy URL từ thuộc tính action của form
-            const GOOGLE_FORM_ACTION_URL = leadForm.getAttribute("action");
 
-            await fetch(GOOGLE_FORM_ACTION_URL, {
+            await fetch(leadForm.getAttribute("action"), {
                 method: "POST",
                 mode: "no-cors",
                 body: formData
             });
 
-            // 6. CHUYỂN TRANG
-          window.location.href = tu-van-ai.html;
-        
-    } catch (error) {
-        console.error(Lỗi:, error);
-        if (submitBtn) submitBtn.disabled = false;
-    }
-});
-
+            // 6. Chuyển trang sau khi hoàn tất
+            window.location.href = "tu-van-ai.html";
+        } catch (error) {
+            console.error("Lỗi:", error);
+            if (submitBtn) submitBtn.disabled = false;
+        }
+    });
+}
                     // 2. Chuyển sang trang tư vấn AI ngay sau khi gửi xong
                     const loaiHinh = document.getElementById('space_input') ? document.getElementById('space_input').value : "không gian của bạn";
                     localStorage.setItem('loai_hinh', loaiHinh);
