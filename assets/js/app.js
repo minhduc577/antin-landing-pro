@@ -290,14 +290,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Cấu hình gửi AJAX Form chống reload trang
-    if (leadForm) {
-        leadForm.addEventListener("submit", async (e) => {
-            const honeypotEl = document.getElementById("honeypot_field");
-            if (honeypotEl && honeypotEl.value) {
-                e.preventDefault();
-                console.warn("Spam Bot detected!");
-                return;
-            }
+        if (leadForm) {
+    leadForm.addEventListener("submit", async (e) => {
+        // Chặn chuyển trang mặc định
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        // Kiểm tra Spam
+        const honeypotEl = document.getElementById("honeypot_field");
+        if (honeypotEl && honeypotEl.value) {
+            console.warn("Spam Bot detected!");
+            return;
+        }
+
+        // Thực hiện gửi dữ liệu (AJAX) và chuyển trang thủ công
+        try {
+            const formData = new FormData(leadForm);
+            await fetch(leadForm.getAttribute("action"), {
+                method: "POST",
+                mode: "no-cors",
+                body: formData
+            });
+            window.location.href = "tu-van-ai.html";
+        } catch (error) {
+            console.error("Lỗi:", error);
+        }
+    });
+}
 
             window.formSubmitted = true;
             const submitBtn = document.getElementById("submit-form-btn") || leadForm.querySelector("button[type='submit']");
