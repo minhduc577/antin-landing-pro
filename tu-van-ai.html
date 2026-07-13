@@ -22,90 +22,70 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
-    let space = decodeURIComponent(urlParams.get('space') || 'Nhà ở / Biệt thự');
-
+    const space = decodeURIComponent(urlParams.get('space') || 'Nhà ở / Biệt thự');
     const resultBox = document.getElementById('ai-result-content');
-    if (!resultBox) return;
 
-    let titleText = `Giải pháp & Ước tính ngân sách cho: ${space}`;
-    let aiRecommendations = [];
-    let comboPrice = "";
-
-    // =========================================================================
-    // 1. KHỐI LOGIC: PHÂN TÍCH THEO HỆ SINH THÁI DỊCH VỤ TRỌN GÓI CỦA AN TÍN
-    // =========================================================================
-    if (space.includes("Nhà ở") || space.includes("Biệt thự")) {
-        aiRecommendations = [
-            "Hệ thống Camera AI giám sát vòng ngoài chống góc chết, tích hợp khóa cửa thông minh bảo mật vân tay đa tầng bảo vệ gia đình bạn.",
-            "Giải pháp mạng Wi-Fi Mesh phủ xanh mọi ngóc ngách và lắp đặt hệ thống điện thông minh (Smart Home) điều khiển bằng giọng nói/smartphone.",
-            "Kiểm tra an toàn hệ thống điện dân dụng, bảo trì định kỳ thiết bị điện gia đình (bếp điện, quạt, nồi điện) phòng chống cháy nổ."
-        ];
-        comboPrice = "Từ 4.500.000đ - 12.000.000đ (Trọn gói lắp đặt + Thiết bị cao cấp)";
-    } 
-    else if (space.includes("Cửa hàng") || space.includes("Shop") || space.includes("Chuỗi")) {
-        aiRecommendations = [
-            "Camera AI giám sát quầy thu ngân chống thất thoát, kết hợp hệ thống chấm công vân tay / kiểm soát ra vào nhân viên chính xác.",
-            "Hạ tầng mạng Wi-Fi chuyên dụng chịu tải cao (chống rớt mạng khi khách đông) và thiết kế Website bán hàng chuẩn SEO chuyên nghiệp.",
-            "Hệ thống Cloud Server / Hosting vận hành ổn định và giải pháp báo động chống trộm, báo cháy tự động sau giờ quản lý."
-        ];
-        comboPrice = "Từ 6.800.000đ - 18.000.000đ (Tối ưu hạ tầng mạng, web và an ninh)";
-    } 
-    else if (space.includes("Kho Bãi") || space.includes("Nhà Xưởng")) {
-        aiRecommendations = [
-            "Camera IP thân trụ hồng ngoại tầm xa trên 80m chuẩn IP67 chịu thời tiết, tích hợp hàng rào ảo cảnh báo đột nhập vùng biên.",
-            "Hạ tầng CNTT chuyên nghiệp: Thiết kế phòng máy, tủ rack, hệ thống mạng Wi-Fi diện rộng cho nhà xưởng quản lý số liệu liên tục.",
-            "Thi công, đấu nối tủ điện công nghiệp công suất lớn; bảo trì định kỳ hệ thống tự động hóa và thiết bị điện nhà xưởng."
-        ];
-        comboPrice = "Từ 15.000.000đ - 45.000.000đ (Thiết bị chuyên dụng tải cao)";
-    } 
-    else {
-        // Trường hợp mặc định - Lời chào tổng lực của An Tín
-        aiRecommendations = [
-            "Tích hợp trọn gói giải pháp Công nghệ thông tin & An ninh: Camera giám sát, Wi-Fi tốc độ cao, Tổng đài nội bộ và Website doanh nghiệp.",
-            "Giải pháp An toàn & Tiện ích: Hệ thống điện thông minh (Smart Home), báo cháy tự động và khóa cửa từ bảo mật cao nâng tầm công trình.",
-            "Dịch vụ Kỹ thuật điện trọn gói: Thi công điện dân dụng/công nghiệp, sửa chữa thiết bị điện gia dụng nhanh từ 3 - 24 giờ tại TP.HCM."
-        ];
-        comboPrice = "Liên hệ Hotline: 0914 060 339 để nhận khảo sát & báo giá miễn phí";
-    }
-
-    // =========================================================================
-    // 2. KHỐI HIỂN THỊ: ĐẶT HOÀN TOÀN BÊN NGOÀI KHỐI IF...ELSE
-    // =========================================================================
-    
-    // Cập nhật giá combo
-    const priceDisplay = document.getElementById("combo-price-display");
-    if (priceDisplay) {
-        priceDisplay.innerText = comboPrice;
-    }
-
-    // Cập nhật danh sách các giải pháp
-    const listContainer = document.getElementById("ai-recommendations-list");
-    if (listContainer) {
-        listContainer.innerHTML = ""; // Xóa danh sách cũ
-        aiRecommendations.forEach(item => {
-            let li = document.createElement("li");
-            li.innerText = item;
-            listContainer.appendChild(li);
-        });
-    }
+    // 1. KỸ THUẬT SKELETON SCREEN (Giữ chân khách hàng)
+    resultBox.style.transition = "opacity 0.5s ease";
+    resultBox.style.opacity = "0.5";
     resultBox.innerHTML = `
-        <div class="w-full">
-            <h3 class="text-xl font-bold text-blue-900 mb-4 text-center md:text-left">${titleText}</h3>
-            <ul class="space-y-3 text-left list-none pl-0 mb-6">
-                ${aiRecommendations.map(item => `
-                    <li class="flex items-start">
-                        <span class="text-red-600 mr-2 font-bold text-lg">•</span>
-                        <span class="text-gray-700 font-medium text-base">${item}</span>
-                    </li>
-                `).join('')}
+        <div class="animate-pulse p-8">
+            <h3 class="text-xl font-bold text-gray-400">An Tín đang thiết kế giải pháp riêng cho không gian "${space}" của anh...</h3>
+        </div>`;
+
+    // 2. LOGIC "HUMANIZE" & GOM HỒ SƠ KHÁCH HÀNG
+    const strategies = {
+        "Cửa hàng": {
+            intro: `Dựa trên không gian "${space}" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:`,
+            points: [
+                "Hệ thống an ninh 24/7: Đóng vai trò quản lý kỹ thuật, giúp anh phát hiện sự cố quầy thu ngân tức thì mà không cần trực tiếp có mặt.",
+                "Hạ tầng mạng chịu tải cao: Đảm bảo doanh thu thông suốt, không gián đoạn kết nối khi khách hàng đông.",
+                "Dịch vụ trọn gói: An Tín xử lý cả điện văn phòng & website, anh chỉ cần tập trung kinh doanh."
+            ],
+            price: "Từ 6.800.000đ - 18.000.000đ"
+        },
+        "default": {
+            intro: `Chào anh, An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:`,
+            points: [
+                "Giải pháp an ninh đa tầng giúp bảo vệ tài sản tuyệt đối 24/7.",
+                "Hệ thống điện thông minh & Internet tốc độ cao nâng tầm trải nghiệm sử dụng.",
+                "Bảo trì trọn gói định kỳ, hỗ trợ kỹ thuật từ 3-24h."
+            ],
+            price: "Liên hệ Hotline 0914 060 339 để được tư vấn miễn phí"
+        }
+    };
+
+    // 3. TỐI ƯU HÓA & RENDERING
+    setTimeout(() => {
+        const data = strategies[space] || strategies["default"];
+        resultBox.style.opacity = "1";
+        
+        resultBox.innerHTML = `
+            <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
+            <ul class="space-y-4 text-left mb-6">
+                ${data.points.map(p => `<li class="flex items-start"><span class="text-red-600 mr-2 text-lg">✦</span><span class="text-gray-700 font-medium">${p}</span></li>`).join('')}
             </ul>
-            <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-left">
-                <p class="text-amber-900 font-bold text-lg mb-1">💰 Ngân sách Combo dự kiến (Gồm Camera, Đầu ghi, Lắp đặt, Bảo trì):</p>
-                <p class="text-red-600 font-extrabold text-xl">${comboPrice}</p>
-                <p class="text-gray-500 text-xs mt-2">* Chi phí thực tế phụ thuộc vào khảo sát tận nơi và số lượng mắt camera yêu cầu.</p>
+            
+            <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
+                <p class="font-bold text-blue-900 mb-2 text-sm">💡 Anh có gặp khó khăn thêm với:</p>
+                <div class="flex flex-wrap gap-2">
+                    <button class="bg-white px-3 py-1 rounded-full border border-blue-300 text-sm hover:bg-blue-100">Mạng Wi-Fi chập chờn?</button>
+                    <button class="bg-white px-3 py-1 rounded-full border border-blue-300 text-sm hover:bg-blue-100">Thiết bị điện hay hỏng?</button>
+                </div>
             </div>
-        </div>
-    `;
+
+            <div class="bg-amber-50 p-4 rounded-lg mb-2 text-left border border-amber-200">
+                <p class="font-bold text-red-600 text-lg">💰 Ngân sách dự kiến: ${data.price}</p>
+            </div>
+            <p class="text-[10px] text-gray-400 italic">Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín</p>
+        `;
+
+        // 4. KÊU GỌI HÀNH ĐỘNG (CTA) KHAN HIẾM
+        const ctaButton = document.querySelector("a[href='thankyou.html']");
+        if (ctaButton) {
+            ctaButton.innerText = "Đăng ký nhận phương án khảo sát miễn phí (Chỉ còn 3 suất trong tuần này)";
+        }
+    }, 800);
 });
 </script>
 </body>
