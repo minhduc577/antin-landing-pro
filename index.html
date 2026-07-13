@@ -528,43 +528,44 @@
             }
         }
 
-        var data = {
-            ho_ten: hoTen,
-            so_dien_thoai: soDienThoai,
-            email: emailKhach,
-            loai_hinh: selectedSpace
-        };
+var data = {
+        ho_ten: hoTen,
+        so_dien_thoai: soDienThoai,
+        email: emailKhach,
+        loai_hinh: selectedSpace
+    };
 
-        var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJI16E5kB-_1KVDDGoo_BiTdE4Caf0tBUoz3-iNgusUwUkhNNezr7U2-9Q/exec";
+    var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJI16E5kB-_1KVDDGoo_BiTdE4Caf0tBUoz3-iNgusUwUkhNNezr7U2-9Q/exec";
+    var params = new URLSearchParams(data);
 
-// Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
-if (typeof window.showAIScore === 'function') {
-    window.showAIScore();
-}
+    // Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
+    if (typeof window.showAIScore === 'function') {
+        window.showAIScore();
+    }
 
-// Hàm xử lý chuyển trang đồng bộ sang tư vấn AI
-function chuyenTrangTuVan() {
-    window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
-}
+    // Hàm xử lý chuyển trang đồng bộ sang tư vấn AI
+    function chuyenTrangTuVan() {
+        window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+    }
 
-// Cơ chế Đội cứu hộ khẩn cấp: Tối đa 2.5 giây nếu mạng lag tự động chuyển hướng
-var crmTimeout = setTimeout(chuyenTrangTuVan, 2500);
+    // Cơ chế Đội cứu hộ khẩn cấp: Tối đa 2.5 giây nếu mạng lag tự động chuyển hướng
+    var crmTimeout = setTimeout(chuyenTrangTuVan, 2500);
 
-// 3. Gửi dữ liệu đi với chế độ POST và xử lý đồng bộ
-fetch(url, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString()
-})
-.then(function() {
-    clearTimeout(crmTimeout); // Xóa bộ đếm thời gian nếu thành công sớm
-    chuyenTrangTuVan();
-})
-.catch(function() {
-    clearTimeout(crmTimeout);
-    chuyenTrangTuVan();
-});
+    // Gửi dữ liệu đi với chế độ POST và xử lý đồng bộ
+    fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+    })
+    .then(function() {
+        clearTimeout(crmTimeout); // Xóa bộ đếm thời gian nếu thành công sớm
+        chuyenTrangTuVan();
+    })
+    .catch(function() {
+        clearTimeout(crmTimeout);
+        chuyenTrangTuVan();
+    });
 </script>
 </body> <!-- Thẻ kết thúc -->
 </html>
