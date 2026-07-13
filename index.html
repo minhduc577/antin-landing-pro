@@ -527,7 +527,15 @@
                 selectedSpace = activeCard.innerText.trim().split('\n')[0];
             }
         }
- var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJIl6E5kB-_lKVDDGoo_BiTdE4CafOtBUoz3-iNGusUWUkhNNezr7U2-9Q/exec";
+
+        var data = {
+            ho_ten: hoTen,
+            so_dien_thoai: soDienThoai,
+            email: emailKhach,
+            loai_hinh: selectedSpace
+        };
+
+        var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJIl6E5kB-_lKVDDGoo_BiTdE4CafOtBUoz3-iNGusUWUkhNNezr7U2-9Q/exec";
         var params = new URLSearchParams(data);
 
         // Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
