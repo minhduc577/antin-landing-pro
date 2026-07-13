@@ -536,7 +536,7 @@
         };
 
         var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJIl6E5kB-_lKVDDGoo_BiTdE4CafOtBUoz3-iNGusUWUkhNNezr7U2-9Q/exec";
-
+        var params = new URLSearchParams(data);
 // Hàm xử lý chuyển trang đồng bộ, an toàn tuyệt đối cho tính năng Tư vấn AI
 function chuyểnTrangTưVấn() {
     window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
