@@ -52,16 +52,24 @@ document.addEventListener("DOMContentLoaded", function() {
             "Thi công, đấu nối tủ điện công nghiệp công suất lớn và bảo trì hệ thống tự động hóa thiết bị điện nhà xưởng."
         ];
         comboPrice = "Từ 15.000.000đ - 45.000.000đ (Chuyên dụng cho không gian lớn)";
-    } else {
-        document.getElementById("combo-price-display").innerText = comboPrice;
+       } else {
+        aiRecommendations = [
+            "Tích hợp trọn gói giải pháp Công nghệ thông tin: Camera an ninh, Wi-Fi tốc độ cao, Tổng đài và Hạ tầng mạng CNTT.",
+            "Giải pháp An toàn & Tiện ích: Hệ thống báo cháy tự động, khóa thông minh và Smart Home nâng tầm cuộc sống.",
+            "Dịch vụ Kỹ thuật điện trọn gói: Thi công điện dân dụng/công nghiệp, sửa chữa thiết bị điện gia dụng nhanh từ 3-24h."
+        ];
+        comboPrice = "Liên hệ để nhận báo giá tối ưu";
+    }
+    document.getElementById("combo-price-display").innerText = comboPrice;
 
-const listContainer = document.getElementById("ai-recommendations-list");
-listContainer.innerHTML = ""; 
-aiRecommendations.forEach(item => {
-    let li = document.createElement("li");
-    li.innerText = item;
-    listContainer.appendChild(li);
-});
+    const listContainer = document.getElementById("ai-recommendations-list");
+    listContainer.innerHTML = ""; 
+
+    aiRecommendations.forEach(item => {
+        let li = document.createElement("li");
+        li.innerText = item;
+        listContainer.appendChild(li);
+    });
         aiRecommendations = [
             "Tích hợp trọn gói giải pháp Công nghệ thông tin: Camera an ninh, Wi-Fi tốc độ cao, Tổng đài và Hạ tầng mạng CNTT.",
             "Giải pháp An toàn & Tiện ích: Hệ thống báo cháy tự động, khóa thông minh và Smart Home nâng tầm cuộc sống.",
