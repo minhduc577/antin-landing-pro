@@ -25,12 +25,13 @@ document.addEventListener("DOMContentLoaded", function() {
     let space = decodeURIComponent(urlParams.get('space') || 'Nhà ở / Biệt thự');
 
     const resultBox = document.getElementById('ai-result-content');
-    if (!resultBox) return; 
+    if (!resultBox) return;
 
     let titleText = `Giải pháp & Ước tính ngân sách cho: ${space}`;
     let aiRecommendations = [];
     let comboPrice = "";
 
+    // 1. KHỐI LOGIC: Chỉ dùng để phân tích và gán giá trị vào biến
     if (space.includes("Nhà ở") || space.includes("Biệt thự")) {
         aiRecommendations = [
             "Hệ thống Camera AI giám sát vòng ngoài chống góc chết, tích hợp khóa cửa thông minh bảo mật vân tay đa tầng.",
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "Thiết kế, thi công điện dân dụng an toàn, bảo trì định kỳ thiết bị điện gia đình (bếp điện, quạt, nồi điện)."
         ];
         comboPrice = "Từ 4.500.000đ - 12.000.000đ (Trọn gói lắp đặt + Thiết bị)";
-    } else if (space.includes("Cửa Hàng") || space.includes("Shop") || space.includes("Chuỗi")) {
+    } else if (space.includes("Cửa hàng") || space.includes("Shop") || space.includes("Chuỗi")) {
         aiRecommendations = [
             "Camera AI giám sát quầy thu ngân kết hợp kiểm soát ra vào, chấm công vân tay nhân viên chính xác.",
             "Hạ tầng mạng Wi-Fi chuyên dụng chịu tải cao, thiết kế Website bán hàng và hệ thống Cloud Server vận hành ổn định.",
@@ -52,21 +53,27 @@ document.addEventListener("DOMContentLoaded", function() {
             "Thi công, đấu nối tủ điện công nghiệp công suất lớn và bảo trì hệ thống tự động hóa thiết bị điện nhà xưởng."
         ];
         comboPrice = "Từ 15.000.000đ - 45.000.000đ (Chuyên dụng cho không gian lớn)";
-       } else {
+    } else {
         aiRecommendations = [
             "Tích hợp trọn gói giải pháp Công nghệ thông tin: Camera an ninh, Wi-Fi tốc độ cao, Tổng đài và Hạ tầng mạng CNTT.",
             "Giải pháp An toàn & Tiện ích: Hệ thống báo cháy tự động, khóa thông minh và Smart Home nâng tầm cuộc sống.",
             "Dịch vụ Kỹ thuật điện trọn gói: Thi công điện dân dụng/công nghiệp, sửa chữa thiết bị điện gia dụng nhanh từ 3-24h."
         ];
-        comboPrice = "Liên hệ để nhận báo giá tối ưu";
-    document.getElementById("combo-price-display").innerText = comboPrice;
-    const listContainer = document.getElementById("ai-recommendations-list");
-listContainer.innerHTML = ""; 
+        comboPrice = "Liên hệ hotline để nhận báo giá may đo chính xác nhất";
+    }
 
-aiRecommendations.forEach(item => {
-    let li = document.createElement("li");
-    li.innerText = item;
-    listContainer.appendChild(li);
+    // 2. KHỐI HIỂN THỊ: Đặt hoàn toàn độc lập phía ngoài, sau khi cấu trúc if...else kết thúc
+    document.getElementById("combo-price-display").innerText = comboPrice;
+
+    const listContainer = document.getElementById("ai-recommendations-list");
+    if (listContainer) {
+        listContainer.innerHTML = ""; 
+        aiRecommendations.forEach(item => {
+            let li = document.createElement("li");
+            li.innerText = item;
+            listContainer.appendChild(li);
+        });
+    }
 });
     resultBox.innerHTML = `
         <div class="w-full">
