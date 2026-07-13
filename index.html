@@ -536,27 +536,30 @@
         };
 
         var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJIl6E5kB-_lKVDDGoo_BiTdE4CafOtBUoz3-iNGusUWUkhNNezr7U2-9Q/exec";
-        var params = new URLSearchParams(data);
 
-        // Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
-        if (typeof window.showAIScore === 'function') {
-            window.showAIScore();
-        }
+// Hàm xử lý chuyển trang đồng bộ, an toàn tuyệt đối cho tính năng Tư vấn AI
+function chuyểnTrangTưVấn() {
+    window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+}
 
-        // 3. Gửi dữ liệu đi với chế độ 'no-cors' để vượt qua cơ chế chặn của Google Script
-        fetch(url + "?" + params.toString(), { mode: 'no-cors' })
-            .then(function() {
-                window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
-            })
-            .catch(function() {
-                window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
-            });
+// Cơ chế Đội cứu hộ khẩn cấp: Tối đa 2.5 giây nếu mạng lag tự động kích hoạt chuyển trang
+var crmTimeout = setTimeout(chuyểnTrangTưVấn, 2500);
 
-        // 4. ĐỘI CỨU HỘ KHẨN CẤP: Nếu quá 3 giây mạng lag chưa phản hồi, tự động chuyển hướng luôn
-        setTimeout(function() {
-            window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
-        }, 3000);
-    });
+// Thực hiện đẩy dữ liệu dạng POST
+fetch(url, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString()
+})
+.then(function() {
+    clearTimeout(crmTimeout); // Xóa bộ đếm thời gian nếu gửi thành công sớm
+    chuyểnTrangTưVấn();
+})
+.catch(function() {
+    clearTimeout(crmTimeout);
+    chuyểnTrangTưVấn();
+});
 </script>
 </body> <!-- Thẻ kết thúc -->
 </html>
