@@ -527,44 +527,27 @@
                 selectedSpace = activeCard.innerText.trim().split('\n')[0];
             }
         }
+ var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJIl6E5kB-_lKVDDGoo_BiTdE4CafOtBUoz3-iNGusUWUkhNNezr7U2-9Q/exec";
+        var params = new URLSearchParams(data);
 
-var data = {
-        ho_ten: hoTen,
-        so_dien_thoai: soDienThoai,
-        email: emailKhach,
-        loai_hinh: selectedSpace
-    };
+        // Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
+        if (typeof window.showAIScore === 'function') {
+            window.showAIScore();
+        }
 
-    var url = "https://script.google.com/macros/s/AKfycbwU7X5_YvHYXJI16E5kB-_1KVDDGoo_BiTdE4Caf0tBUoz3-iNgusUwUkhNNezr7U2-9Q/exec";
-    var params = new URLSearchParams(data);
+        // 3. Gửi dữ liệu đi với chế độ 'no-cors' để vượt qua cơ chế chặn của Google Script
+        fetch(url + "?" + params.toString(), { mode: 'no-cors' })
+            .then(function() {
+                window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+            })
+            .catch(function() {
+                window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+            });
 
-    // Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
-    if (typeof window.showAIScore === 'function') {
-        window.showAIScore();
-    }
-
-    // Hàm xử lý chuyển trang đồng bộ sang tư vấn AI
-    function chuyenTrangTuVan() {
-        window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
-    }
-
-    // Cơ chế Đội cứu hộ khẩn cấp: Tối đa 2.5 giây nếu mạng lag tự động chuyển hướng
-    var crmTimeout = setTimeout(chuyenTrangTuVan, 2500);
-
-    // Gửi dữ liệu đi với chế độ POST và xử lý đồng bộ
-    fetch(url, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-    })
-    .then(function() {
-        clearTimeout(crmTimeout); // Xóa bộ đếm thời gian nếu thành công sớm
-        chuyenTrangTuVan();
-    })
-    .catch(function() {
-        clearTimeout(crmTimeout);
-        chuyenTrangTuVan();
+        // 4. ĐỘI CỨU HỘ KHẨN CẤP: Nếu quá 3 giây mạng lag chưa phản hồi, tự động chuyển hướng luôn
+        setTimeout(function() {
+            window.location.href = "tu-van-ai.html?space=" + encodeURIComponent(selectedSpace);
+        }, 3000);
     });
 </script>
 </body> <!-- Thẻ kết thúc -->
