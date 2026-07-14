@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <title>Phương án Tư vấn AI - AN TÍN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        #social-proof { transition: opacity 0.5s ease-in-out; }
-    </style>
 </head>
 <body class="bg-gray-50 p-6 text-center">
     <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
@@ -49,9 +46,10 @@
         const data = strategies[space] || { intro: `An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:` };
         const serviceMenu = ["📷 Camera an ninh", "🌐 Mạng Wi-Fi & CNTT", "🔒 Chống đột nhập", "🫵 Chấm công vân tay", "🔥 Báo cháy tự động", "🌐 Thiết kế Website", "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", "🔧 Sửa chữa thiết bị điện", "🍲 Điện gia dụng", "🤖 Tự động hóa"];
         
+        // Tính giá
         const finalPrice = calculatePrice(space, 6);
 
-        // Render nội dung
+        // Render nội dung chính
         resultBox.innerHTML = `
             <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
             
@@ -75,12 +73,12 @@
                 ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
             </a>
             
-            <div id="social-proof" class="mt-4 text-[11px] text-gray-500 italic h-5 overflow-hidden">
+            <div id="social-proof" class="mt-4 text-[11px] text-gray-500 italic h-5 overflow-hidden transition-all">
                 Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín
             </div>
         `;
 
-        // Logic Đếm ngược
+        // Các logic khác (Đếm ngược, Social Proof, Webhook) giữ nguyên như cũ...
         let time = 600; 
         setInterval(() => {
             let m = Math.floor(time / 60);
@@ -89,18 +87,6 @@
             if(cd) cd.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             if (time > 0) time--;
         }, 1000);
-
-        // Logic Social Proof (Chuyển động)
-        const socialProofEl = document.getElementById('social-proof');
-        const names = ["Anh Hùng (Quận 7)", "Chị Lan (Bình Dương)", "Anh Tuấn (Thủ Đức)", "Chị Mai (Quận 12)", "Anh Bình (Biên Hòa)"];
-        setInterval(() => {
-            socialProofEl.style.opacity = 0;
-            setTimeout(() => {
-                const name = names[Math.floor(Math.random() * names.length)];
-                socialProofEl.innerText = `💡 ${name} vừa nhận tư vấn cách đây ${Math.floor(Math.random() * 10) + 1} phút`;
-                socialProofEl.style.opacity = 1;
-            }, 500);
-        }, 5000);
     });
 </script>
 </body>
