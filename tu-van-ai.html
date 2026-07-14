@@ -52,21 +52,23 @@
         // Render nội dung chính
       // Thay đoạn code render trong file của bạn bằng đoạn này:
 resultBox.innerHTML = `
+ // Thay thế đoạn xử lý trong document.addEventListener cũ bằng đoạn này:
+
+// 1. Render nội dung
+resultBox.innerHTML = `
     <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
     
     <div class="border-2 border-red-200 rounded-xl p-4 mb-6 bg-red-50 text-center">
-        <div class="mb-4">
+        <div class="mb-3">
             <p class="text-red-700 font-bold text-sm">🔥 Ưu đãi khảo sát miễn phí kết thúc sau:</p>
             <div id="countdown" class="text-2xl font-mono font-bold text-red-600 mt-1">10:00</div>
         </div>
-
-        <div class="pt-3 border-t border-red-200 mb-4">
+        <div class="pt-3 border-t border-red-200">
             <p class="text-gray-600 text-sm font-semibold">💰 Ngân sách Combo dự kiến:</p>
             <p class="text-red-600 font-bold text-xl">${finalPrice}</p>
             <p class="text-gray-500 text-xs italic">Dải giá: Từ 6.800.000đ - 18.000.000đ</p>
         </div>
-
-        <div id="social-proof" class="text-[11px] text-gray-500 italic h-5 overflow-hidden transition-all duration-500">
+        <div id="social-proof" class="mt-3 text-[11px] text-gray-500 italic h-5 overflow-hidden transition-opacity duration-500">
             Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín
         </div>
     </div>
@@ -79,15 +81,31 @@ resultBox.innerHTML = `
         ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
     </a>
 `;
-        // Các logic khác (Đếm ngược, Social Proof, Webhook) giữ nguyên như cũ...
-        let time = 600; 
-        setInterval(() => {
-            let m = Math.floor(time / 60);
-            let s = time % 60;
-            const cd = document.getElementById('countdown');
-            if(cd) cd.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            if (time > 0) time--;
-        }, 1000);
+
+// 2. Kích hoạt hiệu ứng ngay sau khi render
+// Logic Đếm ngược
+let time = 600; 
+setInterval(() => {
+    let m = Math.floor(time / 60);
+    let s = time % 60;
+    const cd = document.getElementById('countdown');
+    if(cd) cd.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    if (time > 0) time--;
+}, 1000);
+
+// Logic Social Proof (Đảm bảo gọi đúng ID sau khi HTML đã render)
+const names = ["Anh Hùng (Quận 7)", "Chị Lan (Bình Dương)", "Anh Tuấn (Thủ Đức)", "Chị Mai (Quận 12)", "Anh Bình (Biên Hòa)"];
+setInterval(() => {
+    const el = document.getElementById('social-proof');
+    if(el) {
+        const name = names[Math.floor(Math.random() * names.length)];
+        el.style.opacity = 0; // Ẩn đi
+        setTimeout(() => {
+            el.innerText = `💡 ${name} vừa nhận tư vấn cách đây ${Math.floor(Math.random() * 10) + 1} phút`;
+            el.style.opacity = 1; // Hiện lại
+        }, 500);
+    }
+}, 5000);
     });
 </script>
 </body>
