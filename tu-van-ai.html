@@ -31,6 +31,32 @@
     const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở / Biệt thự';
     
     const resultBox = document.getElementById('ai-result-content');
+       // --- BƯỚC 3: TẠO HIỆU ỨNG AI SUY LUẬN ---
+    async function showLoadingEffect(element) {
+        const stages = [
+            "Đang quét dữ liệu không gian...",
+            "Đang tính toán định mức vật tư...",
+            "Đang tối ưu hóa vị trí đặt camera...",
+            "Đang cấu hình giải pháp bảo mật...",
+            "Đang hoàn tất phân tích AI..."
+        ];
+
+        for (let stage of stages) {
+            element.innerHTML = `
+                <div class="flex flex-col items-center p-10">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mb-4"></div>
+                    <p class="text-lg font-semibold text-gray-700">${stage}</p>
+                </div>
+            `;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+
+    // Gọi hàm hiệu ứng
+    await showLoadingEffect(resultBox);
+    
+    // Sau khi chạy xong hiệu ứng, hệ thống sẽ tiếp tục chạy các dòng code bên dưới
+    // để render kết quả thật (bắt đầu từ dòng 35 trở đi trong file của anh)
 
     // 1. KỸ THUẬT SKELETON SCREEN (Giữ chân khách hàng)
     resultBox.style.transition = "opacity 0.5s ease";
