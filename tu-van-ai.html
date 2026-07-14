@@ -24,7 +24,7 @@
 </a>
     </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+   document.addEventListener("DOMContentLoaded", async function() {
    // Lấy ưu tiên từ localStorage, nếu không có mới dùng URL, cuối cùng là mặc định
     const savedSpace = localStorage.getItem('loai_hinh');
     const urlParams = new URLSearchParams(window.location.search);
