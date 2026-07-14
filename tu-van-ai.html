@@ -88,7 +88,7 @@
         }
     };
 
-   // 3. TỐI ƯU HÓA & RENDERING VỚI HIỆU ỨNG AI
+  // 3. TỐI ƯU HÓA & RENDERING VỚI HIỆU ỨNG AI
     const data = strategies[space] || strategies["default"];
     const serviceMenu = ["📷 Camera an ninh", "🌐 Mạng Wi-Fi & CNTT", "🔒 Chống đột nhập", "🫵 Chấm công vân tay", "🔥 Báo cháy tự động", "🌐 Thiết kế Website", "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", "🔧 Sửa chữa thiết bị điện", "🍲 Điện gia dụng", "🤖 Tự động hóa"];
 
@@ -107,9 +107,7 @@
         }
     }, 1000);
 
-    // Sau 5 giây, hiển thị kết quả thật
-  
-       // Sau 5 giây, hiển thị kết quả thật
+    // Sau 5 giây, xóa interval và hiển thị kết quả thật duy nhất
     setTimeout(() => {
         clearInterval(loadingInterval);
         resultBox.style.opacity = "1";
@@ -132,7 +130,7 @@
             </a>
         `;
     }, 5000);
-   });
+});
 </script>
 </body>
 </html>
