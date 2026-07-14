@@ -24,24 +24,78 @@
 </a>
     </div>
 <script>
-document.addEventListener("DOMContentLoaded", async function() {
+   document.addEventListener("DOMContentLoaded", async function() {
+   // Lấy ưu tiên từ localStorage, nếu không có mới dùng URL, cuối cùng là mặc định
     const savedSpace = localStorage.getItem('loai_hinh');
     const urlParams = new URLSearchParams(window.location.search);
     const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở / Biệt thự';
+    
     const resultBox = document.getElementById('ai-result-content');
+       // --- BƯỚC 3: TẠO HIỆU ỨNG AI SUY LUẬN ---
+    async function showLoadingEffect(element) {
+        const stages = [
+            "Đang quét dữ liệu không gian...",
+            "Đang tính toán định mức vật tư...",
+            "Đang tối ưu hóa vị trí đặt camera...",
+            "Đang cấu hình giải pháp bảo mật...",
+            "Đang hoàn tất phân tích AI..."
+        ];
 
-    // 1. Dữ liệu tư vấn
+        for (let stage of stages) {
+            element.innerHTML = `
+                <div class="flex flex-col items-center p-10">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mb-4"></div>
+                    <p class="text-lg font-semibold text-gray-700">${stage}</p>
+                </div>
+            `;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+
+    // Gọi hàm hiệu ứng
+    await showLoadingEffect(resultBox);
+    
+    // Sau khi chạy xong hiệu ứng, hệ thống sẽ tiếp tục chạy các dòng code bên dưới
+    // để render kết quả thật (bắt đầu từ dòng 35 trở đi trong file của anh)
+
+    // 1. KỸ THUẬT SKELETON SCREEN (Giữ chân khách hàng)
+    resultBox.style.transition = "opacity 0.5s ease";
+    resultBox.style.opacity = "0.5";
+    resultBox.innerHTML = `
+        <div class="animate-pulse p-8">
+            <h3 class="text-xl font-bold text-gray-400">An Tín đang thiết kế giải pháp riêng cho không gian "${space}" của anh...</h3>
+        </div>`;
+
+    // 2. LOGIC "HUMANIZE" & GOM HỒ SƠ KHÁCH HÀNG
     const strategies = {
-        "Cửa hàng": { intro: `Dựa trên không gian "${space}" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:`, price: "Từ 6.800.000đ - 18.000.000đ" },
-        "default": { intro: `Chào anh, An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:`, price: "Liên hệ Hotline 0914 060 339 để được tư vấn miễn phí" }
+        "Cửa hàng": {
+            intro: `Dựa trên không gian "${space}" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:`,
+            points: [
+                "Hệ thống an ninh 24/7: Đóng vai trò quản lý kỹ thuật, giúp anh phát hiện sự cố quầy thu ngân tức thì mà không cần trực tiếp có mặt.",
+                "Hạ tầng mạng chịu tải cao: Đảm bảo doanh thu thông suốt, không gián đoạn kết nối khi khách hàng đông.",
+                "Dịch vụ trọn gói: An Tín xử lý cả điện văn phòng & website, anh chỉ cần tập trung kinh doanh."
+            ],
+            price: "Từ 6.800.000đ - 18.000.000đ"
+        },
+        "default": {
+            intro: `Chào anh, An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:`,
+            points: [
+                "Giải pháp an ninh đa tầng giúp bảo vệ tài sản tuyệt đối 24/7.",
+                "Hệ thống điện thông minh & Internet tốc độ cao nâng tầm trải nghiệm sử dụng.",
+                "Bảo trì trọn gói định kỳ, hỗ trợ kỹ thuật từ 3-24h."
+            ],
+            price: "Liên hệ Hotline 0914 060 339 để được tư vấn miễn phí"
+        }
     };
 
+  // 3. TỐI ƯU HÓA & RENDERING VỚI HIỆU ỨNG AI
     const data = strategies[space] || strategies["default"];
     const serviceMenu = ["📷 Camera an ninh", "🌐 Mạng Wi-Fi & CNTT", "🔒 Chống đột nhập", "🫵 Chấm công vân tay", "🔥 Báo cháy tự động", "🌐 Thiết kế Website", "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", "🔧 Sửa chữa thiết bị điện", "🍲 Điện gia dụng", "🤖 Tự động hóa"];
+
+    // Hiệu ứng "AI đang suy nghĩ"
     const stages = ["Đang quét dữ liệu không gian...", "Đang tính toán định mức vật tư...", "Đang tối ưu hóa vị trí...", "Đang hoàn tất phân tích AI..."];
-    
-    // 2. Hiệu ứng loading chạy 5 giây
     let currentStage = 0;
+
     const loadingInterval = setInterval(() => {
         if (currentStage < stages.length) {
             resultBox.innerHTML = `
@@ -53,9 +107,10 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }, 1000);
 
-    // 3. Render kết quả cuối cùng (Chỉ chạy 1 lần sau 5 giây)
+    // Sau 5 giây, xóa interval và hiển thị kết quả thật duy nhất
     setTimeout(() => {
         clearInterval(loadingInterval);
+        resultBox.style.opacity = "1";
         resultBox.innerHTML = `
             <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
             <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
@@ -68,6 +123,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 <p class="font-bold text-amber-900 mb-1">💰 Ngân sách Combo dự kiến:</p>
                 <p class="text-red-600 font-bold text-lg">${data.price}</p>
             </div>
+            <p class="text-[10px] text-gray-400 italic mb-4">Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín</p>
             <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 px-4 rounded-xl text-center shadow-lg hover:bg-red-700 transition">
                 ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
                 <br><span style="font-size: 0.9em; opacity: 0.9;">(Chỉ còn 3 suất trong tuần này)</span>
