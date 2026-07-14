@@ -24,71 +24,57 @@
 </a>
     </div>
 <script>
-    document.addEventListener("DOMContentLoaded", async function() {
-        const savedSpace = localStorage.getItem('loai_hinh');
-        const urlParams = new URLSearchParams(window.location.search);
-        const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở / Biệt thự';
-        const resultBox = document.getElementById('ai-result-content');
+document.addEventListener("DOMContentLoaded", async function() {
+    const savedSpace = localStorage.getItem('loai_hinh');
+    const urlParams = new URLSearchParams(window.location.search);
+    const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở / Biệt thự';
+    const resultBox = document.getElementById('ai-result-content');
 
-        const strategies = {
-            "Cửa hàng": {
-                intro: `Dựa trên không gian "${space}" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:`,
-                price: "Từ 6.800.000đ - 18.000.000đ"
-            },
-            "default": {
-                intro: `Chào anh, An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:`,
-                price: "Liên hệ Hotline 0914 060 339 để được tư vấn miễn phí"
-            }
-        };
-
-       // 1. Hàm tính toán giá động (Đặt ngay dưới các biến khai báo)
-function calculatePrice(spaceType, deviceCount = 4) {
-    const config = {
-        "Cửa hàng": { base: 6800000, complexity: 1.2 },
-        "Nhà ở": { base: 5500000, complexity: 1.0 },
-        "Kho bãi": { base: 9000000, complexity: 1.5 }
+    // 1. Dữ liệu tư vấn
+    const strategies = {
+        "Cửa hàng": { intro: `Dựa trên không gian "${space}" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:`, price: "Từ 6.800.000đ - 18.000.000đ" },
+        "default": { intro: `Chào anh, An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:`, price: "Liên hệ Hotline 0914 060 339 để được tư vấn miễn phí" }
     };
 
-    const conf = config[spaceType] || { base: 5000000, complexity: 1.0 };
+    const data = strategies[space] || strategies["default"];
+    const serviceMenu = ["📷 Camera an ninh", "🌐 Mạng Wi-Fi & CNTT", "🔒 Chống đột nhập", "🫵 Chấm công vân tay", "🔥 Báo cháy tự động", "🌐 Thiết kế Website", "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", "🔧 Sửa chữa thiết bị điện", "🍲 Điện gia dụng", "🤖 Tự động hóa"];
+    const stages = ["Đang quét dữ liệu không gian...", "Đang tính toán định mức vật tư...", "Đang tối ưu hóa vị trí...", "Đang hoàn tất phân tích AI..."];
     
-    // Thuật toán: (Giá nền + Số thiết bị * 850k) * Hệ số phức tạp
-    let total = (conf.base + (deviceCount * 850000)) * conf.complexity;
-    
-    // Làm tròn đến hàng trăm nghìn cho đẹp (Ví dụ: 7.200.000đ)
-    total = Math.round(total / 100000) * 100000;
-    
-    return total.toLocaleString('vi-VN') + "đ";
-}
+    // 2. Hiệu ứng loading chạy 5 giây
+    let currentStage = 0;
+    const loadingInterval = setInterval(() => {
+        if (currentStage < stages.length) {
+            resultBox.innerHTML = `
+                <div class="flex flex-col items-center p-10 animate-pulse">
+                    <div class="h-12 w-12 border-b-4 border-red-600 rounded-full animate-spin mb-4"></div>
+                    <p class="text-lg font-semibold text-gray-700">${stages[currentStage]}</p>
+                </div>`;
+            currentStage++;
+        }
+    }, 1000);
 
-// ... sau đó trong khối setTimeout ...
-
-setTimeout(() => {
-    clearInterval(loadingInterval);
-    
-    // Tính toán giá dựa trên không gian và số lượng thiết bị dự kiến
-    const finalPrice = calculatePrice(space, 6); // Anh có thể để số 6 là số thiết bị mặc định
-    
-    resultBox.style.opacity = "1";
-    resultBox.innerHTML = `
-        <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
-        <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
-            <p class="text-sm text-blue-900 mb-3">💡 Anh có đang quan tâm đến các giải pháp:</p>
-            <div class="grid grid-cols-2 gap-2">
-                ${serviceMenu.map(item => `<button class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-100 transition">${item}</button>`).join('')}
+    // 3. Render kết quả cuối cùng (Chỉ chạy 1 lần sau 5 giây)
+    setTimeout(() => {
+        clearInterval(loadingInterval);
+        resultBox.innerHTML = `
+            <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
+            <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
+                <p class="text-sm text-blue-900 mb-3">💡 Anh có đang quan tâm đến các giải pháp:</p>
+                <div class="grid grid-cols-2 gap-2">
+                    ${serviceMenu.map(item => `<button class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-100 transition">${item}</button>`).join('')}
+                </div>
             </div>
-        </div>
-        <div class="bg-amber-50 p-4 rounded-lg mb-4 text-left border border-amber-200">
-            <p class="font-bold text-amber-900 mb-1">💰 Ngân sách Combo dự kiến (Tối ưu cho ${space}):</p>
-            <p class="text-red-600 font-bold text-lg">${finalPrice}</p>
-        </div>
-        <p class="text-[10px] text-gray-400 italic mb-4">Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín</p>
-        <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 px-4 rounded-xl text-center shadow-lg hover:bg-red-700 transition">
-            ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
-            <br><span style="font-size: 0.9em; opacity: 0.9;">(Chỉ còn 3 suất trong tuần này)</span>
-        </a>
-    `;
-}, 5000);
-    });
-</script>  
+            <div class="bg-amber-50 p-4 rounded-lg mb-4 text-left border border-amber-200">
+                <p class="font-bold text-amber-900 mb-1">💰 Ngân sách Combo dự kiến:</p>
+                <p class="text-red-600 font-bold text-lg">${data.price}</p>
+            </div>
+            <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 px-4 rounded-xl text-center shadow-lg hover:bg-red-700 transition">
+                ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
+                <br><span style="font-size: 0.9em; opacity: 0.9;">(Chỉ còn 3 suất trong tuần này)</span>
+            </a>
+        `;
+    }, 5000);
+});
+</script>
 </body>
 </html>
