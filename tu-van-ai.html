@@ -88,29 +88,48 @@
         }
     };
 
-    // 3. TỐI ƯU HÓA & RENDERING
- // Thay thế đoạn render bên trong setTimeout thành đoạn này:
-setTimeout(() => {
+   // 3. TỐI ƯU HÓA & RENDERING VỚI HIỆU ỨNG AI
     const data = strategies[space] || strategies["default"];
-    resultBox.style.opacity = "1";
-    
-    // Danh sách menu dịch vụ anh yêu cầu
-    const serviceMenu = [
-        "📹 Camera an ninh", "📡 Mạng Wi-Fi & CNTT", "🔐 Chống đột nhập", 
-        "👆 Chấm công vân tay", "🚨 Báo cháy tự động", "🌐 Thiết kế Website",
-        "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", 
-        "🔧 Sửa chữa thiết bị điện", "♨️ Điện gia dụng", "🤖 Tự động hóa"
-    ];
+    const serviceMenu = ["📷 Camera an ninh", "🌐 Mạng Wi-Fi & CNTT", "🔒 Chống đột nhập", "🫵 Chấm công vân tay", "🔥 Báo cháy tự động", "🌐 Thiết kế Website", "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", "🔧 Sửa chữa thiết bị điện", "🍲 Điện gia dụng", "🤖 Tự động hóa"];
 
-    resultBox.innerHTML = `
-        <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
-        
-        <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
-            <p class="font-bold text-blue-900 mb-3 text-sm">💡 Anh có đang quan tâm đến các giải pháp:</p>
-            <div class="grid grid-cols-2 gap-2">
-                ${serviceMenu.map(item => `
-                    <button class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-100 transition">
-                        ${item}
+    // Hiệu ứng "AI đang suy nghĩ"
+    const stages = ["Đang quét dữ liệu không gian...", "Đang tính toán định mức vật tư...", "Đang tối ưu hóa vị trí...", "Đang hoàn tất phân tích AI..."];
+    let currentStage = 0;
+
+    const loadingInterval = setInterval(() => {
+        if (currentStage < stages.length) {
+            resultBox.innerHTML = `
+                <div class="flex flex-col items-center p-10 animate-pulse">
+                    <div class="h-12 w-12 border-b-4 border-red-600 rounded-full animate-spin mb-4"></div>
+                    <p class="text-lg font-semibold text-gray-700">${stages[currentStage]}</p>
+                </div>`;
+            currentStage++;
+        }
+    }, 1000);
+
+    // Sau 5 giây, hiển thị kết quả thật
+    setTimeout(() => {
+        clearInterval(loadingInterval);
+        resultBox.style.opacity = "1";
+        resultBox.innerHTML = `
+            <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
+            <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
+                <p class="text-sm text-blue-900 mb-3">💡 Anh có đang quan tâm đến các giải pháp:</p>
+                <div class="grid grid-cols-2 gap-2">
+                    ${serviceMenu.map(item => `<button class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-100 transition">${item}</button>`).join('')}
+                </div>
+            </div>
+            <div class="bg-amber-50 p-4 rounded-lg mb-4 text-left border border-amber-200">
+                <p class="font-bold text-amber-900 mb-1">💰 Ngân sách Combo dự kiến:</p>
+                <p class="text-red-600 font-bold text-lg">${data.price}</p>
+            </div>
+            <p class="text-[10px] text-gray-400 italic mb-4">Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín</p>
+            <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 px-4 rounded-xl text-center shadow-lg hover:bg-red-700 transition">
+                ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
+                <br><span style="font-size: 0.9em; opacity: 0.9;">(Chỉ còn 3 suất trong tuần này)</span>
+            </a>
+        `;
+    }, 5000);
                     </button>
                 `).join('')}
             </div>
