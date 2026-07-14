@@ -23,5 +23,33 @@
         
         <a href="index.html" class="btn-home">Quay lại trang chủ</a>
     </div>
+
+    <script>
+        // Hàm gửi dữ liệu về Google Sheets
+        function sendLeadToSheet() {
+            // Lấy dữ liệu từ localStorage (giả sử anh đã lưu các key này ở trang trước)
+            const leadData = {
+                name: localStorage.getItem('user_name') || 'Khách hàng',
+                phone: localStorage.getItem('user_phone') || 'Chưa cung cấp',
+                space: localStorage.getItem('loai_hinh') || 'Không xác định',
+                price: localStorage.getItem('last_price') || 'Liên hệ',
+                timestamp: new Date().toLocaleString('vi-VN')
+            };
+
+            const WEB_APP_URL = "DÁN_URL_GOOGLE_APPS_SCRIPT_CỦA_ANH_VÀO_ĐÂY";
+
+            fetch(WEB_APP_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(leadData)
+            })
+            .then(() => console.log("Dữ liệu đã được ghi nhận về An Tín!"))
+            .catch(err => console.error("Lỗi kết nối:", err));
+        }
+
+        // Tự động chạy khi trang Cảm ơn tải xong
+        window.onload = sendLeadToSheet;
+    </script>
 </body>
 </html>
