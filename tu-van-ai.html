@@ -14,7 +14,7 @@
     </div>
 
 <script>
-    // 1. HÀM TÍNH GIÁ ĐỘNG (Phát triển thêm)
+    // Hàm tính toán giá động
     function calculatePrice(spaceType, deviceCount = 4) {
         const config = {
             "Cửa hàng": { base: 6800000, complexity: 1.2 },
@@ -30,42 +30,42 @@
     document.addEventListener("DOMContentLoaded", async function() {
         const savedSpace = localStorage.getItem('loai_hinh');
         const urlParams = new URLSearchParams(window.location.search);
-        const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở / Biệt thự';
+        const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở';
         const resultBox = document.getElementById('ai-result-content');
 
-        // 2. HIỆU ỨNG LOADING (Giữ nguyên cấu trúc của anh)
+        // Hiệu ứng Loading
         const stages = ["Đang quét dữ liệu không gian...", "Đang tính toán định mức vật tư...", "Đang tối ưu hóa vị trí...", "Đang hoàn tất phân tích AI..."];
-        
         for (let stage of stages) {
-            resultBox.innerHTML = `<div class="flex flex-col items-center p-10"><div class="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mb-4"></div><p class="text-lg font-semibold text-gray-700">${stage}</p></div>`;
+            resultBox.innerHTML = `<div class="p-10 animate-pulse text-lg font-semibold text-gray-700">${stage}</div>`;
             await new Promise(resolve => setTimeout(resolve, 800));
         }
 
-        // 3. DỮ LIỆU & RENDER KẾT QUẢ (Đã chèn giá động vào)
+        // Logic dữ liệu
         const strategies = {
-            "Cửa hàng": { intro: `An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận cho "${space}":`, points: ["Hệ thống an ninh 24/7", "Hạ tầng mạng chịu tải cao", "Dịch vụ trọn gói"] },
-            "default": { intro: `An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:`, points: ["Giải pháp an ninh đa tầng 24/7", "Hệ thống điện thông minh", "Bảo trì trọn gói định kỳ"] }
+            "Cửa hàng": { intro: `Dựa trên không gian "Cửa hàng" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:` },
+            "Kho bãi": { intro: `An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "Kho bãi" của anh:` }
         };
+        
+        const data = strategies[space] || { intro: `An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:` };
+        const serviceMenu = ["📷 Camera an ninh", "🌐 Mạng Wi-Fi & CNTT", "🔒 Chống đột nhập", "🫵 Chấm công vân tay", "🔥 Báo cháy tự động", "🌐 Thiết kế Website", "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", "🔧 Sửa chữa thiết bị điện", "🍲 Điện gia dụng", "🤖 Tự động hóa"];
+        const finalPrice = calculatePrice(space, 6);
 
-        const data = strategies[space] || strategies["default"];
-        const serviceMenu = ["📷 Camera", "🌐 Wi-Fi", "🔒 Chống trộm", "🫵 Chấm công", "🔥 Báo cháy", "🤖 Tự động hóa"];
-        const finalPrice = calculatePrice(space, 4); // Gọi hàm tính giá ở đây
-
+        // Render kết quả (Khớp với khung đỏ của anh)
         resultBox.innerHTML = `
-            <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
-            <ul class="text-left mb-6 space-y-2">
-                ${data.points.map(p => `<li class="flex items-center text-gray-700">✅ ${p}</li>`).join('')}
-            </ul>
+            <div class="mb-6 font-bold text-blue-900">${data.intro}</div>
             <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
-                <p class="text-sm text-blue-900 mb-3">💡 Các giải pháp bổ sung:</p>
-                <div class="grid grid-cols-2 gap-2">${serviceMenu.map(item => `<button class="bg-white px-2 py-1 rounded border text-xs text-left">${item}</button>`).join('')}</div>
+                <p class="text-sm font-bold text-blue-900 mb-3">💡 Anh có đang quan tâm đến các giải pháp:</p>
+                <div class="grid grid-cols-2 gap-2">
+                    ${serviceMenu.map(item => `<button class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-100 transition">${item}</button>`).join('')}
+                </div>
             </div>
-            <div class="bg-amber-50 p-4 rounded-lg mb-4 text-left border border-amber-200">
+            <div class="bg-amber-50 p-4 rounded-lg mb-6 text-left border border-amber-200">
                 <p class="font-bold text-amber-900">💰 Ngân sách Combo dự kiến:</p>
                 <p class="text-red-600 font-bold text-2xl">${finalPrice}</p>
             </div>
             <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-red-700 transition">
                 ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
+                <br><span class="text-sm opacity-90 font-normal">(Chỉ còn 3 suất trong tuần này)</span>
             </a>
         `;
     });
