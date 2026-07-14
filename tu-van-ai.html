@@ -87,6 +87,21 @@
             if(cd) cd.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             if (time > 0) time--;
         }, 1000);
+        // Logic Social Proof (Chuyển động)
+        const socialProofEl = document.getElementById('social-proof');
+        const names = ["Anh Hùng (Quận 7)", "Chị Lan (Bình Dương)", "Anh Tuấn (Thủ Đức)", "Chị Mai (Quận 12)", "Anh Bình (Biên Hòa)"];
+        
+        if (socialProofEl) {
+            setInterval(() => {
+                socialProofEl.style.opacity = 0; // Ẩn đi
+                setTimeout(() => {
+                    const name = names[Math.floor(Math.random() * names.length)];
+                    const minutes = Math.floor(Math.random() * 10) + 1;
+                    socialProofEl.innerText = `💡 ${name} vừa nhận tư vấn cách đây ${minutes} phút`;
+                    socialProofEl.style.opacity = 1; // Hiện lại
+                }, 500);
+            }, 5000); // 5 giây đổi một lần
+        }
     });
 </script>
 </body>
