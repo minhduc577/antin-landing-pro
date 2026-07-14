@@ -21,8 +21,11 @@
     </div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+   // Lấy ưu tiên từ localStorage, nếu không có mới dùng URL, cuối cùng là mặc định
+    const savedSpace = localStorage.getItem('loai_hinh');
     const urlParams = new URLSearchParams(window.location.search);
-    const space = decodeURIComponent(urlParams.get('space') || 'Nhà ở / Biệt thự');
+    const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở / Biệt thự';
+    
     const resultBox = document.getElementById('ai-result-content');
 
     // 1. KỸ THUẬT SKELETON SCREEN (Giữ chân khách hàng)
