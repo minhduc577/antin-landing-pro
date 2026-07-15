@@ -56,6 +56,15 @@
                 Object.keys(subData).forEach(key => {
                     html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-green-50 p-4 rounded-xl font-bold text-sm col-span-2">${subData[key].name}</button>`;
                 });
+                // --- THÊM ĐOẠN NÀY ĐỂ HIỆN LINK BẢNG GIÁ ---
+            if (catKey === 'cham-cong') { // Chỉ hiện khi ở mục Chấm công/Tenon
+                html += `
+                <div class="col-span-2 mt-4 text-center">
+                    <a href="https://drive.google.com/file/d/1uY7_omeP6ZmwpV8NyBILGAW1zYgY6Ge-/view?usp=sharing" target="_blank" class="text-red-600 font-bold text-[11px] underline uppercase tracking-wider">
+                        📄 BẢNG GIÁ KHOÁ THÔNG MINH TENON
+                    </a>
+                </div>`;
+            }
                 html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
             } else if (level === 3) {
                 const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
