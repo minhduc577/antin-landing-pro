@@ -25,51 +25,45 @@
     }
 
     async function loadCategory(level, catKey = null, subKey = null) {
-        const container = document.getElementById('dynamic-menu');
-        // Hiệu ứng 3 vòng tròn AI quay ngược chiều nhau
-        container.innerHTML = `<div class="flex justify-center p-8"><div class="relative w-12 h-12"><div class="absolute w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full spin-slow"></div><div class="absolute w-8 h-8 top-2 left-2 border-4 border-red-400 border-t-transparent rounded-full spin-rev"></div><div class="absolute w-4 h-4 top-4 left-4 border-2 border-yellow-400 border-t-transparent rounded-full spin-slow-rev"></div></div></div>`;
-        
-        try {
-            const data = await (await fetch('data/data.json')).json();
-            let html = '<div class="grid grid-cols-2 gap-2">';
+    const container = document.getElementById('dynamic-menu');
+    if (!container) return;
 
-            if (level === 1) {
-                Object.keys(data).forEach(key => {
-                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border border-gray-100 p-2 rounded-xl text-[11px] font-bold text-gray-700 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">${data[key].name}</button>`;
-                });
-       // Thay thế toàn bộ đoạn xử lý level 3 của anh bằng đoạn này:
-} else if (level === 3) {
-    const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
-    
     try {
-        const res = await fetch(path);
-        const data = await res.json();
-        let html = '<div class="space-y-2">';
-        
-        // Kiểm tra xem dữ liệu có phải là bảng giá (Tenon) hay danh sách sản phẩm thông thường
-        if (data.products && Array.isArray(data.products)) {
-            data.products.forEach(p => {
-                // Nếu p là object (có model và giá), hiển thị giá
-                if (typeof p === 'object') {
-                    const priceDisplay = p.price_vnd ? p.price_vnd.toLocaleString() + 'đ' : 'Liên hệ';
-                    html += `<div class="p-3 bg-white border-l-4 border-red-500 rounded shadow-sm">
-                                <div class="font-bold text-xs">${p.model || 'Sản phẩm'}</div>
-                                <div class="text-red-600 font-bold text-xs">${priceDisplay}</div>
-                             </div>`;
-                } else {
-                    // Nếu p là chuỗi (danh sách tên sản phẩm)
-                    html += `<div class="p-3 bg-white border-l-4 border-blue-500 rounded shadow-sm">
-                                <div class="font-bold text-xs text-gray-800">${p}</div>
-                             </div>`;
-                }
+        const response = await fetch('data/data.json');
+        const data = await response.json();
+        let html = '<div class="grid grid-cols-2 gap-2 mt-4">';
+
+        if (level === 1) {
+            Object.keys(data).forEach(key => {
+                html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border p-3 rounded-xl font-bold text-xs shadow-sm">${data[key].name}</button>`;
             });
+        } else if (level === 2) {
+            const subData = data[catKey]?.sub || {};
+            Object.keys(subData).forEach(key => {
+                html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-green-50 p-4 rounded-xl font-bold text-sm col-span-2">${subData[key].name}</button>`;
+            });
+            html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
+        } else if (level === 3) {
+            // Xử lý linh hoạt: Nếu có file riêng thì fetch, không thì báo lỗi nhẹ
+            const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
+            const res = await fetch(path);
+            const d = await res.json();
+            
+            // Hiển thị sản phẩm an toàn
+            (d.products || []).forEach(p => {
+                const label = typeof p === 'object' ? p.model : p;
+                const price = (p.price_vnd ? p.price_vnd.toLocaleString() + 'đ' : '');
+                html += `<div class="p-3 bg-white border-l-4 border-red-500 rounded shadow-sm col-span-2">
+                            <div class="font-bold text-xs">${label}</div>
+                            <div class="text-red-600 font-bold text-xs">${price}</div>
+                         </div>`;
+            });
+            html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
         }
-        
-        html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-4 underline">⬅️ Quay lại</button></div>`;
-        container.innerHTML = html;
-        
+        container.innerHTML = html + '</div>';
     } catch (e) {
-        container.innerHTML = `<p class="text-red-500 text-xs text-center">Đang cập nhật dữ liệu...</p>`;
+        console.error(e);
+        container.innerHTML = `<p class="text-red-500 text-xs text-center mt-4">Dữ liệu mục này chưa được cấu hình.</p>`;
     }
 }
     document.addEventListener("DOMContentLoaded", () => {
