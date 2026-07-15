@@ -6,103 +6,94 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 p-6 text-center">
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
-        <h1 class="text-2xl font-bold text-navy mb-4">Kết quả Phân tích AI</h1>
+    <div class="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+        <h1 class="text-xl font-bold text-gray-800 mb-4">Kết quả Phân tích AI</h1>
         <div id="ai-result-content"></div>
     </div>
 
 <script>
-    function calculatePrice(spaceType, deviceCount = 6) {
-        const config = {
-            "Cửa hàng": { base: 6800000, complexity: 1.2 },
-            "Nhà ở": { base: 5500000, complexity: 1.0 },
-            "Kho bãi": { base: 9000000, complexity: 1.5 }
-        };
-        const conf = config[spaceType] || { base: 5000000, complexity: 1.0 };
-        let total = (conf.base + (deviceCount * 850000)) * conf.complexity;
-        return Math.round(total / 100000) * 100000;
+    function calculatePrice(space) {
+        const prices = { "Cửa hàng": "14.300.000", "Nhà ở": "10.600.000", "Kho bãi": "18.500.000" };
+        return prices[space] || "10.600.000";
     }
 
     async function loadCategory(level, catKey = null, brandKey = null) {
         const menuContainer = document.getElementById('dynamic-menu');
-        menuContainer.innerHTML = `<p class="text-xs text-gray-500 animate-pulse italic">Đang truy xuất dữ liệu từ kho...</p>`;
+        menuContainer.innerHTML = `<p class="text-xs text-blue-500 animate-pulse font-bold">🤖 Hệ thống đang phân tích...</p>`;
 
         try {
             let html = '';
             if (level === 1) {
                 const data = await (await fetch('data/data.json')).json();
                 Object.keys(data).forEach(key => {
-                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-blue-50 border border-blue-200 px-4 py-3 rounded-lg text-sm font-bold text-blue-900 hover:bg-blue-100 transition">${data[key].name}</button>`;
+                    html += `<button onclick="loadCategory(2, '${key}')" class="w-full mb-2 bg-blue-50 border border-blue-100 p-3 rounded-lg text-sm font-bold text-blue-900 hover:bg-blue-100 transition">${data[key].name}</button>`;
                 });
-                menuContainer.innerHTML = `<div class="grid grid-cols-1 gap-3">${html}</div>`;
             } else if (level === 2) {
                 const data = await (await fetch('data/data.json')).json();
                 Object.keys(data[catKey].sub).forEach(key => {
-                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-green-50 border border-green-200 px-4 py-3 rounded-lg text-sm font-bold text-green-900 hover:bg-green-100 transition">${data[catKey].sub[key].name}</button>`;
+                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="w-full mb-2 bg-green-50 border border-green-100 p-3 rounded-lg text-sm font-bold text-green-900 hover:bg-green-100 transition">${data[catKey].sub[key].name}</button>`;
                 });
-                html += `<button onclick="loadCategory(1)" class="text-gray-500 font-bold text-xs mt-4 underline">⬅️ Quay lại</button>`;
-                menuContainer.innerHTML = `<div class="grid grid-cols-1 gap-3">${html}</div>`;
+                html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-2 underline">⬅️ Quay lại</button>`;
             } else if (level === 3) {
                 if (catKey === 'cham-cong' && brandKey === 'tenon') {
-                    const tenon = await (await fetch('data/chamcongvantay/tenon_products_2026.json')).json();
-                    tenon.products.forEach(p => {
+                    const res = await fetch('data/chamcongvantay/tenon_products_2026.json');
+                    const tenonData = await res.json();
+                    tenonData.products.forEach(p => {
                         html += `
-                        <div class="p-4 border rounded-xl bg-white text-left shadow-sm mb-3">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-bold text-blue-800">${p.model}</span>
-                                ${p.badge ? `<span class="bg-red-500 text-white text-[9px] px-2 py-0.5 rounded-full uppercase">${p.badge}</span>` : ''}
+                        <div class="p-3 border rounded-xl bg-white shadow-sm text-left mb-3 border-l-4 border-l-red-500">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-gray-800">${p.model}</span>
+                                ${p.badge ? `<span class="bg-red-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">${p.badge}</span>` : ''}
                             </div>
-                            <p class="text-red-600 font-bold text-sm mb-1">${p.price_vnd.toLocaleString()}đ</p>
-                            <p class="text-[10px] text-gray-600">🗝️ Mở: ${p.unlock_methods.join(', ')}</p>
-                            <p class="text-[10px] text-gray-500 italic">Vật liệu: ${p.material}</p>
+                            <p class="text-red-600 font-bold text-sm my-1">${p.price_vnd.toLocaleString()}đ</p>
+                            <p class="text-[11px] text-gray-600">🗝️ ${p.unlock_methods.join(', ')}</p>
+                            <p class="text-[11px] text-gray-500 italic">Chất liệu: ${p.material}</p>
                         </div>`;
                     });
                 } else {
                     const data = await (await fetch('data/data.json')).json();
                     data[catKey].sub[brandKey].products.forEach(p => {
-                        html += `<div class="p-3 border rounded-lg bg-gray-50 text-xs font-semibold text-left mb-2">${p}</div>`;
+                        html += `<div class="p-2 mb-1 bg-gray-50 rounded text-sm font-medium text-gray-700">${p}</div>`;
                     });
                 }
-                html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-500 font-bold text-xs mt-2 underline">⬅️ Quay lại</button>`;
-                menuContainer.innerHTML = `<div>${html}</div>`;
+                html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-2 underline">⬅️ Quay lại</button>`;
             }
-        } catch (e) { menuContainer.innerHTML = `<p class="text-red-500 text-xs">Lỗi truy xuất dữ liệu!</p>`; }
+            menuContainer.innerHTML = html;
+        } catch (e) { menuContainer.innerHTML = `<p class="text-red-500 text-xs">Lỗi tải dữ liệu!</p>`; }
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
         const space = localStorage.getItem('loai_hinh') || 'Nhà ở';
         const resultBox = document.getElementById('ai-result-content');
         
-        // Hiệu ứng quét dữ liệu AI
-        const stages = ["Đang quét kiến trúc...", "Phân tích nhu cầu AI...", "Tối ưu hóa bảng giá..."];
-        for (let stage of stages) {
-            resultBox.innerHTML = `<div class="p-10 text-center font-bold text-blue-600 animate-bounce">${stage}</div>`;
-            await new Promise(r => setTimeout(r, 600));
-        }
+        // Hiệu ứng "AI suy nghĩ"
+        resultBox.innerHTML = `<div class="py-10 text-blue-600 font-bold animate-pulse text-lg">Đang phân tích cấu trúc "${space}"...</div>`;
+        await new Promise(r => setTimeout(r, 1500));
 
         resultBox.innerHTML = `
-            <p class="mb-4 text-gray-700 font-medium">Dựa trên không gian <b>"${space}"</b>, An Tín đã thiết kế riêng bộ giải pháp:</p>
-            <div class="bg-red-50 p-4 rounded-xl border border-red-200 mb-6 text-center">
-                <p class="text-red-700 font-bold text-sm">🔥 Ưu đãi kết thúc sau:</p>
-                <div id="countdown" class="text-3xl font-mono font-bold text-red-600">10:00</div>
-                <p class="text-red-600 font-bold text-3xl mt-2">${calculatePrice(space).toLocaleString()}đ</p>
+            <p class="mb-4 text-sm text-gray-600 leading-relaxed">Dựa trên không gian <b>"${space}"</b>, An Tín đã thiết kế giải pháp tối ưu:</p>
+            <div class="bg-red-50 p-4 rounded-xl border border-red-100 mb-6 text-center">
+                <p class="text-red-600 font-bold text-xs uppercase">🔥 Ưu đãi kết thúc sau:</p>
+                <div id="countdown" class="text-3xl font-mono font-bold text-red-600">09:04</div>
+                <p class="text-gray-600 font-bold mt-2">💰 Ngân sách Combo dự kiến:</p>
+                <div class="text-3xl font-bold text-red-600">${calculatePrice(space)}đ</div>
+                <p class="text-gray-400 text-[10px] mt-1">Dải giá tham khảo: 6.8tr - 18tr</p>
             </div>
             <div id="dynamic-menu" class="mb-6"></div>
-            <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-red-700">ĐĂNG KÝ NHẬN TƯ VẤN</a>
-            <div id="social-proof" class="mt-4 text-xs text-gray-700 font-bold italic h-6 transition-opacity duration-500"></div>
+            <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-red-700 transition">ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ</a>
+            <div id="social-proof" class="mt-4 text-xs text-gray-700 font-bold italic h-6"></div>
         `;
-
         loadCategory(1);
-        
+
         // Đếm ngược
-        let time = 600; setInterval(() => {
+        let time = 544; setInterval(() => {
             let m = Math.floor(time / 60), s = time % 60;
             document.getElementById('countdown').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
             if(time>0) time--;
         }, 1000);
 
-        // Social Proof
-        const msgs = ["💡 Chị Lan vừa nhận tư vấn 7 phút trước", "💡 Anh Hùng vừa chốt giải pháp 12 phút trước", "💡 Chị Mai vừa được khảo sát 3 phút trước"];
+        // Social Proof mượt mà
+        const msgs = ["💡 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "💡 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", "💡 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"];
         setInterval(() => {
             const el = document.getElementById('social-proof');
             el.style.opacity = 0;
