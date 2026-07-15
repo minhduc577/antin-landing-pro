@@ -26,6 +26,41 @@
         return total.toLocaleString('vi-VN') + "đ";
     }
 
+    // Hàm render động 3 cấp
+    async function loadCategory(level, catKey = null, brandKey = null) {
+        const container = document.getElementById('ai-result-content');
+        // Giữ lại phần HTML phía trên (thông báo + đếm ngược + giá) nếu cần, 
+        // ở đây ta chỉ render lại phần danh mục
+        const menuContainer = document.getElementById('dynamic-menu');
+        if (!menuContainer) return; 
+
+        menuContainer.innerHTML = `<p class="text-xs text-gray-500 italic text-center">Đang tải danh mục...</p>`;
+
+        try {
+            const response = await fetch('data.json');
+            const data = await response.json();
+            let html = '';
+
+            if (level === 1) {
+                Object.keys(data).forEach(key => {
+                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-50">${data[key].name}</button>`;
+                });
+            } else if (level === 2) {
+                const sub = data[catKey].sub;
+                Object.keys(sub).forEach(key => {
+                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-white px-2 py-1.5 rounded border border-green-300 text-xs text-left hover:bg-green-50">${sub[key].name}</button>`;
+                });
+                html += `<button onclick="loadCategory(1)" class="col-span-2 text-blue-600 font-bold text-xs mt-2">⬅️ Quay lại</button>`;
+            } else if (level === 3) {
+                data[catKey].sub[brandKey].products.forEach(p => {
+                    html += `<div class="p-2 border rounded bg-white text-xs font-bold">${p}</div>`;
+                });
+                html += `<button onclick="loadCategory(2, '${catKey}')" class="col-span-2 text-blue-600 font-bold text-xs mt-2">⬅️ Quay lại</button>`;
+            }
+            menuContainer.innerHTML = `<div class="grid grid-cols-2 gap-2">${html}</div>`;
+        } catch (e) { menuContainer.innerHTML = "Lỗi tải dữ liệu"; }
+    }
+
     document.addEventListener("DOMContentLoaded", async function() {
         const savedSpace = localStorage.getItem('loai_hinh');
         const urlParams = new URLSearchParams(window.location.search);
@@ -33,75 +68,49 @@
         const resultBox = document.getElementById('ai-result-content');
 
         // Hiệu ứng Loading
-        const stages = ["Đang quét dữ liệu không gian...", "Đang tính toán định mức vật tư...", "Đang tối ưu hóa vị trí...", "Đang hoàn tất phân tích AI..."];
+        const stages = ["Đang quét dữ liệu...", "Đang tính toán vật tư...", "Đang tối ưu AI..."];
         for (let stage of stages) {
             resultBox.innerHTML = `<div class="p-10 animate-pulse text-lg font-semibold text-gray-700">${stage}</div>`;
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 300));
         }
 
-        const strategies = {
-            "Cửa hàng": { intro: `Dựa trên không gian "Cửa hàng" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:` },
-            "Kho bãi": { intro: `An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "Kho bãi" của anh:` }
-        };
-        const data = strategies[space] || { intro: `An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:` };
-        const serviceMenu = ["📷 Camera an ninh", "🌐 Mạng Wi-Fi & CNTT", "🔒 Chống đột nhập", "🫵 Chấm công vân tay", "🔥 Báo cháy tự động", "🌐 Thiết kế Website", "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", "🔧 Sửa chữa thiết bị điện", "🍲 Điện gia dụng", "🤖 Tự động hóa"];
+        const strategies = { "Cửa hàng": { intro: `Bộ giải pháp cho "Cửa hàng":` }, "Kho bãi": { intro: `Bộ giải pháp cho "Kho bãi":` } };
+        const data = strategies[space] || { intro: `Bộ giải pháp cho "${space}":` };
         
-        // Tính giá
-        const finalPrice = calculatePrice(space, 6);
-
-        // Render nội dung chính
         resultBox.innerHTML = `
             <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
-            
-            <div class="bg-red-50 border border-red-200 p-4 rounded-xl mb-4 text-center space-y-3">
-                <div>
-                    <p class="text-red-700 font-bold text-sm">🔥 Ưu đãi khảo sát miễn phí kết thúc sau:</p>
-                    <div id="countdown" class="text-3xl font-mono font-bold text-red-600 mt-1">10:00</div>
-                </div>
-                <div class="pt-3 border-t border-red-200">
-                    <p class="text-gray-600 text-sm font-semibold">💰 Ngân sách Combo dự kiến:</p>
-                    <p class="text-red-600 font-bold text-2xl">${finalPrice}</p>
-                    <p class="text-gray-500 text-xs mt-1 italic">Dải giá: Từ 6.800.000đ - 18.000.000đ</p>
-                </div>
+            <div class="bg-red-50 border border-red-200 p-4 rounded-xl mb-4 text-center">
+                <p class="text-red-700 font-bold text-sm">🔥 Ưu đãi kết thúc sau:</p>
+                <div id="countdown" class="text-3xl font-mono font-bold text-red-600">10:00</div>
+                <p class="text-red-600 font-bold text-2xl">${calculatePrice(space, 6)}</p>
             </div>
-
-            <div class="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-200">
-                <div class="grid grid-cols-2 gap-2">${serviceMenu.map(item => `<button class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left">${item}</button>`).join('')}</div>
-            </div>
-
-            <a href="thankyou.html" id="btn-register-lead" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-red-700 transition">
-                ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
-            </a>
-            
-            <div id="social-proof" class="mt-4 text-[11px] text-gray-500 italic h-5 overflow-hidden transition-all">
-                Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín
-            </div>
+            <div id="dynamic-menu" class="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-200"></div>
+            <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg">ĐĂNG KÝ NHẬN PHƯƠNG ÁN</a>
+            <div id="social-proof" class="mt-4 text-[11px] text-gray-500 italic h-5 overflow-hidden transition-all"></div>
         `;
 
-        // Các logic khác (Đếm ngược, Social Proof, Webhook) giữ nguyên như cũ...
+        // Gọi load danh mục cấp 1
+        loadCategory(1);
+
+        // Logic Đếm ngược
         let time = 600; 
         setInterval(() => {
-            let m = Math.floor(time / 60);
-            let s = time % 60;
+            let m = Math.floor(time / 60), s = time % 60;
             const cd = document.getElementById('countdown');
             if(cd) cd.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             if (time > 0) time--;
         }, 1000);
-        // Logic Social Proof (Chuyển động)
+
+        // Logic Social Proof
         const socialProofEl = document.getElementById('social-proof');
-        const names = ["Anh Hùng (Quận 7)", "Chị Lan (Bình Dương)", "Anh Tuấn (Thủ Đức)", "Chị Mai (Quận 12)", "Anh Bình (Biên Hòa)"];
-        
-        if (socialProofEl) {
-            setInterval(() => {
-                socialProofEl.style.opacity = 0; // Ẩn đi
-                setTimeout(() => {
-                    const name = names[Math.floor(Math.random() * names.length)];
-                    const minutes = Math.floor(Math.random() * 10) + 1;
-                    socialProofEl.innerText = `💡 ${name} vừa nhận tư vấn cách đây ${minutes} phút`;
-                    socialProofEl.style.opacity = 1; // Hiện lại
-                }, 500);
-            }, 5000); // 5 giây đổi một lần
-        }
+        const names = ["Anh Hùng", "Chị Lan", "Anh Tuấn", "Chị Mai", "Anh Bình"];
+        setInterval(() => {
+            socialProofEl.style.opacity = 0;
+            setTimeout(() => {
+                socialProofEl.innerText = `💡 ${names[Math.floor(Math.random() * names.length)]} vừa nhận tư vấn cách đây ${Math.floor(Math.random()*10)+1} phút`;
+                socialProofEl.style.opacity = 1;
+            }, 500);
+        }, 5000);
     });
 </script>
 </body>
