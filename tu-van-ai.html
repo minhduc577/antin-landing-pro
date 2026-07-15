@@ -2,12 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <!-- Bắt đầu đoạn thẻ SEO -->
     <meta name="description" content="Nhận tư vấn giải pháp an ninh, camera giám sát và khóa thông minh Tenon chuyên nghiệp từ AN TÍN. Tối ưu ngân sách, khảo sát tại nhà.">
     <meta name="keywords" content="tư vấn giải pháp an ninh, khóa Tenon, lắp đặt camera, an tin, giải pháp AI">
     <meta property="og:title" content="Tư vấn Giải pháp An ninh AI - AN TÍN">
     <meta property="og:description" content="Giải pháp an ninh thông minh, tiết kiệm và tối ưu cho ngôi nhà của bạn.">
-    <!-- Kết thúc đoạn thẻ SEO -->
     <title>Phương án Tư vấn AI - AN TÍN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -38,17 +36,15 @@
         const container = document.getElementById('dynamic-menu');
         if (!container) return;
 
-        // Hiển thị hiệu ứng 5 vòng tròn trước khi tải
         container.innerHTML = `
             <div class="loader-wrapper">
                 <div class="circle c1"></div><div class="circle c2"></div>
                 <div class="circle c3"></div><div class="circle c4"></div>
                 <div class="circle c5"></div>
-            </div>
-        `;
+            </div>`;
 
         try {
-            await new Promise(r => setTimeout(r, 600)); // Hiệu ứng AI suy nghĩ
+            await new Promise(r => setTimeout(r, 600));
             const response = await fetch('data/data.json');
             const data = await response.json();
             let html = '<div class="grid grid-cols-2 gap-2 mt-4">';
@@ -62,21 +58,14 @@
                 Object.keys(subData).forEach(key => {
                     html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-green-50 p-4 rounded-xl font-bold text-sm col-span-2">${subData[key].name}</button>`;
                 });
-                // --- THÊM ĐOẠN NÀY ĐỂ HIỆN LINK BẢNG GIÁ ---
-            if (catKey === 'cham-cong') { // Chỉ hiện khi ở mục Chấm công/Tenon
-                html += `
-                <div class="col-span-2 mt-4 text-center">
-                    <a href="https://drive.google.com/file/d/1uY7_omeP6ZmwpV8NyBILGAW1zYgY6Ge-/view?usp=sharing" target="_blank" class="text-red-600 font-bold text-[11px] underline uppercase tracking-wider">
-                        📄 BẢNG GIÁ KHOÁ THÔNG MINH TENON
-                    </a>
-                </div>`;
-            }
+                if (catKey === 'cham-cong') {
+                    html += `<div class="col-span-2 mt-4 text-center"><a href="https://drive.google.com/file/d/1uY7_omeP6ZmwpV8NyBILGAW1zYgY6Ge-/view?usp=sharing" target="_blank" class="text-red-600 font-bold text-[11px] underline uppercase tracking-wider">📄 BẢNG GIÁ KHOÁ THÔNG MINH TENON</a></div>`;
+                }
                 html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
             } else if (level === 3) {
                 const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
                 const res = await fetch(path);
                 const d = await res.json();
-                
                 (d.products || []).forEach(p => {
                     const label = typeof p === 'object' ? p.model : p;
                     const price = (typeof p === 'object' && p.price_vnd) ? p.price_vnd.toLocaleString() + 'đ' : '';
@@ -110,18 +99,15 @@
                 </div>
             </div>
             <div id="dynamic-menu"></div>
-        // Thêm vào cuối hàm loadCategory, ngay trước dòng container.innerHTML = html;
-html += `
-    <div class="col-span-2 mt-6">
-        <a href="thankyou.html" class="block w-full bg-red-600 text-white text-center font-black py-4 rounded-xl text-xs shadow-lg hover:bg-red-700 transition">
-            ĐĂNG KÝ PHƯƠNG ÁN KHẢO SÁT
-        </a>
-    </div>`;
+            <div class="mt-8">
+                <a href="thankyou.html" class="block w-full bg-red-600 text-white text-center font-black py-4 rounded-xl text-xs shadow-lg hover:bg-red-700 transition">
+                    ĐĂNG KÝ PHƯƠNG ÁN KHẢO SÁT
+                </a>
+            </div>
             <div id="social-proof" class="mt-4 text-[10px] font-bold text-red-600 italic h-4 transition-opacity duration-500 text-center"></div>
         `;
         loadCategory(1);
 
-        // Countdown & Social Proof
         let time = 544; setInterval(() => {
             let m = Math.floor(time / 60), s = time % 60;
             const cd = document.getElementById('countdown');
