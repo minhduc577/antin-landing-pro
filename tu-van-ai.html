@@ -114,15 +114,12 @@
         ];
         
         setInterval(() => {
+             setInterval(() => {
             const el = document.getElementById('social-proof');
-            if(el) {
-                el.style.opacity = 0;
-                setTimeout(() => { 
-                    el.innerText = msgs[Math.floor(Math.random() * msgs.length)]; 
-                    el.style.opacity = 1; 
-                }, 500);
-            }
-        }, 5000);
+            el.style.opacity = 0;
+            setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500);
+        }, 6000); 
+});
 </script>
 </body>
 </html>
