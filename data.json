@@ -13,7 +13,12 @@
       "tplink": { "name": "TP-Link", "products": ["TL-WR841N", "TL-Archer C6"] }
     }
   },
-  "chong-trom": { "name": "🔒 Chống đột nhập", "sub": {} },
+  "chong-trom": { 
+  "name": "🔒 Chống đột nhập",
+  "sub": {
+    "hikvision": { "name": "Hikvision", "products": ["HIK-A1"] }
+  }
+},
   "cham-cong": { "name": "🫵 Chấm công vân tay", "sub": {} },
   "bao-chay": { "name": "🔥 Báo cháy tự động", "sub": {} },
   "website": { "name": "🌐 Thiết kế Website", "sub": {} },
