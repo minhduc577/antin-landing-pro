@@ -14,7 +14,7 @@
 </head>
 <body class="bg-gray-50 p-4">
     <div class="max-w-md mx-auto bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
-        <h1 class="text-2xl font-black text-center mb-6 text-gray-800">Kết quả Phân tích AI</h1>
+        <h1 class="text-xl font-black text-center mb-6 text-gray-800">Kết quả Phân tích AI</h1>
         <div id="ai-result-content"></div>
     </div>
 
@@ -26,36 +26,35 @@
 
     async function loadCategory(level, catKey = null, subKey = null) {
         const container = document.getElementById('dynamic-menu');
-        // Hiệu ứng AI sống động với 3 vòng tròn đứt nét lồng nhau
-        container.innerHTML = `<div class="flex justify-center p-10"><div class="relative w-16 h-16"><div class="absolute w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full spin-slow"></div><div class="absolute w-10 h-10 top-3 left-3 border-4 border-red-400 border-t-transparent rounded-full spin-rev"></div><div class="absolute w-4 h-4 top-6 left-6 border-4 border-yellow-400 border-t-transparent rounded-full spin-slow-rev"></div></div></div>`;
+        // Hiệu ứng 3 vòng tròn AI quay ngược chiều nhau
+        container.innerHTML = `<div class="flex justify-center p-8"><div class="relative w-12 h-12"><div class="absolute w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full spin-slow"></div><div class="absolute w-8 h-8 top-2 left-2 border-4 border-red-400 border-t-transparent rounded-full spin-rev"></div><div class="absolute w-4 h-4 top-4 left-4 border-2 border-yellow-400 border-t-transparent rounded-full spin-slow-rev"></div></div></div>`;
         
         try {
             const data = await (await fetch('data/data.json')).json();
-            let html = '<div class="grid grid-cols-2 gap-3">';
+            let html = '<div class="grid grid-cols-2 gap-2">';
 
             if (level === 1) {
                 Object.keys(data).forEach(key => {
-                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border-2 border-gray-100 p-4 rounded-2xl text-sm font-bold text-gray-700 hover:border-blue-500 hover:text-blue-600 transition flex items-center justify-center shadow-sm">${data[key].name}</button>`;
+                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border border-gray-100 p-2 rounded-xl text-[11px] font-bold text-gray-700 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">${data[key].name}</button>`;
                 });
             } else if (level === 2) {
                 Object.keys(data[catKey].sub).forEach(key => {
-                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="col-span-2 bg-green-50 border border-green-100 p-4 rounded-2xl text-base font-bold text-green-900">${data[catKey].sub[key].name}</button>`;
+                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="col-span-2 bg-green-50 border border-green-100 p-3 rounded-xl text-sm font-bold text-green-900">${data[catKey].sub[key].name}</button>`;
                 });
-                html += `<button onclick="loadCategory(1)" class="col-span-2 text-gray-400 text-sm mt-2 underline">⬅️ Quay lại danh mục chính</button>`;
+                html += `<button onclick="loadCategory(1)" class="col-span-2 text-gray-400 text-xs mt-2 underline">⬅️ Quay lại</button>`;
             } else if (level === 3) {
-                // Logic xử lý folder data và file tenon_products_2026.json
                 const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/chamcongvantay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
                 const subData = await (await fetch(path)).json();
                 subData.products.forEach(p => {
-                    html += `<div class="col-span-2 p-4 border-l-4 border-red-500 bg-gray-50 rounded-xl mb-2 text-left shadow-sm">
-                                <div class="font-bold text-base text-gray-900">${p.model || p}</div>
-                                ${p.price_vnd ? `<div class="text-red-600 font-black text-lg">${p.price_vnd.toLocaleString()}đ</div>` : ''}
+                    html += `<div class="col-span-2 p-3 border-l-4 border-red-500 bg-gray-50 rounded-lg mb-2 text-left shadow-sm">
+                                <div class="font-bold text-sm text-gray-900">${p.model || p}</div>
+                                ${p.price_vnd ? `<div class="text-red-600 font-black text-sm">${p.price_vnd.toLocaleString()}đ</div>` : ''}
                              </div>`;
                 });
-                html += `<button onclick="loadCategory(2, '${catKey}')" class="col-span-2 text-gray-400 text-sm mt-2 underline">⬅️ Quay lại</button>`;
+                html += `<button onclick="loadCategory(2, '${catKey}')" class="col-span-2 text-gray-400 text-xs mt-2 underline">⬅️ Quay lại</button>`;
             }
             container.innerHTML = html + '</div>';
-        } catch (e) { container.innerHTML = `<p class="text-red-500 text-center font-bold">Lỗi tải dữ liệu!</p>`; }
+        } catch (e) { container.innerHTML = `<p class="text-red-500 text-center font-bold text-xs">Đang cập nhật dữ liệu...</p>`; }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -63,24 +62,23 @@
         const priceInfo = getPriceDisplay(space);
         
         document.getElementById('ai-result-content').innerHTML = `
-            <div class="bg-red-50 p-6 rounded-3xl text-center mb-6 border border-red-100">
-                <p class="text-red-600 font-bold text-xs uppercase mb-2">🔥 Ưu đãi kết thúc sau:</p>
-                <div id="countdown" class="text-4xl font-black font-mono text-red-600">09:04</div>
-                <div class="mt-4">
-                    <p class="text-gray-700 font-bold text-sm">Ngân sách Combo dự kiến:</p>
+            <div class="bg-red-50 p-5 rounded-3xl text-center mb-6 border border-red-100">
+                <p class="text-red-600 font-bold text-[10px] uppercase mb-1">🔥 Ưu đãi kết thúc sau:</p>
+                <div id="countdown" class="text-3xl font-black font-mono text-red-600">09:04</div>
+                <div class="mt-3">
+                    <p class="text-gray-700 font-bold text-xs">Ngân sách Combo dự kiến:</p>
                     <div class="text-5xl font-black text-red-600 my-2">${priceInfo.combo}</div>
-                    <p class="text-gray-600 font-semibold text-sm bg-white/50 py-1 px-3 rounded-full inline-block border border-red-200">
+                    <p class="text-gray-600 font-bold text-[11px] bg-white/60 py-1 px-4 rounded-full inline-block border border-red-100">
                         Giá khoảng: ${priceInfo.range}
                     </p>
                 </div>
             </div>
             <div id="dynamic-menu"></div>
-            <button class="w-full bg-red-600 text-white font-black py-5 rounded-2xl mt-8 text-base shadow-lg hover:bg-red-700 transition">ĐĂNG KÝ PHƯƠNG ÁN KHẢO SÁT</button>
-            <div id="social-proof" class="mt-6 text-xs font-bold text-red-600 italic h-5 transition-opacity duration-500 text-center"></div>
+            <button class="w-full bg-red-600 text-white font-black py-4 rounded-xl mt-6 text-xs shadow-lg hover:bg-red-700 transition">ĐĂNG KÝ PHƯƠNG ÁN KHẢO SÁT</button>
+            <div id="social-proof" class="mt-4 text-[10px] font-bold text-red-600 italic h-4 transition-opacity duration-500 text-center"></div>
         `;
         loadCategory(1);
 
-        // Countdown
         let time = 544; setInterval(() => {
             let m = Math.floor(time / 60), s = time % 60;
             const cd = document.getElementById('countdown');
@@ -88,7 +86,6 @@
             if(time>0) time--;
         }, 1000);
 
-        // Social Proof mới
         const msgs = [
             "🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", 
             "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", 
