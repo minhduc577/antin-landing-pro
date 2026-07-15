@@ -26,39 +26,64 @@
         return total.toLocaleString('vi-VN') + "đ";
     }
 
-    // Hàm render động 3 cấp
+    // Hàm render động 3 cấp đã được cập nhật đường dẫn
     async function loadCategory(level, catKey = null, brandKey = null) {
-        const container = document.getElementById('ai-result-content');
-        // Giữ lại phần HTML phía trên (thông báo + đếm ngược + giá) nếu cần, 
-        // ở đây ta chỉ render lại phần danh mục
         const menuContainer = document.getElementById('dynamic-menu');
-        if (!menuContainer) return; 
+        if (!menuContainer) return;
 
-        menuContainer.innerHTML = `<p class="text-xs text-gray-500 italic text-center">Đang tải danh mục...</p>`;
+        menuContainer.innerHTML = `<p class="text-xs text-gray-500 italic text-center">Đang tải dữ liệu...</p>`;
 
         try {
-            const response = await fetch('data.json');
-            const data = await response.json();
-            let html = '';
-
+            let data;
+            // Cấp 1: Load từ thư mục data/
             if (level === 1) {
+                const response = await fetch('data/data.json');
+                data = await response.json();
+                
+                let html = '';
                 Object.keys(data).forEach(key => {
                     html += `<button onclick="loadCategory(2, '${key}')" class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-50">${data[key].name}</button>`;
                 });
-            } else if (level === 2) {
+                menuContainer.innerHTML = `<div class="grid grid-cols-2 gap-2">${html}</div>`;
+            } 
+            // Cấp 2: Load sub-category từ thư mục data/
+            else if (level === 2) {
+                const response = await fetch('data/data.json');
+                data = await response.json();
                 const sub = data[catKey].sub;
+                
+                let html = '';
                 Object.keys(sub).forEach(key => {
                     html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-white px-2 py-1.5 rounded border border-green-300 text-xs text-left hover:bg-green-50">${sub[key].name}</button>`;
                 });
                 html += `<button onclick="loadCategory(1)" class="col-span-2 text-blue-600 font-bold text-xs mt-2">⬅️ Quay lại</button>`;
-            } else if (level === 3) {
-                data[catKey].sub[brandKey].products.forEach(p => {
-                    html += `<div class="p-2 border rounded bg-white text-xs font-bold">${p}</div>`;
+                menuContainer.innerHTML = `<div class="grid grid-cols-2 gap-2">${html}</div>`;
+            } 
+            // Cấp 3: Load sản phẩm (Phân nhánh theo đường dẫn file mới)
+            else if (level === 3) {
+                let products = [];
+                
+                // Kiểm tra nếu là danh mục chấm công và thương hiệu Tenon -> Load file riêng
+                if (catKey === 'cham-cong' && brandKey === 'tenon') {
+                    const res = await fetch('data/chamcongvantay/tenon_products_2026.json');
+                    const tenonData = await res.json();
+                    products = tenonData.products.map(p => `${p.model} - ${p.price_vnd.toLocaleString()}đ`);
+                } else {
+                    const response = await fetch('data/data.json');
+                    data = await response.json();
+                    products = data[catKey].sub[brandKey].products;
+                }
+
+                let html = '';
+                products.forEach(p => {
+                    html += `<div class="p-2 border rounded bg-white text-xs font-bold text-left">${p}</div>`;
                 });
                 html += `<button onclick="loadCategory(2, '${catKey}')" class="col-span-2 text-blue-600 font-bold text-xs mt-2">⬅️ Quay lại</button>`;
+                menuContainer.innerHTML = `<div class="grid grid-cols-2 gap-2">${html}</div>`;
             }
-            menuContainer.innerHTML = `<div class="grid grid-cols-2 gap-2">${html}</div>`;
-        } catch (e) { menuContainer.innerHTML = "Lỗi tải dữ liệu"; }
+        } catch (e) {
+            menuContainer.innerHTML = `<p class="text-red-500 text-xs">Lỗi tải dữ liệu: ${e.message}</p>`;
+        }
     }
 
     document.addEventListener("DOMContentLoaded", async function() {
