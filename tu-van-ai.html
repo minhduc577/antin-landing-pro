@@ -7,85 +7,67 @@
     <style>
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes spin-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-        .spin-slow { animation: spin 3s linear infinite; }
-        .spin-rev { animation: spin-rev 2s linear infinite; }
+        .spin-slow { animation: spin 4s linear infinite; }
+        .spin-rev { animation: spin-rev 3s linear infinite; }
+        .spin-slow-rev { animation: spin 2s linear infinite reverse; }
     </style>
 </head>
 <body class="bg-gray-50 p-4">
     <div class="max-w-md mx-auto bg-white p-6 rounded-3xl shadow-xl border border-gray-100" id="main-container">
-        <h1 class="text-xl font-black text-center mb-4">Kết quả Phân tích AI</h1>
+        <h1 class="text-2xl font-black text-center mb-6 text-gray-800">Kết quả Phân tích AI</h1>
         <div id="ai-result-content"></div>
     </div>
 
 <script>
-    // 1. Logic định giá
-    function getPriceDisplay(space) {
-        const data = { "Cửa hàng": { combo: "14.300.000đ", range: "6.800.000đ - 18.000.000đ" }, "Nhà ở": { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" } };
-        return data[space] || { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" };
-    }
-
-    // 2. Logic xử lý dữ liệu và điều hướng
+    // Logic điều hướng và hiển thị cấp 3
     async function loadCategory(level, catKey = null, subKey = null) {
         const container = document.getElementById('dynamic-menu');
-        container.innerHTML = `<div class="flex justify-center p-8"><div class="relative w-12 h-12"><div class="absolute w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full spin-slow"></div><div class="absolute w-8 h-8 top-2 left-2 border-4 border-red-500 border-t-transparent rounded-full spin-rev"></div></div></div>`;
+        // Hiệu ứng 3 vòng tròn lồng ghép sống động
+        container.innerHTML = `<div class="flex justify-center p-10"><div class="relative w-16 h-16"><div class="absolute w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full spin-slow"></div><div class="absolute w-10 h-10 top-3 left-3 border-4 border-red-400 border-t-transparent rounded-full spin-rev"></div><div class="absolute w-4 h-4 top-6 left-6 border-4 border-yellow-400 border-t-transparent rounded-full spin-slow-rev"></div></div></div>`;
         
         try {
             const data = await (await fetch('data/data.json')).json();
-            let html = '';
+            let html = '<div class="grid grid-cols-2 gap-3">';
 
             if (level === 1) {
-                html = `<div class="grid grid-cols-2 gap-2">`;
-                const icons = { 'camera': '📷', 'mang': '🌐', 'chong-trom': '🔒', 'cham-cong': '🖐️', 'bao-chay': '🔥', 'web': '🌐', 'cloud': '☁️', 'smart-home': '🏠', 'dien': '⚡', 'sua-chua': '🔧', 'gia-dung': '🔌', 'tu-dong-hoa': '🤖' };
                 Object.keys(data).forEach(key => {
-                    // Fix lỗi undefined: dùng icon mặc định nếu không khớp key
-                    const icon = icons[key] || '🔘';
-                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border border-blue-100 p-3 rounded-xl text-xs font-bold text-blue-900 hover:border-blue-400 whitespace-nowrap overflow-hidden shadow-sm flex items-center justify-center gap-1">${icon} ${data[key].name}</button>`;
+                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border-2 border-gray-100 p-4 rounded-2xl text-sm font-bold text-gray-700 hover:border-blue-500 hover:text-blue-600 transition flex items-center justify-center shadow-sm">${data[key].name}</button>`;
                 });
-                html += `</div>`;
-            } 
-            else if (level === 2) {
+            } else if (level === 2) {
                 Object.keys(data[catKey].sub).forEach(key => {
-                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="w-full mb-2 bg-green-50 border border-green-100 p-3 rounded-xl text-sm font-bold text-green-900">${data[catKey].sub[key].name}</button>`;
+                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="col-span-2 bg-green-50 border border-green-100 p-4 rounded-2xl text-base font-bold text-green-900">${data[catKey].sub[key].name}</button>`;
                 });
-                html += `<button onclick="loadCategory(1)" class="w-full text-gray-400 text-xs mt-2 underline">Quay lại</button>`;
-            } 
-            else if (level === 3) {
-                // Điều hướng file JSON cấp 3
+                html += `<button onclick="loadCategory(1)" class="col-span-2 text-gray-400 text-sm mt-2 underline">⬅️ Quay lại danh mục</button>`;
+            } else if (level === 3) {
+                // Logic xử lý folder data và file tenon_products_2026.json
                 const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/chamcongvantay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
                 const subData = await (await fetch(path)).json();
-                
                 subData.products.forEach(p => {
-                    html += `<div class="p-3 border-l-4 border-red-500 bg-gray-50 rounded mb-2 text-left">
-                                <div class="font-bold text-sm">${p.model || p}</div>
-                                ${p.price_vnd ? `<div class="text-red-600 font-black text-sm">${p.price_vnd.toLocaleString()}đ</div>` : ''}
+                    html += `<div class="col-span-2 p-4 border-l-4 border-red-500 bg-gray-50 rounded-xl mb-2 text-left shadow-sm">
+                                <div class="font-bold text-base text-gray-900">${p.model || p}</div>
+                                ${p.price_vnd ? `<div class="text-red-600 font-black text-lg">${p.price_vnd.toLocaleString()}đ</div>` : ''}
                              </div>`;
                 });
-                html += `<button onclick="loadCategory(2, '${catKey}')" class="w-full text-gray-400 text-xs mt-2 underline">Quay lại</button>`;
+                html += `<button onclick="loadCategory(2, '${catKey}')" class="col-span-2 text-gray-400 text-sm mt-2 underline">⬅️ Quay lại</button>`;
             }
-            container.innerHTML = html;
-        } catch (e) { container.innerHTML = `<p class="text-red-500 text-xs">Đang cập nhật danh mục...</p>`; }
+            container.innerHTML = html + '</div>';
+        } catch (e) { container.innerHTML = `<p class="text-red-500 text-center font-bold">Lỗi tải dữ liệu, vui lòng thử lại!</p>`; }
     }
 
-    // 3. Khởi tạo giao diện
     document.addEventListener("DOMContentLoaded", () => {
-        const space = localStorage.getItem('loai_hinh') || 'Nhà ở';
-        const priceInfo = getPriceDisplay(space);
         document.getElementById('ai-result-content').innerHTML = `
-            <p class="text-sm font-bold text-gray-700 mb-4">Dựa trên không gian <b>"${space}"</b>, An Tín đề xuất giải pháp tối ưu:</p>
-            <div class="bg-red-50 p-4 rounded-xl text-center mb-6 border border-red-100">
-                <p class="text-red-600 font-black text-[10px] uppercase">🔥 Ưu đãi kết thúc sau:</p>
-                <div id="countdown" class="text-3xl font-black font-mono text-red-600 my-1">09:04</div>
-                <div class="text-2xl font-black text-red-600">${priceInfo.combo}</div>
-                <p class="text-xs font-bold text-gray-600 mt-1">Giá khoảng: ${priceInfo.range}</p>
+            <div class="bg-red-50 p-6 rounded-3xl text-center mb-6 border border-red-100">
+                <p class="text-red-600 font-bold text-xs uppercase mb-2">🔥 Ưu đãi kết thúc sau:</p>
+                <div id="countdown" class="text-4xl font-black font-mono text-red-600">09:04</div>
+                <p class="text-lg font-black text-red-700 mt-2">10.600.000đ</p>
             </div>
             <div id="dynamic-menu"></div>
-            <button class="w-full bg-red-600 text-white font-black py-4 rounded-xl mt-6 text-[11px] whitespace-nowrap shadow-lg">ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ</button>
-            <div id="social-proof" class="mt-4 text-[10px] font-black text-red-600 italic h-4 transition-opacity duration-500"></div>
+            <button class="w-full bg-red-600 text-white font-black py-5 rounded-2xl mt-8 text-base shadow-lg hover:bg-red-700 transition">ĐĂNG KÝ PHƯƠNG ÁN KHẢO SÁT</button>
+            <div id="social-proof" class="mt-6 text-xs font-bold text-red-600 italic h-5 transition-opacity duration-500 text-center"></div>
         `;
-        
         loadCategory(1);
 
-        // Logic Countdown
+        // Countdown
         let time = 544; setInterval(() => {
             let m = Math.floor(time / 60), s = time % 60;
             const cd = document.getElementById('countdown');
@@ -93,8 +75,15 @@
             if(time>0) time--;
         }, 1000);
 
-        // Logic Social Proof
-        const msgs = ["🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", "🔥 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"];
+        // Social Proof mới
+        const msgs = [
+            "🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", 
+            "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", 
+            "🔥 Dì Tám (Biên Hoà) vừa nhận tư vấn 7 phút trước", 
+            "🔥 Anh Tí (Tây Ninh) vừa nhận tư vấn 8 phút trước", 
+            "🔥 Anh Quyền (Long An) vừa nhận tư vấn 9 phút trước", 
+            "🔥 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"
+        ];
         setInterval(() => {
             const el = document.getElementById('social-proof');
             if(el) {
