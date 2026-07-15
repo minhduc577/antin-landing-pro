@@ -104,13 +104,25 @@
             if (time > 0) time--;
         }, 1000);
 
-        const msgs = ["💡 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "💡 Anh Hùng (Tân Phú) vừa chốt giải pháp Camera 12 phút trước", "💡 Chị Mai (Q.1) vừa được khảo sát miễn phí 3 phút trước"];
+       const msgs = [
+            "🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", 
+            "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", 
+            "🔥 Dì Tám (Biên Hoà) vừa nhận tư vấn 7 phút trước", 
+            "🔥 Anh Tí (Tây Ninh) vừa nhận tư vấn 8 phút trước", 
+            "🔥 Anh Quyền (Long An) vừa nhận tư vấn 9 phút trước", 
+            "🔥 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"
+        ];
+        
         setInterval(() => {
             const el = document.getElementById('social-proof');
-            el.style.opacity = 0;
-            setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500);
-        }, 6000);
-    });
+            if(el) {
+                el.style.opacity = 0;
+                setTimeout(() => { 
+                    el.innerText = msgs[Math.floor(Math.random() * msgs.length)]; 
+                    el.style.opacity = 1; 
+                }, 500);
+            }
+        }, 5000);
 </script>
 </body>
 </html>
