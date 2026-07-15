@@ -5,11 +5,15 @@
     <title>Phương án Tư vấn AI - AN TÍN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes spin-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-        .spin-slow { animation: spin 4s linear infinite; }
-        .spin-rev { animation: spin-rev 3s linear infinite; }
-        .spin-slow-rev { animation: spin 2s linear infinite reverse; }
+        .loader-wrapper { display: flex; justify-content: center; align-items: center; height: 180px; position: relative; margin-top: 20px; }
+        .circle { border: 3px solid transparent; border-radius: 50%; position: absolute; }
+        .c1 { width: 80px; height: 80px; border-top-color: #ef4444; animation: spin 1s linear infinite; }
+        .c2 { width: 65px; height: 65px; border-bottom-color: #3b82f6; animation: spin-rev 1.5s linear infinite; }
+        .c3 { width: 50px; height: 50px; border-top-color: #10b981; animation: spin 2s linear infinite; }
+        .c4 { width: 35px; height: 35px; border-bottom-color: #f59e0b; animation: spin-rev 2.5s linear infinite; }
+        .c5 { width: 20px; height: 20px; border-top-color: #8b5cf6; animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-rev { 100% { transform: rotate(-360deg); } }
     </style>
 </head>
 <body class="bg-gray-50 p-4">
@@ -25,47 +29,55 @@
     }
 
     async function loadCategory(level, catKey = null, subKey = null) {
-    const container = document.getElementById('dynamic-menu');
-    if (!container) return;
+        const container = document.getElementById('dynamic-menu');
+        if (!container) return;
 
-    try {
-        const response = await fetch('data/data.json');
-        const data = await response.json();
-        let html = '<div class="grid grid-cols-2 gap-2 mt-4">';
+        // Hiển thị hiệu ứng 5 vòng tròn trước khi tải
+        container.innerHTML = `
+            <div class="loader-wrapper">
+                <div class="circle c1"></div><div class="circle c2"></div>
+                <div class="circle c3"></div><div class="circle c4"></div>
+                <div class="circle c5"></div>
+            </div>
+        `;
 
-        if (level === 1) {
-            Object.keys(data).forEach(key => {
-                html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border p-3 rounded-xl font-bold text-xs shadow-sm">${data[key].name}</button>`;
-            });
-        } else if (level === 2) {
-            const subData = data[catKey]?.sub || {};
-            Object.keys(subData).forEach(key => {
-                html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-green-50 p-4 rounded-xl font-bold text-sm col-span-2">${subData[key].name}</button>`;
-            });
-            html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
-        } else if (level === 3) {
-            // Xử lý linh hoạt: Nếu có file riêng thì fetch, không thì báo lỗi nhẹ
-            const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
-            const res = await fetch(path);
-            const d = await res.json();
-            
-            // Hiển thị sản phẩm an toàn
-            (d.products || []).forEach(p => {
-                const label = typeof p === 'object' ? p.model : p;
-                const price = (p.price_vnd ? p.price_vnd.toLocaleString() + 'đ' : '');
-                html += `<div class="p-3 bg-white border-l-4 border-red-500 rounded shadow-sm col-span-2">
-                            <div class="font-bold text-xs">${label}</div>
-                            <div class="text-red-600 font-bold text-xs">${price}</div>
-                         </div>`;
-            });
-            html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
+        try {
+            await new Promise(r => setTimeout(r, 600)); // Hiệu ứng AI suy nghĩ
+            const response = await fetch('data/data.json');
+            const data = await response.json();
+            let html = '<div class="grid grid-cols-2 gap-2 mt-4">';
+
+            if (level === 1) {
+                Object.keys(data).forEach(key => {
+                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border p-3 rounded-xl font-bold text-xs shadow-sm hover:border-red-500 transition">${data[key].name}</button>`;
+                });
+            } else if (level === 2) {
+                const subData = data[catKey]?.sub || {};
+                Object.keys(subData).forEach(key => {
+                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-green-50 p-4 rounded-xl font-bold text-sm col-span-2">${subData[key].name}</button>`;
+                });
+                html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
+            } else if (level === 3) {
+                const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
+                const res = await fetch(path);
+                const d = await res.json();
+                
+                (d.products || []).forEach(p => {
+                    const label = typeof p === 'object' ? p.model : p;
+                    const price = (typeof p === 'object' && p.price_vnd) ? p.price_vnd.toLocaleString() + 'đ' : '';
+                    html += `<div class="p-3 bg-white border-l-4 border-red-500 rounded shadow-sm col-span-2">
+                                <div class="font-bold text-xs">${label}</div>
+                                <div class="text-red-600 font-bold text-xs">${price}</div>
+                             </div>`;
+                });
+                html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
+            }
+            container.innerHTML = html + '</div>';
+        } catch (e) {
+            container.innerHTML = `<p class="text-red-500 text-xs text-center mt-4">Đang cập nhật dữ liệu...</p>`;
         }
-        container.innerHTML = html + '</div>';
-    } catch (e) {
-        console.error(e);
-        container.innerHTML = `<p class="text-red-500 text-xs text-center mt-4">Dữ liệu mục này chưa được cấu hình.</p>`;
     }
-}
+
     document.addEventListener("DOMContentLoaded", () => {
         const space = localStorage.getItem('loai_hinh') || 'Nhà ở';
         const priceInfo = getPriceDisplay(space);
@@ -88,27 +100,18 @@
         `;
         loadCategory(1);
 
+        // Countdown & Social Proof
         let time = 544; setInterval(() => {
             let m = Math.floor(time / 60), s = time % 60;
             const cd = document.getElementById('countdown');
             if(cd) cd.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-            if(time>0) time--;
+            if(time > 0) time--;
         }, 1000);
 
-        const msgs = [
-            "🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", 
-            "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", 
-            "🔥 Dì Tám (Biên Hoà) vừa nhận tư vấn 7 phút trước", 
-            "🔥 Anh Tí (Tây Ninh) vừa nhận tư vấn 8 phút trước", 
-            "🔥 Anh Quyền (Long An) vừa nhận tư vấn 9 phút trước", 
-            "🔥 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"
-        ];
+        const msgs = ["🔥 Chị Lan vừa nhận tư vấn 7 phút trước", "🔥 Anh Hùng vừa chốt giải pháp 12 phút trước", "🔥 Chị Mai vừa được khảo sát 3 phút trước"];
         setInterval(() => {
             const el = document.getElementById('social-proof');
-            if(el) {
-                el.style.opacity = 0;
-                setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500);
-            }
+            if(el) { el.style.opacity = 0; setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500); }
         }, 5000);
     });
 </script>
