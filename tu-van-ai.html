@@ -37,42 +37,39 @@
                 Object.keys(data).forEach(key => {
                     html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border border-gray-100 p-2 rounded-xl text-[11px] font-bold text-gray-700 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">${data[key].name}</button>`;
                 });
-       } else if (level === 3) {
+       // Thay thế toàn bộ đoạn xử lý level 3 của anh bằng đoạn này:
+} else if (level === 3) {
     const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
+    
     try {
         const res = await fetch(path);
         const data = await res.json();
         let html = '<div class="space-y-2">';
         
-        // Kiểm tra dữ liệu: Nếu có catalog_title thì hiển thị dạng bảng giá Tenon
-        if (data.catalog_title) {
+        // Kiểm tra xem dữ liệu có phải là bảng giá (Tenon) hay danh sách sản phẩm thông thường
+        if (data.products && Array.isArray(data.products)) {
             data.products.forEach(p => {
-                // Xử lý giá: nếu là mảng thì lấy phần tử đầu, nếu là số thì hiển thị luôn
-                let priceText = 'Liên hệ';
-                if (Array.isArray(p.price_vnd)) {
-                    priceText = p.price_vnd[0].toLocaleString() + 'đ+';
-                } else if (typeof p.price_vnd === 'number') {
-                    priceText = p.price_vnd.toLocaleString() + 'đ';
+                // Nếu p là object (có model và giá), hiển thị giá
+                if (typeof p === 'object') {
+                    const priceDisplay = p.price_vnd ? p.price_vnd.toLocaleString() + 'đ' : 'Liên hệ';
+                    html += `<div class="p-3 bg-white border-l-4 border-red-500 rounded shadow-sm">
+                                <div class="font-bold text-xs">${p.model || 'Sản phẩm'}</div>
+                                <div class="text-red-600 font-bold text-xs">${priceDisplay}</div>
+                             </div>`;
+                } else {
+                    // Nếu p là chuỗi (danh sách tên sản phẩm)
+                    html += `<div class="p-3 bg-white border-l-4 border-blue-500 rounded shadow-sm">
+                                <div class="font-bold text-xs text-gray-800">${p}</div>
+                             </div>`;
                 }
-                
-                html += `<div class="p-3 bg-white border-l-4 border-red-500 rounded shadow-sm">
-                            <div class="font-bold text-xs">${p.model}</div>
-                            <div class="text-red-600 font-bold text-xs">${priceText}</div>
-                         </div>`;
-            });
-        } else {
-            // Nếu là dạng danh sách (Camera/Wifi), hiển thị tên sản phẩm
-            const list = data.products || [];
-            list.forEach(item => {
-                html += `<div class="p-3 bg-white border-l-4 border-blue-500 rounded shadow-sm">
-                            <div class="font-bold text-xs text-gray-800">${item}</div>
-                         </div>`;
             });
         }
+        
         html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-4 underline">⬅️ Quay lại</button></div>`;
         container.innerHTML = html;
+        
     } catch (e) {
-        container.innerHTML = `<p class="text-red-500 text-xs text-center">Dữ liệu mục này đang được cập nhật...</p>`;
+        container.innerHTML = `<p class="text-red-500 text-xs text-center">Đang cập nhật dữ liệu...</p>`;
     }
 }
     document.addEventListener("DOMContentLoaded", () => {
