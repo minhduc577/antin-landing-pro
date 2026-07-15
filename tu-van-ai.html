@@ -35,7 +35,7 @@
 
             if (level === 1) {
                 html = `<div class="grid grid-cols-2 gap-3">`;
-                const icons = { 'camera': '📷', 'mang': '📶', 'chong-trom': '🔒', 'cham-cong': '🖐️', 'bao-chay': '🔥', 'web': '🌐', 'cloud': '☁️', 'smart-home': '🏠', 'dien': '⚡', 'sua-chua': '🔧', 'gia-dung': '🔌', 'tu-dong-hoa': '🤖' };
+                const icons = { 'camera': '📷', 'mang': '🌐', 'chong-trom': '🔒', 'cham-cong': '🖐️', 'bao-chay': '🔥', 'web': '🌐', 'cloud': '☁️', 'smart-home': '🏠', 'dien': '⚡', 'sua-chua': '🔧', 'gia-dung': '🔌', 'tu-dong-hoa': '🤖' };
                 Object.keys(data).forEach(key => {
                     html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border-2 border-blue-50 p-3 rounded-xl text-xs font-bold text-blue-900 hover:border-blue-400 whitespace-nowrap overflow-hidden shadow-sm flex items-center justify-center gap-1">${icons[key]} ${data[key].name}</button>`;
                 });
@@ -96,7 +96,7 @@
         }, 1000);
 
         // Social Proof
-        const msgs = ["🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", "🔥 Dì Tám (Biên Hoà) vừa nhận tư vấn 7 phút trước", 🔥 Anh Tí (Tây Ninh) vừa nhận tư vấn 8 phút trước", 🔥 Anh Quyền (Long An) vừa nhận tư vấn 9 phút trước", "🔥 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"];
+        const msgs = ["🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", "🔥 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"];
         setInterval(() => {
             const el = document.getElementById('social-proof');
             if(el) {
