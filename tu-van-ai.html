@@ -2,109 +2,135 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <!-- Bắt đầu đoạn thẻ SEO -->
+    <meta name="description" content="Nhận tư vấn giải pháp an ninh, camera giám sát và khóa thông minh Tenon chuyên nghiệp từ AN TÍN. Tối ưu ngân sách, khảo sát tại nhà.">
+    <meta name="keywords" content="tư vấn giải pháp an ninh, khóa Tenon, lắp đặt camera, an tin, giải pháp AI">
+    <meta property="og:title" content="Tư vấn Giải pháp An ninh AI - AN TÍN">
+    <meta property="og:description" content="Giải pháp an ninh thông minh, tiết kiệm và tối ưu cho ngôi nhà của bạn.">
+    <!-- Kết thúc đoạn thẻ SEO -->
     <title>Phương án Tư vấn AI - AN TÍN</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loader-wrapper { display: flex; justify-content: center; align-items: center; height: 180px; position: relative; margin-top: 20px; }
+        .circle { border: 3px solid transparent; border-radius: 50%; position: absolute; }
+        .c1 { width: 80px; height: 80px; border-top-color: #ef4444; animation: spin 1s linear infinite; }
+        .c2 { width: 65px; height: 65px; border-bottom-color: #3b82f6; animation: spin-rev 1.5s linear infinite; }
+        .c3 { width: 50px; height: 50px; border-top-color: #10b981; animation: spin 2s linear infinite; }
+        .c4 { width: 35px; height: 35px; border-bottom-color: #f59e0b; animation: spin-rev 2.5s linear infinite; }
+        .c5 { width: 20px; height: 20px; border-top-color: #8b5cf6; animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-rev { 100% { transform: rotate(-360deg); } }
+    </style>
 </head>
-<body class="bg-gray-50 p-6 text-center">
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
-        <h1 class="text-2xl font-bold text-navy mb-4">Kết quả Phân tích AI</h1>
-        <p class="mb-6">Dựa trên dữ liệu anh vừa cung cấp, đây là phương án tối ưu cho không gian của anh:</p>
-        
-    <div id="ai-result-content" class="...">
-    <div id="combo-price-display" style="font-weight: bold; color: red;"></div>
-    <ul id="ai-recommendations-list"></ul>
-</div>
-
-<a href="javascript:void(0)" 
-   onclick="localStorage.setItem('da_dang_ky', 'true'); window.location.href='thankyou.html';" 
-   class="block w-full bg-red-600 text-white font-bold py-4 px-4 rounded-xl text-center shadow-lg hover:bg-red-700 transition">
-    ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ
-    <br>
-    <span style="font-size: 0.9em; opacity: 0.9;">(Chỉ còn 3 suất trong tuần này)</span>
-</a>
+<body class="bg-gray-50 p-4">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
+        <h1 class="text-xl font-black text-center mb-6 text-gray-800">Kết quả Phân tích AI</h1>
+        <div id="ai-result-content"></div>
     </div>
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-   // Lấy ưu tiên từ localStorage, nếu không có mới dùng URL, cuối cùng là mặc định
-    const savedSpace = localStorage.getItem('loai_hinh');
-    const urlParams = new URLSearchParams(window.location.search);
-    const space = savedSpace || decodeURIComponent(urlParams.get('space')) || 'Nhà ở / Biệt thự';
-    
-    const resultBox = document.getElementById('ai-result-content');
-
-    // 1. KỸ THUẬT SKELETON SCREEN (Giữ chân khách hàng)
-    resultBox.style.transition = "opacity 0.5s ease";
-    resultBox.style.opacity = "0.5";
-    resultBox.innerHTML = `
-        <div class="animate-pulse p-8">
-            <h3 class="text-xl font-bold text-gray-400">An Tín đang thiết kế giải pháp riêng cho không gian "${space}" của anh...</h3>
-        </div>`;
-
-    // 2. LOGIC "HUMANIZE" & GOM HỒ SƠ KHÁCH HÀNG
-    const strategies = {
-        "Cửa hàng": {
-            intro: `Dựa trên không gian "${space}" anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu hóa sự an tâm và lợi nhuận:`,
-            points: [
-                "Hệ thống an ninh 24/7: Đóng vai trò quản lý kỹ thuật, giúp anh phát hiện sự cố quầy thu ngân tức thì mà không cần trực tiếp có mặt.",
-                "Hạ tầng mạng chịu tải cao: Đảm bảo doanh thu thông suốt, không gián đoạn kết nối khi khách hàng đông.",
-                "Dịch vụ trọn gói: An Tín xử lý cả điện văn phòng & website, anh chỉ cần tập trung kinh doanh."
-            ],
-            price: "Từ 6.800.000đ - 18.000.000đ"
-        },
-        "default": {
-            intro: `Chào anh, An Tín đã phân tích và đề xuất phương án tối ưu cho không gian "${space}" của anh:`,
-            points: [
-                "Giải pháp an ninh đa tầng giúp bảo vệ tài sản tuyệt đối 24/7.",
-                "Hệ thống điện thông minh & Internet tốc độ cao nâng tầm trải nghiệm sử dụng.",
-                "Bảo trì trọn gói định kỳ, hỗ trợ kỹ thuật từ 3-24h."
-            ],
-            price: "Liên hệ Hotline 0914 060 339 để được tư vấn miễn phí"
-        }
-    };
-
-    // 3. TỐI ƯU HÓA & RENDERING
- // Thay thế đoạn render bên trong setTimeout thành đoạn này:
-setTimeout(() => {
-    const data = strategies[space] || strategies["default"];
-    resultBox.style.opacity = "1";
-    
-    // Danh sách menu dịch vụ anh yêu cầu
-    const serviceMenu = [
-        "📹 Camera an ninh", "📡 Mạng Wi-Fi & CNTT", "🔐 Chống đột nhập", 
-        "👆 Chấm công vân tay", "🚨 Báo cháy tự động", "🌐 Thiết kế Website",
-        "☁️ Cloud Server & Hosting", "🏠 Smart Home", "⚡ Điện dân dụng/công nghiệp", 
-        "🔧 Sửa chữa thiết bị điện", "♨️ Điện gia dụng", "🤖 Tự động hóa"
-    ];
-
-    resultBox.innerHTML = `
-        <h3 class="text-xl font-bold text-blue-900 mb-4">${data.intro}</h3>
-        
-        <div class="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-200">
-            <p class="font-bold text-blue-900 mb-3 text-sm">💡 Anh có đang quan tâm đến các giải pháp:</p>
-            <div class="grid grid-cols-2 gap-2">
-                ${serviceMenu.map(item => `
-                    <button class="bg-white px-2 py-1.5 rounded border border-blue-300 text-xs text-left hover:bg-blue-100 transition">
-                        ${item}
-                    </button>
-                `).join('')}
-            </div>
-        </div>
-
-        <div class="bg-amber-50 p-4 rounded-lg mb-4 text-left border border-amber-200">
-            <p class="font-bold text-amber-900 mb-1">💰 Ngân sách Combo dự kiến:</p>
-            <p class="text-red-600 font-extrabold text-lg">${data.price}</p>
-        </div>
-        
-        <p class="text-[10px] text-gray-400 italic mb-4">Đã có 500+ khách hàng tại TP.HCM tin tưởng giải pháp từ An Tín</p>
-    `;
-
-    // Cập nhật CTA
-    const ctaButton = document.querySelector("a[href='thankyou.html']");
-    if (ctaButton) {
-        ctaButton.innerText = "Đăng ký nhận phương án khảo sát miễn phí (Chỉ còn 3 suất trong tuần này)";
+    function getPriceDisplay(space) {
+        const data = { "Cửa hàng": { combo: "14.300.000đ", range: "6.800.000đ - 18.000.000đ" }, "Nhà ở": { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" } };
+        return data[space] || { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" };
     }
-    }, 800);
-});
+
+    async function loadCategory(level, catKey = null, subKey = null) {
+        const container = document.getElementById('dynamic-menu');
+        if (!container) return;
+
+        // Hiển thị hiệu ứng 5 vòng tròn trước khi tải
+        container.innerHTML = `
+            <div class="loader-wrapper">
+                <div class="circle c1"></div><div class="circle c2"></div>
+                <div class="circle c3"></div><div class="circle c4"></div>
+                <div class="circle c5"></div>
+            </div>
+        `;
+
+        try {
+            await new Promise(r => setTimeout(r, 600)); // Hiệu ứng AI suy nghĩ
+            const response = await fetch('data/data.json');
+            const data = await response.json();
+            let html = '<div class="grid grid-cols-2 gap-2 mt-4">';
+
+            if (level === 1) {
+                Object.keys(data).forEach(key => {
+                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border p-3 rounded-xl font-bold text-xs shadow-sm hover:border-red-500 transition">${data[key].name}</button>`;
+                });
+            } else if (level === 2) {
+                const subData = data[catKey]?.sub || {};
+                Object.keys(subData).forEach(key => {
+                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-green-50 p-4 rounded-xl font-bold text-sm col-span-2">${subData[key].name}</button>`;
+                });
+                // --- THÊM ĐOẠN NÀY ĐỂ HIỆN LINK BẢNG GIÁ ---
+            if (catKey === 'cham-cong') { // Chỉ hiện khi ở mục Chấm công/Tenon
+                html += `
+                <div class="col-span-2 mt-4 text-center">
+                    <a href="https://drive.google.com/file/d/1uY7_omeP6ZmwpV8NyBILGAW1zYgY6Ge-/view?usp=sharing" target="_blank" class="text-red-600 font-bold text-[11px] underline uppercase tracking-wider">
+                        📄 BẢNG GIÁ KHOÁ THÔNG MINH TENON
+                    </a>
+                </div>`;
+            }
+                html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
+            } else if (level === 3) {
+                const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/ChamCongVanTay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
+                const res = await fetch(path);
+                const d = await res.json();
+                
+                (d.products || []).forEach(p => {
+                    const label = typeof p === 'object' ? p.model : p;
+                    const price = (typeof p === 'object' && p.price_vnd) ? p.price_vnd.toLocaleString() + 'đ' : '';
+                    html += `<div class="p-3 bg-white border-l-4 border-red-500 rounded shadow-sm col-span-2">
+                                <div class="font-bold text-xs">${label}</div>
+                                <div class="text-red-600 font-bold text-xs">${price}</div>
+                             </div>`;
+                });
+                html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-4 underline col-span-2">Quay lại</button>`;
+            }
+            container.innerHTML = html + '</div>';
+        } catch (e) {
+            container.innerHTML = `<p class="text-red-500 text-xs text-center mt-4">Đang cập nhật dữ liệu...</p>`;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const space = localStorage.getItem('loai_hinh') || 'Nhà ở';
+        const priceInfo = getPriceDisplay(space);
+        
+        document.getElementById('ai-result-content').innerHTML = `
+            <div class="bg-red-50 p-5 rounded-3xl text-center mb-6 border border-red-100">
+                <p class="text-red-600 font-bold text-[10px] uppercase mb-1">🔥 Ưu đãi kết thúc sau:</p>
+                <div id="countdown" class="text-3xl font-black font-mono text-red-600">09:04</div>
+                <div class="mt-3">
+                    <p class="text-gray-700 font-bold text-xs">Ngân sách Combo dự kiến:</p>
+                    <div class="text-5xl font-black text-red-600 my-2">${priceInfo.combo}</div>
+                    <p class="text-gray-600 font-bold text-[11px] bg-white/60 py-1 px-4 rounded-full inline-block border border-red-100">
+                        Giá khoảng: ${priceInfo.range}
+                    </p>
+                </div>
+            </div>
+            <div id="dynamic-menu"></div>
+         <a href="thankyou.html" class="block w-full bg-red-600 text-white text-center font-black py-4 rounded-xl mt-6 text-xs shadow-lg hover:bg-red-700 transition">
+    ĐĂNG KÝ PHƯƠNG ÁN KHẢO SÁT
+        </a>
+            <div id="social-proof" class="mt-4 text-[10px] font-bold text-red-600 italic h-4 transition-opacity duration-500 text-center"></div>
+        `;
+        loadCategory(1);
+
+        // Countdown & Social Proof
+        let time = 544; setInterval(() => {
+            let m = Math.floor(time / 60), s = time % 60;
+            const cd = document.getElementById('countdown');
+            if(cd) cd.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if(time > 0) time--;
+        }, 1000);
+
+        const msgs = ["🔥 Chị Lan vừa nhận tư vấn 7 phút trước", "🔥 Anh Hùng vừa chốt giải pháp 12 phút trước", "🔥 Chị Mai vừa được khảo sát 3 phút trước"];
+        setInterval(() => {
+            const el = document.getElementById('social-proof');
+            if(el) { el.style.opacity = 0; setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500); }
+        }, 5000);
+    });
 </script>
 </body>
 </html>
