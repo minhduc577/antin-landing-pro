@@ -12,27 +12,24 @@
     </div>
 
 <script>
-    // Hàm hiển thị giá combo và dải giá
     function getPriceDisplay(space) {
         const data = { 
             "Cửa hàng": { combo: "14.300.000đ", range: "6.800.000đ - 18.000.000đ" },
             "Nhà ở": { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" }
         };
-        return data[space] || { combo: "10.600.000đ", range: "5.000.000đ - 15.000.000đ" };
+        return data[space] || { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" };
     }
 
     async function loadCategory(level, catKey = null, brandKey = null) {
         const menuContainer = document.getElementById('dynamic-menu');
         menuContainer.innerHTML = `<p class="text-xs text-blue-500 animate-pulse font-bold">🤖 Hệ thống đang phân tích...</p>`;
-
+        
         try {
             let html = '';
             const data = await (await fetch('data/data.json')).json();
-
             if (level === 1) {
                 html = `<div class="grid grid-cols-2 gap-2">`;
                 Object.keys(data).forEach(key => {
-                    // Thay icon chuẩn cho từng mục, icon chấm công là 🖐️
                     const icons = { 'camera': '📷', 'mang': '🌐', 'chong-trom': '🔒', 'cham-cong': '🖐️', 'bao-chay': '🔥', 'web': '🌐', 'cloud': '☁️', 'smart-home': '🏠', 'dien': '⚡', 'sua-chua': '🔧', 'gia-dung': '🔌', 'tu-dong-hoa': '🤖' };
                     html += `<button onclick="loadCategory(2, '${key}')" class="bg-blue-50 border border-blue-100 p-2 rounded-lg text-[11px] font-bold text-blue-900 hover:bg-blue-100 transition flex items-center justify-center gap-1">${icons[key] || '🔘'} ${data[key].name}</button>`;
                 });
@@ -43,20 +40,10 @@
                 });
                 html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-2 underline">⬅️ Quay lại</button>`;
             } else if (level === 3) {
-                // Logic bảng giá cửa thông minh Tenon
                 if (catKey === 'cham-cong' && brandKey === 'tenon') {
                     const tenon = await (await fetch('data/chamcongvantay/tenon_products_2026.json')).json();
                     tenon.products.forEach(p => {
-                        html += `
-                        <div class="p-3 border rounded-xl bg-white shadow-sm text-left mb-3 border-l-4 border-l-red-500">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-gray-800">${p.model}</span>
-                                ${p.badge ? `<span class="bg-red-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">${p.badge}</span>` : ''}
-                            </div>
-                            <p class="text-red-600 font-bold text-sm my-1">${p.price_vnd.toLocaleString()}đ</p>
-                            <p class="text-[11px] text-gray-600">🗝️ ${p.unlock_methods.join(', ')}</p>
-                            <p class="text-[11px] text-gray-500 italic">Chất liệu: ${p.material}</p>
-                        </div>`;
+                        html += `<div class="p-3 border rounded-xl bg-white shadow-sm text-left mb-3 border-l-4 border-l-red-500"><div class="flex justify-between"><span class="font-bold text-gray-800">${p.model}</span>${p.badge ? `<span class="bg-red-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">${p.badge}</span>` : ''}</div><p class="text-red-600 font-bold text-sm my-1">${p.price_vnd.toLocaleString()}đ</p><p class="text-[11px] text-gray-600">🗝️ ${p.unlock_methods.join(', ')}</p></div>`;
                     });
                 } else {
                     data[catKey].sub[brandKey].products.forEach(p => {
@@ -74,6 +61,10 @@
         const priceInfo = getPriceDisplay(space);
         const resultBox = document.getElementById('ai-result-content');
         
+        // Hiệu ứng quét AI
+        resultBox.innerHTML = `<div class="py-10 text-blue-600 font-bold animate-bounce text-lg">Đang quét phân tích "${space}"...</div>`;
+        await new Promise(r => setTimeout(r, 1500));
+
         resultBox.innerHTML = `
             <p class="mb-4 text-sm text-gray-600 leading-relaxed">Dựa trên không gian <b>"${space}"</b>, An Tín đã thiết kế giải pháp tối ưu:</p>
             <div class="bg-red-50 p-4 rounded-xl border border-red-100 mb-6 text-center">
@@ -81,7 +72,7 @@
                 <div id="countdown" class="text-3xl font-mono font-bold text-red-600">09:04</div>
                 <p class="text-gray-600 font-bold mt-2">💰 Ngân sách Combo dự kiến:</p>
                 <div class="text-3xl font-bold text-red-600">${priceInfo.combo}</div>
-                <p class="text-gray-400 text-[10px] mt-1">Dải giá: ${priceInfo.range}</p>
+                <p class="text-gray-600 font-bold text-[11px] mt-1">Giá khoảng: ${priceInfo.range}</p>
             </div>
             <div id="dynamic-menu" class="mb-6"></div>
             <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-red-700 transition">ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ</a>
@@ -94,13 +85,6 @@
             document.getElementById('countdown').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
             if(time>0) time--;
         }, 1000);
-
-        const msgs = ["💡 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "💡 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", "💡 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"];
-        setInterval(() => {
-            const el = document.getElementById('social-proof');
-            el.style.opacity = 0;
-            setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500);
-        }, 6000);
     });
 </script>
 </body>
