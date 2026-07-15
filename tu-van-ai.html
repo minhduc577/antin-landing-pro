@@ -4,112 +4,106 @@
     <meta charset="UTF-8">
     <title>Phương án Tư vấn AI - AN TÍN</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spin-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        .spin-slow { animation: spin 3s linear infinite; }
+        .spin-rev { animation: spin-rev 2s linear infinite; }
+    </style>
 </head>
 <body class="bg-gray-50 p-6 text-center">
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
-        <h1 class="text-2xl font-bold text-navy mb-4">Kết quả Phân tích AI</h1>
+    <div class="max-w-lg mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+        <h1 class="text-2xl font-black text-gray-900 mb-5">Kết quả Phân tích AI</h1>
         <div id="ai-result-content"></div>
     </div>
 
 <script>
-    function calculatePrice(spaceType, deviceCount = 6) {
-        const config = {
-            "Cửa hàng": { base: 6800000, complexity: 1.2 },
-            "Nhà ở": { base: 5500000, complexity: 1.0 },
-            "Kho bãi": { base: 9000000, complexity: 1.5 }
-        };
-        const conf = config[spaceType] || { base: 5000000, complexity: 1.0 };
-        let total = (conf.base + (deviceCount * 850000)) * conf.complexity;
-        total = Math.round(total / 100000) * 100000;
-        return total.toLocaleString('vi-VN') + "đ";
+    // --- THUẬT TOÁN ĐỊNH GIÁ & DỮ LIỆU ---
+    function getPriceDisplay(space) {
+        const data = { "Cửa hàng": { combo: "14.300.000đ", range: "6.800.000đ - 18.000.000đ" }, "Nhà ở": { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" } };
+        return data[space] || { combo: "10.600.000đ", range: "5.500.000đ - 15.000.000đ" };
     }
 
-    async function loadCategory(level, catKey = null, brandKey = null) {
+    // --- LOGIC XỬ LÝ ĐIỀU HƯỚNG CẤP 3 & DỮ LIỆU JSON ---
+    async function loadCategory(level, catKey = null, subKey = null) {
         const menuContainer = document.getElementById('dynamic-menu');
-        if (!menuContainer) return;
-        menuContainer.innerHTML = `<p class="text-xs text-gray-500 italic text-center animate-pulse">Đang tải dữ liệu...</p>`;
-
+        menuContainer.innerHTML = `<div class="flex justify-center p-8"><div class="relative w-12 h-12"><div class="absolute w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full spin-slow"></div><div class="absolute w-8 h-8 top-2 left-2 border-4 border-red-500 border-t-transparent rounded-full spin-rev"></div></div></div>`;
+        
         try {
+            const data = await (await fetch('data/data.json')).json();
             let html = '';
+
             if (level === 1) {
-                const data = await (await fetch('data/data.json')).json();
+                html = `<div class="grid grid-cols-2 gap-3">`;
+                const icons = { 'camera': '📷', 'mang': '🌐', 'chong-trom': '🔒', 'cham-cong': '🖐️', 'bao-chay': '🔥', 'web': '🌐', 'cloud': '☁️', 'smart-home': '🏠', 'dien': '⚡', 'sua-chua': '🔧', 'gia-dung': '🔌', 'tu-dong-hoa': '🤖' };
                 Object.keys(data).forEach(key => {
-                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white px-3 py-2 rounded border border-blue-300 text-xs font-bold text-left hover:bg-blue-50">${data[key].name}</button>`;
+                    html += `<button onclick="loadCategory(2, '${key}')" class="bg-white border-2 border-blue-50 p-3 rounded-xl text-xs font-bold text-blue-900 hover:border-blue-400 whitespace-nowrap overflow-hidden shadow-sm flex items-center justify-center gap-1">${icons[key]} ${data[key].name}</button>`;
                 });
-                menuContainer.innerHTML = `<div class="grid grid-cols-2 gap-2">${html}</div>`;
+                html += `</div>`;
             } else if (level === 2) {
-                const data = await (await fetch('data/data.json')).json();
                 Object.keys(data[catKey].sub).forEach(key => {
-                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="bg-white px-3 py-2 rounded border border-green-300 text-xs font-bold text-left hover:bg-green-50">${data[catKey].sub[key].name}</button>`;
+                    html += `<button onclick="loadCategory(3, '${catKey}', '${key}')" class="w-full mb-2 bg-green-50 border border-green-100 p-4 rounded-xl text-sm font-bold text-green-900 whitespace-nowrap">${data[catKey].sub[key].name}</button>`;
                 });
-                html += `<button onclick="loadCategory(1)" class="col-span-2 text-blue-600 font-bold text-xs mt-2 underline">⬅️ Quay lại</button>`;
-                menuContainer.innerHTML = `<div class="grid grid-cols-2 gap-2">${html}</div>`;
+                html += `<button onclick="loadCategory(1)" class="text-gray-400 text-xs mt-2 underline font-bold">⬅️ Quay lại</button>`;
             } else if (level === 3) {
-                if (catKey === 'cham-cong' && brandKey === 'tenon') {
-                    const tenonData = await (await fetch('data/chamcongvantay/tenon_products_2026.json')).json();
-                    tenonData.products.forEach(p => {
-                        html += `
-                        <div class="p-3 border rounded-xl bg-white shadow-sm text-left mb-2">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-blue-900">${p.model}</span>
-                                ${p.badge ? `<span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full uppercase">${p.badge}</span>` : ''}
-                            </div>
-                            <p class="text-red-600 font-bold text-sm my-1">${p.price_vnd.toLocaleString()}đ</p>
-                            <p class="text-[11px] text-gray-600">🗝️: ${p.unlock_methods.join(', ')}</p>
-                            <p class="text-[11px] text-gray-500 italic">Material: ${p.material}</p>
-                        </div>`;
-                    });
-                } else {
-                    const data = await (await fetch('data/data.json')).json();
-                    data[catKey].sub[brandKey].products.forEach(p => {
-                        html += `<div class="p-2 border rounded bg-white text-xs font-bold text-left mb-2">${p}</div>`;
-                    });
-                }
-                html += `<button onclick="loadCategory(2, '${catKey}')" class="col-span-2 text-blue-600 font-bold text-xs mt-2 underline">⬅️ Quay lại</button>`;
-                menuContainer.innerHTML = `<div class="flex flex-col gap-2">${html}</div>`;
+                // Xử lý bảng giá Tenon hoặc các mục khác
+                const path = (catKey === 'cham-cong' && subKey === 'tenon') ? 'data/chamcongvantay/tenon_products_2026.json' : `data/${catKey}/${subKey}.json`;
+                const subData = await (await fetch(path)).json();
+                
+                subData.products.forEach(p => {
+                    html += `<div class="p-3 border-2 rounded-xl bg-white text-left mb-2 border-l-4 border-l-red-500">
+                                <div class="font-bold text-sm">${p.model || p}</div>
+                                ${p.price_vnd ? `<div class="text-red-600 font-black text-sm">${p.price_vnd.toLocaleString()}đ</div>` : ''}
+                                <div class="text-[10px] text-gray-500">🗝️ ${p.unlock_methods ? p.unlock_methods.join(', ') : ''}</div>
+                             </div>`;
+                });
+                html += `<button onclick="loadCategory(2, '${catKey}')" class="text-gray-400 text-xs mt-2 underline font-bold">⬅️ Quay lại</button>`;
             }
-        } catch (e) { menuContainer.innerHTML = `<p class="text-red-500 text-xs">Lỗi tải dữ liệu!</p>`; }
+            menuContainer.innerHTML = html;
+        } catch (e) { menuContainer.innerHTML = `<p class="text-red-500 text-xs font-bold">Đang tải chi tiết...</p>`; }
     }
 
-    document.addEventListener("DOMContentLoaded", async function() {
+    // --- KHỞI TẠO GIAO DIỆN & SOCIAL PROOF ---
+    document.addEventListener("DOMContentLoaded", async () => {
         const space = localStorage.getItem('loai_hinh') || 'Nhà ở';
+        const priceInfo = getPriceDisplay(space);
         const resultBox = document.getElementById('ai-result-content');
-        const stages = ["Đang quét kiến trúc...", "Phân tích nhu cầu AI...", "Tối ưu hóa bảng giá..."];
         
-        for (let stage of stages) {
-            resultBox.innerHTML = `<div class="p-10 text-center font-bold text-blue-600 animate-bounce">${stage}</div>`;
-            await new Promise(r => setTimeout(r, 600));
-        }
+        resultBox.innerHTML = `<div class="py-12 flex flex-col items-center"><div class="relative w-16 h-16 mb-4"><div class="absolute w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full spin-slow"></div><div class="absolute w-10 h-10 top-3 left-3 border-4 border-red-500 border-t-transparent rounded-full spin-rev"></div></div><p class="font-bold text-blue-700">Đang phân tích không gian ${space}...</p></div>`;
+        await new Promise(r => setTimeout(r, 2000));
 
         resultBox.innerHTML = `
-            <p class="mb-4 text-gray-700 font-medium">Dựa trên không gian <b>"${space}"</b> anh mô tả, An Tín đã thiết kế riêng bộ giải pháp giúp anh tối ưu sự an tâm và lợi nhuận:</p>
-            <div class="bg-red-50 border border-red-200 p-4 rounded-xl mb-4 text-center">
-                <p class="text-red-700 font-bold text-sm">🔥 Ưu đãi khảo sát miễn phí kết thúc sau:</p>
-                <div id="countdown" class="text-3xl font-mono font-bold text-red-600">10:00</div>
-                <p class="text-gray-600 font-bold mt-2">💰 Ngân sách Combo dự kiến:</p>
-                <p class="text-red-600 font-bold text-3xl">${calculatePrice(space, 6)}</p>
-                <p class="text-gray-400 text-xs italic mt-1">Dải giá: Từ 6.800.000đ - 18.000.000đ</p>
+            <p class="mb-4 text-sm font-bold text-gray-700">Dựa trên không gian <b>"${space}"</b>, An Tín đã thiết kế giải pháp tối ưu:</p>
+            <div class="bg-red-50 p-5 rounded-2xl border border-red-100 mb-6 text-center">
+                <p class="text-red-600 font-black text-xs uppercase tracking-widest">🔥 Ưu đãi kết thúc sau:</p>
+                <div id="countdown" class="text-4xl font-black font-mono text-red-600 my-2">09:04</div>
+                <div class="text-gray-800 font-bold text-sm">💰 Ngân sách Combo dự kiến:</div>
+                <div class="text-3xl font-black text-red-600">${priceInfo.combo}</div>
+                <div class="text-xs font-bold text-red-600 mt-1">Giá khoảng: ${priceInfo.range}</div>
             </div>
-            <div id="dynamic-menu" class="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-200"></div>
-            <a href="thankyou.html" class="block w-full bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-red-700 transition">ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ</a>
-            <div id="social-proof" class="mt-4 text-xs text-gray-700 font-bold italic h-6 transition-opacity duration-500"></div>
+            <div id="dynamic-menu" class="mb-6"></div>
+            <a href="thankyou.html" class="block w-full bg-red-600 text-white font-black py-4 rounded-xl shadow-lg whitespace-nowrap text-sm hover:bg-red-700 transition">ĐĂNG KÝ NHẬN PHƯƠNG ÁN KHẢO SÁT MIỄN PHÍ</a>
+            <div id="social-proof" class="mt-5 text-xs font-black text-red-600 italic h-6 transition-opacity duration-500"></div>
         `;
-
         loadCategory(1);
-        let time = 600;
-        setInterval(() => {
+
+        // Countdown
+        let time = 544; setInterval(() => {
             let m = Math.floor(time / 60), s = time % 60;
             const cd = document.getElementById('countdown');
-            if(cd) cd.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            if (time > 0) time--;
+            if(cd) cd.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if(time>0) time--;
         }, 1000);
 
-        const msgs = ["💡 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "💡 Anh Hùng (Tân Phú) vừa chốt giải pháp Camera 12 phút trước", "💡 Chị Mai (Q.1) vừa được khảo sát miễn phí 3 phút trước"];
+        // Social Proof
+        const msgs = ["🔥 Chị Lan (Bình Dương) vừa nhận tư vấn 7 phút trước", "🔥 Anh Hùng (Tân Phú) vừa chốt giải pháp 12 phút trước", "🔥 Chị Mai (Q.1) vừa được khảo sát 3 phút trước"];
         setInterval(() => {
             const el = document.getElementById('social-proof');
-            el.style.opacity = 0;
-            setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500);
-        }, 6000);
+            if(el) {
+                el.style.opacity = 0;
+                setTimeout(() => { el.innerText = msgs[Math.floor(Math.random()*msgs.length)]; el.style.opacity = 1; }, 500);
+            }
+        }, 5000);
     });
 </script>
 </body>
