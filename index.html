@@ -538,6 +538,19 @@
         var url = "https://script.google.com/macros/s/AKfycbwYjskWtM8T1OmCXp_iBaS1aTepcM5fWswHO9dcu15C2DwMlXXcfUMVqtCLRfnve0RMiQ/exec";
         var params = new URLSearchParams(data);
 
+        // ==========================================
+        // CHÈN THÊM: Gửi đồng thời sang Make.com ở đây
+        // ==========================================
+        var makeUrl = "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc";
+        fetch(makeUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).catch(function(err) {
+            console.log('Lỗi gửi Make:', err);
+        });
+        // ==========================================
+      
         // Kích hoạt hiệu ứng loading chấm điểm nếu có sẵn trên hệ thống
         if (typeof window.showAIScore === 'function') {
             window.showAIScore();
