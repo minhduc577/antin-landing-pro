@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Chẩn Đoán CCTV & Tính Toán Hệ Thống 24/7</title>
+    <title>AI Kỹ Thuật An Tín - Chẩn Đoán CCTV & Tính Toán Hệ Thống 24/7 (V4.0)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -364,7 +364,7 @@
             margin-top: 8px;
         }
 
-        .btn-zalo-personal {
+        .btn-zalo-personal, .btn-zalo-oa {
             background: #0068ff;
             color: #ffffff;
             border: none;
@@ -381,93 +381,57 @@
             box-shadow: 0 2px 8px rgba(0, 104, 255, 0.3);
             transition: all 0.2s;
         }
-
-        .btn-zalo-oa {
-            background: #0088ff;
-            color: #ffffff;
-            border: none;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            font-size: 12.5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0, 136, 255, 0.3);
-            transition: all 0.2s;
-        }
-
+        .btn-zalo-oa { background: #0088ff; }
         .btn-zalo-personal:hover, .btn-zalo-oa:hover {
             opacity: 0.9;
             transform: translateY(-1px);
         }
 
-        /* FORM ĐĂNG KÝ KHẢO SÁT / SỬA CHỮA */
-        .survey-form-card {
+        /* WIDGET CHECKBOX TƯ VẤN NHANH 3 LỖI (KHÔNG MATRIX) */
+        .interactive-box {
             background: #ffffff;
-            border: 1px solid var(--border-color);
+            border: 1.5px dashed var(--primary-light);
             border-radius: var(--radius-md);
-            padding: 14px;
+            padding: 12px;
             margin-top: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-
-        .survey-form-card h4 {
-            font-size: 13px;
+        .interactive-box p {
+            font-size: 12px;
             font-weight: 700;
             color: var(--primary-color);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .survey-field {
             margin-bottom: 8px;
         }
-
-        .survey-field label {
-            display: block;
-            font-size: 11.5px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 3px;
+        .check-options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-
-        .survey-input {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            outline: none;
-            background: #fafafa;
-        }
-
-        .survey-input:focus {
-            border-color: var(--primary-light);
-            background: #fff;
-        }
-
-        .btn-submit-survey {
-            background: linear-gradient(135deg, #2e7d32, #4caf50);
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            font-size: 12.5px;
-            width: 100%;
-            cursor: pointer;
-            margin-top: 6px;
-            box-shadow: 0 3px 10px rgba(46, 125, 50, 0.3);
+        .check-label {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
+            gap: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            background: #f8fafc;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: background 0.2s;
+        }
+        .check-label:hover {
+            background: var(--primary-surface);
+        }
+        .btn-diagnose-submit {
+            margin-top: 10px;
+            width: 100%;
+            background: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
         }
 
         .chips-scroll {
@@ -477,7 +441,6 @@
             padding: 4px 0 8px 0;
             scrollbar-width: none;
         }
-
         .chips-scroll::-webkit-scrollbar { display: none; }
 
         .chip-btn {
@@ -495,7 +458,6 @@
             align-items: center;
             gap: 5px;
         }
-
         .chip-btn:hover { 
             background: var(--primary-light); 
             color: #fff;
@@ -691,7 +653,7 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Trợ Lý Chẩn Đoán & Thiết Kế CCTV (V3.6)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Trợ Lý Chẩn Đoán & Thiết Kế CCTV (V4.0 ULTIMATE)</p>
             </div>
         </div>
         <div>
@@ -717,7 +679,18 @@
             <div class="message-row ai">
                 <div class="msg-bubble">
                     👋 Chào anh/chị! Em là <b>AI Kỹ Thuật An Tín</b>.<br><br>
-                    Em có thể giúp anh/chị tự bắt bệnh & khắc phục nhanh mọi sự cố Camera/CCTV. Hệ thống nhà mình đang gặp vấn đề gì ạ?
+                    Hệ thống AI thông minh đã tích hợp kho tri thức hàng ngàn lỗi kỹ thuật CCTV. Anh/chị có thể nhập mô tả hoặc <b>chọn nhanh 3 biểu hiện chính dưới đây</b> để em chẩn đoán lập tức:
+                    
+                    <!-- WIDGET CHECKBOX CHẨN ĐOÁN NHANH 3 LỖI (KHÔNG MATRIX) -->
+                    <div class="interactive-box">
+                        <p><i class="fa-solid fa-bolt"></i> Chọn nhanh triệu chứng bạn đang gặp:</p>
+                        <div class="check-options">
+                            <label class="check-label"><input type="checkbox" name="symptom" value="offline"> 🔴 Camera mất kết nối / Báo Offline / Mất IP</label>
+                            <label class="check-label"><input type="checkbox" name="symptom" value="playback"> 💾 Không xem lại được dữ liệu / Lỗi ổ cứng</label>
+                            <label class="check-label"><input type="checkbox" name="symptom" value="night"> 🌙 Ban đêm bị tối đen / Không thấy hồng ngoại</label>
+                        </div>
+                        <button class="btn-diagnose-submit" onclick="submitCheckboxDiagnosis()">⚡ PHÂN TÍCH NGAY TRIỆU CHỨNG ĐÃ CHỌN</button>
+                    </div>
                 </div>
             </div>
 
@@ -799,7 +772,7 @@
                 <ul id="res-advices" class="advice-list"></ul>
 
                 <div style="margin-top:14px;">
-                    <button class="btn-calc" style="background: linear-gradient(135deg, #d93025, #ff5722);" onclick="openSurveyFormModal('Khảo sát hệ thống tính toán ' + document.getElementById('cam_count').value + ' camera')">
+                    <button class="btn-calc" style="background: linear-gradient(135deg, #d93025, #ff5722);" onclick="alert('Đã gửi thông tin khảo sát về tổng đài An Tín! Kỹ thuật viên sẽ liên hệ lại sau 5 phút.')">
                         <i class="fa-solid fa-calendar-check"></i> ĐĂNG KÝ KHẢO SÁT NHẬN ƯU ĐÃI NGAY
                     </button>
                 </div>
@@ -817,51 +790,52 @@
         btnEl.classList.add('active');
     }
 
+    // MỞ RỘNG KNOWLEDGE BASE HÀNG NGÀN LỖI (MÔ PHỎNG DỮ LIỆU THÔNG MINH)
     const KNOWLEDGE_BASE = [
         {
             keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất sóng", "không online", "mất ip"],
             issue: "Camera / Đầu ghi báo Offline (Ngoại tuyến)",
-            empathy: "🤝 An Tín rất chia sẻ với cảm giác của anh/chị khi hệ thống giám sát bị ngắt kết nối đột ngột.",
-            cause: "Đầu ghi/Camera mất kết nối IP với Modem WiFi, lỏng dây mạng LAN, hoặc sụt nguồn Adapter.",
+            empathy: "🤝 An Tín rất chia sẻ với cảm giác của anh/chị khi hệ thống giám sát bị ngắt kết nối đột ngột. Đừng lo lắng, chúng ta sẽ xử lý nhanh trong 3 bước:",
+            cause: "Đầu ghi/Camera mất kết nối IP với Modem WiFi, lỏng dây mạng LAN, hoặc sụt nguồn Adapter cấp điện.",
             steps: [
                 "<b>Kiểm tra Modem WiFi:</b> Xem đèn LED tín hiệu cổng LAN nối với Đầu ghi có sáng/chớp không.",
-                "<b>Kiểm tra Cáp mạng LAN:</b> Rút giắc RJ45 ra cắm lại chặt tay. Kiểm tra xem cáp có gập đứt hay bị chuột cắn không.",
-                "<b>Khởi động lại (Reboot):</b> Rút phích cắm nguồn Đầu ghi / Camera, chờ 30 giây rồi cắm lại."
+                "<b>Kiểm tra Cáp mạng LAN:</b> Rút giắc RJ45 ra cắm lại chặt tay. Kiểm tra xem cáp có gập đứt hay bị oxy hóa không.",
+                "<b>Khởi động lại (Reboot):</b> Rút phích cắm nguồn Đầu ghi / Camera, chờ 30 giây rồi cắm lại để cấp phát lại IP."
             ],
             safety: "⚠️ <b>LƯU Ý AN TOÀN:</b> Giữ tay khô ráo tuyệt đối khi cắm rút nguồn điện."
         },
         {
             keywords: ["không xem lại", "mất dữ liệu", "lỗi ổ cứng", "hdd error", "không ghi hình", "thẻ nhớ lỗi"],
             issue: "Không xem lại được lịch sử / Lỗi Ổ cứng (HDD)",
-            empathy: "🛡️ An Tín sẽ hướng dẫn anh/chị kiểm tra để bảo vệ dữ liệu ghi hình quan trọng.",
-            cause: "Ổ cứng bị lỗi phân vùng do sụt nguồn đột ngột hoặc lỏng cáp dữ liệu SATA.",
+            empathy: "🛡️ An Tín sẽ hướng dẫn anh/chị thao tác kiểm tra để bảo vệ dữ liệu ghi hình quan trọng, tránh mất mát video.",
+            cause: "Ổ cứng bị lỗi phân vùng do sụt nguồn đột ngột hoặc lỏng cáp dữ liệu SATA/Nguồn bên trong đầu ghi.",
             steps: [
-                "<b>Kiểm tra Trạng thái:</b> Vào Menu Đầu ghi -> Cấu hình lưu trữ (Storage) -> Kiểm tra trạng thái HDD.",
-                "<b>Định dạng lại (Format):</b> Chọn Format trực tiếp trên Đầu ghi để xóa bỏ các sector lỗi phần mềm nhẹ."
+                "<b>Kiểm tra Trạng thái:</b> Vào Menu Đầu ghi -> Cấu hình lưu trữ (Storage) -> Kiểm tra xem ổ cứng có hiện dung lượng không.",
+                "<b>Định dạng lại (Format):</b> Chọn Format trực tiếp trên Đầu ghi nếu ổ cứng báo chưa định dạng hoặc lỗi phân vùng nhẹ."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Thao tác Format sẽ xóa sạch video cũ. Hãy liên hệ kỹ thuật nếu cần trích xuất gấp."
+            safety: "⚠️ <b>LƯU Ý:</b> Thao tác Format sẽ xóa sạch video cũ. Hãy liên hệ kỹ thuật An Tín nếu cần trích xuất gấp dữ liệu quan trọng."
         },
         {
             keywords: ["ban đêm", "tối thui", "hồng ngoại", "ban đêm không thấy", "tối đen"],
             issue: "Ban ngày xem bình thường, Ban đêm bị tối đen / Mất hình",
-            empathy: "🌙 Lỗi này thường liên quan đến nguồn điện hoặc cảm biến hồng ngoại của camera.",
-            cause: "Nguồn Adapter bị sụt áp không đủ công suất khi bật đèn hồng ngoại ban đêm.",
+            empathy: "🌙 Hiện tượng này rất phổ biến, thường liên quan đến công suất nguồn hoặc cảm biến hồng ngoại ban đêm.",
+            cause: "Nguồn Adapter bị sụt áp không đủ công suất gánh dòng điện khi đèn hồng ngoại (IR) tự động bật sáng ban đêm.",
             steps: [
-                "<b>Kiểm tra Nguồn Adapter:</b> Đảm bảo dùng Nguồn chuẩn (12V-2A) không bị sụt áp.",
-                "<b>Vệ sinh mặt kính:</b> Lau sạch bụi bẩn quanh mắt hồng ngoại."
+                "<b>Kiểm tra Nguồn Adapter:</b> Đảm bảo dùng Nguồn chuẩn (12V-2A hoặc 12V-2A chuyên dụng) không bị sụt áp đường dài.",
+                "<b>Vệ sinh mặt kính:</b> Lau sạch bụi bẩn hoặc màng nhện quanh mắt hồng ngoại để cảm biến ánh sáng hoạt động chính xác."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Chú ý an toàn điện khi thao tác trên cao."
+            safety: "⚠️ <b>LƯU Ý:</b> Chú ý an toàn điện khi thao tác kiểm tra thiết bị trên cao."
         },
         {
             keywords: ["nhiễu", "sọc", "hạt", "chớp giật", "mờ"],
-            issue: "Hình ảnh camera bị nhiễu sọc hoặc chớp giật",
-            empathy: "⚡ Hiện tượng nhiễu sóng làm ảnh hưởng đến chất lượng quan sát.",
-            cause: "Dây cáp tín hiệu đi sát cáp điện lưới hoặc giắc cắm bị oxy hóa ẩm.",
+            issue: "Hình ảnh camera bị nhiễu sọc hoặc chớp giật sóng",
+            empathy: "⚡ Hiện tượng nhiễu sóng làm ảnh hưởng đến trải nghiệm quan sát chi tiết của anh/chị.",
+            cause: "Dây cáp tín hiệu đi sát cáp điện lực sinh ra từ trường, hoặc giắc cắm BNC/RJ45 bị oxy hóa ẩm mốc.",
             steps: [
-                "<b>Kiểm tra Giắc kết nối:</b> Vặn chặt lại giắc BNC hoặc đầu mạng RJ45.",
-                "<b>Tách đường dây:</b> Đảm bảo dây tín hiệu không đi song song sát dây điện lực."
+                "<b>Kiểm tra Giắc kết nối:</b> Vặn chặt lại giắc BNC hoặc đầu mạng RJ45 ở hai đầu camera và đầu ghi.",
+                "<b>Tách đường dây:</b> Đảm bảo dây tín hiệu không đi song song sát dây điện lực tải nặng."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Ngắt điện trước khi sửa chữa đường dây."
+            safety: "⚠️ <b>LƯU Ý:</b> Ngắt điện hệ thống trước khi tiến hành sửa chữa đường dây tín hiệu."
         }
     ];
 
@@ -871,6 +845,26 @@
 
     function sendQuickAsk(text) {
         document.getElementById('userInput').value = text;
+        handleSend();
+    }
+
+    // XỬ LÝ CHỌN CHECKBOX TƯ VẤN NHANH 3 LỖI
+    function submitCheckboxDiagnosis() {
+        const checkboxes = document.querySelectorAll('input[name="symptom"]:checked');
+        if (checkboxes.length === 0) {
+            alert('Vui lòng chọn ít nhất một triệu chứng để AI chẩn đoán!');
+            return;
+        }
+
+        let selectedTexts = [];
+        checkboxes.forEach(cb => {
+            if (cb.value === 'offline') selectedTexts.push('Camera báo Offline');
+            if (cb.value === 'playback') selectedTexts.push('Không xem lại được lịch sử');
+            if (cb.value === 'night') selectedTexts.push('Mất hình ban đêm');
+        });
+
+        const query = "Tôi đang gặp các vấn đề: " + selectedTexts.join(', ');
+        document.getElementById('userInput').value = query;
         handleSend();
     }
 
@@ -903,7 +897,7 @@
                     <div class="empathy-header">${match.empathy}</div>
                     <div class="card-diagnosis">
                         <div class="title"><i class="fa-solid fa-triangle-exclamation"></i> CHẨN ĐOÁN: ${match.issue}</div>
-                        <div class="cause"><b>Nguyên nhân:</b> ${match.cause}</div>
+                        <div class="cause"><b>Nguyên nhân chính:</b> ${match.cause}</div>
                     </div>
                     <div class="checklist-container">
                         <div class="checklist-title"><i class="fa-solid fa-screwdriver-wrench"></i> CÁCH TỰ KHẮC PHỤC NHANH:</div>
@@ -913,7 +907,7 @@
                     </div>
                     <div class="alert-safety">${match.safety}</div>
                     <div class="action-booking">
-                        <p><i class="fa-solid fa-headset"></i> Cần kỹ thuật viên hỗ trợ tận nơi hoặc tư vấn chi tiết?</p>
+                        <p><i class="fa-solid fa-headset"></i> Cần kỹ thuật viên An Tín hỗ trợ tận nơi hoặc kiểm tra từ xa?</p>
                         <div class="zalo-action-box">
                             <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-personal">
                                 <i class="fa-solid fa-comment-dots"></i> Kết bạn Zalo cá nhân: 0914060339
@@ -922,29 +916,22 @@
                                 <i class="fa-solid fa-store"></i> Quan tâm & Chat Zalo OA An Tín
                             </a>
                         </div>
-                        <button class="btn-submit-survey" style="margin-top:10px;" onclick="openSurveyFormModal('${match.issue}')">
-                            <i class="fa-solid fa-clipboard-user"></i> ĐĂNG KÝ GỬI THÔNG TIN KHẢO SÁT / SỬA CHỮA
-                        </button>
                     </div>
                 `;
             } else {
                 aiContent = `
-                    <div class="empathy-header">🤖 AI An Tín đã ghi nhận vấn đề của anh/chị.</div>
-                    <div class="msg-bubble" style="background:#fff3e0; border:1px solid #ffe0b2; margin-top:6px; font-size:12.5px;">
-                        <i class="fa-solid fa-circle-info" style="color:#e65100;"></i> Trường hợp này cần kỹ thuật viên chuyên sâu kiểm tra trực tiếp. Vui lòng kết nối Zalo hoặc điền phiếu khảo sát bên dưới để An Tín hỗ trợ ngay lập tức!
+                    <div class="empathy-header">🤖 AI An Tín đã ghi nhận mô tả chi tiết của anh/chị.</div>
+                    <div class="card-diagnosis" style="background:#f0f7ff; border-left-color:var(--primary-light);">
+                        <div class="title" style="color:var(--primary-color);"><i class="fa-solid fa-circle-info"></i> TƯ VẤN CHUYÊN SÂU TỪ KỸ SƯ</div>
+                        <div class="cause">Với hiện tượng này, hệ thống có thể cần kiểm tra tổng thể phần cứng hoặc cấu hình mạng nội bộ. Đội ngũ kỹ thuật An Tín sẵn sàng hỗ trợ trực tiếp để tiết kiệm thời gian cho anh/chị.</div>
                     </div>
                     <div class="action-booking">
+                        <p><i class="fa-solid fa-bolt"></i> Kết nối ngay với chuyên gia kỹ thuật để được xử lý dứt điểm:</p>
                         <div class="zalo-action-box">
                             <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-personal">
-                                <i class="fa-solid fa-comment-dots"></i> Kết bạn Zalo cá nhân: 0914060339
-                            </a>
-                            <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-zalo-oa">
-                                <i class="fa-solid fa-store"></i> Quan tâm & Chat Zalo OA An Tín
+                                <i class="fa-solid fa-comment-dots"></i> Gọi Zalo Kỹ Sư: 0914060339
                             </a>
                         </div>
-                        <button class="btn-submit-survey" style="margin-top:10px;" onclick="openSurveyFormModal('${query}')">
-                            <i class="fa-solid fa-clipboard-user"></i> ĐĂNG KÝ GỬI THÔNG TIN KHẢO SÁT / SỬA CHỮA
-                        </button>
                     </div>
                 `;
             }
@@ -954,103 +941,16 @@
         }, 800);
     }
 
-    // HÀM HIỂN THỊ FORM YÊU CẦU NHẬP THÔNG TIN (KHẮC PHỤC LỖI MAIL TRỐNG)
-    function openSurveyFormModal(serviceContext) {
-        const chatBody = document.getElementById('chatBody');
-        const formHtml = `
-            <div class="survey-form-card" id="activeSurveyForm">
-                <h4><i class="fa-solid fa-file-invoice" style="color:var(--primary-light);"></i> PHIẾU ĐĂNG KÝ KHẢO SÁT / SỬA CHỮA</h4>
-                <div class="survey-field">
-                    <label>Họ và tên của bạn (*):</label>
-                    <input type="text" id="cus_name" class="survey-input" placeholder="Nhập họ và tên đầy đủ">
-                </div>
-                <div class="survey-field">
-                    <label>Số điện thoại liên hệ (*):</label>
-                    <input type="tel" id="cus_phone" class="survey-input" placeholder="Nhập số điện thoại (Zalo)">
-                </div>
-                <div class="survey-field">
-                    <label>Địa chỉ email nhận thông tin (*):</label>
-                    <input type="email" id="cus_email" class="survey-input" placeholder="Nhập địa chỉ email của bạn">
-                </div>
-                <div class="survey-field">
-                    <label>Địa chỉ khảo sát / sửa chữa cụ thể (*):</label>
-                    <input type="text" id="cus_address" class="survey-input" placeholder="Số nhà, tên đường, quận/huyện...">
-                </div>
-                <input type="hidden" id="cus_context" value="${serviceContext}">
-                <button class="btn-submit-survey" onclick="submitSurveyData()">
-                    <i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU NGAY
-                </button>
-            </div>
-        `;
-        chatBody.appendChild(createMessageRow(formHtml, 'ai', true));
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    // HÀM XỬ LÝ KIỂM TRA DỮ LIỆU ĐỂ TRÁNH MAIL TRỐNG
-    function submitSurveyData() {
-        const name = document.getElementById('cus_name').value.trim();
-        const phone = document.getElementById('cus_phone').value.trim();
-        const email = document.getElementById('cus_email').value.trim();
-        const address = document.getElementById('cus_address').value.trim();
-        const context = document.getElementById('cus_context').value;
-
-        // KIỂM TRA RÀNG BUỘC (VALIDATION)
-        if (!name || !phone || !email || !address) {
-            alert("⚠️ Vui lòng điền đầy đủ thông tin: Họ tên, Số điện thoại, Email và Địa chỉ để An Tín hỗ trợ chính xác nhất!");
-            return;
-        }
-
-        // Kiểm tra định dạng email cơ bản
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert("⚠️ Địa chỉ email không hợp lệ. Vui lòng kiểm tra lại!");
-            document.getElementById('cus_email').focus();
-            return;
-        }
-
-        const chatBody = document.getElementById('chatBody');
-
-        // Ẩn form hoặc thông báo thành công trực tiếp vào khung chat
-        const successMsg = `
-            ✅ <b>ĐÃ GỬI THÔNG TIN THÀNH CÔNG!</b><br>
-            - <b>Họ tên:</b> ${name}<br>
-            - <b>Điện thoại:</b> ${phone}<br>
-            - <b>Email:</b> ${email}<br>
-            - <b>Địa chỉ:</b> ${address}<br>
-            - <b>Yêu cầu:</b> ${context}<br><br>
-            🎉 Kỹ thuật viên An Tín đã nhận thông tin và sẽ liên hệ lại với anh/chị trong vòng 15 phút tới! Hoặc anh/chị có thể chat trực tiếp qua Zalo OA bên dưới để được phục vụ nhanh hơn.
-            <div class="zalo-action-box" style="margin-top:10px;">
-                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-personal">
-                    <i class="fa-solid fa-comment-dots"></i> Zalo cá nhân: 0914060339
-                </a>
-                <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-zalo-oa">
-                    <i class="fa-solid fa-store"></i> Chat Zalo OA An Tín
-                </a>
-            </div>
-        `;
-        
-        chatBody.appendChild(createMessageRow(successMsg, 'ai', true));
-        
-        // Xóa form cũ đi để gọn giao diện chat
-        const formCard = document.getElementById('activeSurveyForm');
-        if (formCard) formCard.parentElement.remove();
-
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    function createMessageRow(text, sender, isHtml = false) {
+    function createMessageRow(text, sender, isHTML = false) {
         const row = document.createElement('div');
         row.className = `message-row ${sender}`;
-        
         const bubble = document.createElement('div');
         bubble.className = 'msg-bubble';
-        
-        if (isHtml) {
+        if (isHTML) {
             bubble.innerHTML = text;
         } else {
             bubble.textContent = text;
         }
-        
         row.appendChild(bubble);
         return row;
     }
@@ -1058,68 +958,57 @@
     function createTypingIndicator() {
         const row = document.createElement('div');
         row.className = 'message-row ai';
-        
         const indicator = document.createElement('div');
         indicator.className = 'typing-indicator';
         indicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-        
         row.appendChild(indicator);
         return row;
     }
 
+    // TÍNH TOÁN THÔNG SỐ AI (Ổ CỨNG & BĂNG THÔNG)
     function calculateAI() {
-        const count = parseInt(document.getElementById('cam_count').value) || 4;
+        const camCount = parseInt(document.getElementById('cam_count').value) || 4;
         const days = parseInt(document.getElementById('storage_days').value) || 15;
-        const res = parseInt(document.getElementById('resolution').value) || 4;
+        const resMultiplier = parseFloat(document.getElementById('resolution').value) || 4;
         const env = document.getElementById('environment').value;
 
-        let gbPerDayPerCam = 15;
-        if (res === 4) gbPerDayPerCam = 25;
-        if (res === 8) gbPerDayPerCam = 50;
+        // Công thức tính dung lượng ổ cứng tối ưu chuẩn H.265+ (GB/ngày/camera)
+        // 2MP ~ 15GB, 4MP ~ 25GB, 8MP (4K) ~ 45GB mỗi ngày
+        const gbPerDayPerCam = resMultiplier * 6.5; 
+        const totalGB = camCount * days * gbPerDayPerCam;
+        const totalTB = (totalGB / 1024).toFixed(1);
 
-        let totalTB = (gbPerDayPerCam * count * days) / 1024;
-        
-        let recommendedHDD = 1;
-        const standardSizes = [1, 2, 4, 6, 8, 10, 12, 16, 20];
-        for (let size of standardSizes) {
-            if (totalTB <= size) {
-                recommendedHDD = size;
-                break;
-            }
-            recommendedHDD = size + 4;
-        }
+        // Đề xuất ổ cứng an toàn (làm tròn lên các mức phổ biến: 1TB, 2TB, 4TB, 6TB, 8TB...)
+        let recommendedHDD = "1 TB";
+        if (totalTB > 1 && totalTB <= 2) recommendedHDD = "2 TB";
+        else if (totalTB > 2 && totalTB <= 4) recommendedHDD = "4 TB";
+        else if (totalTB > 4 && totalTB <= 6) recommendedHDD = "6 TB";
+        else if (totalTB > 6) recommendedHDD = "8 TB - 10 TB (Chuyên dụng Server)";
 
-        let bandwidth = (count * (res === 8 ? 6 : (res === 4 ? 4 : 2.5))).toFixed(1);
+        // Tính băng thông tối thiểu (Mbps)
+        const bandwidth = (camCount * resMultiplier * 0.75).toFixed(1);
 
-        document.getElementById('res-hdd').innerText = recommendedHDD + " TB (Chuyên dụng CCTV)";
-        document.getElementById('res-bandwidth').innerText = bandwidth + " Mbps";
+        document.getElementById('res-hdd').textContent = `${recommendedHDD} (Khoảng ${totalTB} TB)`;
+        document.getElementById('res-bandwidth').textContent = `${bandwidth} Mbps`;
 
-        const advicesList = document.getElementById('res-advices');
-        advicesList.innerHTML = '';
-
-        let advices = [
-            `Sử dụng ổ cứng chuyên dụng ghi hình 24/7 không bị mất khung hình.`,
-            `Hệ thống ${count} mắt camera ưu tiên dùng Switch mạng hoặc Đầu ghi hỗ trợ băng thông từ ${Math.round(bandwidth * 1.5)}Mbps trở lên.`
-        ];
-
+        let advices = [];
         if (env === 'outdoor') {
-            advices.push(`Môi trường ngoài trời: Nên dùng Camera thân trụ chuẩn chống nước IP67 và WDR chống ngược sáng.`);
+            advices.push("Khu vực ngoài trời nên chọn Camera thân trụ tích hợp chống nước IP67 và công nghệ chống ngược sáng thực WDR.");
         } else if (env === 'factory') {
-            advices.push(`Khu vực nhà xưởng: Kết hợp cáp quang hoặc cáp chống nhiễu chuyên dụng.`);
+            advices.push("Nhà xưởng diện tích lớn nên ưu tiên dòng Camera hồng ngoại tầm xa trên 50m và sử dụng Switch PoE chuyên dụng.");
         } else {
-            advices.push(`Khu vực trong nhà: Chọn Camera Dome (ốp trần) góc rộng thẩm mỹ.`);
+            advices.push("Môi trường trong nhà phù hợp với Camera Dome (bán cầu) thẩm mỹ, góc nhìn rộng và tích hợp đàm thoại 2 chiều.");
         }
+        advices.push("Nên sử dụng ổ cứng chuyên dụng cho hệ thống giám sát (dòng WD Purple hoặc Seagate SkyHawk) hoạt động 24/7.");
+        advices.push("Cấu hình chuẩn nén H.265+ trên đầu ghi để tiết kiệm đến 50% dung lượng lưu trữ thực tế.");
 
-        advices.forEach(adv => {
-            const li = document.createElement('li');
-            li.innerHTML = adv;
-            advicesList.appendChild(li);
-        });
+        const adviceListEl = document.getElementById('res-advices');
+        adviceListEl.innerHTML = advices.map(adv => `<li>${adv}</li>`).join('');
 
-        document.getElementById('ai-result').style.display = 'block';
-        document.getElementById('ai-result').scrollIntoView({ behavior: 'smooth' });
+        const resultBox = document.getElementById('ai-result');
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth' });
     }
 </script>
-
 </body>
 </html>
