@@ -63,13 +63,13 @@
 
 <div class="container" id="main-container">
     <div class="header-title">
-        <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ TỰ ĐỘNG</h2>
-        <p>✨ Tùy chỉnh hệ thống đầu ghi, số lượng camera & ổ cứng theo thực tế 🔥</p>
+        <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ TỰ ĐỘNG ✨</h2>
+        <p>🔥 Tùy chỉnh hệ thống đầu ghi, số lượng camera & ổ cứng theo thực tế 🚀</p>
     </div>
 
     <!-- Khung thông tin khách hàng tự động lấy từ trang 1 và cho phép chỉnh sửa -->
     <div class="customer-quick-box">
-        <div class="customer-quick-title">👤 THÔNG TIN KHÁCH HÀNG (TỰ ĐỘNG ĐỒNG BỘ TỪ TRANG 1 - CÓ THỂ CHỈNH SỬA) 🔥</div>
+        <div class="customer-quick-title">👤 THÔNG TIN KHÁCH HÀNG (ĐỒNG BỘ TỰ ĐỘNG - CÓ THỂ CHỈNH SỬA) 🔥</div>
         <div class="customer-inputs">
             <input type="text" id="cus_name" placeholder="👤 Họ và tên quý khách..." oninput="saveCustomerInfo()">
             <input type="tel" id="cus_phone" placeholder="📞 Số điện thoại liên hệ..." oninput="saveCustomerInfo()">
@@ -105,7 +105,7 @@
 
     <!-- Nút hoàn thành kích thích hành động -->
     <button id="btnXacNhan" class="btn-complete" onclick="processOrderAndSendEmail()">
-        🚀 Xác Nhận Hoàn Thành & Tải Phiếu Báo Giá PDF ➔ ✨
+        🚀 XÁC NHẬN HOÀN THÀNH & TẢI PHIẾU BÁO GIÁ PDF NGAY ➔ 🔥✨
     </button>
 </div>
 
@@ -436,7 +436,7 @@
             element.style.display = 'none';
         });
 
-        // 2. GỬI QUA EMAILJS (Đã sửa lỗi hiển thị mã HTML thô hoàn toàn)
+        // 2. GỬI QUA EMAILJS (Xử lý định dạng HTML sạch sẽ, chuyên nghiệp)
         const emailCleanMessage = `
             <div style="font-family: Arial, sans-serif; color: #333; max-width: 650px;">
                 <h3 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 8px;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI 🔥</h3>
@@ -511,7 +511,7 @@
                     📞 Chuyên viên An Tín sẽ liên hệ lại để khảo sát và hỗ trợ bạn trong thời gian sớm nhất! ⏱️
                 </div>
                 <button onclick="location.reload()" class="btn-complete" style="margin-top: 10px;">
-                    🔄 Tạo Cấu Hình Báo Giá Mới Khác ➔ ✨
+                    🔄 TẠO CẤU HÌNH BÁO GIÁ MỚI KHÁC ➔ ✨
                 </button>
             </div>
         `;
