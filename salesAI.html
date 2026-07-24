@@ -6,13 +6,6 @@
     <title>Hệ Thống Sales AI & Báo Giá Tự Động - An Tín</title>
     <!-- Thư viện SheetJS xuất file Excel phiếu bán hàng -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <!-- Thư viện EmailJS để gửi mail ngầm tự động -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init("ZCs9sblTl_mKM5nQX");
-        })();
-    </script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
@@ -24,26 +17,35 @@
 
         .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; }
         
-        .matrix-item { display: flex; flex-direction: column; gap: 8px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ced4da; }
+        .matrix-item { display: flex; flex-direction: column; gap: 8px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ced4da; transition: all 0.2s ease; }
+        .matrix-item:hover { border-color: #1a73e8; box-shadow: 0 2px 8px rgba(26,115,232,0.1); }
         .matrix-row-top { display: flex; justify-content: space-between; align-items: center; }
         .matrix-info { text-align: left; flex: 1; }
         .matrix-name { font-size: 12px; font-weight: 700; color: #202124; }
-        .matrix-price { font-size: 11px; color: #1a73e8; font-weight: 600; }
-        .matrix-qty { width: 60px; padding: 5px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; }
+        .matrix-price { font-size: 11px; color: #1a73e8; font-weight: 600; margin-top: 2px; }
+        .matrix-qty { width: 60px; padding: 5px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; color: #202124; background: #fff; }
 
         /* Tùy chọn mở rộng cho Combo Camera Hệ Thống */
-        .combo-options { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; padding-top: 6px; border-top: 1px dashed #e9ecef; font-size: 11px; align-items: center; }
+        .combo-options { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; padding-top: 6px; border-top: 1px dashed #e9ecef; font-size: 11px; align-items: center; color: #5f6368; }
         .combo-options select { padding: 4px 6px; border-radius: 6px; border: 1px solid #ced4da; font-size: 11px; background: #fff; font-weight: 600; color: #174ea6; }
         .cam-qty-group { display: flex; align-items: center; gap: 4px; }
-        .cam-qty-group input { width: 45px; padding: 3px; text-align: center; border: 1px solid #ced4da; border-radius: 4px; font-size: 11px; font-weight: 700; }
+        .cam-qty-group input { width: 45px; padding: 3px; text-align: center; border: 1px solid #ced4da; border-radius: 4px; font-size: 11px; font-weight: 700; color: #1a73e8; }
 
         /* Khung tổng tiền & tài chính chi tiết */
         .summary-box { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #174ea6; font-weight: 600; }
         .summary-row { display: flex; justify-content: space-between; align-items: center; }
         .grand-total-row { font-size: 16px; font-weight: 800; border-top: 1px dashed #b4d2ff; padding-top: 6px; color: #d93025; }
 
-        .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); transition: 0.2s; text-align: center; }
-        .btn-complete:hover { opacity: 0.95; }
+        /* Nút bấm hiệu ứng sóng động kích thích hành động */
+        .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); transition: all 0.2s ease; text-align: center; animation: pulseGlow 2s infinite; }
+        .btn-complete:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6); }
+        .btn-complete:active { transform: translateY(0); }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
     </style>
 </head>
 <body>
@@ -79,14 +81,13 @@
         </div>
     </div>
 
-    <!-- Nút hoàn thành -->
+    <!-- Nút hoàn thành với hiệu ứng và icon sống động -->
     <button id="btnXacNhan" class="btn-complete" onclick="processOrderAndSendEmail()">
-        🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔
+        🚀 XÁC NHẬN HOÀN THÀNH & GỬI BÁO CÁO NGAY ➔
     </button>
 </div>
 
 <script>
-    // Danh mục sản phẩm: Đầu ghi 1 bộ + Số lượng camera tùy chọn + Ổ cứng tùy chọn
     const products = [
         { id: 'wifi_cam', name: '📹 Camera Wi-Fi không dây độc lập (P2P/Xoay 360)', price: 1200000, isCombo: false },
         { 
@@ -217,7 +218,6 @@
                         hddAddPrice = product.hddOptions[selectedIdx].addPrice;
                     }
 
-                    // Công thức Combo: (Số lượng đầu ghi * Giá đầu ghi) + (Số lượng camera * Giá camera) + Giá ổ cứng tùy chọn
                     const comboTotal = (qty * product.basePrice) + (camQty * product.camUnitPrice) + hddAddPrice;
                     subTotal += comboTotal;
                 } else {
@@ -226,12 +226,10 @@
             }
         });
 
-        const laborAndMaterialsCost = 0; // Tính theo thực tế khảo sát
-        const rawSum = subTotal + laborAndMaterialsCost;
+        const rawSum = subTotal;
         const vatAmount = rawSum * 0.08;
         const grandTotal = rawSum + vatAmount;
 
-        // Cập nhật giao diện
         document.getElementById('sub-total').innerText = subTotal.toLocaleString('vi-VN') + ' đ';
         document.getElementById('vat-total').innerText = vatAmount.toLocaleString('vi-VN') + ' đ';
         document.getElementById('grand-total').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
@@ -296,10 +294,10 @@
         const finalGrandTotal = rawSum + vatValue;
 
         const btn = document.getElementById('btnXacNhan');
-        btn.innerText = "⏳ Đang lập phiếu Excel & Gửi báo cáo...";
+        btn.innerHTML = "⏳ Đang lập phiếu Excel & Mở Mail báo cáo...";
         btn.disabled = true;
 
-        // 1. TẠO VÀ TẢI FILE EXCEL VỀ MÁY
+        // 1. XUẤT VÀ TẢI FILE EXCEL VỀ MÁY
         let excelRows = [
             ["PHIẾU BÁN HÀNG & KHẢO SÁT GIẢI PHÁP - AN TÍN"],
             ["Thời gian lập phiếu:", timeNow],
@@ -311,95 +309,50 @@
             ["Nhu cầu ban đầu:", cNeed],
             [],
             ["CHI TIẾT CẤU HÌNH COMBO HỆ THỐNG & THIẾT BỊ (MATRIX AI)"],
-            ["Tên thiết bị / Combo Hệ thống", "Đơn giá / Thành tiền (VNĐ)", "Số lượng", "Thành tiền (VNĐ)"]
+            ["Tên thiết bị / Combo Hệ thống", "Thành tiền (VNĐ)"]
         ];
 
-        orderDetails.forEach(item => excelRows.push([item.name, item.price, item.qty, item.total]));
-        excelRows.push(["Vật tư phụ & Nhân công lắp đặt", "Tính theo thực tế khảo sát", "", 0]);
+        orderDetails.forEach(item => excelRows.push([item.name, item.total]));
+        excelRows.push(["Vật tư phụ & Nhân công lắp đặt", "Tính theo thực tế khảo sát"]);
         excelRows.push([]);
-        excelRows.push(["CỘNG TIỀN HÀNG:", "", "", subTotalValue]);
-        excelRows.push(["THUẾ VAT (8%):", "", "", vatValue]);
-        excelRows.push(["TỔNG THANH TOÁN (DỰ TOÁN):", "", "", finalGrandTotal]);
+        excelRows.push(["CỘNG TIỀN HÀNG:", subTotalValue]);
+        excelRows.push(["THUẾ VAT (8%):", vatValue]);
+        excelRows.push(["TỔNG THANH TOÁN (DỰ TOÁN):", finalGrandTotal]);
 
         const ws = XLSX.utils.aoa_to_sheet(excelRows);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. TẠO BẢNG HTML GỬI VỀ EMAILJS
-        let htmlTableRows = '';
+        // 2. TẠO NỘI DUNG EMAIL HIỂN THỊ DẠNG TEXT SẠCH SẼ, CHUẨN ĐẸP 100%
+        let emailBody = "🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI!\n";
+        emailBody += "--------------------------------------------------\n";
+        emailBody += `⏱ Thời gian: ${timeNow}\n\n`;
+        emailBody += "👤 THÔNG TIN KHÁCH HÀNG:\n";
+        emailBody += `• Họ và tên: ${cName}\n`;
+        emailBody += `• Số điện thoại: ${cPhone}\n`;
+        emailBody += `• Email: ${cEmail}\n`;
+        emailBody += `• Nhu cầu ban đầu: ${cNeed}\n\n`;
+        emailBody += "📦 CHI TIẾT CẤU HÌNH THIẾT BỊ:\n";
         orderDetails.forEach(item => {
-            htmlTableRows += `
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold;">${item.total.toLocaleString('vi-VN')} đ</td>
-                </tr>
-            `;
+            emailBody += `- ${item.name}: ${item.total.toLocaleString('vi-VN')} đ\n`;
         });
+        emailBody += "--------------------------------------------------\n";
+        emailBody += `📦 Tổng tiền thiết bị: ${subTotalValue.toLocaleString('vi-VN')} đ\n`;
+        emailBody += "🛠 Vật tư phụ & Nhân công: (Tính thực tế khảo sát)\n";
+        emailBody += `📊 Thuế VAT (8%): ${vatValue.toLocaleString('vi-VN')} đ\n`;
+        emailBody += `💰 TỔNG THANH TOÁN (DỰ TOÁN): ${finalGrandTotal.toLocaleString('vi-VN')} đ\n\n`;
+        emailBody += "(💡 File Excel chi tiết cấu hình đã được tải tự động về thiết bị của bạn).";
 
-        const htmlMessage = `
-            <div style="font-family: Arial, sans-serif; color: #333; max-width: 650px;">
-                <h3 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 8px;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI</h3>
-                <p><strong>🕒 Thời gian:</strong> ${timeNow}</p>
-                
-                <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 15px 0;">
-                    <h4 style="margin-bottom: 8px; color: #202124;">👤 Thông tin khách hàng:</h4>
-                    <p>• Họ và tên: <strong>${cName}</strong></p>
-                    <p>• Số điện thoại: <strong>${cPhone}</strong></p>
-                    <p>• Email: <strong>${cEmail}</strong></p>
-                    <p>• Nhu cầu thực tế: <em>${cNeed}</em></p>
-                </div>
-
-                <h4 style="margin-bottom: 8px; color: #202124;">📋 Bảng chi tiết cấu hình (Copy bảng này paste thẳng vào Excel):</h4>
-                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                    <thead>
-                        <tr style="background: #1a73e8; color: white;">
-                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: left;">Tên thiết bị / Combo Hệ thống</th>
-                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Thành tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${htmlTableRows}
-                        <tr>
-                            <td style="padding: 8px; border: 1px solid #ddd;">Vật tư phụ & Nhân công lắp đặt</td>
-                            <td style="padding: 8px; border: 1px solid #ddd; text-align: right; font-style: italic; color: #5f6368;">Tính theo thực tế khảo sát</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div style="margin-top: 15px; background: #e8f0fe; padding: 12px; border-radius: 8px; text-align: right;">
-                    <p style="margin: 4px 0;">Cộng tiền hàng: <strong>${subTotalValue.toLocaleString('vi-VN')} đ</strong></p>
-                    <p style="margin: 4px 0;">Thuế VAT (8%): <strong>${vatValue.toLocaleString('vi-VN')} đ</strong></p>
-                    <p style="margin: 8px 0 0 0; font-size: 16px; color: #d93025;">TỔNG THANH TOÁN (DỰ TOÁN): <strong>${finalGrandTotal.toLocaleString('vi-VN')} đ</strong></p>
-                </div>
-                <p style="margin-top: 20px; font-size: 12px; color: #5f6368;">⚡ Hệ thống Sales AI Automation - An Tín</p>
-            </div>
-        `;
-
-        const templateParams = {
-            to_email: "ctyantinco@gmail.com",
-            message: htmlMessage,
-            customer_name: cName,
-            customer_phone: cPhone,
-            customer_email: cEmail
-        };
-
-        if (typeof emailjs !== 'undefined') {
-            emailjs.send("service_vj9uc6d", "template_mtqvd5q", templateParams)
-                .then(function(res) {
-                    console.log("Gửi mail thành công!");
-                    btn.innerText = "✅ Đã Xuất Phiếu & Gửi Mail Thành Công!";
-                    setTimeout(() => {
-                        btn.innerText = "🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔";
-                        btn.disabled = false;
-                    }, 3000);
-                }, function(err) {
-                    console.log("Lỗi gửi mail:", err);
-                    alert("⚠️ Có lỗi khi gửi email, nhưng file Excel đã được tải về máy của bạn!");
-                    btn.innerText = "🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔";
-                    btn.disabled = false;
-                });
-        }
+        setTimeout(() => {
+            window.location.href = `mailto:ctyantinco@gmail.com?subject=${encodeURIComponent('Đơn hàng/Khảo sát từ ' + cName)}&body=${encodeURIComponent(emailBody)}`;
+            
+            btn.innerHTML = "✅ HOÀN TẤT! ĐÃ TẢI EXCEL & MỞ MAIL GỬI ➔";
+            setTimeout(() => {
+                btn.innerHTML = "🚀 XÁC NHẬN HOÀN THÀNH & GỬI BÁO CÁO NGAY ➔";
+                btn.disabled = false;
+            }, 3000);
+        }, 1000);
     }
 </script>
 
