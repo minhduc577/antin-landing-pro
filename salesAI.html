@@ -55,8 +55,15 @@
         .grand-total-row { font-size: 16px; font-weight: 800; border-top: 1px dashed #b4d2ff; padding-top: 6px; color: #d93025; }
 
         .btn-group { display: flex; flex-direction: column; gap: 8px; }
-        .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); transition: 0.2s; text-align: center; letter-spacing: 0.3px; display: flex; justify-content: center; align-items: center; gap: 6px; }
-        .btn-complete:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.45); }
+        
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 22px rgba(40, 167, 69, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); }
+        }
+
+        .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; animation: pulseGlow 2s infinite ease-in-out; transition: 0.2s; text-align: center; letter-spacing: 0.3px; display: flex; justify-content: center; align-items: center; gap: 6px; text-decoration: none; }
+        .btn-complete:hover { opacity: 0.95; transform: translateY(-1px); }
         .btn-complete:active { transform: translateY(0); }
 
         /* Hiệu ứng sóng động cho dòng hướng dẫn */
@@ -81,8 +88,8 @@
             gap: 6px;
         }
 
-        .btn-secondary { width: 100%; background: linear-gradient(135deg, #17a2b8, #117a8b); color: white; border: none; border-radius: 10px; padding: 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 5px; text-decoration: none; }
-        .btn-secondary:hover { opacity: 0.95; }
+        .btn-secondary { width: 100%; background: linear-gradient(135deg, #17a2b8, #117a8b); color: white; border: none; border-radius: 10px; padding: 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 5px; text-decoration: none; box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3); }
+        .btn-secondary:hover { opacity: 0.95; transform: translateY(-1px); }
     </style>
 </head>
 <body>
@@ -437,7 +444,7 @@
             vat_total: vatValue.toLocaleString('vi-VN') + ' đ',
             grand_total: finalGrandTotal.toLocaleString('vi-VN') + ' đ',
             html_table_rows: htmlTableRows,
-            message: `...` // Giữ nguyên thông điệp ngầm EmailJS
+            message: `...`
         };
 
         if (typeof emailjs !== 'undefined') {
