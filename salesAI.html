@@ -10,27 +10,30 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            // Khởi tạo EmailJS với Public Key của bạn
             emailjs.init("ZCs9sblTl_mKM5nQX");
         })();
     </script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
-        .container { width: 100%; max-width: 520px; background: #ffffff; border-radius: 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.08); overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+        .container { width: 100%; max-width: 540px; background: #ffffff; border-radius: 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.08); overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
 
         .header-title { text-align: center; }
         .header-title h2 { font-size: 18px; color: #1a73e8; font-weight: 800; }
         .header-title p { font-size: 12px; color: #5f6368; margin-top: 2px; }
 
-        .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 360px; overflow-y: auto; }
+        .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto; }
         
-        .matrix-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #ced4da; }
+        .matrix-item { display: flex; flex-direction: column; gap: 6px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ced4da; }
+        .matrix-row-top { display: flex; justify-content: space-between; align-items: center; }
         .matrix-info { text-align: left; flex: 1; }
         .matrix-name { font-size: 12px; font-weight: 700; color: #202124; }
         .matrix-price { font-size: 11px; color: #1a73e8; font-weight: 600; }
-        
         .matrix-qty { width: 55px; padding: 5px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; }
+
+        /* Tùy chọn mở rộng cho Combo Camera Hệ Thống */
+        .combo-options { display: flex; gap: 8px; margin-top: 4px; padding-top: 6px; border-top: 1px dashed #e9ecef; font-size: 11px; align-items: center; }
+        .combo-options select { padding: 4px 6px; border-radius: 6px; border: 1px solid #ced4da; font-size: 11px; background: #fff; font-weight: 600; color: #174ea6; }
 
         /* Khung tổng tiền & tài chính chi tiết */
         .summary-box { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #174ea6; font-weight: 600; }
@@ -46,10 +49,10 @@
 <div class="container">
     <div class="header-title">
         <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ</h2>
-        <p>✨ Tùy chỉnh số lượng thiết bị & vật tư thực tế theo nhu cầu của bạn</p>
+        <p>✨ Tùy chỉnh hệ thống camera combo & thiết bị thông minh theo thực tế</p>
     </div>
 
-    <!-- Danh mục Matrix AI chọn số lượng -->
+    <!-- Danh mục Matrix AI chọn số lượng & Tùy chọn Combo -->
     <div class="matrix-box" id="matrix-list">
         <!-- Render tự động qua JS -->
     </div>
@@ -62,7 +65,7 @@
         </div>
         <div class="summary-row">
             <span>🛠️ Vật tư phụ & Nhân công lắp đặt:</span>
-            <span id="labor-total">0 đ</span>
+            <span id="labor-total" style="font-style: italic; color: #5f6368; font-size: 12px;">(Tính theo thực tế thi công/khảo sát) 0 đ</span>
         </div>
         <div class="summary-row">
             <span>📊 Thuế VAT (8%):</span>
@@ -81,29 +84,78 @@
 </div>
 
 <script>
-    // Danh mục sản phẩm chi tiết theo ngữ cảnh thực tế An Tín & Digione
+    // Danh mục sản phẩm chuẩn hóa (Tích hợp hệ thống Combo Camera chuẩn Digione & An Tín)
     const products = [
-        { id: 'wifi_cam', name: '📹 Camera Wi-Fi không dây độc lập (P2P/Xoay 360)', price: 1200000 },
-        { id: 'system_cam', name: '🎥 Bộ Hệ thống Camera chuyên nghiệp (Đầu ghi + Ổ cứng + Cam)', price: 4500000 },
-        { id: 'wifi_net', name: '🌐 Thiết bị Mạng Wi-Fi Mesh chuyên dụng & CNTT', price: 1500000 },
-        { id: 'lock', name: '🔒 Khóa cửa điện tử thông minh / Chống đột nhập', price: 3500000 },
-        { id: 'finger', name: '🖪 Máy chấm công vân tay & kiểm soát ra vào', price: 2800000 },
-        { id: 'fire', name: '🔥 Hệ thống Báo cháy tự động thông minh', price: 2500000 },
-        { id: 'smarthome', name: '🏠 Thiết bị Smart Home cơ bản (Điều khiển từ xa)', price: 4000000 },
-        { id: 'electric', name: '⚡ Vật tư Điện dân dụng & Phụ kiện nguồn', price: 800000 }
+        { id: 'wifi_cam', name: '📹 Camera Wi-Fi không dây độc lập (P2P/Xoay 360)', price: 1200000, isCombo: false },
+        { 
+            id: 'system_cam_6', name: '🎥 Hệ thống Combo Đầu ghi 6 Kênh + Camera + Ổ cứng', price: 3800000, isCombo: true,
+            hddOptions: [
+                { name: 'Ổ cứng 500GB', addPrice: 0 },
+                { name: 'Ổ cứng 1TB', addPrice: 300000 },
+                { name: 'Ổ cứng 3TB', addPrice: 1200000 },
+                { name: 'Ổ cứng 6TB', addPrice: 3500000 },
+                { name: 'Ổ cứng 8TB', addPrice: 5000000 },
+                { name: '>8TB (Gọi An Tín báo giá)', addPrice: 0 }
+            ]
+        },
+        { 
+            id: 'system_cam_10', name: '🎥 Hệ thống Combo Đầu ghi 10 Kênh + Camera + Ổ cứng', price: 5800000, isCombo: true,
+            hddOptions: [
+                { name: 'Ổ cứng 500GB', addPrice: 0 },
+                { name: 'Ổ cứng 1TB', addPrice: 300000 },
+                { name: 'Ổ cứng 3TB', addPrice: 1200000 },
+                { name: 'Ổ cứng 6TB', addPrice: 3500000 },
+                { name: 'Ổ cứng 8TB', addPrice: 5000000 },
+                { name: '>8TB (Gọi An Tín báo giá)', addPrice: 0 }
+            ]
+        },
+        { 
+            id: 'system_cam_18', name: '🎥 Hệ thống Combo Đầu ghi 18 Kênh + Camera + Ổ cứng', price: 9500000, isCombo: true,
+            hddOptions: [
+                { name: 'Ổ cứng 500GB', addPrice: 0 },
+                { name: 'Ổ cứng 1TB', addPrice: 300000 },
+                { name: 'Ổ cứng 3TB', addPrice: 1200000 },
+                { name: 'Ổ cứng 6TB', addPrice: 3500000 },
+                { name: 'Ổ cứng 8TB', addPrice: 5000000 },
+                { name: '>8TB (Gọi An Tín báo giá)', addPrice: 0 }
+            ]
+        },
+        { id: 'wifi_net', name: '🌐 Thiết bị Mạng Wi-Fi Mesh chuyên dụng & CNTT', price: 1500000, isCombo: false },
+        { id: 'lock', name: '🔒 Khóa cửa điện tử thông minh / Chống đột nhập', price: 3500000, isCombo: false },
+        { id: 'finger', name: '🖪 Máy chấm công vân tay & kiểm soát ra vào', price: 2800000, isCombo: false },
+        { id: 'fire', name: '🔥 Hệ thống Báo cháy tự động thông minh', price: 2500000, isCombo: false },
+        { id: 'smarthome', name: '🏠 Thiết bị Smart Home cơ bản (Điều khiển từ xa)', price: 4000000, isCombo: false },
+        { id: 'electric', name: '⚡ Vật tư Điện dân dụng & Phụ kiện nguồn', price: 800000, isCombo: false }
     ];
 
     const matrixListEl = document.getElementById('matrix-list');
     function renderMatrix() {
         matrixListEl.innerHTML = '';
         products.forEach((p, index) => {
+            let extraHtml = '';
+            if (p.isCombo) {
+                let optionsHtml = '';
+                p.hddOptions.forEach((opt, idx) => {
+                    optionsHtml += `<option value="${idx}">${opt.name} (${opt.addPrice > 0 ? '+' + opt.addPrice.toLocaleString('vi-VN') + 'đ' : 'Cơ bản'})</option>`;
+                });
+                extraHtml = `
+                    <div class="combo-options">
+                        <span>💾 Tùy chọn Ổ cứng:</span>
+                        <select id="hdd_${p.id}" onchange="calculateTotal()">${optionsHtml}</select>
+                    </div>
+                `;
+            }
+
             matrixListEl.innerHTML += `
                 <div class="matrix-item">
-                    <div class="matrix-info">
-                        <div class="matrix-name">${p.name}</div>
-                        <div class="matrix-price">${p.price.toLocaleString('vi-VN')} đ</div>
+                    <div class="matrix-row-top">
+                        <div class="matrix-info">
+                            <div class="matrix-name">${p.name}</div>
+                            <div class="matrix-price" id="price_display_${p.id}">${p.price.toLocaleString('vi-VN')} đ</div>
+                        </div>
+                        <input type="number" min="0" value="${p.id === 'wifi_cam' ? 2 : 0}" class="matrix-qty" data-id="${p.id}" oninput="calculateTotal()">
                     </div>
-                    <input type="number" min="0" value="${index === 0 ? 2 : 0}" class="matrix-qty" data-id="${p.id}" oninput="calculateTotal()">
+                    ${extraHtml}
                 </div>
             `;
         });
@@ -112,29 +164,38 @@
 
     function calculateTotal() {
         let subTotal = 0;
-        let totalDevices = 0;
 
         document.querySelectorAll('.matrix-qty').forEach(input => {
             const qty = parseInt(input.value) || 0;
             const pId = input.getAttribute('data-id');
             const product = products.find(item => item.id === pId);
-            if (product) {
-                subTotal += qty * product.price;
-                totalDevices += qty;
+            
+            if (product && qty > 0) {
+                let currentItemPrice = product.price;
+                
+                // Nếu là combo, cộng thêm giá trị ổ cứng tùy chọn
+                if (product.isCombo) {
+                    const selectEl = document.getElementById(`hdd_${pId}`);
+                    if (selectEl) {
+                        const selectedIdx = parseInt(selectEl.value);
+                        currentItemPrice += product.hddOptions[selectedIdx].addPrice;
+                    }
+                }
+                subTotal += qty * currentItemPrice;
             }
         });
 
-        // Định mức vật tư thi công & nhân công: 150.000đ cho mỗi thiết bị phát sinh
-        const laborAndMaterialsCost = totalDevices * 150000;
+        // Vật tư phụ & Nhân công lắp đặt tính theo thực tế thi công / khảo sát (tạm tính 0đ trên web hoặc bóc tách sau khảo sát)
+        const laborAndMaterialsCost = 0; 
 
-        // Tính thuế VAT 8% trên tổng thiết bị + vật tư nhân công
+        // Tính thuế VAT 8%
         const rawSum = subTotal + laborAndMaterialsCost;
         const vatAmount = rawSum * 0.08;
         const grandTotal = rawSum + vatAmount;
 
-        // Cập nhật lên giao diện
+        // Cập nhật giao diện
         document.getElementById('sub-total').innerText = subTotal.toLocaleString('vi-VN') + ' đ';
-        document.getElementById('labor-total').innerText = laborAndMaterialsCost.toLocaleString('vi-VN') + ' đ';
+        document.getElementById('labor-total').innerText = "(Tính theo thực tế thi công/khảo sát) 0 đ";
         document.getElementById('vat-total').innerText = vatAmount.toLocaleString('vi-VN') + ' đ';
         document.getElementById('grand-total').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
     }
@@ -142,7 +203,6 @@
     renderMatrix();
 
     function processOrderAndSendEmail() {
-        // Lấy thông tin khách hàng từ sessionStorage
         const cName = sessionStorage.getItem('ai_name') || 'Khách vãng lai';
         const cPhone = sessionStorage.getItem('ai_phone') || 'Chưa cung cấp';
         const cEmail = sessionStorage.getItem('ai_email') || 'Chưa cung cấp';
@@ -151,7 +211,6 @@
 
         let orderDetails = [];
         let subTotalValue = 0;
-        let totalDevicesCount = 0;
 
         document.querySelectorAll('.matrix-qty').forEach(input => {
             const qty = parseInt(input.value) || 0;
@@ -159,30 +218,38 @@
                 const pId = input.getAttribute('data-id');
                 const product = products.find(item => item.id === pId);
                 if (product) {
-                    const lineTotal = qty * product.price;
+                    let currentItemPrice = product.price;
+                    let hddDesc = "";
+                    if (product.isCombo) {
+                        const selectEl = document.getElementById(`hdd_${pId}`);
+                        if (selectEl) {
+                            const selectedIdx = parseInt(selectEl.value);
+                            currentItemPrice += product.hddOptions[selectedIdx].addPrice;
+                            hddDesc = ` [${product.hddOptions[selectedIdx].name}]`;
+                        }
+                    }
+                    const lineTotal = qty * currentItemPrice;
                     subTotalValue += lineTotal;
-                    totalDevicesCount += qty;
-                    orderDetails.push({ name: product.name, price: product.price, qty: qty, total: lineTotal });
+                    orderDetails.push({ name: product.name + hddDesc, price: currentItemPrice, qty: qty, total: lineTotal });
                 }
             }
         });
 
         if (orderDetails.length === 0) {
-            alert('⚠️ Vui lòng chọn ít nhất một sản phẩm hoặc thiết bị trong hệ thống!');
+            alert('⚠️ Vui lòng chọn ít nhất một hệ thống combo hoặc thiết bị!');
             return;
         }
 
-        const laborCost = totalDevicesCount * 150000;
+        const laborCost = 0; // Tính theo thực tế thi công/khảo sát
         const rawSum = subTotalValue + laborCost;
         const vatValue = rawSum * 0.08;
         const finalGrandTotal = rawSum + vatValue;
 
-        // Đổi trạng thái nút bấm sinh động
         const btn = document.getElementById('btnXacNhan');
         btn.innerText = "⏳ Đang lập phiếu Excel & Gửi báo cáo...";
         btn.disabled = true;
 
-        // 1. TẠO VÀ TẢI FILE EXCEL VỀ MÁY KHÁCH
+        // 1. TẠO VÀ TẢI FILE EXCEL VỀ MÁY
         let excelRows = [
             ["PHIẾU BÁN HÀNG & KHẢO SÁT GIẢI PHÁP - AN TÍN"],
             ["Thời gian lập phiếu:", timeNow],
@@ -193,23 +260,23 @@
             ["Email:", cEmail],
             ["Nhu cầu ban đầu:", cNeed],
             [],
-            ["CHI TIẾT CẤU HÌNH THIẾT BỊ (MATRIX AI)"],
-            ["Tên thiết bị / Dịch vụ", "Đơn giá (VNĐ)", "Số lượng", "Thành tiền (VNĐ)"]
+            ["CHI TIẾT CẤU HÌNH COMBO HỆ THỐNG & THIẾT BỊ (MATRIX AI)"],
+            ["Tên thiết bị / Combo Hệ thống", "Đơn giá (VNĐ)", "Số lượng", "Thành tiền (VNĐ)"]
         ];
 
         orderDetails.forEach(item => excelRows.push([item.name, item.price, item.qty, item.total]));
-        excelRows.push(["Vật tư phụ thi công & Nhân công lắp đặt hoàn thiện", 150000, totalDevicesCount, laborCost]);
+        excelRows.push(["Vật tư phụ thi công & Nhân công lắp đặt", "Tính theo thực tế khảo sát", "", 0]);
         excelRows.push([]);
-        excelRows.push(["CỘNG TIỀN HÀNG:", "", "", subTotalValue + laborCost]);
+        excelRows.push(["CỘNG TIỀN HÀNG:", "", "", subTotalValue]);
         excelRows.push(["THUẾ VAT (8%):", "", "", vatValue]);
-        excelRows.push(["TỔNG THANH TOÁN CUỐI CÙNG:", "", "", finalGrandTotal]);
+        excelRows.push(["TỔNG THANH TOÁN (DỰ TOÁN):", "", "", finalGrandTotal]);
 
         const ws = XLSX.utils.aoa_to_sheet(excelRows);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. TẠO BẢNG HTML CHUYÊN NGHIỆP GỬI VỀ QUA EMAILJS (HỖ TRỢ COPY/PASTE THẲNG SANG EXCEL)
+        // 2. TẠO BẢNG HTML GỬI VỀ EMAILJS
         let htmlTableRows = '';
         orderDetails.forEach(item => {
             htmlTableRows += `
@@ -235,11 +302,11 @@
                     <p>• Nhu cầu thực tế: <em>${cNeed}</em></p>
                 </div>
 
-                <h4 style="margin-bottom: 8px; color: #202124;">📋 Bảng chi tiết cấu hình (Bạn có thể bôi đen bảng dưới, Copy và Paste trực tiếp vào Excel):</h4>
+                <h4 style="margin-bottom: 8px; color: #202124;">📋 Bảng chi tiết cấu hình (Copy bảng này paste thẳng vào Excel):</h4>
                 <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
                     <thead>
                         <tr style="background: #1a73e8; color: white;">
-                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: left;">Tên thiết bị / Dịch vụ</th>
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: left;">Tên thiết bị / Combo Hệ thống</th>
                             <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Đơn giá</th>
                             <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center;">SL</th>
                             <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Thành tiền</th>
@@ -249,17 +316,15 @@
                         ${htmlTableRows}
                         <tr>
                             <td style="padding: 8px; border: 1px solid #ddd;">Vật tư phụ thi công & Nhân công lắp đặt</td>
-                            <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">150.000 đ</td>
-                            <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${totalDevicesCount}</td>
-                            <td style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold;">${laborCost.toLocaleString('vi-VN')} đ</td>
+                            <td colspan="3" style="padding: 8px; border: 1px solid #ddd; font-style: italic; color: #5f6368;">Tính theo thực tế khảo sát công trình</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <div style="margin-top: 15px; background: #e8f0fe; padding: 12px; border-radius: 8px; text-align: right;">
-                    <p style="margin: 4px 0;">Cộng tiền hàng: <strong>${(subTotalValue + laborCost).toLocaleString('vi-VN')} đ</strong></p>
+                    <p style="margin: 4px 0;">Cộng tiền hàng: <strong>${subTotalValue.toLocaleString('vi-VN')} đ</strong></p>
                     <p style="margin: 4px 0;">Thuế VAT (8%): <strong>${vatValue.toLocaleString('vi-VN')} đ</strong></p>
-                    <p style="margin: 8px 0 0 0; font-size: 16px; color: #d93025;">TỔNG THANH TOÁN (ĐÃ GỒM VAT): <strong>${finalGrandTotal.toLocaleString('vi-VN')} đ</strong></p>
+                    <p style="margin: 8px 0 0 0; font-size: 16px; color: #d93025;">TỔNG THANH TOÁN (DỰ TOÁN): <strong>${finalGrandTotal.toLocaleString('vi-VN')} đ</strong></p>
                 </div>
                 <p style="margin-top: 20px; font-size: 12px; color: #5f6368;">⚡ Hệ thống Sales AI Automation - An Tín</p>
             </div>
