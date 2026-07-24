@@ -22,7 +22,7 @@
         .header-title h2 { font-size: 19px; color: #1a73e8; font-weight: 800; letter-spacing: 0.3px; }
         .header-title p { font-size: 12px; color: #5f6368; margin-top: 4px; font-weight: 500; }
 
-        /* Bảng nhập thông tin khách hàng nhanh (Phát triển thêm giúp đồng bộ dữ liệu) */
+        /* Bảng nhập thông tin khách hàng nhanh */
         .customer-quick-box { background: #fdf2f2; border: 1px solid #f8d7da; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
         .customer-quick-title { font-size: 12px; font-weight: 700; color: #c5221f; display: flex; align-items: center; gap: 5px; }
         .customer-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -63,11 +63,11 @@
 
 <div class="container" id="main-container">
     <div class="header-title">
-        <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ TỰ ĐỘNG</h2>
+        <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ TỰ ĐỘNG ⚡</h2>
         <p>✨ Tùy chỉnh hệ thống đầu ghi, số lượng camera & ổ cứng theo thực tế 🔥</p>
     </div>
 
-    <!-- ⚡ Phát triển thêm: Khung nhập thông tin khách hàng trực tiếp, lưu tự động tránh lỗi thiếu sót -->
+    <!-- Khung nhập thông tin khách hàng trực tiếp, lưu tự động tránh lỗi thiếu sót -->
     <div class="customer-quick-box">
         <div class="customer-quick-title">👤 THÔNG TIN KHÁCH HÀNG (BẮT BUỘC ĐỂ XUẤT PHIẾU & GỬI MAIL) 🔥</div>
         <div class="customer-inputs">
@@ -271,7 +271,6 @@
     renderMatrix();
 
     function processOrderAndSendEmail() {
-        // Đồng bộ trước khi lấy giá trị
         saveCustomerInfo();
 
         const cName = document.getElementById('cus_name').value.trim() || sessionStorage.getItem('ai_name') || 'Khách vãng lai';
@@ -330,7 +329,7 @@
         const finalGrandTotal = subTotalValue + vatValue;
 
         const btn = document.getElementById('btnXacNhan');
-        btn.innerText = "⏳ Đang lập phiếu Excel & Gửi báo cáo... 🔄";
+        btn.innerText = "⏳ Đang lập phiếu Excel chuyên nghiệp & Gửi báo cáo... 🔄";
         btn.disabled = true;
 
         // 1. XUẤT FILE EXCEL
@@ -372,15 +371,15 @@
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. TẠO BẢNG HTML GỬI QUA EMAILJS
+        // 2. TẠO BẢNG HTML GỬI QUA EMAILJS (Giao diện nâng cấp sang trọng, đồng bộ hoàn hảo)
         let htmlTableRows = '';
         orderDetails.forEach((item, index) => {
             htmlTableRows += `
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${index + 1}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${item.qty}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold; color: #1a73e8;">${item.total.toLocaleString('vi-VN')} đ</td>
+                    <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center; color: #555;">${index + 1}</td>
+                    <td style="padding: 10px; border: 1px solid #e0e0e0; color: #202124; font-weight: 500;">${item.name}</td>
+                    <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center; color: #1a73e8; font-weight: 600;">${item.qty}</td>
+                    <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: right; font-weight: bold; color: #d93025;">${item.total.toLocaleString('vi-VN')} đ</td>
                 </tr>
             `;
         });
@@ -396,34 +395,52 @@
             vat_total: vatValue.toLocaleString('vi-VN') + ' đ',
             grand_total: finalGrandTotal.toLocaleString('vi-VN') + ' đ',
             html_table_rows: htmlTableRows,
-            message: `<div style="font-family: Arial, sans-serif; color: #333; max-width: 650px;">
-                <h3 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 8px;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI 🔥</h3>
-                <p><strong>🕒 Thời gian:</strong> ${timeNow}</p>
-                <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 15px 0;">
-                    <h4 style="margin-bottom: 8px; color: #202124;">👤 Thông tin khách hàng:</h4>
-                    <p>• Họ và tên: <strong>${cName}</strong></p>
-                    <p>• Số điện thoại: <strong style="color: #d93025;">${cPhone}</strong></p>
-                    <p>• Email: <strong>${cEmail}</strong></p>
-                    <p>• Nhu cầu thực tế: <em>${cNeed}</em></p>
+            message: `
+            <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #333; max-width: 650px; margin: 0 auto; border: 1px solid #dcdcdc; border-radius: 12px; overflow: hidden; background: #ffffff;">
+                <div style="background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 20px; text-align: center;">
+                    <h2 style="margin: 0; font-size: 20px; font-weight: 800;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI 🔥</h2>
+                    <p style="margin: 6px 0 0 0; font-size: 13px; opacity: 0.9;">Hệ thống Sales AI Automation - An Tín</p>
                 </div>
-                <h4 style="margin-bottom: 8px; color: #202124;">📋 Bảng chi tiết cấu hình:</h4>
-                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                    <thead>
-                        <tr style="background: #1a73e8; color: white;">
-                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center;">STT</th>
-                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: left;">Tên thiết bị</th>
-                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center;">SL</th>
-                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Thành tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${htmlTableRows}
-                    </tbody>
-                </table>
-                <div style="margin-top: 15px; background: #e8f0fe; padding: 12px; border-radius: 8px; text-align: right;">
-                    <p>Cộng tiền hàng: <strong>${subTotalValue.toLocaleString('vi-VN')} đ</strong></p>
-                    <p>Thuế VAT (8%): <strong>${vatValue.toLocaleString('vi-VN')} đ</strong></p>
-                    <p style="font-size: 15px; color: #d93025;">TỔNG: <strong>${finalGrandTotal.toLocaleString('vi-VN')} đ</strong></p>
+                <div style="padding: 22px;">
+                    <p style="font-size: 13px; color: #5f6368; margin-bottom: 15px;">🕒 Thời gian lập phiếu: <strong>${timeNow}</strong></p>
+                    
+                    <div style="background: #f8f9fa; padding: 14px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #1a73e8;">
+                        <h4 style="margin-bottom: 8px; color: #1a73e8; font-size: 14px;">👤 THÔNG TIN KHÁCH HÀNG:</h4>
+                        <p style="margin: 4px 0; font-size: 13px;">• Họ và tên: <strong style="color: #202124;">${cName}</strong></p>
+                        <p style="margin: 4px 0; font-size: 13px;">• Số điện thoại: <strong style="color: #d93025;">${cPhone}</strong></p>
+                        <p style="margin: 4px 0; font-size: 13px;">• Email: <strong style="color: #1a73e8;">${cEmail}</strong></p>
+                        <p style="margin: 4px 0; font-size: 13px;">• Nhu cầu thực tế: <em style="color: #333;">${cNeed}</em></p>
+                    </div>
+
+                    <h4 style="margin-bottom: 10px; color: #202124; font-size: 14px;">📋 CHI TIẾT CẤU HÌNH GIẢI PHÁP:</h4>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead>
+                            <tr style="background: #f1f3f4; color: #202124;">
+                                <th style="padding: 10px; border: 1px solid #dcdcdc; text-align: center; width: 45px;">STT</th>
+                                <th style="padding: 10px; border: 1px solid #dcdcdc; text-align: left;">Tên thiết bị / Combo Hệ thống</th>
+                                <th style="padding: 10px; border: 1px solid #dcdcdc; text-align: center; width: 60px;">SL</th>
+                                <th style="padding: 10px; border: 1px solid #dcdcdc; text-align: right; width: 120px;">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${htmlTableRows}
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center; color: #555;">-</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; color: #5f6368;">Vật tư phụ & Nhân công lắp đặt</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center; color: #5f6368;">-</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: right; font-style: italic; color: #5f6368;">Thực tế khảo sát</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 15px; background: #e8f0fe; padding: 14px; border-radius: 8px; text-align: right; line-height: 1.6; border: 1px solid #b4d2ff;">
+                        <p style="margin: 2px 0; font-size: 13px; color: #174ea6;">Cộng tiền hàng: <strong>${subTotalValue.toLocaleString('vi-VN')} đ</strong></p>
+                        <p style="margin: 2px 0; font-size: 13px; color: #174ea6;">Thuế VAT (8%): <strong>${vatValue.toLocaleString('vi-VN')} đ</strong></p>
+                        <p style="margin: 8px 0 0 0; font-size: 16px; color: #d93025; font-weight: bold; border-top: 1px dashed #b4d2ff; padding-top: 6px;">TỔNG THANH TOÁN (DỰ TOÁN): ${finalGrandTotal.toLocaleString('vi-VN')} đ</p>
+                    </div>
+                </div>
+                <div style="background: #f8f9fa; padding: 12px; text-align: center; font-size: 12px; color: #5f6368; border-top: 1px solid #eee;">
+                    ⚡ Email tự động gửi từ hệ thống An Tín Sales AI 🚀
                 </div>
             </div>`
         };
