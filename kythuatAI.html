@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0d47a1">
+    <title>AI Kỹ Thuật An Tín - Chẩn Đoán & Hỗ Trợ CCTV 24/7</title>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0d47a1;
+            --primary-light: #1a73e8;
+            --primary-surface: #e8f0fe;
+            --accent-danger: #d93025;
+            --accent-warning: #e65100;
+            --accent-warning-bg: #fff3e0;
+            --accent-success: #2e7d32;
+            --accent-success-bg: #f1f8e9;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --border-color: #e5e7eb;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        /* CONTAINER CHÁT MÁY TÍNH & DI ĐỘNG */
+        .chat-app {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 500px) {
+            .chat-app {
+                height: 92vh;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-md);
+                border: 1px solid var(--border-color);
+            }
+        }
+
+        /* HEADER AN TÍN SMART DESIGN */
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: #ffffff;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+        }
+
+        .avatar-ai {
+            width: 44px;
+            height: 44px;
+            background: #ffffff;
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background-color: #10b981;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+        }
+
+        .header-title h1 {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .header-title p {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        /* CHAT BODY */
+        .chat-body {
+            flex: 1;
+            padding: 16px;
+            background-color: #f8fafc;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .message-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-width: 88%;
+            animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-row.ai { align-self: flex-start; }
+        .message-row.user { align-self: flex-end; }
+
+        .msg-bubble {
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .message-row.ai .msg-bubble {
+            background: #ffffff;
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .message-row.user .msg-bubble {
+            background: var(--primary-light);
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* TYPING INDICATOR ANIMATION */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 16px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #9ca3af;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* ENTERPRISE DIAGNOSIS CARDS */
+        .empathy-header {
+            color: var(--primary-light);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13.5px;
+        }
+
+        .card-diagnosis {
+            background: #fef2f2;
+            border-left: 4px solid var(--accent-danger);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            margin: 8px 0;
+        }
+
+        .card-diagnosis .title {
+            color: var(--accent-danger);
+            font-weight: 700;
+            font-size: 13.5px;
+        }
+
+        .card-diagnosis .cause {
+            color: var(--text-secondary);
+            font-size: 12.5px;
+            margin-top: 4px;
+        }
+
+        .checklist-container {
+            margin-top: 10px;
+        }
+
+        .checklist-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .checklist-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .checklist-items li {
+            font-size: 13px;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: 20px;
+            line-height: 1.4;
+        }
+
+        .checklist-items li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-light);
+            font-weight: bold;
+        }
+
+        .alert-safety {
+            background: var(--accent-warning-bg);
+            border: 1px solid #ffe0b2;
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--accent-warning);
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .action-booking {
+            background: var(--accent-success-bg);
+            border: 1px solid #c8e6c9;
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .action-booking p {
+            font-size: 12px;
+            color: var(--accent-success);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .btn-cta {
+            background: var(--accent-danger);
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 12.5px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 6px rgba(217, 48, 37, 0.25);
+            transition: background 0.2s;
+        }
+
+        .btn-cta:hover { background: #b31412; }
+
+        /* QUICK SUGGESTIONS CHIPS */
+        .chips-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 0;
+            scrollbar-width: none;
+        }
+
+        .chips-scroll::-webkit-scrollbar { display: none; }
+
+        .chip-btn {
+            background: var(--primary-surface);
+            color: var(--primary-light);
+            border: 1px solid #d2e3fc;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chip-btn:hover {
+            background: #d2e3fc;
+        }
+
+        /* INPUT AREA */
+        .chat-footer {
+            padding: 12px 16px;
+            background: #ffffff;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            border-radius: 24px;
+            padding: 4px 6px 4px 16px;
+            border: 1px solid transparent;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary-light);
+            background: #ffffff;
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .btn-send {
+            width: 38px;
+            height: 38px;
+            background: var(--primary-light);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-send:hover { background: var(--primary-color); }
+    </style>
+</head>
+<body>
+
+<div class="chat-app">
+    <!-- HEADER -->
+    <header class="chat-header">
+        <div class="header-brand">
+            <div class="avatar-wrapper">
+                <div class="avatar-ai"><i class="fa-solid fa-robot"></i></div>
+                <div class="status-badge"></div>
+            </div>
+            <div class="header-title">
+                <h1>AI Kỹ Thuật An Tín</h1>
+                <p>Hỗ trợ chẩn đoán CCTV 24/7 (V3.1)</p>
+            </div>
+        </div>
+        <div>
+            <i class="fa-solid fa-shield-halved" style="font-size: 20px; opacity: 0.8;"></i>
+        </div>
+    </header>
+
+    <!-- BODY CHAT -->
+    <main class="chat-body" id="chatBody">
+        <div class="message-row ai">
+            <div class="msg-bubble">
+                👋 Chào anh/chị! Em là <b>AI Kỹ Thuật An Tín</b>.<br><br>
+                Em có thể giúp anh/chị tự bắt bệnh và khắc phục nhanh mọi sự cố Camera/CCTV theo tiêu chuẩn An Tín. Hệ thống đang gặp vấn đề gì ạ?
+            </div>
+        </div>
+
+        <!-- SUGGESTIONS -->
+        <div class="chips-scroll" id="chipsContainer">
+            <button class="chip-btn" onclick="sendQuickAsk('Camera báo Offline')">🔴 Camera báo Offline</button>
+            <button class="chip-btn" onclick="sendQuickAsk('Không xem lại được video')">💾 Không xem lại được</button>
+            <button class="chip-btn" onclick="sendQuickAsk('Mất hình ban đêm')">🌙 Mất hình ban đêm</button>
+            <button class="chip-btn" onclick="sendQuickAsk('Hình ảnh bị nhiễu sọc')">⚡ Bị nhiễu sọc</button>
+        </div>
+    </main>
+
+    <!-- FOOTER INPUT -->
+    <footer class="chat-footer">
+        <div class="input-wrapper">
+            <input type="text" id="userInput" placeholder="Nhập sự cố (VD: camera offline, mất hình...)" onkeypress="handleKeyPress(event)" autocomplete="off">
+            <button class="btn-send" onclick="handleSend()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </footer>
+</div>
+
+<script>
+    /* ==========================================================================
+       AI ENGINE CORE & KNOWLEDGE BASE (EBOOK AN TIN V3.1)
+       ========================================================================== */
+    const KNOWLEDGE_BASE = [
+        {
+            keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất sóng", "không online", "mất ip"],
+            issue: "Camera / Đầu ghi báo Offline (Ngoại tuyến)",
+            empathy: "An Tín rất chia sẻ với cảm giác bất an của anh/chị khi hệ thống giám sát bị ngắt kết nối đột ngột.",
+            cause: "Đầu ghi/Camera mất kết nối IP với Modem WiFi, lỏng dây mạng LAN, hoặc sụt nguồn Adapter.",
+            steps: [
+                "<b>Kiểm tra Modem WiFi:</b> Xem đèn LED tín hiệu cổng LAN nối với Đầu ghi có sáng/chớp không.",
+                "<b>Kiểm tra Cáp mạng LAN:</b> Rút giắc RJ45 ra cắm lại chặt tay. Kiểm tra xem cáp có gập đứt hay bị chuột cắn không.",
+                "<b>Khởi động lại (Reboot):</b> Rút phích cắm nguồn Đầu ghi / Camera, chờ 30 giây rồi cắm lại.",
+                "<b>Kiểm tra Đèn nguồn:</b> Đảm bảo đèn báo trên Cục nguồn/Đầu ghi vẫn sáng nguyên."
+            ],
+            safety: "⚠️ <b>CẢNH BÁO AN TOÀN:</b> Giữ tay khô ráo tuyệt đối khi cắm rút nguồn điện. Không chọc vật nhọn kim loại vào lỗ Reset."
+        },
+        {
+            keywords: ["không xem lại", "mất dữ liệu", "lỗi ổ cứng", "hdd error", "không ghi hình", "thẻ nhớ lỗi"],
+            issue: "Không xem lại được lịch sử / Lỗi Ổ cứng (HDD)",
+            empathy: "Anh/chị yên tâm, An Tín sẽ hướng dẫn kiểm tra từng bước để bảo vệ dữ liệu ghi hình quan trọng.",
+            cause: "Ổ cứng bị Bad Sector do sụt nguồn đột ngột, lỗi phân vùng mã hóa, hoặc lỏng cáp dữ liệu SATA.",
+            steps: [
+                "<b>Kiểm tra Trạng thái:</b> Vào Menu Đầu ghi -> Cấu hình lưu trữ (Storage) -> Kiểm tra xem trạng thái báo 'Normal' hay không.",
+                "<b>Định dạng lại (Format):</b> Chọn Format trực tiếp trên Đầu ghi để xóa bỏ các sector lỗi phần mềm nhẹ.",
+                "<b>Reboot lại thiết bị:</b> Khởi động lại Đầu ghi giúp hệ thống nhận lại phân vùng lưu trữ mới."
+            ],
+            safety: "⚠️ <b>CẢNH BÁO AN TOÀN:</b> Thao tác Format sẽ xóa sạch video cũ. Hãy liên hệ Kỹ Thuật An Tín nếu cần trích xuất dữ liệu gấp trước khi thao tác."
+        },
+        {
+            keywords: ["ban đêm", "tối thui", "hồng ngoại", "ban đêm không thấy", "tối đen"],
+            issue: "Ban ngày xem bình thường, Ban đêm bị tối đen / Mất hình",
+            empathy: "Lỗi này khá phổ biến khi hệ thống tự động chuyển đổi sang chế độ cảm biến ban đêm.",
+            cause: "Nguồn Adapter bị sụt áp không đủ công suất khi bật đèn hồng ngoại, hoặc kẹt cơ kính lọc ICR.",
+            steps: [
+                "<b>Kiểm tra Nguồn Adapter:</b> Ban đêm đèn hồng ngoại tốn gấp 2 lần điện năng. Đảm bảo dùng Nguồn chuẩn An Tín (12V-2A).",
+                "<b>Vệ sinh Kính camera:</b> Lau sạch bụi bẩn, mạng nhện quanh mặt kính tránh phản xạ ngược ánh sáng hồng ngoại."
+            ],
+            safety: "⚠️ <b>CẢNH BÁO AN TOÀN:</b> Chú ý sử dụng thang an toàn khi lau chùi camera ở vị trí trên cao và nhớ tắt nguồn trước."
+        },
+        {
+            keywords: ["nhiễu", "sọc", "hạt", "chớp giật", "mờ"],
+            issue: "Hình ảnh camera bị nhiễu sọc, gợn sóng hoặc chớp giật",
+            empathy: "Hiện tượng nhiễu sóng làm ảnh hưởng đáng kể đến chất lượng quan sát của anh/chị.",
+            cause: "Dây cáp tín hiệu đi sát cáp điện lưới 220V gây nhiễu từ trường, hoặc giắc BNC/PoE bị ẩm oxy hóa.",
+            steps: [
+                "<b>Cố định Giắc tín hiệu:</b> Vặn lại giắc BNC hoặc cắm lại giắc mạng PoE ở 2 đầu camera.",
+                "<b>Tách đường dây:</b> Đảm bảo dây tín hiệu không đi đè song song với dây điện nguồn chính trong nhà."
+            ],
+            safety: "⚠️ <b>CẢNH BÁO AN TOÀN:</b> Không chạm vào dây điện hở nếu chưa cắt ngắt cầu dao tổng."
+        }
+    ];
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') handleSend();
+    }
+
+    function sendQuickAsk(text) {
+        document.getElementById('userInput').value = text;
+        handleSend();
+    }
+
+    function handleSend() {
+        const inputEl = document.getElementById('userInput');
+        const query = inputEl.value.trim();
+        if (!query) return;
+
+        const chatBody = document.getElementById('chatBody');
+
+        // 1. Render User Message
+        chatBody.appendChild(createMessageRow(query, 'user'));
+        inputEl.value = '';
+
+        // Hide Chips
+        const chips = document.getElementById('chipsContainer');
+        if (chips) chips.style.display = 'none';
+
+        // 2. Render Typing Indicator
+        const typingRow = createTypingIndicator();
+        chatBody.appendChild(typingRow);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        // 3. Match Engine
+        const lowerQuery = query.toLowerCase();
+        let match = KNOWLEDGE_BASE.find(item => item.keywords.some(k => lowerQuery.includes(k)));
+
+        // 4. Process Answer Response (300ms Delay)
+        setTimeout(() => {
+            chatBody.removeChild(typingRow);
+
+            let aiContent = "";
+            if (match) {
+                aiContent = `
+                    <div class="empathy-header">🤝 ${match.empathy}</div>
+                    <div class="card-diagnosis">
+                        <div class="title">⚠️ CHẨN ĐOÁN: ${match.issue}</div>
+                        <div class="cause"><b>Nguyên nhân:</b> ${match.cause}</div>
+                    </div>
+                    <div class="checklist-container">
+                        <div class="checklist-title">🔧 QUY TRÌNH TỰ KHẮC PHỤC (CHUẨN AN TÍN):</div>
+                        <ul class="checklist-items">
+                            ${match.steps.map(step => `<li>${step}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="alert-safety">
+                        <i class="fa-solid fa-triangle-exclamation" style="margin-top:2px;"></i>
+                        <div>${match.safety}</div>
+                    </div>
+                    <div class="action-booking">
+                        <p>Đã làm đủ các bước nhưng chưa khắc phục được?</p>
+                        <button class="btn-cta" onclick="requestSupport('${match.issue}')">
+                            <i class="fa-solid fa-calendar-check"></i> ĐẶT LỊCH KỸ THUẬT TẬN NƠI
+                        </button>
+                    </div>
+                `;
+            } else {
+                aiContent = `
+                    <div class="empathy-header">🤝 AI Kỹ Thuật An Tín đã ghi nhận sự cố!</div>
+                    <p style="font-size: 13px; color: var(--text-secondary);">Đối với yêu cầu <i>"${query}"</i>, anh/chị thử nhanh 2 bước:</p>
+                    <div class="checklist-container" style="margin-top: 6px;">
+                        <ul class="checklist-items">
+                            <li>Rút phích cắm nguồn Đầu ghi / Camera khoảng 30s rồi cắm lại.</li>
+                            <li>Kiểm tra xem Modem WiFi gia đình có kết nối Internet bình thường không.</li>
+                        </ul>
+                    </div>
+                    <div class="alert-safety">
+                        <i class="fa-solid fa-triangle-exclamation" style="margin-top:2px;"></i>
+                        <div>⚠️ <b>CẢNH BÁO AN TOÀN:</b> Tay phải khô ráo hoàn toàn khi thao tác với nguồn điện.</div>
+                    </div>
+                    <div class="action-booking">
+                        <button class="btn-cta" onclick="requestSupport('Sự cố: ${query}')">
+                            <i class="fa-solid fa-headset"></i> YÊU CẦU KỸ THUẬT AN TÍN GỌI LẠI
+                        </button>
+                    </div>
+                `;
+            }
+
+            chatBody.appendChild(createMessageRow(aiContent, 'ai'));
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }, 400);
+    }
+
+    function createMessageRow(content, sender) {
+        const row = document.createElement('div');
+        row.className = `message-row ${sender}`;
+        const bubble = document.createElement('div');
+        bubble.className = 'msg-bubble';
+        bubble.innerHTML = content;
+        row.appendChild(bubble);
+        return row;
+    }
+
+    function createTypingIndicator() {
+        const row = document.createElement('div');
+        row.className = 'message-row ai';
+        row.innerHTML = `
+            <div class="typing-indicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        `;
+        return row;
+    }
+
+    function requestSupport(issueName) {
+        alert("✅ ĐÃ GỬI YÊU CẦU THÀNH CÔNG!\n\nTrung tâm Kỹ Thuật An Tín đã nhận thông tin sự cố: [" + issueName + "].\nKỹ thuật viên khu vực sẽ liên hệ hotline hỗ trợ anh/chị trong 15 phút!");
+    }
+</script>
+
+</body>
+</html>
