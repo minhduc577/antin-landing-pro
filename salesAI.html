@@ -277,15 +277,18 @@
             emailjs.send("service_vj9uc6d", "template_mtqvd5q", templateParams)
                 .then(function(res) {
                     console.log("Gửi mail thành công!");
+                    btn.innerText = "✅ Đã Xuất Phiếu & Gửi Mail Thành Công!";
+                    setTimeout(() => {
+                        btn.innerText = "🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔";
+                        btn.disabled = false;
+                    }, 3000);
                 }, function(err) {
                     console.log("Lỗi gửi mail:", err);
+                    alert("⚠️ Có lỗi khi gửi email, nhưng file Excel đã được tải về máy của bạn!");
+                    btn.innerText = "🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔";
+                    btn.disabled = false;
                 });
         }
-
-        // 3. TỰ ĐỘNG CHUYỂN SANG TRANG CẢM ƠN SAU 1.2 GIÂY
-        setTimeout(function() {
-            window.location.href = "thankyou.html";
-        }, 1200);
     }
 </script>
 
