@@ -168,20 +168,22 @@
             customer_email: cEmail
         };
 
-        // Gửi ngầm qua EmailJS (Chạy tốt trên cả điện thoại và máy tính)
+// 3. GỬI MAIL VÀ HIỆN NÚT BẤM HOÀN THÀNH
         emailjs.send("service_vj9uc6d", "template_mtqvd5q", templateParams)
             .then(function(res) {
                 console.log("Đã gửi email thành công!");
+                document.getElementById('nextBtn').style.display = 'inline-block';
             }, function(err) {
                 console.log("Lỗi gửi email:", err);
+                document.getElementById('nextBtn').style.display = 'inline-block';
             });
+    </script>
 
-        // 3. CHUYỂN HƯỚNG SANG TRANG 4 (thankyou.html) SAU 1 GIÂY
-        setTimeout(() => {
-            window.location.href = 'thankyou.html';
-        }, 1000);
-    }
-</script>
-
+    <!-- Nút bấm xác nhận hiển thị sau khi gửi xong -->
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="thankyou.html" id="nextBtn" style="display: none; background-color: #28a745; color: white; padding: 12px 25px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 16px;">
+            🚀 Xác Nhận Hoàn Thành
+        </a>
+    </div>
 </body>
 </html>
