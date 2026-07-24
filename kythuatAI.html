@@ -972,6 +972,14 @@
                 `;
             }
 
+            aiContent += `
+                <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button class="chip-btn" onclick="sendQuickAsk('Camera báo Offline')">🔴 Camera Offline</button>
+                    <button class="chip-btn" onclick="sendQuickAsk('Không xem lại được video')">📼 Lỗi xem lại</button>
+                    <button class="chip-btn" onclick="sendQuickAsk('Mất hình ban đêm')">🌙 Mất hình ban đêm</button>
+                    <button class="chip-btn" onclick="sendQuickAsk('Hình ảnh bị nhiễu sọc')">⚡ Nhiễu sọc</button>
+                </div>
+            `;
             chatBody.appendChild(createMessageRow(aiContent, 'ai'));
             chatBody.scrollTop = chatBody.scrollHeight;
         }, 800);
