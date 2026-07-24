@@ -17,13 +17,13 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
-        .container { width: 100%; max-width: 500px; background: #ffffff; border-radius: 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.08); overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+        .container { width: 100%; max-width: 520px; background: #ffffff; border-radius: 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.08); overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
 
         .header-title { text-align: center; }
         .header-title h2 { font-size: 18px; color: #1a73e8; font-weight: 800; }
         .header-title p { font-size: 12px; color: #5f6368; margin-top: 2px; }
 
-        .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; }
+        .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 360px; overflow-y: auto; }
         
         .matrix-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #ced4da; }
         .matrix-info { text-align: left; flex: 1; }
@@ -32,9 +32,10 @@
         
         .matrix-qty { width: 55px; padding: 5px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; }
 
-        /* Tổng tiền */
-        .total-section { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 14px; color: #174ea6; }
-        .total-amount { color: #d93025; font-size: 18px; }
+        /* Khung tổng tiền & tài chính chi tiết */
+        .summary-box { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #174ea6; font-weight: 600; }
+        .summary-row { display: flex; justify-content: space-between; align-items: center; }
+        .grand-total-row { font-size: 16px; font-weight: 800; border-top: 1px dashed #b4d2ff; padding-top: 6px; color: #d93025; }
 
         .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); transition: 0.2s; text-align: center; }
         .btn-complete:hover { opacity: 0.95; }
@@ -45,7 +46,7 @@
 <div class="container">
     <div class="header-title">
         <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ</h2>
-        <p>✨ Tùy chỉnh số lượng thiết bị theo nhu cầu thực tế của bạn</p>
+        <p>✨ Tùy chỉnh số lượng thiết bị & vật tư thực tế theo nhu cầu của bạn</p>
     </div>
 
     <!-- Danh mục Matrix AI chọn số lượng -->
@@ -53,10 +54,24 @@
         <!-- Render tự động qua JS -->
     </div>
 
-    <!-- Tổng tiền -->
-    <div class="total-section">
-        <span>💰 TỔNG ƯỚC TÍNH:</span>
-        <span class="total-amount" id="grand-total">0 đ</span>
+    <!-- Bảng tổng kết tài chính & Thuế VAT 8% -->
+    <div class="summary-box">
+        <div class="summary-row">
+            <span>📦 Tổng tiền thiết bị:</span>
+            <span id="sub-total">0 đ</span>
+        </div>
+        <div class="summary-row">
+            <span>🛠️ Vật tư phụ & Nhân công lắp đặt:</span>
+            <span id="labor-total">0 đ</span>
+        </div>
+        <div class="summary-row">
+            <span>📊 Thuế VAT (8%):</span>
+            <span id="vat-total">0 đ</span>
+        </div>
+        <div class="summary-row grand-total-row">
+            <span>💰 TỔNG THANH TOÁN:</span>
+            <span id="grand-total">0 đ</span>
+        </div>
     </div>
 
     <!-- Nút hoàn thành -->
@@ -66,15 +81,16 @@
 </div>
 
 <script>
-    // Danh mục ma trận sản phẩm dịch vụ An Tín
+    // Danh mục sản phẩm chi tiết theo ngữ cảnh thực tế An Tín & Digione
     const products = [
-        { id: 'cam', name: '📹 Camera an ninh chính hãng', price: 1200000 },
-        { id: 'wifi', name: '🌐 Thiết bị Mạng Wi-Fi & CNTT', price: 1500000 },
-        { id: 'lock', name: '🔒 Khóa cửa / Chống đột nhập', price: 3500000 },
-        { id: 'finger', name: '🖪 Máy chấm công vân tay', price: 2800000 },
-        { id: 'fire', name: '🔥 Hệ thống Báo cháy tự động', price: 2500000 },
-        { id: 'smarthome', name: '🏠 Thiết bị Smart Home cơ bản', price: 4000000 },
-        { id: 'electric', name: '⚡ Vật tư Điện dân dụng', price: 800000 }
+        { id: 'wifi_cam', name: '📹 Camera Wi-Fi không dây độc lập (P2P/Xoay 360)', price: 1200000 },
+        { id: 'system_cam', name: '🎥 Bộ Hệ thống Camera chuyên nghiệp (Đầu ghi + Ổ cứng + Cam)', price: 4500000 },
+        { id: 'wifi_net', name: '🌐 Thiết bị Mạng Wi-Fi Mesh chuyên dụng & CNTT', price: 1500000 },
+        { id: 'lock', name: '🔒 Khóa cửa điện tử thông minh / Chống đột nhập', price: 3500000 },
+        { id: 'finger', name: '🖪 Máy chấm công vân tay & kiểm soát ra vào', price: 2800000 },
+        { id: 'fire', name: '🔥 Hệ thống Báo cháy tự động thông minh', price: 2500000 },
+        { id: 'smarthome', name: '🏠 Thiết bị Smart Home cơ bản (Điều khiển từ xa)', price: 4000000 },
+        { id: 'electric', name: '⚡ Vật tư Điện dân dụng & Phụ kiện nguồn', price: 800000 }
     ];
 
     const matrixListEl = document.getElementById('matrix-list');
@@ -95,16 +111,32 @@
     }
 
     function calculateTotal() {
-        let total = 0;
+        let subTotal = 0;
+        let totalDevices = 0;
+
         document.querySelectorAll('.matrix-qty').forEach(input => {
             const qty = parseInt(input.value) || 0;
             const pId = input.getAttribute('data-id');
             const product = products.find(item => item.id === pId);
             if (product) {
-                total += qty * product.price;
+                subTotal += qty * product.price;
+                totalDevices += qty;
             }
         });
-        document.getElementById('grand-total').innerText = total.toLocaleString('vi-VN') + ' đ';
+
+        // Định mức vật tư thi công & nhân công: 150.000đ cho mỗi thiết bị phát sinh
+        const laborAndMaterialsCost = totalDevices * 150000;
+
+        // Tính thuế VAT 8% trên tổng thiết bị + vật tư nhân công
+        const rawSum = subTotal + laborAndMaterialsCost;
+        const vatAmount = rawSum * 0.08;
+        const grandTotal = rawSum + vatAmount;
+
+        // Cập nhật lên giao diện
+        document.getElementById('sub-total').innerText = subTotal.toLocaleString('vi-VN') + ' đ';
+        document.getElementById('labor-total').innerText = laborAndMaterialsCost.toLocaleString('vi-VN') + ' đ';
+        document.getElementById('vat-total').innerText = vatAmount.toLocaleString('vi-VN') + ' đ';
+        document.getElementById('grand-total').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
     }
 
     renderMatrix();
@@ -118,7 +150,8 @@
         const timeNow = new Date().toLocaleString('vi-VN');
 
         let orderDetails = [];
-        let grandTotalValue = 0;
+        let subTotalValue = 0;
+        let totalDevicesCount = 0;
 
         document.querySelectorAll('.matrix-qty').forEach(input => {
             const qty = parseInt(input.value) || 0;
@@ -126,24 +159,30 @@
                 const pId = input.getAttribute('data-id');
                 const product = products.find(item => item.id === pId);
                 if (product) {
-                    const subTotal = qty * product.price;
-                    grandTotalValue += subTotal;
-                    orderDetails.push([product.name, product.price, qty, subTotal]);
+                    const lineTotal = qty * product.price;
+                    subTotalValue += lineTotal;
+                    totalDevicesCount += qty;
+                    orderDetails.push({ name: product.name, price: product.price, qty: qty, total: lineTotal });
                 }
             }
         });
 
         if (orderDetails.length === 0) {
-            alert('⚠️ Vui lòng chọn ít nhất một sản phẩm/dịch vụ!');
+            alert('⚠️ Vui lòng chọn ít nhất một sản phẩm hoặc thiết bị trong hệ thống!');
             return;
         }
 
-        // Đổi trạng thái nút bấm để kích thích thị giác khách hàng
+        const laborCost = totalDevicesCount * 150000;
+        const rawSum = subTotalValue + laborCost;
+        const vatValue = rawSum * 0.08;
+        const finalGrandTotal = rawSum + vatValue;
+
+        // Đổi trạng thái nút bấm sinh động
         const btn = document.getElementById('btnXacNhan');
-        btn.innerText = "⏳ Đang xuất phiếu & Gửi báo cáo...";
+        btn.innerText = "⏳ Đang lập phiếu Excel & Gửi báo cáo...";
         btn.disabled = true;
 
-        // 1. TẠO VÀ TẢI FILE EXCEL PHIẾU BÁN HÀNG VỀ MÁY
+        // 1. TẠO VÀ TẢI FILE EXCEL VỀ MÁY KHÁCH
         let excelRows = [
             ["PHIẾU BÁN HÀNG & KHẢO SÁT GIẢI PHÁP - AN TÍN"],
             ["Thời gian lập phiếu:", timeNow],
@@ -158,21 +197,77 @@
             ["Tên thiết bị / Dịch vụ", "Đơn giá (VNĐ)", "Số lượng", "Thành tiền (VNĐ)"]
         ];
 
-        orderDetails.forEach(item => excelRows.push(item));
+        orderDetails.forEach(item => excelRows.push([item.name, item.price, item.qty, item.total]));
+        excelRows.push(["Vật tư phụ thi công & Nhân công lắp đặt hoàn thiện", 150000, totalDevicesCount, laborCost]);
         excelRows.push([]);
-        excelRows.push(["TỔNG CỘNG THANH TOÁN:", "", "", grandTotalValue]);
+        excelRows.push(["CỘNG TIỀN HÀNG:", "", "", subTotalValue + laborCost]);
+        excelRows.push(["THUẾ VAT (8%):", "", "", vatValue]);
+        excelRows.push(["TỔNG THANH TOÁN CUỐI CÙNG:", "", "", finalGrandTotal]);
 
         const ws = XLSX.utils.aoa_to_sheet(excelRows);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang");
+        XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. GỬI MAIL NGẦM VỀ ctyantinco@gmail.com QUA EMAILJS
-        const exactMessage = `Đơn đặt hàng từ Anh chị ${cName} * ${cPhone} * ${cEmail}. Tổng tiền dự toán: ${grandTotalValue.toLocaleString('vi-VN')}đ. Nhu cầu: ${cNeed}`;
+        // 2. TẠO BẢNG HTML CHUYÊN NGHIỆP GỬI VỀ QUA EMAILJS (HỖ TRỢ COPY/PASTE THẲNG SANG EXCEL)
+        let htmlTableRows = '';
+        orderDetails.forEach(item => {
+            htmlTableRows += `
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">${item.price.toLocaleString('vi-VN')} đ</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${item.qty}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold;">${item.total.toLocaleString('vi-VN')} đ</td>
+                </tr>
+            `;
+        });
+
+        const htmlMessage = `
+            <div style="font-family: Arial, sans-serif; color: #333; max-width: 650px;">
+                <h3 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 8px;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI</h3>
+                <p><strong>🕒 Thời gian:</strong> ${timeNow}</p>
+                
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="margin-bottom: 8px; color: #202124;">👤 Thông tin khách hàng:</h4>
+                    <p>• Họ và tên: <strong>${cName}</strong></p>
+                    <p>• Số điện thoại: <strong>${cPhone}</strong></p>
+                    <p>• Email: <strong>${cEmail}</strong></p>
+                    <p>• Nhu cầu thực tế: <em>${cNeed}</em></p>
+                </div>
+
+                <h4 style="margin-bottom: 8px; color: #202124;">📋 Bảng chi tiết cấu hình (Bạn có thể bôi đen bảng dưới, Copy và Paste trực tiếp vào Excel):</h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #1a73e8; color: white;">
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: left;">Tên thiết bị / Dịch vụ</th>
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Đơn giá</th>
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center;">SL</th>
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${htmlTableRows}
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd;">Vật tư phụ thi công & Nhân công lắp đặt</td>
+                            <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">150.000 đ</td>
+                            <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${totalDevicesCount}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold;">${laborCost.toLocaleString('vi-VN')} đ</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 15px; background: #e8f0fe; padding: 12px; border-radius: 8px; text-align: right;">
+                    <p style="margin: 4px 0;">Cộng tiền hàng: <strong>${(subTotalValue + laborCost).toLocaleString('vi-VN')} đ</strong></p>
+                    <p style="margin: 4px 0;">Thuế VAT (8%): <strong>${vatValue.toLocaleString('vi-VN')} đ</strong></p>
+                    <p style="margin: 8px 0 0 0; font-size: 16px; color: #d93025;">TỔNG THANH TOÁN (ĐÃ GỒM VAT): <strong>${finalGrandTotal.toLocaleString('vi-VN')} đ</strong></p>
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; color: #5f6368;">⚡ Hệ thống Sales AI Automation - An Tín</p>
+            </div>
+        `;
 
         const templateParams = {
             to_email: "ctyantinco@gmail.com",
-            message: exactMessage,
+            message: htmlMessage,
             customer_name: cName,
             customer_phone: cPhone,
             customer_email: cEmail
