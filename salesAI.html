@@ -43,13 +43,11 @@
         .matrix-qty { width: 60px; padding: 6px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; background: #f8f9fa; }
         .matrix-qty:focus { border-color: #1a73e8; background: #fff; outline: none; }
 
-        /* Tùy chọn mở rộng cho Combo Camera Hệ Thống */
         .combo-options { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; padding-top: 8px; border-top: 1px dashed #e9ecef; font-size: 11px; align-items: center; }
         .combo-options select { padding: 5px 8px; border-radius: 6px; border: 1px solid #ced4da; font-size: 11px; background: #fff; font-weight: 600; color: #174ea6; outline: none; cursor: pointer; }
         .cam-qty-group { display: flex; align-items: center; gap: 5px; }
         .cam-qty-group input { width: 50px; padding: 4px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 11px; font-weight: 700; background: #fff; }
 
-        /* Khung tổng tiền & tài chính chi tiết */
         .summary-box { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #174ea6; font-weight: 600; }
         .summary-row { display: flex; justify-content: space-between; align-items: center; }
         .grand-total-row { font-size: 16px; font-weight: 800; border-top: 1px dashed #b4d2ff; padding-top: 6px; color: #d93025; }
@@ -64,9 +62,7 @@
 
         .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; animation: pulseGlow 2s infinite ease-in-out; transition: 0.2s; text-align: center; letter-spacing: 0.3px; display: flex; justify-content: center; align-items: center; gap: 6px; text-decoration: none; }
         .btn-complete:hover { opacity: 0.95; transform: translateY(-1px); }
-        .btn-complete:active { transform: translateY(0); }
 
-        /* Hiệu ứng sóng động cho dòng hướng dẫn */
         @keyframes wavePulse {
             0% { transform: scale(1); opacity: 0.85; }
             50% { transform: scale(1.02); opacity: 1; color: #d93025; }
@@ -100,7 +96,6 @@
         <p>✨ Tùy chỉnh hệ thống đầu ghi, số lượng camera & ổ cứng theo thực tế 🔥</p>
     </div>
 
-    <!-- Khung nhập thông tin khách hàng trực tiếp, lưu tự động tránh lỗi thiếu sót -->
     <div class="customer-quick-box">
         <div class="customer-quick-title">👤 THÔNG TIN KHÁCH HÀNG (BẮT BUỘC ĐỂ XUẤT PHIẾU & GỬI MAIL) 🔥</div>
         <div class="customer-inputs">
@@ -111,12 +106,10 @@
         </div>
     </div>
 
-    <!-- Danh mục Matrix AI chọn số lượng & Tùy chọn Combo -->
     <div class="matrix-box" id="matrix-list">
         <!-- Render tự động qua JS -->
     </div>
 
-    <!-- Bảng tổng kết tài chính & Thuế VAT 8% -->
     <div class="summary-box">
         <div class="summary-row">
             <span>📦 Tổng tiền thiết bị:</span>
@@ -136,21 +129,18 @@
         </div>
     </div>
 
-    <!-- Nút hoàn thành, dòng chữ sóng động & điều hướng -->
     <div class="btn-group">
         <button id="btnXacNhan" class="btn-complete" onclick="processOrderAndSendEmail()">
             🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔ ✨
         </button>
         
-        <!-- Dòng chữ chèn icon sóng động theo yêu cầu -->
         <div class="instruction-note">
-            🌊📡 Nếu Quý Khách Không Chọn Cấu Hình Khác Thì Bấm Nút Hoàn Thành Phía Giữa Để Xác Nhận Hoàn Tất! ✨🚀
+            🌊📡 Nếu Quý Khách Không Chọn Cấu Hình Khác Thì Bấm Nút Hoàn Thành Phía Giưới Để Xác Nhận Hoàn Tất! ✨🚀
         </div>
 
-        <!-- Nút HOÀN THÀNH thêm vào ngay dưới trang chính -->
-        <a href="thankyou.html" class="btn-finish-direct" onclick="sessionStorage.clear()">
-            🎯 HOÀN THÀNH & ĐÓNG ➔ 🌟
-        </a>
+        <button id="btnXacNhanBottom" class="btn-finish-direct" onclick="processOrderAndSendEmail()">
+            🎯 HOÀN THÀNH ➔ 🌟
+        </button>
     </div>
 </div>
 
@@ -220,7 +210,6 @@
         { id: 'electric', name: '⚡ Vật tư Điện dân dụng & Phụ kiện nguồn', price: 800000, isCombo: false }
     ];
 
-    // Khôi phục hoặc khởi tạo thông tin khách hàng từ sessionStorage
     function loadCustomerInfo() {
         document.getElementById('cus_name').value = sessionStorage.getItem('ai_name') || '';
         document.getElementById('cus_phone').value = sessionStorage.getItem('ai_phone') || '';
@@ -373,11 +362,11 @@
         const vatValue = subTotalValue * 0.08;
         const finalGrandTotal = subTotalValue + vatValue;
 
-        const btn = document.getElementById('btnXacNhan');
-        btn.innerText = "⏳ Đang lập phiếu Excel chuyên nghiệp & Gửi báo cáo... 🔄";
-        btn.disabled = true;
+        const btnTop = document.getElementById('btnXacNhan');
+        const btnBottom = document.getElementById('btnXacNhanBottom');
+        if (btnTop) { btnTop.innerText = "⏳ Đang lập phiếu Excel chuyên nghiệp & Gửi báo cáo... 🔄"; btnTop.disabled = true; }
+        if (btnBottom) { btnBottom.innerText = "⏳ Đang xử lý hệ thống... 🔄"; btnBottom.disabled = true; }
 
-        // 1. XUẤT FILE EXCEL
         let excelRows = [
             ["CÔNG TY TNHH GIẢI PHÁP CÔNG NGHỆ AN TÍN"],
             ["PHIẾU BÁN HÀNG & KHẢO SÁT GIẢI PHÁP TỰ ĐỘNG"],
@@ -416,7 +405,6 @@
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. TẠO BẢNG HTML GỬI QUA EMAILJS
         let htmlTableRows = '';
         orderDetails.forEach((item, index) => {
             htmlTableRows += `
