@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Trợ Lý Chẩn Đoán CCTV (V4.2)</title>
+    <title>AI Kỹ Thuật An Tín - Trợ Lý Chẩn Đoán & Thiết Kế CCTV (V4.3)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +50,6 @@
             color: var(--text-primary);
         }
 
-        /* MỞ RỘNG GIAO DIỆN TO HƠN & TƯƠNG THÍCH MOBILE TUYỆT ĐỐI */
         .chat-app {
             width: 100vw;
             height: 100vh;
@@ -63,9 +62,9 @@
 
         @media (min-width: 768px) {
             .chat-app {
-                width: 92vw;
-                max-width: 900px;
-                height: 92vh;
+                width: 94vw;
+                max-width: 950px;
+                height: 94vh;
                 border-radius: var(--radius-lg);
                 box-shadow: var(--shadow-lg);
                 border: 1px solid var(--border-color);
@@ -75,7 +74,7 @@
         .chat-header {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: #ffffff;
-            padding: 16px 20px;
+            padding: 14px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -94,22 +93,22 @@
         }
 
         .avatar-ai {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             background: #ffffff;
             color: var(--primary-color);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 22px;
+            font-size: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             animation: pulseGlow 2s infinite;
         }
 
         @keyframes pulseGlow {
             0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
-            70% { box-shadow: 0 0 0 14px rgba(26, 115, 232, 0); }
+            70% { box-shadow: 0 0 0 12px rgba(26, 115, 232, 0); }
             100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
         }
 
@@ -117,15 +116,15 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 13px;
-            height: 13px;
+            width: 12px;
+            height: 12px;
             background-color: #10b981;
             border: 2px solid #ffffff;
             border-radius: 50%;
         }
 
         .header-title h1 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             line-height: 1.2;
             display: flex;
@@ -134,19 +133,19 @@
         }
 
         .header-title p {
-            font-size: 12px;
+            font-size: 11.5px;
             opacity: 0.9;
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
         .btn-back-home {
             color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
-            font-size: 12.5px;
+            font-size: 12px;
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 7px 12px;
+            padding: 6px 12px;
             background: rgba(255,255,255,0.15);
             border-radius: 20px;
             transition: all 0.2s;
@@ -164,10 +163,10 @@
 
         .tab-btn {
             flex: 1;
-            padding: 12px 16px;
+            padding: 11px 16px;
             border: none;
             background: transparent;
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
@@ -198,7 +197,7 @@
         }
 
         .chat-body {
-            padding: 20px;
+            padding: 16px;
             scroll-behavior: smooth;
             gap: 16px;
             display: flex;
@@ -210,7 +209,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            max-width: 88%;
+            max-width: 90%;
             animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -225,7 +224,7 @@
         .msg-bubble {
             padding: 14px 18px;
             border-radius: 18px;
-            font-size: 14px;
+            font-size: 13.5px;
             line-height: 1.5;
             word-break: break-word;
         }
@@ -275,7 +274,7 @@
             color: var(--primary-light);
             font-weight: 600;
             margin-bottom: 8px;
-            font-size: 13.5px;
+            font-size: 13px;
         }
 
         .card-diagnosis {
@@ -289,36 +288,36 @@
         .card-diagnosis .title {
             color: var(--accent-danger);
             font-weight: 700;
-            font-size: 13.5px;
+            font-size: 13px;
         }
 
         .card-diagnosis .cause {
             color: var(--text-secondary);
-            font-size: 12.5px;
-            margin-top: 6px;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
-        .checklist-container { margin-top: 12px; }
+        .checklist-container { margin-top: 10px; }
 
         .checklist-title {
             color: var(--primary-color);
             font-weight: 700;
-            font-size: 13px;
-            margin-bottom: 6px;
+            font-size: 12.5px;
+            margin-bottom: 5px;
         }
 
         .checklist-items {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .checklist-items li {
-            font-size: 13px;
+            font-size: 12.5px;
             color: var(--text-primary);
             position: relative;
-            padding-left: 20px;
+            padding-left: 18px;
             line-height: 1.4;
         }
 
@@ -335,9 +334,9 @@
             background: var(--accent-warning-bg);
             border: 1px solid #ffe0b2;
             border-radius: var(--radius-sm);
-            padding: 10px;
-            margin-top: 12px;
-            font-size: 12px;
+            padding: 9px;
+            margin-top: 10px;
+            font-size: 11.5px;
             color: var(--accent-warning);
         }
 
@@ -352,7 +351,7 @@
         }
 
         .interactive-box .box-title {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 8px;
@@ -378,9 +377,8 @@
             box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
         }
 
-        /* Danh sách có thanh cuộn chứa hàng ngàn lỗi */
         .error-scroll-list {
-            max-height: 190px;
+            max-height: 220px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -403,7 +401,7 @@
             border: 1px solid transparent;
             padding: 8px 10px;
             border-radius: 6px;
-            font-size: 12.5px;
+            font-size: 12px;
             text-align: left;
             cursor: pointer;
             color: var(--text-primary);
@@ -418,7 +416,7 @@
             border-color: #d2e3fc;
         }
         .error-item-btn i {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--primary-light);
         }
 
@@ -431,7 +429,7 @@
             padding: 10px;
             border-radius: var(--radius-sm);
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12.5px;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(13,71,161,0.2);
             transition: opacity 0.2s;
@@ -447,7 +445,7 @@
             margin-top: 14px;
         }
         .repair-booking-box h4 {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 10px;
@@ -460,7 +458,7 @@
         }
         .form-field-group label {
             display: block;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-secondary);
             margin-bottom: 3px;
@@ -470,7 +468,7 @@
             padding: 9px 12px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            font-size: 13px;
+            font-size: 12.5px;
             outline: none;
             background: #ffffff;
         }
@@ -486,7 +484,7 @@
             padding: 11px;
             border-radius: var(--radius-sm);
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12.5px;
             cursor: pointer;
             margin-top: 6px;
             box-shadow: 0 2px 6px rgba(13,71,161,0.25);
@@ -494,6 +492,7 @@
         }
         .btn-submit-repair:hover { opacity: 0.95; }
 
+        /* NÚT ZALO SÓNG ĐỘNG KÍCH THÍCH HÀNH ĐỘNG */
         .zalo-quick-box {
             display: flex;
             gap: 8px;
@@ -504,20 +503,31 @@
             background: #0068ff;
             color: #ffffff;
             border: none;
-            padding: 9px;
+            padding: 10px;
             border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-size: 12px;
+            font-weight: 700;
+            font-size: 11.5px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
             text-decoration: none;
+            box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.5);
+            animation: pulseZalo 1.8s infinite;
+            transition: transform 0.2s;
+        }
+        .btn-zalo-inline:hover {
+            transform: scale(1.02);
+        }
+        @keyframes pulseZalo {
+            0% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.5); }
+            70% { box-shadow: 0 0 0 8px rgba(0, 104, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0); }
         }
 
         .chat-footer {
-            padding: 14px 20px;
+            padding: 12px 18px;
             background: #ffffff;
             border-top: 1px solid var(--border-color);
         }
@@ -528,7 +538,7 @@
             gap: 8px;
             background: #f1f5f9;
             border-radius: 28px;
-            padding: 6px 8px 6px 18px;
+            padding: 6px 8px 6px 16px;
             border: 1px solid transparent;
             transition: border-color 0.2s, background 0.2s;
         }
@@ -544,13 +554,13 @@
             border: none;
             background: transparent;
             outline: none;
-            font-size: 14px;
+            font-size: 13.5px;
             color: var(--text-primary);
         }
 
         .btn-send {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
             color: #ffffff;
             border: none;
@@ -564,50 +574,50 @@
 
         /* TAB TÍNH TOÁN */
         .calc-panel {
-            padding: 20px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
         .calc-card {
             background: #ffffff;
             border-radius: var(--radius-md);
-            padding: 20px;
+            padding: 18px;
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
 
         .calc-card h2 {
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 700;
             color: var(--primary-color);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
             border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .form-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
             display: block;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px 14px;
+            padding: 9px 12px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            font-size: 13.5px;
+            font-size: 13px;
             outline: none;
             background: #fdfdfd;
         }
@@ -621,10 +631,10 @@
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: #ffffff;
             border: none;
-            padding: 13px;
+            padding: 12px;
             border-radius: var(--radius-md);
             font-weight: 700;
-            font-size: 13.5px;
+            font-size: 13px;
             cursor: pointer;
             width: 100%;
             display: flex;
@@ -639,59 +649,59 @@
             background: #0f172a;
             color: #ffffff;
             border-radius: var(--radius-md);
-            padding: 18px;
-            margin-top: 12px;
+            padding: 16px;
+            margin-top: 10px;
             border: 1px solid #334155;
         }
 
         .result-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 14px 0;
+            gap: 10px;
+            margin: 12px 0;
         }
 
         .result-item {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
-            padding: 12px;
+            padding: 10px;
             border-radius: var(--radius-sm);
             text-align: center;
         }
 
         .result-item span.label {
             display: block;
-            font-size: 11px;
+            font-size: 10.5px;
             color: #94a3b8;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .result-item span.val {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             color: #facc15;
         }
 
         .advice-list {
             list-style: none;
-            font-size: 12.5px;
+            font-size: 12px;
             color: #cbd5e1;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 8px;
         }
 
         .advice-list li {
             position: relative;
-            padding-left: 18px;
+            padding-left: 16px;
         }
 
         .advice-list li::before {
             content: "💡";
             position: absolute;
             left: -4px;
-            font-size: 11px;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -707,7 +717,7 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Trợ Lý Chẩn Đoán & Thiết Kế CCTV (V4.2)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Trợ Lý Chẩn Đoán & Thiết Kế CCTV (V4.3)</p>
             </div>
         </div>
         <div>
@@ -733,27 +743,30 @@
             <div class="message-row ai">
                 <div class="msg-bubble">
                     👋 Chào anh/chị! Em là <b>AI Kỹ Thuật An Tín</b>.<br><br>
-                    Hệ thống đã tích hợp kho hàng ngàn lỗi kỹ thuật CCTV. Anh/chị có thể <b>gõ tìm kiếm nhanh hoặc cuộn chọn lỗi bên dưới</b> để em chẩn đoán vấn đáp từng bước:
+                    Hệ thống đã tích hợp <b>hàng chục mã lỗi chuyên sâu</b>. Anh/chị hãy gõ tìm kiếm nhanh từ khóa hoặc chọn trực tiếp lỗi bên dưới để bắt đầu quy trình vấn đáp kỹ thuật:
                     
-                    <!-- KHO TRI THỨC LỖI CÓ THANH CUỘN & TÌM KIẾM NHANH -->
+                    <!-- KHO TRI THỨC HÀNG CHỤC LỖI (CÓ THANH CUỘN & TÌM KIẾM NHANH) -->
                     <div class="interactive-box">
-                        <div class="box-title"><i class="fa-solid fa-magnifying-glass"></i> Kho Tri Thức Hàng Ngàn Lỗi CCTV:</div>
-                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Gõ từ khóa tìm lỗi nhanh (VD: offline, sọc, ổ cứng, nguồn...)" onkeyup="filterErrorList()">
+                        <div class="box-title"><i class="fa-solid fa-magnifying-glass"></i> Kho Tri Thức Sự Cố CCTV (Chọn/Tìm kiếm):</div>
+                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Gõ tìm lỗi (VD: offline, ổ cứng, sọc, hồng ngoại, mật khẩu...)" onkeyup="filterErrorList()">
                         
                         <div class="error-scroll-list" id="errorScrollList">
-                            <!-- Danh sách lỗi phong phú (có thể mở rộng hàng ngàn lỗi) -->
                             <button class="error-item-btn" onclick="selectErrorItem('Camera mất kết nối / Báo Offline / Mất IP')"><span>🔴 Camera mất kết nối / Báo Offline / Mất IP</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Không xem lại được dữ liệu / Lỗi ổ cứng HDD')"><span>💾 Không xem lại được dữ liệu / Lỗi ổ cứng HDD</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Ban đêm bị tối đen / Không thấy hồng ngoại')"><span>🌙 Ban đêm bị tối đen / Không thấy hồng ngoại</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Hình ảnh camera bị nhiễu sọc hoặc chớp giật')"><span>⚡ Hình ảnh camera bị nhiễu sọc hoặc chớp giật</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Đầu ghi phát ra tiếng kêu bíp liên tục')"><span>🔊 Đầu ghi phát ra tiếng kêu bíp liên tục</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Đầu ghi phát ra tiếng kêu bíp liên tục')"><span>🔊 Đầu ghi phát ra tiếng kêu bíp cảnh báo</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Quên mật khẩu đầu ghi / camera IP Hikvision/Dahua')"><span>🔑 Quên mật khẩu đầu ghi / camera IP</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Không xem được camera từ xa qua điện thoại 4G/WiFi')"><span>📱 Không xem được camera từ xa qua điện thoại</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Camera bị mờ do đọng sương hoặc bám bụi kính')"><span>🌫️ Camera bị mờ do đọng sương / bám bụi</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Lỗi nguồn Adapter camera bị cháy nổ sụt áp')"><span>🔌 Lỗi nguồn Adapter camera bị sụt áp</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Cổng kết nối LAN trên đầu ghi không sáng đèn')"><span>🌐 Cổng LAN đầu ghi không nhận mạng</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Camera bị mất màu hiển thị (Chỉ hiện trắng đen ban ngày)')"><span>🎨 Camera bị mất màu (Chỉ hiện trắng đen)</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Đầu ghi không nhận chuột hoặc không điều khiển được')"><span>🖱️ Đầu ghi không nhận chuột / Đứng màn hình</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Lỗi đứt cáp tín hiệu quang / cáp mạng đồng trục')"><span>✂️ Lỗi đứt cáp tín hiệu hoặc bấm sai hạt mạng</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Camera PTZ không quay quét / Lỗi điều khiển góc xoay')"><span>🔄 Camera PTZ không quay quét điều khiển được</span><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
-                        <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> GỬI LỖI ĐÃ CHỌN ĐỂ AI PHÂN TÍCH</button>
+                        <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> GỬI LỖI ĐÃ CHỌN ĐỂ AI PHÂN TÍCH VẤN ĐÁP</button>
                     </div>
                 </div>
             </div>
@@ -761,7 +774,7 @@
 
         <footer class="chat-footer">
             <div class="input-wrapper">
-                <input type="text" id="userInput" placeholder="Nhập câu hỏi hoặc mô tả tiếp theo cho AI..." onkeypress="handleKeyPress(event)" autocomplete="off">
+                <input type="text" id="userInput" placeholder="Hoặc nhập mô tả sự cố của bạn tại đây..." onkeypress="handleKeyPress(event)" autocomplete="off">
                 <button class="btn-send" onclick="handleSend()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </footer>
@@ -808,7 +821,7 @@
 
             <div id="ai-result" class="result-box">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">
-                    <span style="font-size:12.5px; font-weight:700; color:#facc15;"><i class="fa-solid fa-chart-pie"></i> BÁO CÁO KỸ THUẬT AI</span>
+                    <span style="font-size:12px; font-weight:700; color:#facc15;"><i class="fa-solid fa-chart-pie"></i> BÁO CÁO KỸ THUẬT AI</span>
                     <span style="font-size:10px; background:#10b981; color:#fff; padding:2px 6px; border-radius:4px;"><i class="fa-solid fa-bolt"></i> Chuẩn H.265+</span>
                 </div>
 
@@ -823,7 +836,7 @@
                     </div>
                 </div>
 
-                <div style="font-size:12.5px; font-weight:600; color:#fff; margin-top:10px;"><i class="fa-solid fa-lightbulb" style="color:#facc15;"></i> Khuyến nghị thi công An Tín:</div>
+                <div style="font-size:12px; font-weight:600; color:#fff; margin-top:10px;"><i class="fa-solid fa-lightbulb" style="color:#facc15;"></i> Khuyến nghị thi công An Tín:</div>
                 <ul id="res-advices" class="advice-list"></ul>
             </div>
         </div>
@@ -856,7 +869,6 @@
     let currentlySelectedError = "";
     function selectErrorItem(errorName) {
         currentlySelectedError = errorName;
-        // Highlight nút được chọn
         document.querySelectorAll('.error-item-btn').forEach(btn => {
             btn.style.background = '#f8fafc';
             btn.style.borderColor = 'transparent';
@@ -888,9 +900,9 @@
     // KHO TRI THỨC VẤN ĐÁP KỸ THUẬT CHI TIẾT
     const KNOWLEDGE_BASE = [
         {
-            keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất sóng", "mất ip"],
+            keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip"],
             issue: "Camera / Đầu ghi báo Offline (Ngoại tuyến)",
-            empathy: "🤝 An Tín rất chia sẻ với cảm giác của anh/chị khi hệ thống giám sát bị ngắt kết nối đột ngột. Đừng lo lắng, chúng ta cùng xử lý tuần hoàn qua các bước sau:",
+            empathy: "🤝 An Tín rất chia sẻ với cảm giác của anh/chị khi hệ thống giám sát bị ngắt kết nối đột ngột.",
             cause: "Đầu ghi/Camera mất kết nối IP với Modem WiFi, lỏng dây mạng LAN, hoặc sụt nguồn Adapter cấp điện.",
             steps: [
                 "<b>Bước 1:</b> Kiểm tra đèn tín hiệu cổng LAN trên Modem và Đầu ghi có sáng chớp không.",
@@ -922,33 +934,39 @@
             safety: "⚠️ <b>LƯU Ý:</b> Cẩn thận an toàn khi đứng thang kiểm tra camera trên cao."
         },
         {
-            keywords: ["nhiễu", "sọc", "hạt", "chớp giật", "mờ", "tiếng kêu", "bíp", "mật khẩu", "quên", "từ xa", "điện thoại", "đọng sương", "bụi", "nguồn", "lan"],
-            issue: "Sự cố kỹ thuật CCTV tổng quát",
-            empathy: "🤖 AI An Tín đã ghi nhận yêu cầu vấn đáp của anh/chị.",
-            cause: "Lỗi phần cứng hoặc đường truyền tín hiệu ngoại vi cần kiểm tra trực tiếp chuyên sâu.",
+            keywords: ["mật khẩu", "quên", "password"],
+            issue: "Quên mật khẩu đầu ghi / camera IP Hikvision/Dahua",
+            empathy: "🔑 Đừng lo lắng, việc quên mật khẩu thiết bị rất phổ biến và có thể xử lý an toàn.",
+            cause: "Nhập sai mật khẩu quá số lần quy định hoặc thiết bị yêu cầu kích hoạt lại mật khẩu mới.",
             steps: [
-                "<b>Bước 1:</b> Kiểm tra lại toàn bộ giắc cắm kết nối vật lý.",
-                "<b>Bước 2:</b> Cấp lại nguồn điện ổn định cho thiết bị."
+                "<b>Bước 1:</b> Sử dụng phần mềm SADP Tool trên máy tính cùng mạng để quét địa chỉ IP thiết bị.",
+                "<b>Bước 2:</b> Liên hệ trực tiếp kỹ thuật An Tín để được hỗ trợ cấp file reset hoặc mã xác thực độc quyền."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Ngắt nguồn điện trước khi thao tác nối dây."
+            safety: "⚠️ <b>LƯU Ý:</b> Chuẩn bị sẵn hình ảnh tem nhãn serial number của thiết bị."
         }
     ];
 
-    // HỆ THỐNG VẤN ĐÁP TUẦN HOÀN CHO ĐẾN KHI KẾT THÚC
     function processUserQuery(query) {
         const chatBody = document.getElementById('chatBody');
 
-        // Hiển thị tin nhắn câu hỏi của khách
         chatBody.appendChild(createMessageRow(query, 'user'));
         chatBody.scrollTop = chatBody.scrollHeight;
 
-        // Hiển thị trạng thái AI đang suy nghĩ
         const typingRow = createTypingIndicator();
         chatBody.appendChild(typingRow);
         chatBody.scrollTop = chatBody.scrollHeight;
 
         const lowerQuery = query.toLowerCase();
-        let match = KNOWLEDGE_BASE.find(item => item.keywords.some(k => lowerQuery.includes(k))) || KNOWLEDGE_BASE[3];
+        let match = KNOWLEDGE_BASE.find(item => item.keywords.some(k => lowerQuery.includes(k))) || {
+            issue: query,
+            empathy: "🤖 AI An Tín đã ghi nhận triệu chứng sự cố của anh/chị.",
+            cause: "Lỗi phần cứng, đường truyền tín hiệu hoặc cấu hình ngoại vi cần kỹ thuật viên kiểm tra trực tiếp.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra lại toàn bộ giắc cắm kết nối vật lý và nguồn điện thiết bị.",
+                "<b>Bước 2:</b> Khởi động lại toàn bộ hệ thống camera và đầu ghi."
+            ],
+            safety: "⚠️ <b>LƯU Ý:</b> Ngắt nguồn điện trước khi thao tác nối dây."
+        };
 
         setTimeout(() => {
             chatBody.removeChild(typingRow);
@@ -968,24 +986,24 @@
                 <div class="alert-safety">${match.safety}</div>
             `;
 
-            // GẮN THÊM FORM ĐĂNG KÝ SỬA CHỮA / KHẢO SÁT TẠI CHỖ (VÒNG LẶP KẾT THÚC VẤN ĐÁP HOẶC TIẾP TỤC)
+            // FORM ĐĂNG KÝ SỬA CHỮA TẠI CHỖ (4 TRƯỜNG: TÊN, PHONE, MAIL KHÔNG BẮT BUỘC, ĐỊA CHỈ) + NÚT ZALO SÓNG ĐỘNG
             aiContent += `
                 <div class="repair-booking-box">
-                    <h4><i class="fa-solid fa-calendar-check" style="color:var(--primary-light);"></i> Đăng Ký Sửa Chữa / Khảo Sát Tại Chỗ (Hoàn Tất Vấn Đáp)</h4>
+                    <h4><i class="fa-solid fa-calendar-check" style="color:var(--primary-light);"></i> Đăng Ký Sửa Chữa / Khảo Sát Tại Chỗ</h4>
                     <div class="form-field-group">
-                        <label>Họ và tên của bạn:</label>
+                        <label><i class="fa-solid fa-user"></i> Họ và tên của bạn:</label>
                         <input type="text" id="cus_name" placeholder="VD: Anh Nam">
                     </div>
                     <div class="form-field-group">
-                        <label>Số điện thoại liên hệ (* Bắt buộc):</label>
+                        <label><i class="fa-solid fa-phone"></i> Số điện thoại liên hệ (* Bắt buộc):</label>
                         <input type="tel" id="cus_phone" placeholder="VD: 090xxxxxxx">
                     </div>
                     <div class="form-field-group">
-                        <label>Email nhận báo giá (Không bắt buộc):</label>
+                        <label><i class="fa-solid fa-envelope"></i> Email nhận báo giá (Không bắt buộc):</label>
                         <input type="email" id="cus_email" placeholder="VD: email@gmail.com">
                     </div>
                     <div class="form-field-group">
-                        <label>Địa chỉ sửa chữa / khảo sát (* Bắt buộc):</label>
+                        <label><i class="fa-solid fa-location-dot"></i> Địa chỉ sửa chữa khảo sát (* Bắt buộc):</label>
                         <input type="text" id="cus_address" placeholder="VD: 123 Lê Văn Việt, TP.HCM">
                     </div>
                     <button class="btn-submit-repair" onclick="submitRepairForm('${match.issue}')">
@@ -993,21 +1011,21 @@
                     </button>
                     <div class="zalo-quick-box">
                         <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline">
-                            <i class="fa-solid fa-comment-dots"></i> Chat Zalo 0914060339
+                            <i class="fa-solid fa-comment-dots" style="font-size: 14px;"></i> Chat Zalo 0914060339
                         </a>
                         <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-zalo-inline" style="background:#0088ff;">
-                            <i class="fa-solid fa-store"></i> Zalo OA An Tín
+                            <i class="fa-solid fa-store" style="font-size: 14px;"></i> Quan Tâm Zalo OA
                         </a>
                     </div>
                 </div>
-                <div style="margin-top: 10px; font-size: 12.5px; color: var(--text-secondary); text-align: center;">
-                    💬 <em>Bạn vẫn còn lỗi khác cần hỏi tiếp? Hãy tiếp tục gõ vào khung chat bên dưới để bắt đầu vòng vấn đáp mới!</em>
+                <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary); text-align: center;">
+                    💬 <em>Bạn vẫn còn câu hỏi khác? Hãy tiếp tục gõ vào khung chat bên dưới để tiếp tục vòng vấn đáp!</em>
                 </div>
             `;
 
             chatBody.appendChild(createMessageRow(aiContent, 'ai', true));
             chatBody.scrollTop = chatBody.scrollHeight;
-        }, 900);
+        }, 800);
     }
 
     function submitRepairForm(issueName) {
@@ -1017,14 +1035,14 @@
         const address = document.getElementById('cus_address').value.trim();
 
         if (!phone || !address) {
-            alert('Vui lòng nhập Số điện thoại và Địa chỉ để kỹ thuật viên An Tín có thể liên hệ hỗ trợ tận nơi!');
+            alert('Vui lòng nhập Số điện thoại và Địa chỉ sửa chữa khảo sát để kỹ thuật viên liên hệ hỗ trợ tận nơi!');
             return;
         }
 
         const chatBody = document.getElementById('chatBody');
         const successMsg = `
             ✅ <b>ĐĂNG KÝ THÀNH CÔNG!</b><br>
-            Cảm ơn <b>${name || 'Quý khách'}</b> đã hoàn tất phiên vấn đáp cho sự cố: <em>${issueName}</em>.<br>
+            Cảm ơn <b>${name || 'Quý khách'}</b> đã đặt lịch hỗ trợ cho sự cố: <em>${issueName}</em>.<br>
             📍 <b>Địa chỉ:</b> ${address}<br>
             📞 <b>SĐT:</b> ${phone}<br>
             ${email ? `📧 <b>Email:</b> ${email}<br>` : ''}
