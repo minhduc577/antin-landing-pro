@@ -43,11 +43,13 @@
         .matrix-qty { width: 60px; padding: 6px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; background: #f8f9fa; }
         .matrix-qty:focus { border-color: #1a73e8; background: #fff; outline: none; }
 
+        /* Tùy chọn mở rộng cho Combo Camera Hệ Thống */
         .combo-options { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; padding-top: 8px; border-top: 1px dashed #e9ecef; font-size: 11px; align-items: center; }
         .combo-options select { padding: 5px 8px; border-radius: 6px; border: 1px solid #ced4da; font-size: 11px; background: #fff; font-weight: 600; color: #174ea6; outline: none; cursor: pointer; }
         .cam-qty-group { display: flex; align-items: center; gap: 5px; }
         .cam-qty-group input { width: 50px; padding: 4px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 11px; font-weight: 700; background: #fff; }
 
+        /* Khung tổng tiền & tài chính chi tiết */
         .summary-box { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #174ea6; font-weight: 600; }
         .summary-row { display: flex; justify-content: space-between; align-items: center; }
         .grand-total-row { font-size: 16px; font-weight: 800; border-top: 1px dashed #b4d2ff; padding-top: 6px; color: #d93025; }
@@ -62,7 +64,9 @@
 
         .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; animation: pulseGlow 2s infinite ease-in-out; transition: 0.2s; text-align: center; letter-spacing: 0.3px; display: flex; justify-content: center; align-items: center; gap: 6px; text-decoration: none; }
         .btn-complete:hover { opacity: 0.95; transform: translateY(-1px); }
+        .btn-complete:active { transform: translateY(0); }
 
+        /* Hiệu ứng sóng động cho dòng hướng dẫn */
         @keyframes wavePulse {
             0% { transform: scale(1); opacity: 0.85; }
             50% { transform: scale(1.02); opacity: 1; color: #d93025; }
@@ -84,8 +88,8 @@
             gap: 6px;
         }
 
-        .btn-finish-direct { width: 100%; background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; border-radius: 12px; padding: 13px; font-size: 13.5px; font-weight: 800; cursor: pointer; transition: 0.2s; text-align: center; display: flex; justify-content: center; align-items: center; gap: 6px; text-decoration: none; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.35); }
-        .btn-finish-direct:hover { opacity: 0.95; transform: translateY(-1px); }
+        .btn-secondary { width: 100%; background: linear-gradient(135deg, #17a2b8, #117a8b); color: white; border: none; border-radius: 10px; padding: 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 5px; text-decoration: none; box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3); }
+        .btn-secondary:hover { opacity: 0.95; transform: translateY(-1px); }
     </style>
 </head>
 <body>
@@ -140,12 +144,16 @@
         
         <!-- Dòng chữ chèn icon sóng động theo yêu cầu -->
         <div class="instruction-note">
-            🌊📡 Nếu Quý Khách Không Chọn Cấu Hình Khác Thì Bấm Nút Hoàn Thành Phía Giưới Để Xác Nhận Hoàn Tất! ✨🚀
+            🌊📡 Nếu Quý Khách Không Chọn Cấu Hình Khác Thì Bấm Nút Hoàn Thành Phía Giữa Để Xác Nhận Hoàn Tất! ✨🚀
         </div>
 
-        <!-- Nút HOÀN THÀNH chuyển sang trang phụ thankyou.html -->
-        <a href="thankyou.html" class="btn-finish-direct" onclick="sessionStorage.clear()">
-            🎯 HOÀN THÀNH & ĐÓNG ➔ 🌟
+        <!-- Nút bổ sung "HOÀN THÀNH" chạy qua trang Thank You trực tiếp -->
+        <a href="thankyou.html" class="btn-complete" style="background: linear-gradient(135deg, #007bff, #0056b3); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.35);">
+            🎯 HOÀN THÀNH & CHUYỂN TRANG CẢM ƠN ➔ 🌟
+        </a>
+
+        <a href="thankyou.html" class="btn-secondary">
+            🎯 Xem Trang Cảm Ơn Mẫu (Thank You) ➔ 🌟
         </a>
     </div>
 </div>
