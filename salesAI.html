@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Sales AI & Báo Giá Tự Động - An Tín</title>
+    <!-- Thư viện SheetJS xuất file Excel phiếu bán hàng -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Thư viện EmailJS để gửi mail ngầm tự động -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Khởi tạo EmailJS với Public Key của bạn
+            emailjs.init("ZCs9sblTl_mKM5nQX"); // <-- Thay 'YOUR_PUBLIC_KEY' bằng khóa của bạn
+        })();
+    </script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .container { width: 100%; max-width: 500px; background: #ffffff; border-radius: 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.08); overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+        .header-title { text-align: center; }
+        .header-title h2 { font-size: 18px; color: #1a73e8; font-weight: 800; }
+        .header-title p { font-size: 12px; color: #5f6368; margin-top: 2px; }
+
+        .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; }
+        
+        .matrix-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #ced4da; }
+        .matrix-info { text-align: left; flex: 1; }
+        .matrix-name { font-size: 12px; font-weight: 700; color: #202124; }
+        .matrix-price { font-size: 11px; color: #1a73e8; font-weight: 600; }
+        
+        .matrix-qty { width: 55px; padding: 5px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; }
+
+        /* Tổng tiền */
+        .total-section { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 14px; color: #174ea6; }
+        .total-amount { color: #d93025; font-size: 18px; }
+
+        .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); transition: 0.2s; text-align: center; }
+        .btn-complete:hover { opacity: 0.95; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-title">
+        <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ</h2>
+        <p>Tùy chỉnh số lượng thiết bị theo nhu cầu thực tế của bạn</p>
+    </div>
+
+    <!-- Danh mục Matrix AI chọn số lượng -->
+    <div class="matrix-box" id="matrix-list">
+        <!-- Render tự động qua JS -->
+    </div>
+
+    <!-- Tổng tiền -->
+    <div class="total-section">
+        <span>TỔNG ƯỚC TÍNH:</span>
+        <span class="total-amount" id="grand-total">0 đ</span>
+    </div>
+
+    <!-- Nút hoàn thành -->
+    <button class="btn-complete" onclick="processOrderAndSendEmail()">HOÀN THÀNH & XUẤT PHIẾU BÁN HÀNG ➔</button>
+</div>
+
+<script>
+    // Danh mục ma trận sản phẩm dịch vụ An Tín
+    const products = [
+        { id: 'cam', name: '📹 Camera an ninh chính hãng', price: 1200000 },
+        { id: 'wifi', name: '🌐 Thiết bị Mạng Wi-Fi & CNTT', price: 1500000 },
+        { id: 'lock', name: '🔒 Khóa cửa / Chống đột nhập', price: 3500000 },
+        { id: 'finger', name: '🖪 Máy chấm công vân tay', price: 2800000 },
+        { id: 'fire', name: '🔥 Hệ thống Báo cháy tự động', price: 2500000 },
+        { id: 'smarthome', name: '🏠 Thiết bị Smart Home cơ bản', price: 4000000 },
+        { id: 'electric', name: '⚡ Vật tư Điện dân dụng', price: 800000 }
+    ];
+
+    const matrixListEl = document.getElementById('matrix-list');
+    function renderMatrix() {
+        matrixListEl.innerHTML = '';
+        products.forEach((p, index) => {
+            matrixListEl.innerHTML += `
+                <div class="matrix-item">
+                    <div class="matrix-info">
+                        <div class="matrix-name">${p.name}</div>
+                        <div class="matrix-price">${p.price.toLocaleString('vi-VN')} đ</div>
+                    </div>
+                    <input type="number" min="0" value="${index === 0 ? 2 : 0}" class="matrix-qty" data-id="${p.id}" oninput="calculateTotal()">
+                </div>
+            `;
+        });
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        let total = 0;
+        document.querySelectorAll('.matrix-qty').forEach(input => {
+            const qty = parseInt(input.value) || 0;
+            const pId = input.getAttribute('data-id');
+            const product = products.find(item => item.id === pId);
+            total += qty * product.price;
+        });
+        document.getElementById('grand-total').innerText = total.toLocaleString('vi-VN') + ' đ';
+    }
+
+    renderMatrix();
+
+    function processOrderAndSendEmail() {
+        // Lấy thông tin khách hàng từ Trang 1 qua sessionStorage (ánh xạ Tên, Phone, Email)
+        const cName = sessionStorage.getItem('ai_name') || 'Khách vãng lai';
+        const cPhone = sessionStorage.getItem('ai_phone') || 'Chưa cung cấp';
+        const cEmail = sessionStorage.getItem('ai_email') || 'Chưa cung cấp';
+        const cNeed = sessionStorage.getItem('ai_need') || 'Không có ghi chú';
+        const timeNow = new Date().toLocaleString('vi-VN');
+
+        let orderDetails = [];
+        let grandTotalValue = 0;
+
+        document.querySelectorAll('.matrix-qty').forEach(input => {
+            const qty = parseInt(input.value) || 0;
+            if (qty > 0) {
+                const pId = input.getAttribute('data-id');
+                const product = products.find(item => item.id === pId);
+                const subTotal = qty * product.price;
+                grandTotalValue += subTotal;
+                orderDetails.push([product.name, product.price, qty, subTotal]);
+            }
+        });
+
+        if (orderDetails.length === 0) {
+            alert('⚠️ Vui lòng chọn ít nhất một sản phẩm/dịch vụ!');
+            return;
+        }
+
+        // 1. TẠO VÀ TẢI FILE EXCEL PHIẾU BÁN HÀNG VỀ MÁY
+        let excelRows = [
+            ["PHIẾU BÁN HÀNG & KHẢO SÁT GIẢI PHÁP - AN TÍN"],
+            ["Thời gian lập phiếu:", timeNow],
+            [],
+            ["THÔNG TIN KHÁCH HÀNG"],
+            ["Họ và tên:", cName],
+            ["Số điện thoại:", cPhone],
+            ["Email:", cEmail],
+            ["Nhu cầu ban đầu:", cNeed],
+            [],
+            ["CHI TIẾT CẤU HÌNH THIẾT BỊ (MATRIX AI)"],
+            ["Tên thiết bị / Dịch vụ", "Đơn giá (VNĐ)", "Số lượng", "Thành tiền (VNĐ)"]
+        ];
+
+        orderDetails.forEach(item => excelRows.push(item));
+        excelRows.push([]);
+        excelRows.push(["TỔNG CỘNG THANH TOÁN:", "", "", grandTotalValue]);
+
+        const ws = XLSX.utils.aoa_to_sheet(excelRows);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang");
+        XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
+
+        // 2. GỬI MAIL NGẦM VỀ ctyantinco@gmail.com QUA EMAILJS
+        // Nội dung đúng cú pháp yêu cầu của bạn: Đơn dat hàng từ Anh chị [Tên] * [Phone] * [Email]
+        const exactMessage = `Đơn dat hàng từ Anh chị ${cName} * ${cPhone} * ${cEmail}. Tổng tiền dự toán: ${grandTotalValue.toLocaleString('vi-VN')}đ. Nhu cầu: ${cNeed}`;
+
+        const templateParams = {
+            to_email: "ctyantinco@gmail.com",
+            message: exactMessage,
+            customer_name: cName,
+            customer_phone: cPhone,
+            customer_email: cEmail
+        };
+
+        // Gửi ngầm qua EmailJS (Chạy tốt trên cả điện thoại và máy tính)
+        emailjs.send("service_vj9uc6d", "template_mtqvd5q", templateParams)
+            .then(function(res) {
+                console.log("Đã gửi email thành công!");
+            }, function(err) {
+                console.log("Lỗi gửi email:", err);
+            });
+
+        // 3. CHUYỂN HƯỚNG SANG TRANG 4 (thankyou.html) SAU 1 GIÂY
+        setTimeout(() => {
+            window.location.href = 'thankyou.html';
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
