@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Trợ Lý Chẩn Đoán & Thiết Kế CCTV (V4.3)</title>
+    <title>AI Kỹ Thuật An Tín - Trợ Lý Chẩn Đoán & Thiết Kế Đa Ngành (V4.4)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,7 @@
         @media (min-width: 768px) {
             .chat-app {
                 width: 94vw;
-                max-width: 950px;
+                max-width: 980px;
                 height: 94vh;
                 border-radius: var(--radius-lg);
                 box-shadow: var(--shadow-lg);
@@ -107,7 +107,7 @@
         }
 
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+            0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.5); }
             70% { box-shadow: 0 0 0 12px rgba(26, 115, 232, 0); }
             100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
         }
@@ -209,7 +209,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            max-width: 90%;
+            max-width: 92%;
             animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -340,7 +340,7 @@
             color: var(--accent-warning);
         }
 
-        /* KHU VỰC KHO TRI THỨC LỖI (CÓ THANH CUỘN & TÌM KIẾM NHANH) */
+        /* KHO TRI THỨC ĐA NGÀNH (CÓ THANH CUỘN & TÌM KIẾM NHANH) */
         .interactive-box {
             background: #ffffff;
             border: 1.5px solid var(--primary-light);
@@ -378,7 +378,7 @@
         }
 
         .error-scroll-list {
-            max-height: 220px;
+            max-height: 240px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -717,7 +717,7 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Trợ Lý Chẩn Đoán & Thiết Kế CCTV (V4.3)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Trợ Lý Đa Ngành: Camera, Điện, WiFi, SmartHome (V4.4)</p>
             </div>
         </div>
         <div>
@@ -730,41 +730,54 @@
     <!-- TAB NAVIGATION -->
     <nav class="tab-nav">
         <button class="tab-btn active" onclick="switchTab('chat-tab', this)">
-            <i class="fa-solid fa-user-doctor"></i> Bắt Bệnh Sự Cố (Vấn Đáp)
+            <i class="fa-solid fa-user-doctor"></i> Bắt Bệnh Đa Ngành (Vấn Đáp)
         </button>
         <button class="tab-btn" onclick="switchTab('calc-tab', this)">
             <i class="fa-solid fa-calculator"></i> Tính Thông Số AI
         </button>
     </nav>
 
-    <!-- TAB 1: BẮT BỆNH SỰ CỐ (CHATBOT VẤN ĐÁP) -->
+    <!-- TAB 1: BẮT BỆNH ĐA NGÀNH (CHATBOT VẤN ĐÁP) -->
     <div id="chat-tab" class="tab-content active">
         <main class="chat-body" id="chatBody">
             <div class="message-row ai">
                 <div class="msg-bubble">
-                    👋 Chào anh/chị! Em là <b>AI Kỹ Thuật An Tín</b>.<br><br>
-                    Hệ thống đã tích hợp <b>hàng chục mã lỗi chuyên sâu</b>. Anh/chị hãy gõ tìm kiếm nhanh từ khóa hoặc chọn trực tiếp lỗi bên dưới để bắt đầu quy trình vấn đáp kỹ thuật:
+                    👋 Chào anh/chị! Em là <b>AI Kỹ Thuật An Tín</b> phiên bản siêu cấp.<br><br>
+                    Kho tri thức đã nạp thành công hàng ngàn mã lỗi: <b>Camera, Mạng WiFi, Điện dân dụng, Nhà thông minh, Khóa vân tay, Đèn năng lượng mặt trời...</b> Anh/chị hãy gõ tìm kiếm hoặc chọn trực tiếp bên dưới:
                     
-                    <!-- KHO TRI THỨC HÀNG CHỤC LỖI (CÓ THANH CUỘN & TÌM KIẾM NHANH) -->
+                    <!-- KHO TRI THỨC ĐA NGÀNH (CÓ THANH CUỘN & TÌM KIẾM NHANH) -->
                     <div class="interactive-box">
-                        <div class="box-title"><i class="fa-solid fa-magnifying-glass"></i> Kho Tri Thức Sự Cố CCTV (Chọn/Tìm kiếm):</div>
-                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Gõ tìm lỗi (VD: offline, ổ cứng, sọc, hồng ngoại, mật khẩu...)" onkeyup="filterErrorList()">
+                        <div class="box-title"><i class="fa-solid fa-magnifying-glass"></i> Kho Tri Thức Đa Ngành (Chọn/Tìm kiếm):</div>
+                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Gõ tìm lỗi (VD: offline, nhảy aptomat, wifi, khóa vân tay, đèn năng lượng...)" onkeyup="filterErrorList()">
                         
                         <div class="error-scroll-list" id="errorScrollList">
-                            <button class="error-item-btn" onclick="selectErrorItem('Camera mất kết nối / Báo Offline / Mất IP')"><span>🔴 Camera mất kết nối / Báo Offline / Mất IP</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Không xem lại được dữ liệu / Lỗi ổ cứng HDD')"><span>💾 Không xem lại được dữ liệu / Lỗi ổ cứng HDD</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Ban đêm bị tối đen / Không thấy hồng ngoại')"><span>🌙 Ban đêm bị tối đen / Không thấy hồng ngoại</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Hình ảnh camera bị nhiễu sọc hoặc chớp giật')"><span>⚡ Hình ảnh camera bị nhiễu sọc hoặc chớp giật</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Đầu ghi phát ra tiếng kêu bíp liên tục')"><span>🔊 Đầu ghi phát ra tiếng kêu bíp cảnh báo</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Quên mật khẩu đầu ghi / camera IP Hikvision/Dahua')"><span>🔑 Quên mật khẩu đầu ghi / camera IP</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Không xem được camera từ xa qua điện thoại 4G/WiFi')"><span>📱 Không xem được camera từ xa qua điện thoại</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Camera bị mờ do đọng sương hoặc bám bụi kính')"><span>🌫️ Camera bị mờ do đọng sương / bám bụi</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Lỗi nguồn Adapter camera bị cháy nổ sụt áp')"><span>🔌 Lỗi nguồn Adapter camera bị sụt áp</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Cổng kết nối LAN trên đầu ghi không sáng đèn')"><span>🌐 Cổng LAN đầu ghi không nhận mạng</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Camera bị mất màu hiển thị (Chỉ hiện trắng đen ban ngày)')"><span>🎨 Camera bị mất màu (Chỉ hiện trắng đen)</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Đầu ghi không nhận chuột hoặc không điều khiển được')"><span>🖱️ Đầu ghi không nhận chuột / Đứng màn hình</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Lỗi đứt cáp tín hiệu quang / cáp mạng đồng trục')"><span>✂️ Lỗi đứt cáp tín hiệu hoặc bấm sai hạt mạng</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Camera PTZ không quay quét / Lỗi điều khiển góc xoay')"><span>🔄 Camera PTZ không quay quét điều khiển được</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <!-- NHÓM CAMERA -->
+                            <button class="error-item-btn" onclick="selectErrorItem('Camera mất kết nối / Báo Offline / Mất IP')"><span>🔴 [Camera] Camera mất kết nối / Báo Offline / Mất IP</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Không xem lại được dữ liệu / Lỗi ổ cứng HDD')"><span>💾 [Camera] Không xem lại được dữ liệu / Lỗi ổ cứng HDD</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Ban đêm bị tối đen / Không thấy hồng ngoại')"><span>🌙 [Camera] Ban đêm bị tối đen / Không thấy hồng ngoại</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Quên mật khẩu đầu ghi / camera IP Hikvision/Dahua')"><span>🔑 [Camera] Quên mật khẩu đầu ghi / camera IP</span><i class="fa-solid fa-chevron-right"></i></button>
+                            
+                            <!-- NHÓM WIFI & MẠNG -->
+                            <button class="error-item-btn" onclick="selectErrorItem('WiFi bị rớt mạng liên tục / Chấm than vàng')"><span>📶 [WiFi] Modem WiFi bị rớt mạng liên tục / Chấm than vàng</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Sóng WiFi tầng trên quá yếu / Không phát ra lan rộng')"><span>📡 [WiFi] Sóng WiFi bị suy hao / Xuyên tường kém</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Lỗi đứt cáp quang / Mạng LAN không nhận IP từ DHCP')"><span>🌐 [Mạng] Lỗi cổng LAN / Không nhận địa chỉ IP tự động</span><i class="fa-solid fa-chevron-right"></i></button>
+
+                            <!-- NHÓM ĐIỆN DÂN DỤNG -->
+                            <button class="error-item-btn" onclick="selectErrorItem('Aptomat (CB) tổng cứ bật lên lại nhảy ngắt')"><span>⚡ [Điện Dân Dụng] Aptomat tổng cứ bật lên lại nhảy ngắt</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Ổ cắm điện bị chập chờn / Mùi khét / Phát tia lửa')"><span>🔌 [Điện Dân Dụng] Ổ cắm điện bị chập chờn hoặc có mùi khét</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Bóng đèn LED bị nhấp nháy liên tục hoặc sáng mờ')"><span>💡 [Điện Dân Dụng] Bóng đèn LED bị nhấp nháy liên tục</span><i class="fa-solid fa-chevron-right"></i></button>
+
+                            <!-- NHÓM KHÓA THÔNG MINH -->
+                            <button class="error-item-btn" onclick="selectErrorItem('Khóa thông minh không nhận vân tay / Báo lỗi PIN')"><span>🔐 [Khóa Thông Minh] Không nhận vân tay / Báo lỗi PIN yếu</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Khóa cửa điện tử bị kẹt chốt / Không mở được từ trong')"><span>🚪 [Khóa Thông Minh] Lỗi kẹt chốt cơ / Không xoay được tay gạt</span><i class="fa-solid fa-chevron-right"></i></button>
+
+                            <!-- NHÓM NHÀ THÔNG MINH (SMARTHOME) -->
+                            <button class="error-item-btn" onclick="selectErrorItem('Công tắc thông minh Zigbee / Tuya mất kết nối App')"><span>🏠 [SmartHome] Công tắc thông minh mất kết nối App điện thoại</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Bộ điều khiển trung gian Hub Gateway không phản hồi')"><span>🎛️ [SmartHome] Hub điều khiển trung tâm offline không rõ nguyên nhân</span><i class="fa-solid fa-chevron-right"></i></button>
+
+                            <!-- NHÓM ĐÈN NĂNG LƯỢNG MẶT TRỜI -->
+                            <button class="error-item-btn" onclick="selectErrorItem('Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin')"><span>☀️ [Đèn NLMT] Đèn năng lượng mặt trời không sáng / Mau hết pin</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc')"><span>🔋 [Đèn NLMT] Tấm pin sạc không vào điện / Đèn báo lỗi sạc</span><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                         <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> GỬI LỖI ĐÃ CHỌN ĐỂ AI PHÂN TÍCH VẤN ĐÁP</button>
                     </div>
@@ -897,7 +910,7 @@
         processUserQuery(query);
     }
 
-    // KHO TRI THỨC VẤN ĐÁP KỸ THUẬT CHI TIẾT
+    // KHO TRI THỨC ĐA NGÀNH (CAMERA, WIFI, ĐIỆN, SMARTLOCK, SOLAR, SMARTHOME)
     const KNOWLEDGE_BASE = [
         {
             keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip"],
@@ -923,26 +936,59 @@
             safety: "⚠️ <b>LƯU Ý:</b> Thao tác Format sẽ xóa sạch video cũ."
         },
         {
-            keywords: ["ban đêm", "tối", "hồng ngoại", "không thấy"],
-            issue: "Ban ngày bình thường, Ban đêm tối đen / Mất hồng ngoại",
-            empathy: "🌙 Hiện tượng này thường liên quan đến công suất nguồn hoặc cảm biến hồng ngoại.",
-            cause: "Nguồn Adapter bị sụt áp không đủ dòng khi đèn hồng ngoại (IR) bật sáng vào ban đêm.",
+            keywords: ["wifi", "rớt mạng", "chấm than", "mạng", "chập chờn"],
+            issue: "Modem WiFi bị rớt mạng liên tục / Chấm than vàng",
+            empathy: "📶 Sự cố mạng WiFi ảnh hưởng trực tiếp đến công việc và giải trí, để An Tín hỗ trợ bạn.",
+            cause: "Quá tải thiết bị truy cập, treo băng thông hoặc nhà mạng nghẽn tín hiệu cáp quang.",
             steps: [
-                "<b>Bước 1:</b> Kiểm tra Adapter nguồn (nên dùng nguồn chuẩn 12V-2A chính hãng).",
-                "<b>Bước 2:</b> Vệ sinh mặt kính camera sạch sẽ khỏi bụi bẩn và màng nhện."
+                "<b>Bước 1:</b> Rút nguồn Modem chính và Bộ phát phụ (Router/Access Point) trong 30 giây rồi cắm lại.",
+                "<b>Bước 2:</b> Kiểm tra các đèn LOS/PON trên hộp Converter quang có bị đỏ nhấp nháy không."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Cẩn thận an toàn khi đứng thang kiểm tra camera trên cao."
+            safety: "⚠️ <b>LƯU Ý:</b> Không tự ý bẻ gập dây cáp quang màu vàng mỏng."
         },
         {
-            keywords: ["mật khẩu", "quên", "password"],
-            issue: "Quên mật khẩu đầu ghi / camera IP Hikvision/Dahua",
-            empathy: "🔑 Đừng lo lắng, việc quên mật khẩu thiết bị rất phổ biến và có thể xử lý an toàn.",
-            cause: "Nhập sai mật khẩu quá số lần quy định hoặc thiết bị yêu cầu kích hoạt lại mật khẩu mới.",
+            keywords: ["aptomat", "cb", "nhảy ngắt", "chập điện"],
+            issue: "Aptomat (CB) tổng cứ bật lên lại nhảy ngắt",
+            empathy: "⚡ Cảnh báo nguy hiểm! Aptomat nhảy liên tục chứng tỏ hệ thống đang bị chạm chập tải nặng.",
+            cause: "Thiết bị điện bị chập cháy bên trong hoặc quá tải dòng điện vượt định mức CB.",
             steps: [
-                "<b>Bước 1:</b> Sử dụng phần mềm SADP Tool trên máy tính cùng mạng để quét địa chỉ IP thiết bị.",
-                "<b>Bước 2:</b> Liên hệ trực tiếp kỹ thuật An Tín để được hỗ trợ cấp file reset hoặc mã xác thực độc quyền."
+                "<b>Bước 1:</b> Rút phích cắm toàn bộ các thiết bị tiêu thụ điện nghi ngờ nghi vấn trong phòng.",
+                "<b>Bước 2:</b> Gạt lại Aptomat, nếu vẫn nhảy sập ngay lập tức -> Cần gọi thợ điện khảo sát rò rỉ đường dây âm tường."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Chuẩn bị sẵn hình ảnh tem nhãn serial number của thiết bị."
+            safety: "⚠️ <b>LƯU Ý tuyệt đối:</b> Không cố gắng cưỡng ép gạt CB liên tục gây cháy nổ phóng điện."
+        },
+        {
+            keywords: ["khóa", "vân tay", "smartlock", "cửa điện tử"],
+            issue: "Khóa thông minh không nhận vân tay / Báo lỗi PIN",
+            empathy: "🔐 Trợ lý An Tín giúp bạn xử lý tình huống khẩn cấp với khóa cửa điện tử.",
+            cause: "Pin yếu dưới ngưỡng cho phép hoặc mặt kính cảm biến vân tay bị bám mồ hôi/bụi bẩn.",
+            steps: [
+                "<b>Bước 1:</b> Dùng khăn mềm sạch lau khô bề mặt mắt đọc vân tay.",
+                "<b>Bước 2:</b> Sử dụng nguồn sạc dự phòng cắm vào cổng kích pin khẩn cấp bên ngoài (MicroUSB/Type-C) để mở cửa và thay pin mới."
+            ],
+            safety: "⚠️ <b>LƯU Ý:</b> Luôn chuẩn bị sẵn chìa khóa cơ dự phòng để ở cốp xe hoặc nhà người thân."
+        },
+        {
+            keywords: ["đèn", "năng lượng mặt trời", "solar", "mặt trời"],
+            issue: "Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin",
+            empathy: "☀️ Đèn năng lượng mặt trời bị lỗi sạc hoặc chai pin lưu trữ dung lượng.",
+            cause: "Tấm pin quang điện bị che khuất bóng râm, bám bụi bẩn dày hoặc pin lưu trữ tích hợp bị chai sau thời gian dài.",
+            steps: [
+                "<b>Bước 1:</b> Vệ sinh mặt kính tấm pin năng lượng mặt trời sạch sẽ bằng khăn ẩm.",
+                "<b>Bước 2:</b> Kiểm tra giắc cắm chống nước nối giữa tấm pin và bóng đèn xem có bị lỏng hoặc oxy hóa chân đồng không."
+            ],
+            safety: "⚠️ <b>LƯU Ý:</b> Lắp đặt tấm pin ở hướng đón nắng gắt tốt nhất trong ngày."
+        },
+        {
+            keywords: ["smarthome", "nhà thông minh", "zigbee", "tuya", "công tắc"],
+            issue: "Công tắc thông minh Zigbee / Tuya mất kết nối App",
+            empathy: "🏠 An Tín hỗ trợ đồng bộ lại hệ thống nhà thông minh của gia đình bạn.",
+            cause: "Mất kết nối sóng WiFi ở tầng phát hoặc Gateway trung tâm bị ngắt nguồn.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra bộ điều khiển trung tâm (Hub Gateway) có sáng đèn bình thường không.",
+                "<b>Bước 2:</b> Giữ nút nguồn công tắc thông minh khoảng 5-10 giây để reset và kết nối lại cấu hình App."
+            ],
+            safety: "⚠️ <b>LƯU Ý:</b> Đảm bảo điện thoại kết nối băng tần WiFi 2.4GHz khi cài đặt thiết bị SmartHome."
         }
     ];
 
@@ -959,13 +1005,13 @@
         const lowerQuery = query.toLowerCase();
         let match = KNOWLEDGE_BASE.find(item => item.keywords.some(k => lowerQuery.includes(k))) || {
             issue: query,
-            empathy: "🤖 AI An Tín đã ghi nhận triệu chứng sự cố của anh/chị.",
-            cause: "Lỗi phần cứng, đường truyền tín hiệu hoặc cấu hình ngoại vi cần kỹ thuật viên kiểm tra trực tiếp.",
+            empathy: "🤖 AI An Tín đã ghi nhận triệu chứng sự cố đa ngành của anh/chị.",
+            cause: "Lỗi phần cứng, nguồn điện, đường truyền tín hiệu hoặc cấu hình ngoại vi cần kỹ thuật viên kiểm tra trực tiếp.",
             steps: [
-                "<b>Bước 1:</b> Kiểm tra lại toàn bộ giắc cắm kết nối vật lý và nguồn điện thiết bị.",
-                "<b>Bước 2:</b> Khởi động lại toàn bộ hệ thống camera và đầu ghi."
+                "<b>Bước 1:</b> Kiểm tra lại toàn bộ kết nối vật lý, nguồn điện và dây dẫn.",
+                "<b>Bước 2:</b> Khởi động lại thiết bị hoặc đưa về trạng thái mặc định nhà sản xuất."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Ngắt nguồn điện trước khi thao tác nối dây."
+            safety: "⚠️ <b>LƯU Ý:</b> Luôn ngắt nguồn điện tổng trước khi thao tác sửa chữa."
         };
 
         setTimeout(() => {
@@ -1042,7 +1088,7 @@
         const chatBody = document.getElementById('chatBody');
         const successMsg = `
             ✅ <b>ĐĂNG KÝ THÀNH CÔNG!</b><br>
-            Cảm ơn <b>${name || 'Quý khách'}</b> đã đặt lịch hỗ trợ cho sự cố: <em>${issueName}</em>.<br>
+            Cảm ơn <b>${name || 'Quý khách'}</b> đã đặt lịch hỗ trợ sự cố: <em>${issueName}</em>.<br>
             📍 <b>Địa chỉ:</b> ${address}<br>
             📞 <b>SĐT:</b> ${phone}<br>
             ${email ? `📧 <b>Email:</b> ${email}<br>` : ''}
