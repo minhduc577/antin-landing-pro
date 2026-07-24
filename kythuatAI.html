@@ -1017,9 +1017,43 @@
         document.getElementById('ai-result').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function requestSupport(detail) {
-        alert("✨ [AI Kỹ Thuật An Tín] Đã tiếp nhận yêu cầu: \"" + detail + "\". Nhân viên kỹ thuật sẽ liên hệ lại qua số điện thoại của anh/chị trong vòng 5 phút tới!");
-    }
+function requestSupport(detailInfo) {
+    const payload = {
+        source: "AI Kỹ Thuật An Tín (v3.5)",
+        type: "Đặt lịch / Hỗ trợ kỹ thuật",
+        content: detailInfo,
+        timestamp: new Date().toLocaleString('vi-VN'),
+        url: window.location.href
+    };
+
+    const btnCtaList = document.querySelectorAll('.btn-cta');
+    btnCtaList.forEach(btn => {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG GỬI YÊU CẦU...';
+    });
+
+    fetch("https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        alert('✅ Gửi yêu cầu thành công! Kỹ thuật viên An Tín sẽ liên hệ lại với anh/chị trong ít phút.');
+    })
+    .catch(error => {
+        console.error('Lỗi kết nối Webhook:', error);
+        alert('⚠️ Hệ thống đã ghi nhận yêu cầu. An Tín sẽ liên hệ lại ngay với anh/chị.');
+    })
+    .finally(() => {
+        btnCtaList.forEach(btn => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-calendar-check"></i> ĐĂNG KÝ KHẢO SÁT & NHẬN ƯU ĐÃI 30%';
+        });
+    });
+}    
+    
 </script>
 
 </body>
