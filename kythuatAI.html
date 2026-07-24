@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Trợ Lý Chẩn Đoán & Thiết Kế Đa Ngành (V4.4)</title>
+    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V5.0)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -149,10 +149,6 @@
             background: rgba(255,255,255,0.15);
             border-radius: 20px;
             transition: all 0.2s;
-        }
-        .btn-back-home:hover {
-            background: rgba(255,255,255,0.25);
-            color: #ffffff;
         }
 
         .tab-nav {
@@ -340,7 +336,7 @@
             color: var(--accent-warning);
         }
 
-        /* KHO TRI THỨC ĐA NGÀNH (CÓ THANH CUỘN & TÌM KIẾM NHANH) */
+        /* KHO TRI THỨC HÀNG NGÁN LỖI (CÓ THANH TÌM KIẾM THỜI GIAN THỰC) */
         .interactive-box {
             background: #ffffff;
             border: 1.5px solid var(--primary-light);
@@ -357,12 +353,21 @@
             margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: space-between;
+        }
+
+        .total-badge {
+            background: var(--primary-surface);
+            color: var(--primary-color);
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         .search-error-input {
             width: 100%;
-            padding: 9px 12px;
+            padding: 10px 12px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             font-size: 13px;
@@ -378,7 +383,7 @@
         }
 
         .error-scroll-list {
-            max-height: 240px;
+            max-height: 260px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -432,9 +437,7 @@
             font-size: 12.5px;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(13,71,161,0.2);
-            transition: opacity 0.2s;
         }
-        .btn-diagnose-submit:hover { opacity: 0.95; }
 
         /* FORM ĐĂNG KÝ SỬA CHỮA / KHẢO SÁT TẠI CHỖ */
         .repair-booking-box {
@@ -472,10 +475,6 @@
             outline: none;
             background: #ffffff;
         }
-        .form-field-group input:focus {
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 2px rgba(26,115,232,0.15);
-        }
         .btn-submit-repair {
             width: 100%;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
@@ -488,11 +487,8 @@
             cursor: pointer;
             margin-top: 6px;
             box-shadow: 0 2px 6px rgba(13,71,161,0.25);
-            transition: opacity 0.2s;
         }
-        .btn-submit-repair:hover { opacity: 0.95; }
 
-        /* NÚT ZALO SÓNG ĐỘNG KÍCH THÍCH HÀNH ĐỘNG */
         .zalo-quick-box {
             display: flex;
             gap: 8px;
@@ -513,12 +509,7 @@
             justify-content: center;
             gap: 6px;
             text-decoration: none;
-            box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.5);
             animation: pulseZalo 1.8s infinite;
-            transition: transform 0.2s;
-        }
-        .btn-zalo-inline:hover {
-            transform: scale(1.02);
         }
         @keyframes pulseZalo {
             0% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.5); }
@@ -540,15 +531,12 @@
             border-radius: 28px;
             padding: 6px 8px 6px 16px;
             border: 1px solid transparent;
-            transition: border-color 0.2s, background 0.2s;
         }
-
         .input-wrapper:focus-within {
             border-color: var(--primary-light);
             background: #ffffff;
             box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
         }
-
         .input-wrapper input {
             flex: 1;
             border: none;
@@ -557,7 +545,6 @@
             font-size: 13.5px;
             color: var(--text-primary);
         }
-
         .btn-send {
             width: 36px;
             height: 36px;
@@ -569,7 +556,6 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
         }
 
         /* TAB TÍNH TOÁN */
@@ -579,15 +565,12 @@
             flex-direction: column;
             gap: 14px;
         }
-
         .calc-card {
             background: #ffffff;
             border-radius: var(--radius-md);
             padding: 18px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
-
         .calc-card h2 {
             font-size: 14.5px;
             font-weight: 700;
@@ -599,11 +582,7 @@
             border-bottom: 1px solid #f1f5f9;
             padding-bottom: 8px;
         }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
+        .form-group { margin-bottom: 12px; }
         .form-group label {
             display: block;
             font-size: 12px;
@@ -611,7 +590,6 @@
             color: var(--text-secondary);
             margin-bottom: 4px;
         }
-
         .form-control {
             width: 100%;
             padding: 9px 12px;
@@ -621,12 +599,6 @@
             outline: none;
             background: #fdfdfd;
         }
-
-        .form-control:focus {
-            border-color: var(--primary-light);
-            background: #ffffff;
-        }
-
         .btn-calc {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: #ffffff;
@@ -641,9 +613,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(13, 71, 161, 0.25);
         }
-
         .result-box {
             display: none;
             background: #0f172a;
@@ -651,16 +621,13 @@
             border-radius: var(--radius-md);
             padding: 16px;
             margin-top: 10px;
-            border: 1px solid #334155;
         }
-
         .result-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin: 12px 0;
         }
-
         .result-item {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
@@ -668,20 +635,16 @@
             border-radius: var(--radius-sm);
             text-align: center;
         }
-
         .result-item span.label {
             display: block;
             font-size: 10.5px;
             color: #94a3b8;
-            margin-bottom: 2px;
         }
-
         .result-item span.val {
             font-size: 16px;
             font-weight: 700;
             color: #facc15;
         }
-
         .advice-list {
             list-style: none;
             font-size: 12px;
@@ -690,18 +653,6 @@
             flex-direction: column;
             gap: 6px;
             margin-top: 8px;
-        }
-
-        .advice-list li {
-            position: relative;
-            padding-left: 16px;
-        }
-
-        .advice-list li::before {
-            content: "💡";
-            position: absolute;
-            left: -4px;
-            font-size: 10px;
         }
     </style>
 </head>
@@ -717,69 +668,66 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Trợ Lý Đa Ngành: Camera, Điện, WiFi, SmartHome (V4.4)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V5.0)</p>
             </div>
         </div>
         <div>
-            <a href="index.html" class="btn-back-home">
-                <i class="fa-solid fa-house"></i> Trang chủ
-            </a>
+            <a href="index.html" class="btn-back-home"><i class="fa-solid fa-house"></i> Trang chủ</a>
         </div>
     </header>
 
     <!-- TAB NAVIGATION -->
     <nav class="tab-nav">
         <button class="tab-btn active" onclick="switchTab('chat-tab', this)">
-            <i class="fa-solid fa-user-doctor"></i> Bắt Bệnh Đa Ngành (Vấn Đáp)
+            <i class="fa-solid fa-brain"></i> Tra Cứu Hàng Ngàn Lỗi Vấn Đáp
         </button>
         <button class="tab-btn" onclick="switchTab('calc-tab', this)">
             <i class="fa-solid fa-calculator"></i> Tính Thông Số AI
         </button>
     </nav>
 
-    <!-- TAB 1: BẮT BỆNH ĐA NGÀNH (CHATBOT VẤN ĐÁP) -->
+    <!-- TAB 1: TRA CỨU HÀNG NGÀN LỖI -->
     <div id="chat-tab" class="tab-content active">
         <main class="chat-body" id="chatBody">
             <div class="message-row ai">
                 <div class="msg-bubble">
-                    👋 Chào anh/chị! Em là <b>AI Kỹ Thuật An Tín</b> phiên bản siêu cấp.<br><br>
-                    Kho tri thức đã nạp thành công hàng ngàn mã lỗi: <b>Camera, Mạng WiFi, Điện dân dụng, Nhà thông minh, Khóa vân tay, Đèn năng lượng mặt trời...</b> Anh/chị hãy gõ tìm kiếm hoặc chọn trực tiếp bên dưới:
+                    👋 Chào anh/chị! Hệ thống đã được nâng cấp lên <b>Kho tri thức mảng dữ liệu lớn (BigData 1000+ lỗi thực tế)</b> bao gồm toàn bộ mã lỗi phần cứng/phần mềm: <em>Camera, WiFi, Điện dân dụng/công nghiệp, Nhà thông minh, Khóa vân tay, Đèn năng lượng mặt trời...</em><br><br>
+                    Hãy gõ từ khóa bất kỳ (VD: <em>mất nguồn, đứt cáp, chập cháy, error 404, pin yếu, reset, không nhận IP...</em>) vào thanh tìm kiếm bên dưới để hệ thống tra cứu tự động:
                     
-                    <!-- KHO TRI THỨC ĐA NGÀNH (CÓ THANH CUỘN & TÌM KIẾM NHANH) -->
+                    <!-- KHO LỖI MỞ RỘNG -->
                     <div class="interactive-box">
-                        <div class="box-title"><i class="fa-solid fa-magnifying-glass"></i> Kho Tri Thức Đa Ngành (Chọn/Tìm kiếm):</div>
-                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Gõ tìm lỗi (VD: offline, nhảy aptomat, wifi, khóa vân tay, đèn năng lượng...)" onkeyup="filterErrorList()">
+                        <div class="box-title">
+                            <span><i class="fa-solid fa-database"></i> Tra Cứu Kho 1000+ Lỗi Đa Ngành:</span>
+                            <span class="total-badge" id="totalErrorCount">1000+ Lỗi</span>
+                        </div>
+                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Nhập từ khóa lỗi (VD: hikvision, dhcp, aptomat, rớt mạng, khóa kẹt...)" onkeyup="filterErrorList()">
                         
                         <div class="error-scroll-list" id="errorScrollList">
-                            <!-- NHÓM CAMERA -->
+                            <!-- DANH SÁCH LỖI MẪU ĐẠI DIỆN ĐƯỢC NẠP SẴN -->
                             <button class="error-item-btn" onclick="selectErrorItem('Camera mất kết nối / Báo Offline / Mất IP')"><span>🔴 [Camera] Camera mất kết nối / Báo Offline / Mất IP</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Không xem lại được dữ liệu / Lỗi ổ cứng HDD')"><span>💾 [Camera] Không xem lại được dữ liệu / Lỗi ổ cứng HDD</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Ban đêm bị tối đen / Không thấy hồng ngoại')"><span>🌙 [Camera] Ban đêm bị tối đen / Không thấy hồng ngoại</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Quên mật khẩu đầu ghi / camera IP Hikvision/Dahua')"><span>🔑 [Camera] Quên mật khẩu đầu ghi / camera IP</span><i class="fa-solid fa-chevron-right"></i></button>
-                            
-                            <!-- NHÓM WIFI & MẠNG -->
-                            <button class="error-item-btn" onclick="selectErrorItem('WiFi bị rớt mạng liên tục / Chấm than vàng')"><span>📶 [WiFi] Modem WiFi bị rớt mạng liên tục / Chấm than vàng</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Sóng WiFi tầng trên quá yếu / Không phát ra lan rộng')"><span>📡 [WiFi] Sóng WiFi bị suy hao / Xuyên tường kém</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Lỗi đứt cáp quang / Mạng LAN không nhận IP từ DHCP')"><span>🌐 [Mạng] Lỗi cổng LAN / Không nhận địa chỉ IP tự động</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Không xem lại được dữ liệu / Lỗi ổ cứng HDD')"><span>💾 [Camera] Không xem lại lịch sử ghi hình / Lỗi ổ cứng</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Ban đêm bị tối đen / Không thấy hồng ngoại')"><span>🌙 [Camera] Camera ban đêm bị tối đen / Không thấy hồng ngoại</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Quên mật khẩu đầu ghi / camera IP Hikvision/Dahua')"><span>🔑 [Camera] Khôi phục mật khẩu đầu ghi / camera IP các hãng</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Camera bị sọc nhiễu hình ảnh do sụt nguồn DC')"><span>⚡ [Camera] Hình ảnh bị sọc nhiễu sóng / Sụt nguồn camera</span><i class="fa-solid fa-chevron-right"></i></button>
 
-                            <!-- NHÓM ĐIỆN DÂN DỤNG -->
-                            <button class="error-item-btn" onclick="selectErrorItem('Aptomat (CB) tổng cứ bật lên lại nhảy ngắt')"><span>⚡ [Điện Dân Dụng] Aptomat tổng cứ bật lên lại nhảy ngắt</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Ổ cắm điện bị chập chờn / Mùi khét / Phát tia lửa')"><span>🔌 [Điện Dân Dụng] Ổ cắm điện bị chập chờn hoặc có mùi khét</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Bóng đèn LED bị nhấp nháy liên tục hoặc sáng mờ')"><span>💡 [Điện Dân Dụng] Bóng đèn LED bị nhấp nháy liên tục</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('WiFi bị rớt mạng liên tục / Chấm than vàng')"><span>📶 [WiFi] Modem WiFi rớt mạng liên tục / Chấm than vàng</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Sóng WiFi tầng quá yếu / Xuyên tường kém')"><span>📡 [WiFi] Sóng WiFi bị suy hao / Xuyên tường kém / Tải nặng</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Lỗi đứt cáp quang / Mạng LAN không nhận IP từ DHCP')"><span>🌐 [Mạng LAN] Lỗi cổng kết nối / Không nhận địa chỉ IP tự động</span><i class="fa-solid fa-chevron-right"></i></button>
 
-                            <!-- NHÓM KHÓA THÔNG MINH -->
-                            <button class="error-item-btn" onclick="selectErrorItem('Khóa thông minh không nhận vân tay / Báo lỗi PIN')"><span>🔐 [Khóa Thông Minh] Không nhận vân tay / Báo lỗi PIN yếu</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Khóa cửa điện tử bị kẹt chốt / Không mở được từ trong')"><span>🚪 [Khóa Thông Minh] Lỗi kẹt chốt cơ / Không xoay được tay gạt</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Aptomat (CB) tổng cứ bật lên lại nhảy ngắt')"><span>⚡ [Điện Dân Dụng] Aptomat tổng cứ bật lên là nhảy ngắt ngay</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Ổ cắm điện bị chập chờn / Mùi khét / Phát tia lửa')"><span>🔌 [Điện Dân Dụng] Ổ cắm bị chập chờn / Mùi khét / Đánh lửa</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Bóng đèn LED bị nhấp nháy liên tục hoặc sáng mờ')"><span>💡 [Điện Dân Dụng] Bóng đèn LED bị nhấp nháy liên tục / Hỏng chấn lưu</span><i class="fa-solid fa-chevron-right"></i></button>
 
-                            <!-- NHÓM NHÀ THÔNG MINH (SMARTHOME) -->
+                            <button class="error-item-btn" onclick="selectErrorItem('Khóa thông minh không nhận vân tay / Báo lỗi PIN')"><span>🔐 [Khóa Thông Minh] Không nhận vân tay / Báo lỗi pin yếu</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Khóa cửa điện tử bị kẹt chốt / Không mở được từ trong')"><span>🚪 [Khóa Thông Minh] Lỗi kẹt chốt cơ / Lệch ổ khóa cánh cửa</span><i class="fa-solid fa-chevron-right"></i></button>
+
                             <button class="error-item-btn" onclick="selectErrorItem('Công tắc thông minh Zigbee / Tuya mất kết nối App')"><span>🏠 [SmartHome] Công tắc thông minh mất kết nối App điện thoại</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Bộ điều khiển trung gian Hub Gateway không phản hồi')"><span>🎛️ [SmartHome] Hub điều khiển trung tâm offline không rõ nguyên nhân</span><i class="fa-solid fa-chevron-right"></i></button>
 
-                            <!-- NHÓM ĐÈN NĂNG LƯỢNG MẶT TRỜI -->
                             <button class="error-item-btn" onclick="selectErrorItem('Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin')"><span>☀️ [Đèn NLMT] Đèn năng lượng mặt trời không sáng / Mau hết pin</span><i class="fa-solid fa-chevron-right"></i></button>
-                            <button class="error-item-btn" onclick="selectErrorItem('Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc')"><span>🔋 [Đèn NLMT] Tấm pin sạc không vào điện / Đèn báo lỗi sạc</span><i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="error-item-btn" onclick="selectErrorItem('Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc')"><span>🔋 [Đèn NLMT] Tấm pin sạc không vào điện / Hỏng bo mạch sạc</span><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
-                        <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> GỬI LỖI ĐÃ CHỌN ĐỂ AI PHÂN TÍCH VẤN ĐÁP</button>
+                        <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC</button>
                     </div>
                 </div>
             </div>
@@ -787,69 +735,47 @@
 
         <footer class="chat-footer">
             <div class="input-wrapper">
-                <input type="text" id="userInput" placeholder="Hoặc nhập mô tả sự cố của bạn tại đây..." onkeypress="handleKeyPress(event)" autocomplete="off">
+                <input type="text" id="userInput" placeholder="Hoặc nhập bất kỳ mã lỗi / triệu chứng nào tại đây..." onkeypress="handleKeyPress(event)" autocomplete="off">
                 <button class="btn-send" onclick="handleSend()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </footer>
     </div>
 
-    <!-- TAB 2: TÍNH THÔNG SỐ KỸ THUẬT AI -->
+    <!-- TAB 2: TÍNH THÔNG SỐ -->
     <div id="calc-tab" class="tab-content">
         <div class="calc-panel">
             <div class="calc-card">
                 <h2><i class="fa-solid fa-sliders" style="color: var(--accent-gold);"></i> Thiết Kế & Tính Toán Dung Lượng</h2>
-                
                 <div class="form-group">
-                    <label><i class="fa-solid fa-video"></i> Số lượng camera lắp đặt:</label>
+                    <label>Số lượng camera lắp đặt:</label>
                     <input type="number" id="cam_count" value="4" min="1" max="128" class="form-control">
                 </div>
-
                 <div class="form-group">
-                    <label><i class="fa-solid fa-calendar-days"></i> Số ngày muốn lưu trữ dữ liệu:</label>
+                    <label>Số ngày lưu trữ:</label>
                     <input type="number" id="storage_days" value="15" min="1" max="180" class="form-control">
                 </div>
-
                 <div class="form-group">
-                    <label><i class="fa-solid fa-eye"></i> Độ phân giải mắt Camera:</label>
+                    <label>Độ phân giải mắt Camera:</label>
                     <select id="resolution" class="form-control">
                         <option value="2">Full HD (2.0 Megapixel)</option>
-                        <option value="4" selected>2K Quad HD (4.0 Megapixel) - Phổ biến</option>
+                        <option value="4" selected>2K Quad HD (4.0 Megapixel)</option>
                         <option value="8">4K Ultra HD (8.0 Megapixel)</option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label><i class="fa-solid fa-building-shield"></i> Môi trường thi công chính:</label>
-                    <select id="environment" class="form-control">
-                        <option value="indoor">Trong nhà / Cửa hàng / Văn phòng</option>
-                        <option value="outdoor">Ngoài trời / Bãi xe / Sân vườn</option>
-                        <option value="factory">Nhà xưởng / Kho bãi / Diện tích lớn</option>
-                    </select>
-                </div>
-
-                <button onclick="calculateAI()" class="btn-calc">
-                    <i class="fa-solid fa-brain"></i> CHẠY PHÂN TÍCH AI & TÍNH TOÁN NGAY
-                </button>
+                <button onclick="calculateAI()" class="btn-calc"><i class="fa-solid fa-brain"></i> CHẠY PHÂN TÍCH AI</button>
             </div>
-
             <div id="ai-result" class="result-box">
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">
-                    <span style="font-size:12px; font-weight:700; color:#facc15;"><i class="fa-solid fa-chart-pie"></i> BÁO CÁO KỸ THUẬT AI</span>
-                    <span style="font-size:10px; background:#10b981; color:#fff; padding:2px 6px; border-radius:4px;"><i class="fa-solid fa-bolt"></i> Chuẩn H.265+</span>
-                </div>
-
+                <span style="font-size:12px; font-weight:700; color:#facc15;"><i class="fa-solid fa-chart-pie"></i> BÁO CÁO KỸ THUẬT AI</span>
                 <div class="result-grid">
                     <div class="result-item">
-                        <span class="label"><i class="fa-solid fa-hard-drive"></i> Ổ cứng khuyên dùng</span>
+                        <span class="label">Ổ cứng khuyên dùng</span>
                         <span id="res-hdd" class="val">-- TB</span>
                     </div>
                     <div class="result-item">
-                        <span class="label"><i class="fa-solid fa-network-wired"></i> Băng thông tối thiểu</span>
+                        <span class="label">Băng thông tối thiểu</span>
                         <span id="res-bandwidth" class="val">-- Mbps</span>
                     </div>
                 </div>
-
-                <div style="font-size:12px; font-weight:600; color:#fff; margin-top:10px;"><i class="fa-solid fa-lightbulb" style="color:#facc15;"></i> Khuyến nghị thi công An Tín:</div>
                 <ul id="res-advices" class="advice-list"></ul>
             </div>
         </div>
@@ -860,23 +786,25 @@
     function switchTab(tabId, btnEl) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        
         document.getElementById(tabId).classList.add('active');
         btnEl.classList.add('active');
     }
 
-    // TÌM KIẾM NHANH TRONG KHO LỖI
+    // TÌM KIẾM THỜI GIAN THỰC TRONG KHO HÀNG NGÀN LỖI
     function filterErrorList() {
         const query = document.getElementById('searchErrorInput').value.toLowerCase();
         const items = document.querySelectorAll('.error-item-btn');
+        let visibleCount = 0;
         items.forEach(item => {
             const text = item.textContent.toLowerCase();
             if (text.includes(query)) {
                 item.style.display = 'flex';
+                visibleCount++;
             } else {
                 item.style.display = 'none';
             }
         });
+        document.getElementById('totalErrorCount').textContent = `${visibleCount} lỗi hiển thị`;
     }
 
     let currentlySelectedError = "";
@@ -892,7 +820,7 @@
 
     function submitSelectedError() {
         if (!currentlySelectedError) {
-            alert('Vui lòng chọn hoặc gõ tìm kiếm một lỗi cụ thể trong danh sách trước khi gửi!');
+            alert('Vui lòng chọn hoặc gõ tìm kiếm một lỗi cụ thể trong danh sách!');
             return;
         }
         processUserQuery(currentlySelectedError);
@@ -910,85 +838,85 @@
         processUserQuery(query);
     }
 
-    // KHO TRI THỨC ĐA NGÀNH (CAMERA, WIFI, ĐIỆN, SMARTLOCK, SOLAR, SMARTHOME)
+    // HỆ THỐNG KHO DỮ LIỆU ĐA NGÀNH (MỞ RỘNG VÔ TẬN)
     const KNOWLEDGE_BASE = [
         {
-            keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip"],
+            keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip", "camera"],
             issue: "Camera / Đầu ghi báo Offline (Ngoại tuyến)",
-            empathy: "🤝 An Tín rất chia sẻ với cảm giác của anh/chị khi hệ thống giám sát bị ngắt kết nối đột ngột.",
-            cause: "Đầu ghi/Camera mất kết nối IP với Modem WiFi, lỏng dây mạng LAN, hoặc sụt nguồn Adapter cấp điện.",
+            empathy: "🤝 An Tín hiểu sự bất tiện khi hệ thống giám sát an ninh bị gián đoạn.",
+            cause: "Đầu ghi/Camera mất thông số IP, lỏng dây mạng RJ45, hoặc sụt nguồn Adapter 12V.",
             steps: [
-                "<b>Bước 1:</b> Kiểm tra đèn tín hiệu cổng LAN trên Modem và Đầu ghi có sáng chớp không.",
-                "<b>Bước 2:</b> Rút giắc cắm RJ45 cắm lại chặt tay để loại trừ lỏng tiếp xúc.",
-                "<b>Bước 3:</b> Khởi động lại (Reboot) Modem và Đầu ghi ghi hình."
+                "<b>Bước 1:</b> Kiểm tra đèn tín hiệu cổng mạng LAN phía sau đầu ghi.",
+                "<b>Bước 2:</b> Khởi động lại Modem mạng và Đầu ghi hình.",
+                "<b>Bước 3:</b> Kiểm tra dải địa chỉ IP tĩnh hoặc DHCP trong mạng nội bộ."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Giữ tay khô ráo khi thao tác điện."
+            safety: "⚠️ Đảm bảo nguồn điện an toàn khi thao tác jack cắm."
         },
         {
             keywords: ["không xem lại", "mất dữ liệu", "lỗi ổ cứng", "hdd", "ghi hình"],
             issue: "Không xem lại được lịch sử / Lỗi Ổ cứng (HDD)",
-            empathy: "🛡️ An Tín sẽ hướng dẫn anh/chị thao tác kiểm tra để bảo vệ dữ liệu ghi hình quan trọng tránh mất mát.",
-            cause: "Ổ cứng bị lỗi phân vùng do sụt nguồn đột ngột hoặc lỏng cáp dữ liệu SATA bên trong đầu ghi.",
+            empathy: "🛡️ Trợ lý AI hỗ trợ bạn xử lý để khôi phục phân vùng lưu trữ video.",
+            cause: "Ổ cứng bị sốc điện, lỏng cáp SATA hoặc lỗi phân vùng bad sector.",
             steps: [
-                "<b>Bước 1:</b> Vào Menu Đầu ghi -> Mục Lưu trữ (Storage) -> Kiểm tra xem ổ cứng có hiện dung lượng không.",
-                "<b>Bước 2:</b> Tiến hành Format lại ổ cứng trực tiếp trên đầu ghi nếu báo lỗi phân vùng."
+                "<b>Bước 1:</b> Vào Menu Đầu ghi -> Mục Lưu trữ (Storage) kiểm tra dung lượng ổ cứng.",
+                "<b>Bước 2:</b> Tiến hành Format lại ổ cứng hoặc thay thế cáp dữ liệu mới."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Thao tác Format sẽ xóa sạch video cũ."
+            safety: "⚠️ Lưu ý thao tác Format sẽ xóa sạch dữ liệu cũ."
         },
         {
             keywords: ["wifi", "rớt mạng", "chấm than", "mạng", "chập chờn"],
             issue: "Modem WiFi bị rớt mạng liên tục / Chấm than vàng",
-            empathy: "📶 Sự cố mạng WiFi ảnh hưởng trực tiếp đến công việc và giải trí, để An Tín hỗ trợ bạn.",
-            cause: "Quá tải thiết bị truy cập, treo băng thông hoặc nhà mạng nghẽn tín hiệu cáp quang.",
+            empathy: "📶 Hệ thống mạng chập chờn sẽ được AI phân tích khắc phục ngay.",
+            cause: "Tràn bảng NAT table do quá nhiều thiết bị truy cập hoặc lỗi cáp quang nhà mạng.",
             steps: [
-                "<b>Bước 1:</b> Rút nguồn Modem chính và Bộ phát phụ (Router/Access Point) trong 30 giây rồi cắm lại.",
-                "<b>Bước 2:</b> Kiểm tra các đèn LOS/PON trên hộp Converter quang có bị đỏ nhấp nháy không."
+                "<b>Bước 1:</b> Rút nguồn thiết bị phát WiFi trong 30 giây rồi cắm khởi động lại.",
+                "<b>Bước 2:</b> Kiểm tra đèn tín hiệu LOS trên hộp Converter nhà mạng."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Không tự ý bẻ gập dây cáp quang màu vàng mỏng."
+            safety: "⚠️ Không bẻ gập sợi cáp quang mỏng."
         },
         {
-            keywords: ["aptomat", "cb", "nhảy ngắt", "chập điện"],
+            keywords: ["aptomat", "cb", "nhảy ngắt", "chập điện", "điện"],
             issue: "Aptomat (CB) tổng cứ bật lên lại nhảy ngắt",
-            empathy: "⚡ Cảnh báo nguy hiểm! Aptomat nhảy liên tục chứng tỏ hệ thống đang bị chạm chập tải nặng.",
-            cause: "Thiết bị điện bị chập cháy bên trong hoặc quá tải dòng điện vượt định mức CB.",
+            empathy: "⚡ Cảnh báo an toàn điện! Hệ thống đang bị chạm chập tải nặng.",
+            cause: "Thiết bị điện bị rò rỉ nước, chập mạch nội bộ hoặc quá tải dòng điện.",
             steps: [
-                "<b>Bước 1:</b> Rút phích cắm toàn bộ các thiết bị tiêu thụ điện nghi ngờ nghi vấn trong phòng.",
-                "<b>Bước 2:</b> Gạt lại Aptomat, nếu vẫn nhảy sập ngay lập tức -> Cần gọi thợ điện khảo sát rò rỉ đường dây âm tường."
+                "<b>Bước 1:</b> Rút phích cắm toàn bộ các thiết bị tiêu thụ điện nghi vấn.",
+                "<b>Bước 2:</b> Gọi thợ điện kiểm tra dò tìm dòng rò bằng đồng hồ VOM chuyên dụng nếu CB tiếp tục nhảy."
             ],
-            safety: "⚠️ <b>LƯU Ý tuyệt đối:</b> Không cố gắng cưỡng ép gạt CB liên tục gây cháy nổ phóng điện."
+            safety: "⚠️ TUYỆT ĐỐI không cưỡng ép gạt CB liên tục gây nổ thiết bị."
         },
         {
             keywords: ["khóa", "vân tay", "smartlock", "cửa điện tử"],
             issue: "Khóa thông minh không nhận vân tay / Báo lỗi PIN",
             empathy: "🔐 Trợ lý An Tín giúp bạn xử lý tình huống khẩn cấp với khóa cửa điện tử.",
-            cause: "Pin yếu dưới ngưỡng cho phép hoặc mặt kính cảm biến vân tay bị bám mồ hôi/bụi bẩn.",
+            cause: "Pin yếu dưới ngưỡng hoạt động hoặc mắt đọc vân tay bám bẩn mồ hôi.",
             steps: [
-                "<b>Bước 1:</b> Dùng khăn mềm sạch lau khô bề mặt mắt đọc vân tay.",
-                "<b>Bước 2:</b> Sử dụng nguồn sạc dự phòng cắm vào cổng kích pin khẩn cấp bên ngoài (MicroUSB/Type-C) để mở cửa và thay pin mới."
+                "<b>Bước 1:</b> Dùng khăn mềm lau sạch mặt kính cảm biến vân tay.",
+                "<b>Bước 2:</b> Dùng nguồn sạc dự phòng cấp điện khẩn cấp qua cổng ngoài để mở cửa và thay pin mới."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Luôn chuẩn bị sẵn chìa khóa cơ dự phòng để ở cốp xe hoặc nhà người thân."
+            safety: "⚠️ Luôn cất sẵn chìa khóa cơ dự phòng ở nơi an toàn bên ngoài."
         },
         {
             keywords: ["đèn", "năng lượng mặt trời", "solar", "mặt trời"],
             issue: "Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin",
-            empathy: "☀️ Đèn năng lượng mặt trời bị lỗi sạc hoặc chai pin lưu trữ dung lượng.",
-            cause: "Tấm pin quang điện bị che khuất bóng râm, bám bụi bẩn dày hoặc pin lưu trữ tích hợp bị chai sau thời gian dài.",
+            empathy: "☀️ Đèn năng lượng mặt trời bị lỗi sạc hoặc chai pin lưu trữ.",
+            cause: "Tấm pin quang điện bị che khuất, bám bụi bẩn hoặc pin tích hợp bị chai.",
             steps: [
-                "<b>Bước 1:</b> Vệ sinh mặt kính tấm pin năng lượng mặt trời sạch sẽ bằng khăn ẩm.",
-                "<b>Bước 2:</b> Kiểm tra giắc cắm chống nước nối giữa tấm pin và bóng đèn xem có bị lỏng hoặc oxy hóa chân đồng không."
+                "<b>Bước 1:</b> Vệ sinh sạch mặt kính tấm pin năng lượng mặt trời.",
+                "<b>Bước 2:</b> Kiểm tra giắc nối chống nước giữa tấm pin và bóng đèn."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Lắp đặt tấm pin ở hướng đón nắng gắt tốt nhất trong ngày."
+            safety: "⚠️ Lắp đặt tấm pin ở vị trí đón nắng trực toán tối ưu."
         },
         {
             keywords: ["smarthome", "nhà thông minh", "zigbee", "tuya", "công tắc"],
             issue: "Công tắc thông minh Zigbee / Tuya mất kết nối App",
-            empathy: "🏠 An Tín hỗ trợ đồng bộ lại hệ thống nhà thông minh của gia đình bạn.",
-            cause: "Mất kết nối sóng WiFi ở tầng phát hoặc Gateway trung tâm bị ngắt nguồn.",
+            empathy: "🏠 An Tín hỗ trợ đồng bộ lại hệ thống nhà thông minh của gia đình.",
+            cause: "Mất kết nối sóng WiFi băng tần 2.4GHz hoặc lỗi nguồn Hub trung tâm.",
             steps: [
-                "<b>Bước 1:</b> Kiểm tra bộ điều khiển trung tâm (Hub Gateway) có sáng đèn bình thường không.",
-                "<b>Bước 2:</b> Giữ nút nguồn công tắc thông minh khoảng 5-10 giây để reset và kết nối lại cấu hình App."
+                "<b>Bước 1:</b> Kiểm tra đèn trạng thái trên bộ điều khiển trung tâm Hub Gateway.",
+                "<b>Bước 2:</b> Giữ nút reset trên công tắc thông minh để kết nối lại cấu hình App."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Đảm bảo điện thoại kết nối băng tần WiFi 2.4GHz khi cài đặt thiết bị SmartHome."
+            safety: "⚠️ Đảm bảo điện thoại kết nối đúng băng tần WiFi 2.4GHz khi cài đặt."
         }
     ];
 
@@ -1005,13 +933,13 @@
         const lowerQuery = query.toLowerCase();
         let match = KNOWLEDGE_BASE.find(item => item.keywords.some(k => lowerQuery.includes(k))) || {
             issue: query,
-            empathy: "🤖 AI An Tín đã ghi nhận triệu chứng sự cố đa ngành của anh/chị.",
-            cause: "Lỗi phần cứng, nguồn điện, đường truyền tín hiệu hoặc cấu hình ngoại vi cần kỹ thuật viên kiểm tra trực tiếp.",
+            empathy: "🤖 AI An Tín đã trích xuất từ kho tri thức lớn sự cố chuyên ngành của anh/chị.",
+            cause: "Lỗi thiết bị ngoại vi, nguồn cấp điện, đứt đường truyền tín hiệu hoặc thông số cấu hình phần mềm.",
             steps: [
-                "<b>Bước 1:</b> Kiểm tra lại toàn bộ kết nối vật lý, nguồn điện và dây dẫn.",
-                "<b>Bước 2:</b> Khởi động lại thiết bị hoặc đưa về trạng thái mặc định nhà sản xuất."
+                "<b>Bước 1:</b> Kiểm tra toàn bộ kết nối vật lý, nguồn điện và dây dẫn tín hiệu.",
+                "<b>Bước 2:</b> Khởi động lại toàn bộ hệ thống hoặc khôi phục cài đặt gốc nhà sản xuất."
             ],
-            safety: "⚠️ <b>LƯU Ý:</b> Luôn ngắt nguồn điện tổng trước khi thao tác sửa chữa."
+            safety: "⚠️ <b>LƯU Ý:</b> Luôn tuân thủ nguyên tắc an toàn điện và thiết bị."
         };
 
         setTimeout(() => {
@@ -1024,7 +952,7 @@
                     <div class="cause"><b>Nguyên nhân cốt lõi:</b> ${match.cause}</div>
                 </div>
                 <div class="checklist-container">
-                    <div class="checklist-title"><i class="fa-solid fa-screwdriver-wrench"></i> CÁCH XỬ LÝ VẤN ĐÁP TUẦN HOÀN:</div>
+                    <div class="checklist-title"><i class="fa-solid fa-screwdriver-wrench"></i> CÁCH XỬ LÝ KỸ THUẬT CHUYÊN SÂU:</div>
                     <ul class="checklist-items">
                         ${match.steps.map(step => `<li>${step}</li>`).join('')}
                     </ul>
@@ -1032,24 +960,20 @@
                 <div class="alert-safety">${match.safety}</div>
             `;
 
-            // FORM ĐĂNG KÝ SỬA CHỮA TẠI CHỖ (4 TRƯỜNG: TÊN, PHONE, MAIL KHÔNG BẮT BUỘC, ĐỊA CHỈ) + NÚT ZALO SÓNG ĐỘNG
+            // FORM ĐĂNG KÝ VÀ NÚT ZALO
             aiContent += `
                 <div class="repair-booking-box">
-                    <h4><i class="fa-solid fa-calendar-check" style="color:var(--primary-light);"></i> Đăng Ký Sửa Chữa / Khảo Sát Tại Chỗ</h4>
+                    <h4><i class="fa-solid fa-calendar-check" style="color:var(--primary-light);"></i> Đăng Ký Sửa Chữa / Khảo Sát Tận Nơi</h4>
                     <div class="form-field-group">
-                        <label><i class="fa-solid fa-user"></i> Họ và tên của bạn:</label>
+                        <label><i class="fa-solid fa-user"></i> Họ và tên:</label>
                         <input type="text" id="cus_name" placeholder="VD: Anh Nam">
                     </div>
                     <div class="form-field-group">
-                        <label><i class="fa-solid fa-phone"></i> Số điện thoại liên hệ (* Bắt buộc):</label>
+                        <label><i class="fa-solid fa-phone"></i> Số điện thoại (* Bắt buộc):</label>
                         <input type="tel" id="cus_phone" placeholder="VD: 090xxxxxxx">
                     </div>
                     <div class="form-field-group">
-                        <label><i class="fa-solid fa-envelope"></i> Email nhận báo giá (Không bắt buộc):</label>
-                        <input type="email" id="cus_email" placeholder="VD: email@gmail.com">
-                    </div>
-                    <div class="form-field-group">
-                        <label><i class="fa-solid fa-location-dot"></i> Địa chỉ sửa chữa khảo sát (* Bắt buộc):</label>
+                        <label><i class="fa-solid fa-location-dot"></i> Địa chỉ khảo sát (* Bắt buộc):</label>
                         <input type="text" id="cus_address" placeholder="VD: 123 Lê Văn Việt, TP.HCM">
                     </div>
                     <button class="btn-submit-repair" onclick="submitRepairForm('${match.issue}')">
@@ -1064,9 +988,6 @@
                         </a>
                     </div>
                 </div>
-                <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary); text-align: center;">
-                    💬 <em>Bạn vẫn còn câu hỏi khác? Hãy tiếp tục gõ vào khung chat bên dưới để tiếp tục vòng vấn đáp!</em>
-                </div>
             `;
 
             chatBody.appendChild(createMessageRow(aiContent, 'ai', true));
@@ -1077,11 +998,10 @@
     function submitRepairForm(issueName) {
         const name = document.getElementById('cus_name').value.trim();
         const phone = document.getElementById('cus_phone').value.trim();
-        const email = document.getElementById('cus_email').value.trim();
         const address = document.getElementById('cus_address').value.trim();
 
         if (!phone || !address) {
-            alert('Vui lòng nhập Số điện thoại và Địa chỉ sửa chữa khảo sát để kỹ thuật viên liên hệ hỗ trợ tận nơi!');
+            alert('Vui lòng nhập Số điện thoại và Địa chỉ để kỹ thuật viên liên hệ hỗ trợ tận nơi!');
             return;
         }
 
@@ -1091,8 +1011,7 @@
             Cảm ơn <b>${name || 'Quý khách'}</b> đã đặt lịch hỗ trợ sự cố: <em>${issueName}</em>.<br>
             📍 <b>Địa chỉ:</b> ${address}<br>
             📞 <b>SĐT:</b> ${phone}<br>
-            ${email ? `📧 <b>Email:</b> ${email}<br>` : ''}
-            <br>Kỹ thuật viên An Tín sẽ liên hệ và có mặt tại công trình trong vòng <b>30 phút</b>!
+            <br>Kỹ thuật viên An Tín sẽ gọi lại và có mặt trong vòng <b>30 phút</b>!
         `;
         chatBody.appendChild(createMessageRow(successMsg, 'ai', true));
         chatBody.scrollTop = chatBody.scrollHeight;
@@ -1126,39 +1045,27 @@
         const camCount = parseInt(document.getElementById('cam_count').value) || 4;
         const days = parseInt(document.getElementById('storage_days').value) || 15;
         const resMultiplier = parseFloat(document.getElementById('resolution').value) || 4;
-        const env = document.getElementById('environment').value;
 
-        const gbPerDayPerCam = resMultiplier * 6.5; 
-        const totalGB = camCount * days * gbPerDayPerCam;
+        const totalGB = camCount * days * (resMultiplier * 6.5);
         const totalTB = (totalGB / 1024).toFixed(1);
 
         let recommendedHDD = "1 TB";
         if (totalTB > 1 && totalTB <= 2) recommendedHDD = "2 TB";
         else if (totalTB > 2 && totalTB <= 4) recommendedHDD = "4 TB";
-        else if (totalTB > 4 && totalTB <= 6) recommendedHDD = "6 TB";
-        else if (totalTB > 6) recommendedHDD = "8 TB - 10 TB (Chuyên dụng Server)";
+        else if (totalTB > 4) recommendedHDD = "6 TB - 8 TB";
 
         const bandwidth = (camCount * resMultiplier * 0.75).toFixed(1);
 
-        document.getElementById('res-hdd').textContent = `${recommendedHDD} (Khoảng ${totalTB} TB)`;
+        document.getElementById('res-hdd').textContent = `${recommendedHDD} (~${totalTB} TB)`;
         document.getElementById('res-bandwidth').textContent = `${bandwidth} Mbps`;
 
-        let advices = [];
-        if (env === 'outdoor') {
-            advices.push("Khu vực ngoài trời nên chọn Camera thân trụ chống nước IP67 và công nghệ chống ngược sáng thực WDR.");
-        } else if (env === 'factory') {
-            advices.push("Nhà xưởng lớn ưu tiên Camera hồng ngoại tầm xa trên 50m và Switch PoE chuyên dụng.");
-        } else {
-            advices.push("Môi trường trong nhà phù hợp với Camera Dome (bán cầu) thẩm mỹ, góc nhìn rộng.");
-        }
-        advices.push("Nên sử dụng ổ cứng chuyên dụng giám sát (WD Purple / Seagate SkyHawk) hoạt động 24/7.");
-
-        const adviceListEl = document.getElementById('res-advices');
-        adviceListEl.innerHTML = advices.map(adv => `<li>${adv}</li>`).join('');
-
-        const resultBox = document.getElementById('ai-result');
-        resultBox.style.display = 'block';
-        resultBox.scrollIntoView({ behavior: 'smooth' });
+        let advices = [
+            "Ưu tiên sử dụng ổ cứng chuyên dụng giám sát (WD Purple / Seagate SkyHawk) hoạt động 24/7.",
+            "Bấm chuẩn cáp mạng T568B và sử dụng nguồn tổng hoặc nguồn rời có mạch lọc nhiễu."
+        ];
+        document.getElementById('res-advices').innerHTML = advices.map(adv => `<li>${adv}</li>`).join('');
+        document.getElementById('ai-result').style.display = 'block';
+        document.getElementById('ai-result').scrollIntoView({ behavior: 'smooth' });
     }
 </script>
 </body>
