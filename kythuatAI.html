@@ -874,30 +874,6 @@
         handleSend();
     }
 
-    function createMessageRow(text, sender) {
-        const row = document.createElement('div');
-        row.className = `message-row ${sender}`;
-        const bubble = document.createElement('div');
-        bubble.className = 'msg-bubble';
-        if (sender === 'user') {
-            bubble.textContent = text;
-        } else {
-            bubble.innerHTML = text;
-        }
-        row.appendChild(bubble);
-        return row;
-    }
-
-    function createTypingIndicator() {
-        const row = document.createElement('div');
-        row.className = 'message-row ai';
-        const indicator = document.createElement('div');
-        indicator.className = 'typing-indicator';
-        indicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-        row.appendChild(indicator);
-        return row;
-    }
-
     function handleSend() {
         const inputEl = document.getElementById('userInput');
         const query = inputEl.value.trim();
@@ -947,145 +923,203 @@
                             </a>
                         </div>
                         <button class="btn-submit-survey" style="margin-top:10px;" onclick="openSurveyFormModal('${match.issue}')">
-                            <i class="fa-solid fa-calendar-check"></i> ĐĂNG KÝ KHẢO SÁT / SỬA CHỮA TẬN NƠI
+                            <i class="fa-solid fa-clipboard-user"></i> ĐĂNG KÝ GỬI THÔNG TIN KHẢO SÁT / SỬA CHỮA
                         </button>
                     </div>
                 `;
             } else {
                 aiContent = `
-                    <div class="empathy-header">🤝 An Tín đã ghi nhận yêu cầu của anh/chị.</div>
-                    <div class="msg-text" style="font-size:13px; margin-bottom:8px;">Với vấn đề này, kỹ thuật viên chuyên sâu của An Tín sẽ hỗ trợ trực tiếp để đảm bảo xử lý triệt để cho anh/chị.</div>
+                    <div class="empathy-header">🤖 AI An Tín đã ghi nhận vấn đề của anh/chị.</div>
+                    <div class="msg-bubble" style="background:#fff3e0; border:1px solid #ffe0b2; margin-top:6px; font-size:12.5px;">
+                        <i class="fa-solid fa-circle-info" style="color:#e65100;"></i> Trường hợp này cần kỹ thuật viên chuyên sâu kiểm tra trực tiếp. Vui lòng kết nối Zalo hoặc điền phiếu khảo sát bên dưới để An Tín hỗ trợ ngay lập tức!
+                    </div>
                     <div class="action-booking">
-                        <p><i class="fa-solid fa-headset"></i> Kết nối ngay với Kỹ thuật trưởng An Tín:</p>
                         <div class="zalo-action-box">
                             <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-personal">
-                                <i class="fa-solid fa-comment-dots"></i> Zalo Kỹ Thuật: 0914060339
+                                <i class="fa-solid fa-comment-dots"></i> Kết bạn Zalo cá nhân: 0914060339
                             </a>
                             <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-zalo-oa">
-                                <i class="fa-solid fa-store"></i> Zalo OA An Tín (Hỗ trợ 24/7)
+                                <i class="fa-solid fa-store"></i> Quan tâm & Chat Zalo OA An Tín
                             </a>
                         </div>
-                        <button class="btn-submit-survey" style="margin-top:10px;" onclick="openSurveyFormModal('Yêu cầu hỗ trợ: ${query}')">
-                            <i class="fa-solid fa-calendar-check"></i> ĐĂNG KÝ KHẢO SÁT / HỖ TRỢ TẬN NƠI
+                        <button class="btn-submit-survey" style="margin-top:10px;" onclick="openSurveyFormModal('${query}')">
+                            <i class="fa-solid fa-clipboard-user"></i> ĐĂNG KÝ GỬI THÔNG TIN KHẢO SÁT / SỬA CHỮA
                         </button>
                     </div>
                 `;
             }
 
-            aiContent += `
-                <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
-                    <button class="chip-btn" onclick="sendQuickAsk('Camera báo Offline')">🔴 Camera Offline</button>
-                    <button class="chip-btn" onclick="sendQuickAsk('Không xem lại được video')">📼 Lỗi xem lại</button>
-                    <button class="chip-btn" onclick="sendQuickAsk('Mất hình ban đêm')">🌙 Mất hình ban đêm</button>
-                    <button class="chip-btn" onclick="sendQuickAsk('Hình ảnh bị nhiễu sọc')">⚡ Nhiễu sọc</button>
-                </div>
-            `;
-            chatBody.appendChild(createMessageRow(aiContent, 'ai'));
+            chatBody.appendChild(createMessageRow(aiContent, 'ai', true));
             chatBody.scrollTop = chatBody.scrollHeight;
         }, 800);
     }
 
-    function openSurveyFormModal(issueName) {
+    // HÀM HIỂN THỊ FORM YÊU CẦU NHẬP THÔNG TIN (KHẮC PHỤC LỖI MAIL TRỐNG)
+    function openSurveyFormModal(serviceContext) {
         const chatBody = document.getElementById('chatBody');
         const formHtml = `
-            <div class="survey-form-card">
-                <h4><i class="fa-solid fa-clipboard-question" style="color:var(--primary-light);"></i> Đăng ký Khảo sát & Sửa chữa:</h4>
-                <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:8px;">Vấn đề: <b>${issueName}</b></p>
+            <div class="survey-form-card" id="activeSurveyForm">
+                <h4><i class="fa-solid fa-file-invoice" style="color:var(--primary-light);"></i> PHIẾU ĐĂNG KÝ KHẢO SÁT / SỬA CHỮA</h4>
                 <div class="survey-field">
-                    <label>Họ và tên:</label>
-                    <input type="text" id="surveyName" class="survey-input" placeholder="Nhập họ tên của anh/chị">
+                    <label>Họ và tên của bạn (*):</label>
+                    <input type="text" id="cus_name" class="survey-input" placeholder="Nhập họ và tên đầy đủ">
                 </div>
                 <div class="survey-field">
-                    <label>Số điện thoại liên hệ:</label>
-                    <input type="tel" id="surveyPhone" class="survey-input" placeholder="Nhập số điện thoại (Zalo)">
+                    <label>Số điện thoại liên hệ (*):</label>
+                    <input type="tel" id="cus_phone" class="survey-input" placeholder="Nhập số điện thoại (Zalo)">
                 </div>
                 <div class="survey-field">
-                    <label>Địa chỉ công trình / nhà riêng:</label>
-                    <input type="text" id="surveyAddress" class="survey-input" placeholder="Nhập địa chỉ tại khu vực của anh/chị">
+                    <label>Địa chỉ email nhận thông tin (*):</label>
+                    <input type="email" id="cus_email" class="survey-input" placeholder="Nhập địa chỉ email của bạn">
                 </div>
-                <button class="btn-submit-survey" onclick="submitSurveyData('${issueName}')">
-                    <i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU ĐẾN KỸ THUẬT AN TÍN
+                <div class="survey-field">
+                    <label>Địa chỉ khảo sát / sửa chữa cụ thể (*):</label>
+                    <input type="text" id="cus_address" class="survey-input" placeholder="Số nhà, tên đường, quận/huyện...">
+                </div>
+                <input type="hidden" id="cus_context" value="${serviceContext}">
+                <button class="btn-submit-survey" onclick="submitSurveyData()">
+                    <i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU NGAY
                 </button>
             </div>
         `;
-        chatBody.appendChild(createMessageRow(formHtml, 'ai'));
+        chatBody.appendChild(createMessageRow(formHtml, 'ai', true));
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    function submitSurveyData(issueName) {
-        const name = document.getElementById('surveyName').value.trim();
-        const phone = document.getElementById('surveyPhone').value.trim();
-        const address = document.getElementById('surveyAddress').value.trim();
+    // HÀM XỬ LÝ KIỂM TRA DỮ LIỆU ĐỂ TRÁNH MAIL TRỐNG
+    function submitSurveyData() {
+        const name = document.getElementById('cus_name').value.trim();
+        const phone = document.getElementById('cus_phone').value.trim();
+        const email = document.getElementById('cus_email').value.trim();
+        const address = document.getElementById('cus_address').value.trim();
+        const context = document.getElementById('cus_context').value;
 
-        if (!name || !phone) {
-            alert('Vui lòng nhập đầy đủ Họ tên và Số điện thoại để An Tín tiện liên hệ!');
+        // KIỂM TRA RÀNG BUỘC (VALIDATION)
+        if (!name || !phone || !email || !address) {
+            alert("⚠️ Vui lòng điền đầy đủ thông tin: Họ tên, Số điện thoại, Email và Địa chỉ để An Tín hỗ trợ chính xác nhất!");
+            return;
+        }
+
+        // Kiểm tra định dạng email cơ bản
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("⚠️ Địa chỉ email không hợp lệ. Vui lòng kiểm tra lại!");
+            document.getElementById('cus_email').focus();
             return;
         }
 
         const chatBody = document.getElementById('chatBody');
-        const successHtml = `
-            <div style="background:var(--accent-success-bg); border:1px solid #c8e6c9; border-radius:var(--radius-sm); padding:12px; color:var(--accent-success);">
-                <div style="font-weight:700; font-size:13px; margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> ĐĂNG KÝ THÀNH CÔNG!</div>
-                <div style="font-size:12px; line-height:1.4;">
-                    Cảm ơn anh/chị <b>${name}</b> đã đăng ký.<br>
-                    Kỹ thuật viên An Tín sẽ liên hệ số điện thoại <b>${phone}</b> và chuẩn bị thiết bị qua khảo sát tại <b>${address || 'đã cung cấp'}</b> trong thời gian sớm nhất!
-                </div>
+
+        // Ẩn form hoặc thông báo thành công trực tiếp vào khung chat
+        const successMsg = `
+            ✅ <b>ĐÃ GỬI THÔNG TIN THÀNH CÔNG!</b><br>
+            - <b>Họ tên:</b> ${name}<br>
+            - <b>Điện thoại:</b> ${phone}<br>
+            - <b>Email:</b> ${email}<br>
+            - <b>Địa chỉ:</b> ${address}<br>
+            - <b>Yêu cầu:</b> ${context}<br><br>
+            🎉 Kỹ thuật viên An Tín đã nhận thông tin và sẽ liên hệ lại với anh/chị trong vòng 15 phút tới! Hoặc anh/chị có thể chat trực tiếp qua Zalo OA bên dưới để được phục vụ nhanh hơn.
+            <div class="zalo-action-box" style="margin-top:10px;">
+                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-personal">
+                    <i class="fa-solid fa-comment-dots"></i> Zalo cá nhân: 0914060339
+                </a>
+                <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-zalo-oa">
+                    <i class="fa-solid fa-store"></i> Chat Zalo OA An Tín
+                </a>
             </div>
         `;
-        chatBody.appendChild(createMessageRow(successHtml, 'ai'));
+        
+        chatBody.appendChild(createMessageRow(successMsg, 'ai', true));
+        
+        // Xóa form cũ đi để gọn giao diện chat
+        const formCard = document.getElementById('activeSurveyForm');
+        if (formCard) formCard.parentElement.remove();
+
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
+    function createMessageRow(text, sender, isHtml = false) {
+        const row = document.createElement('div');
+        row.className = `message-row ${sender}`;
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'msg-bubble';
+        
+        if (isHtml) {
+            bubble.innerHTML = text;
+        } else {
+            bubble.textContent = text;
+        }
+        
+        row.appendChild(bubble);
+        return row;
+    }
+
+    function createTypingIndicator() {
+        const row = document.createElement('div');
+        row.className = 'message-row ai';
+        
+        const indicator = document.createElement('div');
+        indicator.className = 'typing-indicator';
+        indicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+        
+        row.appendChild(indicator);
+        return row;
+    }
+
     function calculateAI() {
-        const camCount = parseInt(document.getElementById('cam_count').value) || 4;
+        const count = parseInt(document.getElementById('cam_count').value) || 4;
         const days = parseInt(document.getElementById('storage_days').value) || 15;
-        const resValue = parseInt(document.getElementById('resolution').value) || 4;
+        const res = parseInt(document.getElementById('resolution').value) || 4;
         const env = document.getElementById('environment').value;
 
-        // Bitrate estimation per camera in Mbps based on resolution & H.265+
-        let bitratePerCam = 2.0; // 4M (2K)
-        if (resValue === 2) bitratePerCam = 1.2; // Full HD
-        if (resValue === 8) bitratePerCam = 4.5; // 4K
+        let gbPerDayPerCam = 15;
+        if (res === 4) gbPerDayPerCam = 25;
+        if (res === 8) gbPerDayPerCam = 50;
 
-        // Total bandwidth in Mbps
-        const totalBandwidth = (camCount * bitratePerCam).toFixed(1);
-
-        // Storage calculation: (Bitrate in Mbps * 3600 * 24 * days * camCount) / (8 * 1024 * 1024 * 1024) in TB
-        // Formula simplified: (Bitrate_Mbps * camCount * days * 10.8 GB per day per Mbps approx) / 1000
-        let totalGB = (bitratePerCam * camCount * 10.8 * days);
-        let hddTB = (totalGB / 1000).toFixed(1);
-
-        // Safety margin for HDD (add 20% overhead)
-        let recommendedHDD = Math.ceil(parseFloat(hddTB) * 1.2);
-        if (recommendedHDD < 1) recommendedHDD = 1;
-
-        // Standard HDD sizes available: 1TB, 2TB, 4TB, 6TB, 8TB, 10TB, 12TB
-        const standardSizes = [1, 2, 4, 6, 8, 10, 12, 16, 20];
-        let finalHDD = standardSizes.find(s => s >= recommendedHDD) || standardSizes[standardSizes.length - 1];
-
-        // Advices list based on environment and specs
-        let advices = [];
-        advices.push(`Sử dụng ổ cứng chuyên dụng CCTV (WD Purple / Seagate SkyHawk) để ghi hình 24/7 ổn định.`);
-        advices.push(`Hệ thống ${camCount} mắt camera ${resValue === 2 ? 'Full HD' : resValue === 4 ? '2K Quad HD' : '4K Ultra HD'} đề xuất bật chuẩn nén <b>H.265+</b> giúp tiết kiệm đến 50% dung lượng lưu trữ.`);
+        let totalTB = (gbPerDayPerCam * count * days) / 1024;
         
-        if (env === 'outdoor') {
-            advices.push(`Môi trường ngoài trời: Nên ưu tiên chọn camera thân trụ vỏ kim loại chuẩn chống nước IP67 và có hồng ngoại ban đêm tầm xa từ 30m - 50m.`);
-        } else if (env === 'factory') {
-            advices.push(`Khu vực nhà xưởng rộng: Nên kết hợp Switch PoE chuyên dụng Gigabit và cáp mạng lõi đồng nguyên chất chống nhiễu tốt.`);
-        } else {
-            advices.push(`Khu vực trong nhà: Có thể dùng camera dome ốp trần góc rộng hoặc camera xoay PTZ 360 độ để tối ưu quan sát.`);
+        let recommendedHDD = 1;
+        const standardSizes = [1, 2, 4, 6, 8, 10, 12, 16, 20];
+        for (let size of standardSizes) {
+            if (totalTB <= size) {
+                recommendedHDD = size;
+                break;
+            }
+            recommendedHDD = size + 4;
         }
 
-        document.getElementById('res-hdd').textContent = `${finalHDD} TB (SATA 3)`;
-        document.getElementById('res-bandwidth').textContent = `${totalBandwidth} Mbps`;
+        let bandwidth = (count * (res === 8 ? 6 : (res === 4 ? 4 : 2.5))).toFixed(1);
 
-        const adviceListEl = document.getElementById('res-advices');
-        adviceListEl.innerHTML = advices.map(adv => `<li>${adv}</li>`).join('');
+        document.getElementById('res-hdd').innerText = recommendedHDD + " TB (Chuyên dụng CCTV)";
+        document.getElementById('res-bandwidth').innerText = bandwidth + " Mbps";
 
-        const resultBox = document.getElementById('ai-result');
-        resultBox.style.display = 'block';
-        resultBox.scrollIntoView({ behavior: 'smooth' });
+        const advicesList = document.getElementById('res-advices');
+        advicesList.innerHTML = '';
+
+        let advices = [
+            `Sử dụng ổ cứng chuyên dụng ghi hình 24/7 không bị mất khung hình.`,
+            `Hệ thống ${count} mắt camera ưu tiên dùng Switch mạng hoặc Đầu ghi hỗ trợ băng thông từ ${Math.round(bandwidth * 1.5)}Mbps trở lên.`
+        ];
+
+        if (env === 'outdoor') {
+            advices.push(`Môi trường ngoài trời: Nên dùng Camera thân trụ chuẩn chống nước IP67 và WDR chống ngược sáng.`);
+        } else if (env === 'factory') {
+            advices.push(`Khu vực nhà xưởng: Kết hợp cáp quang hoặc cáp chống nhiễu chuyên dụng.`);
+        } else {
+            advices.push(`Khu vực trong nhà: Chọn Camera Dome (ốp trần) góc rộng thẩm mỹ.`);
+        }
+
+        advices.forEach(adv => {
+            const li = document.createElement('li');
+            li.innerHTML = adv;
+            advicesList.appendChild(li);
+        });
+
+        document.getElementById('ai-result').style.display = 'block';
+        document.getElementById('ai-result').scrollIntoView({ behavior: 'smooth' });
     }
 </script>
+
 </body>
 </html>
