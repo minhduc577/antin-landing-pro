@@ -244,6 +244,31 @@
             box-shadow: 0 0 0 3px rgba(0, 104, 255, 0.15);
         }
 
+        /* HIỆU ỨNG SÓNG ĐỘNG (PULSE RIPPLE EFFECT) KÍCH THÍCH HÀNH ĐỘNG */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 104, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 104, 255, 0);
+            }
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+            }
+        }
+
         .z-btn {
             background: linear-gradient(135deg, var(--zalo-color), var(--zalo-hover));
             color: #ffffff;
@@ -260,12 +285,20 @@
             gap: 8px;
             box-shadow: 0 4px 12px rgba(0, 104, 255, 0.25);
             transition: all 0.2s;
+            position: relative;
+            animation: pulse-glow 2s infinite;
         }
 
         .z-btn:hover {
             opacity: 0.95;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(0, 104, 255, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 104, 255, 0.45);
+        }
+
+        .z-btn.btn-green {
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+            animation: pulse-green 2s infinite;
         }
 
         /* BROADCAST TEMPLATE PREVIEW */
@@ -293,6 +326,11 @@
             padding: 10px;
             border-radius: var(--radius-sm);
             text-align: center;
+            transition: transform 0.2s;
+        }
+        .stat-box:hover {
+            transform: translateY(-2px);
+            border-color: var(--zalo-color);
         }
 
         .stat-box span { display: block; }
@@ -314,10 +352,13 @@
             background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
-        .customer-item:hover { background: #f8fafc; }
+        .customer-item:hover { 
+            background: #f8fafc; 
+            border-color: var(--zalo-color);
+        }
 
         .cus-info h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); }
         .cus-info p { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
@@ -339,6 +380,7 @@
         .btn-action-sm:hover {
             background: var(--zalo-color);
             color: #ffffff;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -358,7 +400,6 @@
             </div>
         </div>
         <div>
-            <!-- Nút liên kết theo yêu cầu của bạn -->
             <a href="index.html" class="btn-home">
                 <i class="fa-solid fa-house"></i> Trang chủ
             </a>
@@ -385,15 +426,15 @@
     <div id="tab-dashboard" class="zalo-panel active">
         <div class="broadcast-stats">
             <div class="stat-box">
-                <span class="lbl">Người Quan Tâm</span>
+                <span class="lbl"><i class="fa-solid fa-users" style="color:var(--zalo-color)"></i> Quan Tâm</span>
                 <span class="num">12,450</span>
             </div>
             <div class="stat-box">
-                <span class="lbl">Tương Tác Tháng</span>
+                <span class="lbl"><i class="fa-solid fa-comments" style="color:#10b981"></i> Tương Tác</span>
                 <span class="num">3,820</span>
             </div>
             <div class="stat-box">
-                <span class="lbl">Đơn Chốt Qua OA</span>
+                <span class="lbl"><i class="fa-solid fa-cart-shopping" style="color:#f59e0b"></i> Đơn Chốt</span>
                 <span class="num">245</span>
             </div>
         </div>
@@ -404,8 +445,8 @@
                 <button class="z-btn" style="padding: 10px; font-size: 12px;" onclick="switchZaloTab('tab-broadcast', document.querySelectorAll('.zalo-tab-btn')[1])">
                     <i class="fa-solid fa-paper-plane"></i> Gửi Tin Hàng Loạt
                 </button>
-                <button class="z-btn" style="padding: 10px; font-size: 12px; background: linear-gradient(135deg, #2e7d32, #4caf50);" onclick="syncZaloCRM()">
-                    <i class="fa-solid fa-sync"></i> Đồng Bộ Zalo CRM
+                <button class="z-btn btn-green" style="padding: 10px; font-size: 12px;" onclick="syncZaloCRM()">
+                    <i class="fa-solid fa-sync fa-spin"></i> Đồng Bộ CRM
                 </button>
             </div>
         </div>
@@ -415,7 +456,7 @@
             <div style="font-size: 12px; color: var(--text-secondary); display:flex; flex-direction:column; gap:8px; margin-top: 8px;">
                 <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
                     <span><i class="fa-solid fa-check-circle" style="color:#10b981;"></i> Đã gửi Broadcast ưu đãi tháng</span>
-                    <span style="font-size:11px; color:#9ca3af;">Hôm nay</span>
+                    <span style="font-size:11px; color:#9ca3af;"><i class="fa-regular fa-clock"></i> Hôm nay</span>
                 </div>
             </div>
         </div>
@@ -427,31 +468,31 @@
             <h3><i class="fa-solid fa-bullhorn" style="color: var(--zalo-color);"></i> Soạn Tin Nhắn & Kích Hoạt Make.com</h3>
             
             <div class="z-form-group">
-                <label>Đối tượng nhận tin:</label>
+                <label><i class="fa-solid fa-filter"></i> Đối tượng nhận tin:</label>
                 <select id="bc_target" class="z-control">
-                    <option value="all">Tất cả người quan tâm Zalo OA (12,450 người)</option>
-                    <option value="buyers">Khách hàng đã lắp đặt camera (3,200 người)</option>
-                    <option value="warranty">Khách hàng sắp hết hạn bảo hành (415 người)</option>
+                    <option value="all">👥 Tất cả người quan tâm Zalo OA (12,450 người)</option>
+                    <option value="buyers">📷 Khách hàng đã lắp đặt camera (3,200 người)</option>
+                    <option value="warranty">⏳ Khách hàng sắp hết hạn bảo hành (415 người)</option>
                 </select>
             </div>
 
             <div class="z-form-group">
-                <label>Tiêu đề thông điệp:</label>
+                <label><i class="fa-solid fa-heading"></i> Tiêu đề thông điệp:</label>
                 <input type="text" id="bc_title" class="z-control" value="🔥 ƯU ĐÃI ĐẶC BIỆT: BẢO DƯỠNG CAMERA MIỄN PHÍ TỪ AN TÍN">
             </div>
 
             <div class="z-form-group">
-                <label>Nội dung chi tiết:</label>
+                <label><i class="fa-solid fa-pen-nib"></i> Nội dung chi tiết:</label>
                 <textarea id="bc_content" class="z-control" rows="4" style="resize:none;">Kính gửi Quý khách hàng, Nhân dịp tri ân khách hàng An Tín, hệ thống gửi tặng voucher kiểm tra và vệ sinh hệ thống camera miễn phí tận nơi.</textarea>
             </div>
 
             <button onclick="sendBroadcastViaWebhook()" class="z-btn">
-                <i class="fa-solid fa-paper-plane"></i> GỬI QUA MAKE.COM WEBHOOK
+                <i class="fa-solid fa-rocket"></i> GỬI QUA MAKE.COM WEBHOOK <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
 
         <div class="z-card">
-            <h3><i class="fa-solid fa-eye"></i> Xem trước hiển thị trên Zalo App</h3>
+            <h3><i class="fa-solid fa-eye" style="color: var(--zalo-color);"></i> Xem trước hiển thị trên Zalo App</h3>
             <div class="preview-box" id="previewBoxContent">
                 <b>🔥 ƯU ĐÃI ĐẶC BIỆT: BẢO DƯỠNG CAMERA MIỄN PHÍ TỪ AN TÍN</b><br><br>
                 Kính gửi Quý khách hàng, Nhân dịp tri ân khách hàng An Tín, hệ thống gửi tặng voucher kiểm tra và vệ sinh hệ thống camera miễn phí tận nơi.
@@ -466,15 +507,15 @@
             <div class="customer-list">
                 <div class="customer-item">
                     <div class="cus-info">
-                        <h4>Nguyễn Văn A</h4>
-                        <p>SĐT: 0903***789 • Quan tâm: Lắp 4 camera 2K</p>
+                        <h4><i class="fa-solid fa-user-check" style="color:var(--zalo-color)"></i> Nguyễn Văn A</h4>
+                        <p><i class="fa-solid fa-phone"></i> SĐT: 0903***789 • Quan tâm: Lắp 4 camera 2K</p>
                     </div>
                     <button class="btn-action-sm" onclick="openChatZalo('0903***789')"><i class="fa-solid fa-comment-dots"></i> Nhắn Zalo</button>
                 </div>
                 <div class="customer-item">
                     <div class="cus-info">
-                        <h4>Trần Thị B</h4>
-                        <p>SĐT: 0918***123 • Quan tâm: Lỗi camera Offline</p>
+                        <h4><i class="fa-solid fa-user-check" style="color:var(--zalo-color)"></i> Trần Thị B</h4>
+                        <p><i class="fa-solid fa-phone"></i> SĐT: 0918***123 • Quan tâm: Lỗi camera Offline</p>
                     </div>
                     <button class="btn-action-sm" onclick="openChatZalo('0918***123')"><i class="fa-solid fa-comment-dots"></i> Nhắn Zalo</button>
                 </div>
@@ -488,17 +529,17 @@
             <h3><i class="fa-solid fa-key" style="color: var(--zalo-color);"></i> Cấu Hình Webhook Make.com</h3>
             
             <div class="z-form-group">
-                <label>Webhook URL hiện tại:</label>
+                <label><i class="fa-solid fa-link"></i> Webhook URL hiện tại:</label>
                 <input type="text" id="webhook_url_input" class="z-control" value="https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc">
             </div>
 
             <div class="z-form-group">
-                <label>Trạng thái kết nối:</label>
+                <label><i class="fa-solid fa-shield-halved"></i> Trạng thái kết nối:</label>
                 <input type="text" class="z-control" value="🟢 Đã kết nối tự động hóa Make.com" readonly style="color: #2e7d32; font-weight:600;">
             </div>
 
             <button onclick="alert('Đã lưu thiết lập thành công!')" class="z-btn">
-                <i class="fa-solid fa-save"></i> LƯU THAY ĐỔI
+                <i class="fa-solid fa-floppy-disk"></i> LƯU THAY ĐỔI
             </button>
         </div>
     </div>
@@ -519,11 +560,11 @@
 
     function updatePreview() {
         const title = document.getElementById('bc_title').value;
-        const content = document.getElementById('bc_content').value.replace(/\\n/g, '<br>');
+        const content = document.getElementById('bc_content').value.replace(/\n/g, '<br>');
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
-    // Tích hợp gửi dữ liệu trực tiếp qua Make.com Webhook
+    // Tích hợp gửi Broadcast trực tiếp qua Make.com Webhook
     async function sendBroadcastViaWebhook() {
         const target = document.getElementById('bc_target').value;
         const title = document.getElementById('bc_title').value;
@@ -567,8 +608,35 @@
         }
     }
 
-    function syncZaloCRM() {
-        alert('🔄 Đã đồng bộ thành công dữ liệu Khách hàng từ Zalo OA về hệ thống CRM An Tín!');
+    // Tích hợp đồng bộ CRM qua Make.com Webhook
+    async function syncZaloCRM() {
+        const webhookUrl = document.getElementById('webhook_url_input').value;
+
+        const payload = {
+            action: "sync_crm",
+            source: "Zalo OA Manager - An Tín",
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                alert('🔄 [Thành công] Đã kích hoạt lệnh đồng bộ dữ liệu Khách hàng từ Zalo OA về CRM qua Make.com!');
+            } else {
+                alert('⚠️ Máy chủ Make.com phản hồi lỗi trạng thái: ' + response.status);
+            }
+        } catch (error) {
+            console.error('Lỗi kết nối Webhook:', error);
+            alert('❌ Không thể kết nối tới Webhook Make.com.');
+        }
     }
 
     function openChatZalo(phone) {
