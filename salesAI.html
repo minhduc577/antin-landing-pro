@@ -96,6 +96,7 @@
         <p>✨ Tùy chỉnh hệ thống đầu ghi, số lượng camera & ổ cứng theo thực tế 🔥</p>
     </div>
 
+    <!-- Khung nhập thông tin khách hàng trực tiếp, lưu tự động tránh lỗi thiếu sót -->
     <div class="customer-quick-box">
         <div class="customer-quick-title">👤 THÔNG TIN KHÁCH HÀNG (BẮT BUỘC ĐỂ XUẤT PHIẾU & GỬI MAIL) 🔥</div>
         <div class="customer-inputs">
@@ -106,10 +107,12 @@
         </div>
     </div>
 
+    <!-- Danh mục Matrix AI chọn số lượng & Tùy chọn Combo -->
     <div class="matrix-box" id="matrix-list">
         <!-- Render tự động qua JS -->
     </div>
 
+    <!-- Bảng tổng kết tài chính & Thuế VAT 8% -->
     <div class="summary-box">
         <div class="summary-row">
             <span>📦 Tổng tiền thiết bị:</span>
@@ -129,18 +132,21 @@
         </div>
     </div>
 
+    <!-- Nút hoàn thành, dòng chữ sóng động & điều hướng -->
     <div class="btn-group">
         <button id="btnXacNhan" class="btn-complete" onclick="processOrderAndSendEmail()">
             🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔ ✨
         </button>
         
+        <!-- Dòng chữ chèn icon sóng động theo yêu cầu -->
         <div class="instruction-note">
             🌊📡 Nếu Quý Khách Không Chọn Cấu Hình Khác Thì Bấm Nút Hoàn Thành Phía Giưới Để Xác Nhận Hoàn Tất! ✨🚀
         </div>
 
-        <button id="btnXacNhanBottom" class="btn-finish-direct" onclick="processOrderAndSendEmail()">
-            🎯 HOÀN THÀNH ➔ 🌟
-        </button>
+        <!-- Nút HOÀN THÀNH chuyển sang trang phụ thankyou.html -->
+        <a href="thankyou.html" class="btn-finish-direct" onclick="sessionStorage.clear()">
+            🎯 HOÀN THÀNH & ĐÓNG ➔ 🌟
+        </a>
     </div>
 </div>
 
@@ -210,6 +216,7 @@
         { id: 'electric', name: '⚡ Vật tư Điện dân dụng & Phụ kiện nguồn', price: 800000, isCombo: false }
     ];
 
+    // Khôi phục hoặc khởi tạo thông tin khách hàng từ sessionStorage
     function loadCustomerInfo() {
         document.getElementById('cus_name').value = sessionStorage.getItem('ai_name') || '';
         document.getElementById('cus_phone').value = sessionStorage.getItem('ai_phone') || '';
@@ -362,11 +369,11 @@
         const vatValue = subTotalValue * 0.08;
         const finalGrandTotal = subTotalValue + vatValue;
 
-        const btnTop = document.getElementById('btnXacNhan');
-        const btnBottom = document.getElementById('btnXacNhanBottom');
-        if (btnTop) { btnTop.innerText = "⏳ Đang lập phiếu Excel chuyên nghiệp & Gửi báo cáo... 🔄"; btnTop.disabled = true; }
-        if (btnBottom) { btnBottom.innerText = "⏳ Đang xử lý hệ thống... 🔄"; btnBottom.disabled = true; }
+        const btn = document.getElementById('btnXacNhan');
+        btn.innerText = "⏳ Đang lập phiếu Excel chuyên nghiệp & Gửi báo cáo... 🔄";
+        btn.disabled = true;
 
+        // 1. XUẤT FILE EXCEL
         let excelRows = [
             ["CÔNG TY TNHH GIẢI PHÁP CÔNG NGHỆ AN TÍN"],
             ["PHIẾU BÁN HÀNG & KHẢO SÁT GIẢI PHÁP TỰ ĐỘNG"],
@@ -405,6 +412,7 @@
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
+        // 2. TẠO BẢNG HTML GỬI QUA EMAILJS
         let htmlTableRows = '';
         orderDetails.forEach((item, index) => {
             htmlTableRows += `
@@ -428,7 +436,7 @@
             vat_total: vatValue.toLocaleString('vi-VN') + ' đ',
             grand_total: finalGrandTotal.toLocaleString('vi-VN') + ' đ',
             html_table_rows: htmlTableRows,
-            message: "Hệ thống báo giá tự động từ Sales AI An Tín."
+            message: `...`
         };
 
         if (typeof emailjs !== 'undefined') {
