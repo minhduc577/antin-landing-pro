@@ -86,7 +86,6 @@
 </div>
 
 <script>
-    // Danh mục sản phẩm: Đầu ghi 1 bộ + Số lượng camera tùy chọn + Ổ cứng tùy chọn
     const products = [
         { id: 'wifi_cam', name: '📹 Camera Wi-Fi không dây độc lập (P2P/Xoay 360)', price: 1200000, isCombo: false },
         { 
@@ -199,7 +198,6 @@
 
     function calculateTotal() {
         let subTotal = 0;
-
         document.querySelectorAll('.matrix-qty').forEach(input => {
             const qty = parseInt(input.value) || 0;
             const pId = input.getAttribute('data-id');
@@ -209,26 +207,21 @@
                 if (product.isCombo) {
                     const camQtyInput = document.getElementById(`cam_qty_${pId}`);
                     const camQty = camQtyInput ? (parseInt(camQtyInput.value) || 0) : 0;
-                    
                     const selectEl = document.getElementById(`hdd_${pId}`);
                     let hddAddPrice = 0;
                     if (selectEl) {
                         const selectedIdx = parseInt(selectEl.value);
                         hddAddPrice = product.hddOptions[selectedIdx].addPrice;
                     }
-
-                    const comboTotal = (qty * product.basePrice) + (camQty * product.camUnitPrice) + hddAddPrice;
-                    subTotal += comboTotal;
+                    subTotal += (qty * product.basePrice) + (camQty * product.camUnitPrice) + hddAddPrice;
                 } else {
                     subTotal += qty * product.price;
                 }
             }
         });
 
-        const laborAndMaterialsCost = 0; 
-        const rawSum = subTotal + laborAndMaterialsCost;
-        const vatAmount = rawSum * 0.08;
-        const grandTotal = rawSum + vatAmount;
+        const vatAmount = subTotal * 0.08;
+        const grandTotal = subTotal + vatAmount;
 
         document.getElementById('sub-total').innerText = subTotal.toLocaleString('vi-VN') + ' đ';
         document.getElementById('vat-total').innerText = vatAmount.toLocaleString('vi-VN') + ' đ';
@@ -256,7 +249,6 @@
                     if (product.isCombo) {
                         const camQtyInput = document.getElementById(`cam_qty_${pId}`);
                         const camQty = camQtyInput ? (parseInt(camQtyInput.value) || 0) : 0;
-                        
                         const selectEl = document.getElementById(`hdd_${pId}`);
                         let hddName = "";
                         let hddAddPrice = 0;
@@ -265,15 +257,11 @@
                             hddName = product.hddOptions[selectedIdx].name;
                             hddAddPrice = product.hddOptions[selectedIdx].addPrice;
                         }
-
                         const lineTotal = (qty * product.basePrice) + (camQty * product.camUnitPrice) + hddAddPrice;
                         subTotalValue += lineTotal;
-
                         orderDetails.push({ 
-                            name: `${product.name} (Đầu ghi: ${qty} cái, Camera: ${camQty} cái, ${hddName})`, 
-                            price: lineTotal, 
-                            qty: 1, 
-                            total: lineTotal 
+                            name: `${product.name} (Đầu ghi: ${qty}, Cam: ${camQty}, ${hddName})`, 
+                            price: lineTotal, qty: 1, total: lineTotal 
                         });
                     } else {
                         const lineTotal = qty * product.price;
@@ -289,15 +277,14 @@
             return;
         }
 
-        const rawSum = subTotalValue;
-        const vatValue = rawSum * 0.08;
-        const finalGrandTotal = rawSum + vatValue;
+        const vatValue = subTotalValue * 0.08;
+        const finalGrandTotal = subTotalValue + vatValue;
 
         const btn = document.getElementById('btnXacNhan');
-        btn.innerText = "⏳ Đang lập phiếu Excel chuyên nghiệp & Gửi báo cáo... 🔄";
+        btn.innerText = "⏳ Đang lập phiếu Excel & Gửi báo cáo... 🔄";
         btn.disabled = true;
 
-        // 1. TẠO VÀ TẢI FILE EXCEL CHUẨN GỌN GÀNG, ĐỊNH DẠNG SỐ CÓ DẤU PHẨY
+        // 1. XUẤT FILE EXCEL
         let excelRows = [
             ["CÔNG TY TNHH GIẢI PHÁP CÔNG NGHỆ AN TÍN"],
             ["PHIẾU BÁN HÀNG & KHẢO SÁT GIẢI PHÁP TỰ ĐỘNG"],
@@ -323,34 +310,20 @@
         excelRows.push(["", "", "", "TỔNG THANH TOÁN (DỰ TOÁN):", finalGrandTotal]);
 
         const ws = XLSX.utils.aoa_to_sheet(excelRows);
-
-        // Định dạng số có dấu phẩy phân cách hàng ngàn cho cột Đơn giá và Thành tiền trong Excel
         const range = XLSX.utils.decode_range(ws['!ref']);
         for (let R = 12; R <= range.e.r; ++R) {
             let cellPrice = ws[XLSX.utils.encode_cell({c: 2, r: R})];
             let cellTotal = ws[XLSX.utils.encode_cell({c: 4, r: R})];
-            if (cellPrice && typeof cellPrice.v === 'number') {
-                cellPrice.z = '#,##0" đ"';
-            }
-            if (cellTotal && typeof cellTotal.v === 'number') {
-                cellTotal.z = '#,##0" đ"';
-            }
+            if (cellPrice && typeof cellPrice.v === 'number') cellPrice.z = '#,##0" đ"';
+            if (cellTotal && typeof cellTotal.v === 'number') cellTotal.z = '#,##0" đ"';
         }
-
-        // Tự động căn độ rộng cột để không bị che khuất
-        ws['!cols'] = [
-            {wch: 6},  // STT
-            {wch: 55}, // Tên thiết bị
-            {wch: 22}, // Đơn giá
-            {wch: 10}, // Số lượng
-            {wch: 25}  // Thành tiền
-        ];
+        ws['!cols'] = [{wch: 6}, {wch: 55}, {wch: 22}, {wch: 10}, {wch: 25}];
 
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. TẠO BẢNG HTML GỬI VỀ EMAILJS
+        // 2. TẠO BẢNG HTML GỬI QUA EMAILJS (Bọc cú pháp HTML chuẩn để template nhận diện)
         let htmlTableRows = '';
         orderDetails.forEach((item, index) => {
             htmlTableRows += `
@@ -363,62 +336,49 @@
             `;
         });
 
-        const htmlMessage = `
-            <div style="font-family: Arial, sans-serif; color: #333; max-width: 700px; border: 1px solid #dcdcdc; border-radius: 10px; overflow: hidden;">
-                <div style="background: #1a73e8; color: white; padding: 15px; text-align: center;">
-                    <h2 style="margin: 0; font-size: 18px;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI 🔥</h2>
-                    <p style="margin: 5px 0 0 0; font-size: 12px;">Hệ thống Sales AI Automation - An Tín</p>
-                </div>
-                <div style="padding: 20px;">
-                    <p><strong>🕒 Thời gian:</strong> ${timeNow}</p>
-                    
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #1a73e8;">
-                        <h4 style="margin-bottom: 8px; color: #202124;">👤 Thông tin khách hàng:</h4>
-                        <p style="margin: 4px 0;">• Họ và tên: <strong>${cName}</strong></p>
-                        <p style="margin: 4px 0;">• Số điện thoại: <strong style="color: #d93025;">${cPhone}</strong></p>
-                        <p style="margin: 4px 0;">• Email: <strong>${cEmail}</strong></p>
-                        <p style="margin: 4px 0;">• Nhu cầu thực tế: <em>${cNeed}</em></p>
-                    </div>
-
-                    <h4 style="margin-bottom: 8px; color: #202124;">📋 Bảng chi tiết cấu hình giải pháp:</h4>
-                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                        <thead>
-                            <tr style="background: #1a73e8; color: white;">
-                                <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center; width: 40px;">STT</th>
-                                <th style="padding: 8px; border: 1px solid #1a73e8; text-align: left;">Tên thiết bị / Combo Hệ thống</th>
-                                <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center; width: 50px;">SL</th>
-                                <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Thành tiền</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${htmlTableRows}
-                            <tr>
-                                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">-</td>
-                                <td style="padding: 8px; border: 1px solid #ddd;">Vật tư phụ & Nhân công lắp đặt</td>
-                                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">-</td>
-                                <td style="padding: 8px; border: 1px solid #ddd; text-align: right; font-style: italic; color: #5f6368;">Thực tế khảo sát</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div style="margin-top: 15px; background: #e8f0fe; padding: 12px; border-radius: 8px; text-align: right; line-height: 1.6;">
-                        <p style="margin: 2px 0;">Cộng tiền hàng: <strong>${subTotalValue.toLocaleString('vi-VN')} đ</strong></p>
-                        <p style="margin: 2px 0;">Thuế VAT (8%): <strong>${vatValue.toLocaleString('vi-VN')} đ</strong></p>
-                        <p style="margin: 6px 0 0 0; font-size: 16px; color: #d93025; font-weight: bold;">TỔNG THANH TOÁN (DỰ TOÁN): ${finalGrandTotal.toLocaleString('vi-VN')} đ</p>
-                    </div>
-                </div>
-                <div style="background: #f1f3f4; padding: 10px; text-align: center; font-size: 12px; color: #5f6368;">
-                    ⚡ Email tự động gửi từ hệ thống An Tín Sales AI 🚀
-                </div>
-            </div>
-        `;
-
+        // Sử dụng cấu trúc tách biệt hoặc gửi nguyên khối bọc an toàn
         const templateParams = {
             to_email: "ctyantinco@gmail.com",
-            message: htmlMessage,
             customer_name: cName,
             customer_phone: cPhone,
-            customer_email: cEmail
+            customer_email: cEmail,
+            customer_need: cNeed,
+            time_now: timeNow,
+            sub_total: subTotalValue.toLocaleString('vi-VN') + ' đ',
+            vat_total: vatValue.toLocaleString('vi-VN') + ' đ',
+            grand_total: finalGrandTotal.toLocaleString('vi-VN') + ' đ',
+            html_table_rows: htmlTableRows,
+            // Truyền cả message dạng khối bọc html thuần
+            message: `<div style="font-family: Arial, sans-serif; color: #333; max-width: 650px;">
+                <h3 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 8px;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI 🔥</h3>
+                <p><strong>🕒 Thời gian:</strong> ${timeNow}</p>
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="margin-bottom: 8px; color: #202124;">👤 Thông tin khách hàng:</h4>
+                    <p>• Họ và tên: <strong>${cName}</strong></p>
+                    <p>• Số điện thoại: <strong style="color: #d93025;">${cPhone}</strong></p>
+                    <p>• Email: <strong>${cEmail}</strong></p>
+                    <p>• Nhu cầu thực tế: <em>${cNeed}</em></p>
+                </div>
+                <h4 style="margin-bottom: 8px; color: #202124;">📋 Bảng chi tiết cấu hình:</h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #1a73e8; color: white;">
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center;">STT</th>
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: left;">Tên thiết bị</th>
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: center;">SL</th>
+                            <th style="padding: 8px; border: 1px solid #1a73e8; text-align: right;">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${htmlTableRows}
+                    </tbody>
+                </table>
+                <div style="margin-top: 15px; background: #e8f0fe; padding: 12px; border-radius: 8px; text-align: right;">
+                    <p>Cộng tiền hàng: <strong>${subTotalValue.toLocaleString('vi-VN')} đ</strong></p>
+                    <p>Thuế VAT (8%): <strong>${vatValue.toLocaleString('vi-VN')} đ</strong></p>
+                    <p style="font-size: 15px; color: #d93025;">TỔNG: <strong>${finalGrandTotal.toLocaleString('vi-VN')} đ</strong></p>
+                </div>
+            </div>`
         };
 
         if (typeof emailjs !== 'undefined') {
@@ -435,7 +395,6 @@
         }
     }
 
-    // 3. HÀM CHUYỂN HƯỚNG GIAO DIỆN SANG TRANG CẢM ƠN MƯỢT MÀ
     function redirectToThankYouPage(customerName) {
         const container = document.getElementById('main-container');
         container.innerHTML = `
