@@ -324,7 +324,7 @@
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. TẠO NỘI DUNG EMAIL HIỂN THỊ DẠNG TEXT SẠCH SẼ, CHUẨN ĐẸP 100%
+        // 2. TẠO KÍCH HOẠT MỞ MAIL AN TOÀN TUYỆT ĐỐI BẰNG THẺ <a> TỰ ĐỘNG CLICK
         let emailBody = "🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI!\n";
         emailBody += "--------------------------------------------------\n";
         emailBody += `⏱ Thời gian: ${timeNow}\n\n`;
@@ -345,8 +345,16 @@
         emailBody += "(💡 File Excel chi tiết cấu hình đã được tải tự động về thiết bị của bạn).";
 
         setTimeout(() => {
-            window.location.href = `mailto:ctyantinco@gmail.com?subject=${encodeURIComponent('Đơn hàng/Khảo sát từ ' + cName)}&body=${encodeURIComponent(emailBody)}`;
+            const mailtoLink = `mailto:ctyantinco@gmail.com?subject=${encodeURIComponent('Đơn hàng/Khảo sát từ ' + cName)}&body=${encodeURIComponent(emailBody)}`;
             
+            // Tạo thẻ a ẩn và bấm giả lập để trình duyệt di động bắt buộc phải mở ứng dụng Mail
+            const link = document.createElement('a');
+            link.href = mailtoLink;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
             btn.innerHTML = "✅ HOÀN TẤT! ĐÃ TẢI EXCEL & MỞ MAIL GỬI ➔";
             setTimeout(() => {
                 btn.innerHTML = "🚀 XÁC NHẬN HOÀN THÀNH & GỬI BÁO CÁO NGAY ➔";
