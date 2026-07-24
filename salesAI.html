@@ -179,11 +179,45 @@
             });
     </script>
 
-    <!-- Nút bấm xác nhận hiển thị sau khi gửi xong -->
-    <div style="text-align: center; margin-top: 30px;">
-        <a href="thankyou.html" id="nextBtn" style="display: none; background-color: #28a745; color: white; padding: 12px 25px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 16px;">
-            🚀 Xác Nhận Hoàn Thành
-        </a>
-    </div>
+   <!-- Nút xác nhận hoàn thành & chuyển sang trang cảm ơn -->
+<div style="text-align: center; margin-top: 30px;">
+    <button id="btnXacNhan" onclick="hoanThanhDonHang()" style="background-color: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng
+    </button>
+</div>
+
+<script>
+    function hoanThanhDonHang() {
+        // Đổi trạng thái nút thành đang xử lý cho chuyên nghiệp
+        const btn = document.getElementById('btnXacNhan');
+        btn.innerText = "⏳ Đang xử lý & Gửi phiếu...";
+        btn.disabled = true;
+
+        // Chuẩn bị dữ liệu gửi email qua EmailJS (nếu có)
+        const templateParams = {
+            to_email: "ctyantinco@gmail.com",
+            message: "Khách hàng đã hoàn tất cấu hình báo giá Matrix Sales AI và xác nhận xuất phiếu bán hàng.",
+            time: new Date().toLocaleString()
+        };
+
+        // Gửi ngầm email (nếu cấu hình EmailJS của bạn đã sẵn sàng)
+        if (typeof emailjs !== 'undefined') {
+            emailjs.send("service_vj9uc6d", "template_mtqvd5q", templateParams)
+                .then(function(res) {
+                    console.log("Gửi mail thành công!");
+                    // Chuyển sang trang Cảm Ơn sau khi gửi xong
+                    window.location.href = "thankyou.html";
+                }, function(err) {
+                    console.log("Lỗi gửi mail, vẫn chuyển trang:", err);
+                    window.location.href = "thankyou.html";
+                });
+        } else {
+            // Nếu không dùng emailjs ở trang này, chuyển thẳng sang trang cảm ơn luôn
+            setTimeout(() => {
+                window.location.href = "thankyou.html";
+            }, 500);
+        }
+    }
+</script>
 </body>
 </html>
