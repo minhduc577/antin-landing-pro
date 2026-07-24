@@ -105,6 +105,13 @@
             align-items: center;
             font-size: 20px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(26, 115, 232, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
         }
 
         .status-badge {
@@ -116,12 +123,33 @@
             background-color: #10b981;
             border: 2px solid #ffffff;
             border-radius: 50%;
+            animation: pulseDot 1.5s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
         .header-title h1 {
             font-size: 15px;
             font-weight: 700;
             line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-title h1::after {
+            content: "🔥";
+            font-size: 13px;
+            animation: bounceIcon 1s infinite alternate;
+        }
+
+        @keyframes bounceIcon {
+            from { transform: translateY(0); }
+            to { transform: translateY(-3px); }
         }
 
         .header-title p {
@@ -140,11 +168,12 @@
             padding: 6px 10px;
             background: rgba(255,255,255,0.15);
             border-radius: 20px;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
         .btn-back-home:hover {
             background: rgba(255,255,255,0.25);
             color: #ffffff;
+            transform: scale(1.05);
         }
 
         /* TAB NAVIGATION */
@@ -195,6 +224,8 @@
             padding: 16px;
             scroll-behavior: smooth;
             gap: 14px;
+            display: flex;
+            flex-direction: column;
         }
 
         .message-row {
@@ -355,24 +386,35 @@
         }
 
         .btn-cta {
-            background: var(--accent-danger);
+            background: linear-gradient(135deg, #d93025, #ff5722);
             color: #ffffff;
             border: none;
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: var(--radius-sm);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 12.5px;
             cursor: pointer;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 2px 6px rgba(217, 48, 37, 0.25);
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(217, 48, 37, 0.35);
+            transition: all 0.2s ease;
+            animation: pulseBtn 2s infinite;
         }
 
-        .btn-cta:hover { background: #b31412; }
+        @keyframes pulseBtn {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217, 48, 37, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(217, 48, 37, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217, 48, 37, 0); }
+        }
+
+        .btn-cta:hover { 
+            background: #b31412; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(217, 48, 37, 0.45);
+        }
 
         /* QUICK SUGGESTIONS CHIPS */
         .chips-scroll {
@@ -396,9 +438,17 @@
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        .chip-btn:hover { background: #d2e3fc; }
+        .chip-btn:hover { 
+            background: var(--primary-light); 
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
+        }
 
         /* INPUT AREA */
         .chat-footer {
@@ -415,12 +465,13 @@
             border-radius: 24px;
             padding: 4px 6px 4px 16px;
             border: 1px solid transparent;
-            transition: border-color 0.2s, background 0.2s;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
         }
 
         .input-wrapper:focus-within {
             border-color: var(--primary-light);
             background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
         }
 
         .input-wrapper input {
@@ -435,7 +486,7 @@
         .btn-send {
             width: 36px;
             height: 36px;
-            background: var(--primary-light);
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
             color: #ffffff;
             border: none;
             border-radius: 50%;
@@ -443,10 +494,14 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(26, 115, 232, 0.3);
         }
 
-        .btn-send:hover { background: var(--primary-color); }
+        .btn-send:hover { 
+            transform: scale(1.1); 
+            box-shadow: 0 4px 10px rgba(26, 115, 232, 0.4);
+        }
 
         /* DESIGN CALCULATOR FORM STYLES */
         .calc-panel {
@@ -496,12 +551,13 @@
             font-size: 13px;
             outline: none;
             background: #fdfdfd;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .form-control:focus {
             border-color: var(--primary-light);
             background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
         }
 
         .btn-calc {
@@ -518,11 +574,15 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 2px 8px rgba(13, 71, 161, 0.25);
-            transition: opacity 0.2s;
+            box-shadow: 0 4px 12px rgba(13, 71, 161, 0.25);
+            transition: all 0.2s;
         }
 
-        .btn-calc:hover { opacity: 0.95; }
+        .btn-calc:hover { 
+            opacity: 0.95; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(13, 71, 161, 0.35);
+        }
 
         /* CALCULATOR RESULT */
         .result-box {
@@ -533,6 +593,8 @@
             padding: 16px;
             margin-top: 10px;
             animation: slideUp 0.3s ease;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.3);
+            border: 1px solid #334155;
         }
 
         .result-grid {
@@ -548,6 +610,11 @@
             padding: 10px;
             border-radius: var(--radius-sm);
             text-align: center;
+            transition: transform 0.2s;
+        }
+        .result-item:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.09);
         }
 
         .result-item span.label {
@@ -579,10 +646,10 @@
         }
 
         .advice-list li::before {
-            content: "•";
+            content: "💡";
             position: absolute;
-            left: 4px;
-            color: #facc15;
+            left: -4px;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -630,10 +697,10 @@
 
             <!-- SUGGESTIONS -->
             <div class="chips-scroll" id="chipsContainer">
-                <button class="chip-btn" onclick="sendQuickAsk('Camera báo Offline')">🔴 Camera báo Offline</button>
-                <button class="chip-btn" onclick="sendQuickAsk('Không xem lại được video')">💾 Không xem lại được</button>
-                <button class="chip-btn" onclick="sendQuickAsk('Mất hình ban đêm')">🌙 Mất hình ban đêm</button>
-                <button class="chip-btn" onclick="sendQuickAsk('Hình ảnh bị nhiễu sọc')">⚡ Bị nhiễu sọc</button>
+                <button class="chip-btn" onclick="sendQuickAsk('Camera báo Offline')"><i class="fa-solid fa-triangle-exclamation" style="color:#d93025"></i> Camera báo Offline</button>
+                <button class="chip-btn" onclick="sendQuickAsk('Không xem lại được video')"><i class="fa-solid fa-hard-drive" style="color:#1a73e8"></i> Không xem lại được</button>
+                <button class="chip-btn" onclick="sendQuickAsk('Mất hình ban đêm')"><i class="fa-solid fa-moon" style="color:#d4af37"></i> Mất hình ban đêm</button>
+                <button class="chip-btn" onclick="sendQuickAsk('Hình ảnh bị nhiễu sọc')"><i class="fa-solid fa-bolt" style="color:#e65100"></i> Bị nhiễu sọc</button>
             </div>
         </main>
 
@@ -649,20 +716,20 @@
     <div id="calc-tab" class="tab-content">
         <div class="calc-panel">
             <div class="calc-card">
-                <h2><i class="fa-solid fa-sliders text-gold"></i> Thiết Thiết & Tính Toán Dung Lượng</h2>
+                <h2><i class="fa-solid fa-sliders" style="color: var(--accent-gold);"></i> Thiết Kế & Tính Toán Dung Lượng</h2>
                 
                 <div class="form-group">
-                    <label>Số lượng camera lắp đặt:</label>
+                    <label><i class="fa-solid fa-video"></i> Số lượng camera lắp đặt:</label>
                     <input type="number" id="cam_count" value="4" min="1" max="128" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label>Số ngày muốn lưu trữ dữ liệu:</label>
+                    <label><i class="fa-solid fa-calendar-days"></i> Số ngày muốn lưu trữ dữ liệu:</label>
                     <input type="number" id="storage_days" value="15" min="1" max="180" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label>Độ phân giải mắt Camera:</label>
+                    <label><i class="fa-solid fa-eye"></i> Độ phân giải mắt Camera:</label>
                     <select id="resolution" class="form-control">
                         <option value="2">Full HD (2.0 Megapixel)</option>
                         <option value="4" selected>2K Quad HD (4.0 Megapixel) - Phổ biến</option>
@@ -671,7 +738,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Môi trường thi công chính:</label>
+                    <label><i class="fa-solid fa-building-shield"></i> Môi trường thi công chính:</label>
                     <select id="environment" class="form-control">
                         <option value="indoor">Trong nhà / Cửa hàng / Văn phòng</option>
                         <option value="outdoor">Ngoài trời / Bãi xe / Sân vườn</option>
@@ -680,7 +747,7 @@
                 </div>
 
                 <button onclick="calculateAI()" class="btn-calc">
-                    <i class="fa-solid fa-brain"></i> CHẠY PHÂN TÍCH AI & TÍNH TOÁN
+                    <i class="fa-solid fa-brain"></i> CHẠY PHÂN TÍCH AI & TÍNH TOÁN NGAY
                 </button>
             </div>
 
@@ -702,14 +769,14 @@
                     </div>
                 </div>
 
-                <div style="font-size:12px; font-weight:600; color:#fff; margin-top:10px;">💡 Khuyến nghị thi công An Tín:</div>
+                <div style="font-size:12px; font-weight:600; color:#fff; margin-top:10px;"><i class="fa-solid fa-lightbulb" style="color:#facc15;"></i> Khuyến nghị thi công An Tín:</div>
                 <ul id="res-advices" class="advice-list">
                     <!-- Dynamic JS Content -->
                 </ul>
 
                 <div style="margin-top:14px;">
                     <button class="btn-cta" onclick="requestSupport('Khảo sát hệ thống tính toán ' + document.getElementById('cam_count').value + ' camera')">
-                        <i class="fa-solid fa-calendar-check"></i> ĐĂNG KÝ KHẢO SÁT TẬN NƠI
+                        <i class="fa-solid fa-calendar-check"></i> ĐĂNG KÝ KHẢO SÁT & NHẬN ƯU ĐÃI 30%
                     </button>
                 </div>
             </div>
@@ -719,8 +786,8 @@
 
 <script>
     /* ==========================================================================
-       TAB SWITCHING
-       ========================================================================== */
+        TAB SWITCHING
+        ========================================================================== */
     function switchTab(tabId, btnEl) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -730,8 +797,8 @@
     }
 
     /* ==========================================================================
-       AI ENGINE CORE & KNOWLEDGE BASE (EBOOK AN TIN V3.5)
-       ========================================================================== */
+        AI ENGINE CORE & KNOWLEDGE BASE (EBOOK AN TIN V3.5)
+        ========================================================================== */
     const KNOWLEDGE_BASE = [
         {
             keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất sóng", "không online", "mất ip"],
@@ -839,7 +906,7 @@
                     <div class="action-booking">
                         <p>Đã làm đủ các bước nhưng chưa khắc phục được?</p>
                         <button class="btn-cta" onclick="requestSupport('${match.issue}')">
-                            <i class="fa-solid fa-calendar-check"></i> ĐẶT LỊCH KỸ THUẬT TẬN NƠI
+                            <i class="fa-solid fa-calendar-check"></i> ĐẶT LỊCH KỸ THUẬT TẬN NƠI (HỖ TRỢ 24/7)
                         </button>
                     </div>
                 `;
@@ -859,7 +926,7 @@
                     </div>
                     <div class="action-booking">
                         <button class="btn-cta" onclick="requestSupport('Sự cố: ${query}')">
-                            <i class="fa-solid fa-headset"></i> YÊU CẦU KỸ THUẬT AN TÍN GỌI LẠI
+                            <i class="fa-solid fa-headset"></i> KẾT NỐI NGAY VỚI KỸ THUẬT VIÊN AN TÍN
                         </button>
                     </div>
                 `;
@@ -882,7 +949,7 @@
 
     function createTypingIndicator() {
         const row = document.createElement('div');
-        row.className = 'message-row ai';
+        row.className = `message-row ai`;
         row.innerHTML = `
             <div class="typing-indicator">
                 <div class="dot"></div>
@@ -894,46 +961,64 @@
     }
 
     /* ==========================================================================
-       AI CALCULATOR LOGIC
-       ========================================================================== */
+        AI CALCULATOR LOGIC (FULL & COMPLETE)
+        ========================================================================== */
     function calculateAI() {
-        const count = parseInt(document.getElementById('cam_count').value) || 1;
-        const days = parseInt(document.getElementById('storage_days').value) || 1;
-        const res = parseFloat(document.getElementById('resolution').value) || 2;
-        const env = document.getElementById('environment').value;
+        const count = parseInt(document.getElementById('cam_count').value) || 4;
+        const days = parseInt(document.getElementById('storage_days').value) || 15;
+        const resMultiplier = parseFloat(document.getElementById('resolution').value) || 4;
+        const environment = document.getElementById('environment').value;
 
-        // Băng thông & Dung lượng ước tính chuẩn chuẩn H.265+
-        const gbPerCamPerDay = res * 10.5; 
-        const totalGB = count * days * gbPerCamPerDay;
-        const totalTB = (totalGB / 1024).toFixed(1);
-        const bandwidth = (count * res * 1.1).toFixed(1);
+        // Ước tính dung lượng ổ cứng (GB/ngày/camera dựa trên độ phân giải và chuẩn nén H.265+)
+        // 2MP ~ 15GB/ngày, 4MP ~ 25GB/ngày, 8MP(4K) ~ 45GB/ngày
+        let baseGbPerDay = 15;
+        if (resMultiplier === 4) baseGbPerDay = 25;
+        if (resMultiplier === 8) baseGbPerDay = 45;
 
-        document.getElementById('res-hdd').innerText = totalTB + " TB";
+        // Môi trường nhà xưởng/ngoài trời chuyển động nhiều dung lượng cao hơn 20%
+        if (environment === 'outdoor' || environment === 'factory') {
+            baseGbPerDay *= 1.2;
+        }
+
+        const totalGb = count * days * baseGbPerDay;
+        const totalTb = totalGb / 1024;
+
+        // Quy chuẩn chọn ổ cứng thực tế (1TB, 2TB, 4TB, 6TB, 8TB, 10TB...)
+        let recommendedHdd = 1;
+        if (totalTb <= 1) recommendedHdd = 1;
+        else if (totalTb <= 2) recommendedHdd = 2;
+        else if (totalTb <= 4) recommendedHdd = 4;
+        else if (totalTb <= 6) recommendedHdd = 6;
+        else if (totalTb <= 8) recommendedHdd = 8;
+        else recommendedHdd = Math.ceil(totalTb / 2) * 2;
+
+        // Băng thông tối thiểu (Mbps)
+        let bandwidth = Math.round(count * resMultiplier * 0.8 * 10) / 10;
+
+        // Hiển thị kết quả
+        document.getElementById('res-hdd').innerText = recommendedHdd + " TB (Chuyên dụng CCTV)";
         document.getElementById('res-bandwidth').innerText = bandwidth + " Mbps";
 
-        const advices = document.getElementById('res-advices');
-        advices.innerHTML = '';
-
-        if (env === 'indoor') {
-            advices.innerHTML += '<li>Khuyên dùng Camera bán cầu (Dome) góc rộng, thẩm mỹ cho trần nhà.</li>';
-            advices.innerHTML += '<li>Đường dây nên đi trong ống nẹp âm tường hoặc nẹp nhựa vuông.</li>';
-        } else if (env === 'outdoor') {
-            advices.innerHTML += '<li>Bắt buộc chọn Camera thân kim loại đạt tiêu chuẩn chống nước IP67.</li>';
-            advices.innerHTML += '<li>Sử dụng hộp kỹ thuật chống nước tại các khớp nối giắc tín hiệu.</li>';
+        // Khuyến nghị chi tiết
+        let advicesHtml = `
+            <li>Hệ thống ${count} mắt camera ${resMultiplier===2?'Full HD':resMultiplier===4?'2K Quad HD':'4K Ultra HD'} lưu trữ ${days} ngày chạy ổn định với Ổ cứng chuyên dụng ${recommendedHdd}TB.</li>
+            <li>Nên sử dụng nguồn tổng cấp nguồn riêng hoặc Switch PoE chuẩn để chống sụt áp và bảo vệ tuổi thọ camera.</li>
+        `;
+        if (environment === 'factory') {
+            advicesHtml += `<li>Khu vực nhà xưởng/kho bãi nên ưu tiên đi cáp quang hoặc cáp mạng lõi đồng nguyên chất chống nhiễu tín hiệu.</li>`;
+        } else if (environment === 'outdoor') {
+            advicesHtml += `<li>Khu vực ngoài trời cần dùng hộp kỹ thuật chống nước IP66 và camera thân hồng ngoại xa.</li>`;
         } else {
-            advices.innerHTML += '<li>Khuyên dùng Camera tích hợp AI phân biệt người/xe và công nghệ Night Color ban đêm.</li>';
-            advices.innerHTML += '<li>Nên chạy Switch PoE tập trung và đi cáp trong ống ruột gà lõi thép chống chuột cắn.</li>';
+            advicesHtml += `<li>Môi trường văn phòng/cửa hàng nên chọn dòng camera tích hợp mic thu âm để ghi lại âm thanh rõ nét.</li>`;
         }
 
-        if (count >= 8) {
-            advices.innerHTML += '<li>Hệ thống từ 8 camera trở lên nên tách mạng VLAN riêng để tối ưu băng thông.</li>';
-        }
-
+        document.getElementById('res-advices').innerHTML = advicesHtml;
         document.getElementById('ai-result').style.display = 'block';
+        document.getElementById('ai-result').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function requestSupport(issueName) {
-        alert("✅ ĐÃ GỬI YÊU CẦU THÀNH CÔNG!\n\nTrung tâm Kỹ Thuật An Tín đã nhận thông tin: [" + issueName + "].\nKỹ thuật viên khu vực sẽ liên hệ hotline hỗ trợ anh/chị trong 15 phút!");
+    function requestSupport(detail) {
+        alert("✨ [AI Kỹ Thuật An Tín] Đã tiếp nhận yêu cầu: \"" + detail + "\". Nhân viên kỹ thuật sẽ liên hệ lại qua số điện thoại của anh/chị trong vòng 5 phút tới!");
     }
 </script>
 
