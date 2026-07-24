@@ -15,43 +15,67 @@
     </script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
-        .container { width: 100%; max-width: 560px; background: #ffffff; border-radius: 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.08); overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+        body { background: linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .container { width: 100%; max-width: 580px; background: #ffffff; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.12); overflow: hidden; padding: 22px; display: flex; flex-direction: column; gap: 14px; border: 1px solid rgba(255,255,255,0.8); }
 
         .header-title { text-align: center; }
-        .header-title h2 { font-size: 18px; color: #1a73e8; font-weight: 800; }
-        .header-title p { font-size: 12px; color: #5f6368; margin-top: 2px; }
+        .header-title h2 { font-size: 19px; color: #1a73e8; font-weight: 800; letter-spacing: 0.3px; }
+        .header-title p { font-size: 12px; color: #5f6368; margin-top: 4px; font-weight: 500; }
 
-        .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; }
+        /* Bảng nhập thông tin khách hàng nhanh (Phát triển thêm giúp đồng bộ dữ liệu) */
+        .customer-quick-box { background: #fdf2f2; border: 1px solid #f8d7da; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .customer-quick-title { font-size: 12px; font-weight: 700; color: #c5221f; display: flex; align-items: center; gap: 5px; }
+        .customer-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .customer-inputs input { width: 100%; padding: 7px 10px; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; outline: none; transition: 0.2s; background: #fff; }
+        .customer-inputs input:focus { border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26,115,232,0.15); }
+        .customer-inputs input.full-width { grid-column: span 2; }
+
+        .matrix-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #cbd5e1 #f8f9fa; }
+        .matrix-box::-webkit-scrollbar { width: 6px; }
+        .matrix-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         
-        .matrix-item { display: flex; flex-direction: column; gap: 8px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ced4da; }
+        .matrix-item { display: flex; flex-direction: column; gap: 8px; background: #fff; padding: 11px; border-radius: 9px; border: 1px solid #ced4da; transition: 0.2s; }
+        .matrix-item:hover { border-color: #93c5fd; box-shadow: 0 3px 10px rgba(26,115,232,0.06); }
         .matrix-row-top { display: flex; justify-content: space-between; align-items: center; }
-        .matrix-info { text-align: left; flex: 1; }
-        .matrix-name { font-size: 12px; font-weight: 700; color: #202124; }
-        .matrix-price { font-size: 11px; color: #1a73e8; font-weight: 600; }
-        .matrix-qty { width: 60px; padding: 5px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; }
+        .matrix-info { text-align: left; flex: 1; padding-right: 8px; }
+        .matrix-name { font-size: 12px; font-weight: 700; color: #202124; line-height: 1.3; }
+        .matrix-price { font-size: 11px; color: #1a73e8; font-weight: 600; margin-top: 2px; }
+        .matrix-qty { width: 60px; padding: 6px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 12px; font-weight: 700; background: #f8f9fa; }
+        .matrix-qty:focus { border-color: #1a73e8; background: #fff; outline: none; }
 
         /* Tùy chọn mở rộng cho Combo Camera Hệ Thống */
-        .combo-options { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; padding-top: 6px; border-top: 1px dashed #e9ecef; font-size: 11px; align-items: center; }
-        .combo-options select { padding: 4px 6px; border-radius: 6px; border: 1px solid #ced4da; font-size: 11px; background: #fff; font-weight: 600; color: #174ea6; }
-        .cam-qty-group { display: flex; align-items: center; gap: 4px; }
-        .cam-qty-group input { width: 45px; padding: 3px; text-align: center; border: 1px solid #ced4da; border-radius: 4px; font-size: 11px; font-weight: 700; }
+        .combo-options { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; padding-top: 8px; border-top: 1px dashed #e9ecef; font-size: 11px; align-items: center; }
+        .combo-options select { padding: 5px 8px; border-radius: 6px; border: 1px solid #ced4da; font-size: 11px; background: #fff; font-weight: 600; color: #174ea6; outline: none; cursor: pointer; }
+        .cam-qty-group { display: flex; align-items: center; gap: 5px; }
+        .cam-qty-group input { width: 50px; padding: 4px; text-align: center; border: 1px solid #ced4da; border-radius: 6px; font-size: 11px; font-weight: 700; background: #fff; }
 
         /* Khung tổng tiền & tài chính chi tiết */
         .summary-box { background: #e8f0fe; border: 1px solid #b4d2ff; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #174ea6; font-weight: 600; }
         .summary-row { display: flex; justify-content: space-between; align-items: center; }
         .grand-total-row { font-size: 16px; font-weight: 800; border-top: 1px dashed #b4d2ff; padding-top: 6px; color: #d93025; }
 
-        .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); transition: 0.2s; text-align: center; }
-        .btn-complete:hover { opacity: 0.95; transform: translateY(-1px); }
+        .btn-complete { width: 100%; background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.35); transition: 0.2s; text-align: center; letter-spacing: 0.3px; }
+        .btn-complete:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.45); }
+        .btn-complete:active { transform: translateY(0); }
     </style>
 </head>
 <body>
 
 <div class="container" id="main-container">
     <div class="header-title">
-        <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ</h2>
+        <h2>🤖 MATRIX SALES AI - CẤU HÌNH BÁO GIÁ TỰ ĐỘNG</h2>
         <p>✨ Tùy chỉnh hệ thống đầu ghi, số lượng camera & ổ cứng theo thực tế 🔥</p>
+    </div>
+
+    <!-- ⚡ Phát triển thêm: Khung nhập thông tin khách hàng trực tiếp, lưu tự động tránh lỗi thiếu sót -->
+    <div class="customer-quick-box">
+        <div class="customer-quick-title">👤 THÔNG TIN KHÁCH HÀNG (BẮT BUỘC ĐỂ XUẤT PHIẾU & GỬI MAIL) 🔥</div>
+        <div class="customer-inputs">
+            <input type="text" id="cus_name" placeholder="👤 Họ và tên quý khách..." oninput="saveCustomerInfo()">
+            <input type="tel" id="cus_phone" placeholder="📞 Số điện thoại liên hệ..." oninput="saveCustomerInfo()">
+            <input type="email" id="cus_email" class="full-width" placeholder="📧 Địa chỉ Email nhận báo giá chi tiết..." oninput="saveCustomerInfo()">
+            <input type="text" id="cus_need" class="full-width" placeholder="💬 Ghi chú / Yêu cầu thực tế (Ví dụ: Lắp nhà xưởng, biệt thự...)..." oninput="saveCustomerInfo()">
+        </div>
     </div>
 
     <!-- Danh mục Matrix AI chọn số lượng & Tùy chọn Combo -->
@@ -151,6 +175,21 @@
         { id: 'electric', name: '⚡ Vật tư Điện dân dụng & Phụ kiện nguồn', price: 800000, isCombo: false }
     ];
 
+    // Khôi phục hoặc khởi tạo thông tin khách hàng từ sessionStorage
+    function loadCustomerInfo() {
+        document.getElementById('cus_name').value = sessionStorage.getItem('ai_name') || '';
+        document.getElementById('cus_phone').value = sessionStorage.getItem('ai_phone') || '';
+        document.getElementById('cus_email').value = sessionStorage.getItem('ai_email') || '';
+        document.getElementById('cus_need').value = sessionStorage.getItem('ai_need') || '';
+    }
+
+    function saveCustomerInfo() {
+        sessionStorage.setItem('ai_name', document.getElementById('cus_name').value.trim());
+        sessionStorage.setItem('ai_phone', document.getElementById('cus_phone').value.trim());
+        sessionStorage.setItem('ai_email', document.getElementById('cus_email').value.trim());
+        sessionStorage.setItem('ai_need', document.getElementById('cus_need').value.trim());
+    }
+
     const matrixListEl = document.getElementById('matrix-list');
     function renderMatrix() {
         matrixListEl.innerHTML = '';
@@ -228,14 +267,24 @@
         document.getElementById('grand-total').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
     }
 
+    loadCustomerInfo();
     renderMatrix();
 
     function processOrderAndSendEmail() {
-        const cName = sessionStorage.getItem('ai_name') || 'Khách vãng lai';
-        const cPhone = sessionStorage.getItem('ai_phone') || 'Chưa cung cấp';
-        const cEmail = sessionStorage.getItem('ai_email') || 'Chưa cung cấp';
-        const cNeed = sessionStorage.getItem('ai_need') || 'Không có ghi chú';
+        // Đồng bộ trước khi lấy giá trị
+        saveCustomerInfo();
+
+        const cName = document.getElementById('cus_name').value.trim() || sessionStorage.getItem('ai_name') || 'Khách vãng lai';
+        const cPhone = document.getElementById('cus_phone').value.trim() || sessionStorage.getItem('ai_phone') || 'Chưa cung cấp';
+        const cEmail = document.getElementById('cus_email').value.trim() || sessionStorage.getItem('ai_email') || 'Chưa cung cấp';
+        const cNeed = document.getElementById('cus_need').value.trim() || sessionStorage.getItem('ai_need') || 'Không có ghi chú';
         const timeNow = new Date().toLocaleString('vi-VN');
+
+        if (!document.getElementById('cus_name').value.trim() || !document.getElementById('cus_phone').value.trim()) {
+            alert('⚠️ Vui lòng nhập đầy đủ Tên và Số điện thoại để An Tín tiện liên hệ khảo sát!');
+            document.getElementById('cus_name').focus();
+            return;
+        }
 
         let orderDetails = [];
         let subTotalValue = 0;
@@ -323,7 +372,7 @@
         XLSX.utils.book_append_sheet(wb, ws, "PhieuBanHang_AnTin");
         XLSX.writeFile(wb, `PhieuBanHang_${cName.replace(/\s+/g, '_')}.xlsx`);
 
-        // 2. TẠO BẢNG HTML GỬI QUA EMAILJS (Bọc cú pháp HTML chuẩn để template nhận diện)
+        // 2. TẠO BẢNG HTML GỬI QUA EMAILJS
         let htmlTableRows = '';
         orderDetails.forEach((item, index) => {
             htmlTableRows += `
@@ -336,7 +385,6 @@
             `;
         });
 
-        // Sử dụng cấu trúc tách biệt hoặc gửi nguyên khối bọc an toàn
         const templateParams = {
             to_email: "ctyantinco@gmail.com",
             customer_name: cName,
@@ -348,7 +396,6 @@
             vat_total: vatValue.toLocaleString('vi-VN') + ' đ',
             grand_total: finalGrandTotal.toLocaleString('vi-VN') + ' đ',
             html_table_rows: htmlTableRows,
-            // Truyền cả message dạng khối bọc html thuần
             message: `<div style="font-family: Arial, sans-serif; color: #333; max-width: 650px;">
                 <h3 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 8px;">🚀 CÓ ĐƠN HÀNG / YÊU CẦU KHẢO SÁT MỚI 🔥</h3>
                 <p><strong>🕒 Thời gian:</strong> ${timeNow}</p>
