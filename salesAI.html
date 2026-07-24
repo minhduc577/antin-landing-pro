@@ -59,6 +59,28 @@
         .btn-complete:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.45); }
         .btn-complete:active { transform: translateY(0); }
 
+        /* Hiệu ứng sóng động cho dòng hướng dẫn */
+        @keyframes wavePulse {
+            0% { transform: scale(1); opacity: 0.85; }
+            50% { transform: scale(1.02); opacity: 1; color: #d93025; }
+            100% { transform: scale(1); opacity: 0.85; }
+        }
+        .instruction-note {
+            text-align: center;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #1a73e8;
+            background: #e8f0fe;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px dashed #b4d2ff;
+            animation: wavePulse 2.2s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
         .btn-secondary { width: 100%; background: linear-gradient(135deg, #17a2b8, #117a8b); color: white; border: none; border-radius: 10px; padding: 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 5px; text-decoration: none; }
         .btn-secondary:hover { opacity: 0.95; }
     </style>
@@ -107,11 +129,22 @@
         </div>
     </div>
 
-    <!-- Nút hoàn thành & điều hướng -->
+    <!-- Nút hoàn thành, dòng chữ sóng động & điều hướng -->
     <div class="btn-group">
         <button id="btnXacNhan" class="btn-complete" onclick="processOrderAndSendEmail()">
             🚀 Xác Nhận Hoàn Thành & Xuất Phiếu Bán Hàng ➔ ✨
         </button>
+        
+        <!-- Dòng chữ chèn icon sóng động theo yêu cầu -->
+        <div class="instruction-note">
+            🌊📡 Nếu Quý Khách Không Chọn Cấu Hình Khác Thì Bấm Nút Hoàn Thành Phía Giữa Để Xác Nhận Hoàn Tất! ✨🚀
+        </div>
+
+        <!-- Nút bổ sung "HOÀN THÀNH" chạy qua trang Thank You trực tiếp -->
+        <a href="thankyou.html" class="btn-complete" style="background: linear-gradient(135deg, #007bff, #0056b3); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.35);">
+            🎯 HOÀN THÀNH & CHUYỂN TRANG CẢM ƠN ➔ 🌟
+        </a>
+
         <a href="thankyou.html" class="btn-secondary">
             🎯 Xem Trang Cảm Ơn Mẫu (Thank You) ➔ 🌟
         </a>
