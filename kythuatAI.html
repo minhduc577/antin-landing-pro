@@ -1188,9 +1188,10 @@ const KNOWLEDGE_BASE = [
     }
 
     // Gọi hàm khi trang vừa tải xong
-    document.addEventListener('DOMContentLoaded', () => {
-        renderKnowledgeBase(KNOWLEDGE_BASE);
-    });    
+
+window.onload = function() {
+    renderKnowledgeBase(KNOWLEDGE_BASE);
+};    
 
     function processUserQuery(query) {
         const chatBody = document.getElementById('chatBody');
