@@ -1380,91 +1380,43 @@ function showAIResultAndChatInterface() {
     modal.id = 'ai-result-modal';
     modal.innerHTML = `
         <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 2147483647; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; backdrop-filter: blur(3px);">
-            <div style="background: #ffffff; width: 92%; max-width: 720px; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; max-height: 92vh; animation: slideUp 0.4s ease-out;">
+            <div style="background: #ffffff; width: 90%; max-width: 680px; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; max-height: 90vh; animation: slideUp 0.4s ease-out;">
                 
-                <!-- Tiêu đề modal -->
-                <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="margin: 0; font-size: 18px;">✨ HỆ THỐNG CHUẨN ĐOÁN & HỖ TRỢ KỸ THUẬT</h3>
+                <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-size: 19px;">✨ KẾT QUẢ CHUẨN ĐOÁN THÔNG MINH</h3>
                     <span id="ai-close-modal-x" style="cursor: pointer; font-size: 26px; font-weight: bold; color: #fff;">&times;</span>
                 </div>
 
-                <!-- Khu vực nội dung cuộn -->
-                <div style="padding: 20px; overflow-y: auto; flex: 1; background: #f8f9fa;">
-                    
-                    <!-- 1. VÒNG ĐỎ (TRÍCH XUẤT LÊN TOP): KẾT QUẢ CHUẨN ĐOÁN & HƯỚNG DẪN -->
-                    <div style="background: #fff; border: 2px solid #e53e3e; border-radius: 10px; padding: 16px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(229,62,62,0.1);">
-                        <div style="background: #fff5f5; border-left: 5px solid #e53e3e; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
-                            <h4 style="margin: 0 0 6px 0; color: #c53030; font-size: 15px;">🚨 Chẩn đoán: Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin</h4>
-                            <p style="margin: 0; font-size: 13px; color: #2c3e50;"><b>Nguyên nhân cốt lõi:</b> Tấm pin năng lượng bị che khuất bám bụi bẩn, hoặc pin lưu trữ chai sau thời gian dài.</p>
-                        </div>
-
-                        <div style="background: #ebf8ff; border-left: 5px solid #3182ce; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
-                            <h4 style="margin: 0 0 6px 0; color: #2b6cb0; font-size: 15px;">🛠️ Hướng dẫn khách hàng tự xử lý:</h4>
-                            <p style="margin: 0; font-size: 13px; color: #2c3e50; line-height: 1.5;">
-                                1. Dùng khăn ẩm lau sạch bề mặt tấm pin năng lượng mặt trời.<br>
-                                2. Đảm bảo ban ngày tấm pin nhận được tối đa ánh nắng trực tiếp.<br>
-                                3. Kiểm tra giắc cắm chống nước nối giữa tấm pin và thân đèn.
-                            </p>
-                        </div>
-
-                        <div style="font-size: 13px; color: #2d3748;">
-                            <h4 style="margin: 0 0 6px 0; color: #2b6cb0; font-size: 14px;">📋 Quy trình khắc phục chuyên sâu kỹ thuật:</h4>
-                            <p style="margin: 0 0 4px 0;">⚙️ <b>Bước 1:</b> Kiểm tra góc nghiêng của tấm pin hướng về phía đón nắng tốt nhất.</p>
-                            <p style="margin: 0 0 4px 0;">⚙️ <b>Bước 2:</b> Kiểm tra dung lượng lưu trữ của khối pin sạc Lithium bên trong đèn.</p>
-                            <p style="margin: 0;">⚙️ <b>Bước 3:</b> Thay thế pin lưu trữ mới nếu cell pin đã bị chai phù.</p>
-                        </div>
-
-                        <div style="margin-top: 10px; background: #fffaf0; border: 1px dashed #dd6b20; padding: 8px 12px; border-radius: 6px; color: #c05621; font-size: 12px;">
-                            🔥 <b>Hỗ trợ tận nơi:</b> Nếu đã thử các bước trên nhưng chưa khắc phục được, hãy điền thông tin bên dưới để kỹ thuật viên An Tín hỗ trợ xử lý!
-                        </div>
+                <div style="padding: 22px; overflow-y: auto; flex: 1; background: #f8f9fa;">
+                    <div style="background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 14px; border-radius: 6px; margin-bottom: 15px;">
+                        <h4 style="margin: 0 0 6px 0; color: #2e7d32; font-size: 15px;">🎯 Vấn đề phát hiện:</h4>
+                        <p style="margin: 0; font-size: 14px; color: #2c3e50; font-weight: 500;">Thiết bị đang gặp sự cố kết nối ngoại tuyến / gián đoạn tín hiệu đường truyền dữ liệu.</p>
                     </div>
 
-                    <!-- KHUNG CHAT TRỰC TIẾP VỚI AI -->
-                    <div style="background: white; border: 1px solid #cbd5e1; border-radius: 10px; padding: 15px; margin-bottom: 20px;">
+                    <div style="background: #e3f2fd; border-left: 5px solid #1976d2; padding: 14px; border-radius: 6px; margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 8px 0; color: #1976d2; font-size: 15px;">🛠️ Hướng dẫn khắc phục nhanh tại nhà:</h4>
+                        <p style="margin: 0; font-size: 14px; color: #2c3e50; line-height: 1.6;">
+                            1️⃣ Kiểm tra nguồn điện cấp ổn định cho thiết bị.<br>
+                            2️⃣ Khởi động lại bộ định tuyến Hub / Router WiFi.<br>
+                            3️⃣ Kiểm tra lại dây cáp mạng kết nối tín hiệu.
+                        </p>
+                    </div>
+
+                    <div style="border-top: 2px dashed #cbd5e1; padding-top: 18px;">
                         <h4 style="margin: 0 0 10px 0; color: #1e3c72; font-size: 15px;">💬 Trò chuyện trực tiếp với Chuyên Gia Kỹ Thuật AI:</h4>
                         
-                        <div id="ai-chat-box" style="height: 130px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 13px; margin-bottom: 10px;">
-                            <div style="margin-bottom: 8px; color: #1e3c72; background: #e2e8f0; padding: 8px 12px; border-radius: 6px; width: fit-content; max-width: 85%;">
-                                🤖 <b>AI Kỹ Thuật:</b> Dạ em đã chuẩn đoán xong lỗi trên. Anh/chị cần tư vấn thêm vấn đề gì không ạ?
+                        <div id="ai-chat-box" style="height: 150px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; overflow-y: auto; font-size: 13px; margin-bottom: 12px;">
+                            <div style="margin-bottom: 10px; color: #1e3c72; background: #f1f5f9; padding: 8px 12px; border-radius: 6px; width: fit-content; max-width: 85%;">
+                                🤖 <b>AI Kỹ Thuật:</b> Dạ em đã chuẩn đoán xong lỗi trên. Anh/chị có cần em hướng dẫn chi tiết thêm bước nào không ạ?
                             </div>
                         </div>
 
                         <div style="display: flex; gap: 8px; align-items: center;">
-                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn tại đây..." style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; outline: none;">
-                            <button id="ai-send-btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; white-space: nowrap;">🚀 Gửi</button>
-                            <button id="ai-end-btn" style="background: #e53e3e; color: white; border: none; padding: 10px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; white-space: nowrap;">🛑 Kết thúc</button>
+                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn tại đây..." style="flex: 1; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none;">
+                            <button id="ai-send-btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 11px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; white-space: nowrap;">🚀 Gửi</button>
+                            <button id="ai-end-btn" style="background: #e53e3e; color: white; border: none; padding: 11px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; white-space: nowrap;">🛑 Kết thúc</button>
                         </div>
                     </div>
-
-                    <!-- 2. VÒNG XANH (TRÍCH XUẤT XUỐNG BOTTOM): FORM ĐĂNG KÝ KIỂM TRA & SỬA CHỮA -->
-                    <div style="background: #fff; border: 2px solid #38a169; border-radius: 10px; padding: 16px; box-shadow: 0 4px 12px rgba(56,161,105,0.1);">
-                        <h4 style="margin: 0 0 12px 0; color: #276749; font-size: 16px;">🚀 Đăng Ký Kiểm Tra & Sửa Chữa Tại Chỗ</h4>
-                        
-                        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-                            <div>
-                                <label style="display: block; margin-bottom: 4px; color: #4a5568; font-weight: 500;">Họ và tên quý khách: <span style="color: red;">*</span></label>
-                                <input type="text" id="reg-name" placeholder="Nhập họ và tên..." style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; outline: none;">
-                            </div>
-                            <div>
-                                <label style="display: block; margin-bottom: 4px; color: #4a5568; font-weight: 500;">Số điện thoại liên hệ: <span style="color: red;">*</span></label>
-                                <input type="text" id="reg-phone" placeholder="Nhập số điện thoại..." style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; outline: none;">
-                            </div>
-                            <div>
-                                <label style="display: block; margin-bottom: 4px; color: #4a5568; font-weight: 500;">Địa chỉ sửa chữa / khảo sát: <span style="color: red;">*</span></label>
-                                <input type="text" id="reg-address" placeholder="Nhập số nhà, đường, quận/huyện..." style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; outline: none;">
-                            </div>
-
-                            <button id="reg-submit-btn" style="background: linear-gradient(135deg, #276749 0%, #38a169 100%); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; text-transform: uppercase; margin-top: 4px; box-shadow: 0 4px 10px rgba(56,161,105,0.3);">✨ Gửi Yêu Cầu Hỗ Trợ Ngay</button>
-                            
-                            <div style="display: flex; gap: 8px; margin-top: 6px;">
-                                <a href="https://zalo.me/0914060339" style="flex: 1; background: #0068ff; color: white; text-align: center; padding: 9px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px;">📞 Zalo: 0914 060 339</a>
-                                <a href="https://zalo.me/3260030944980440169" target="_blank" style="flex: 1; background: #0088ff; color: white; text-align: center; padding: 9px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px;">⭐ Quan tâm Zalo OA</a>
-                            </div>
-
-                            <a href="https://zalo.me/s/2109317456418246815/" style="background: #0055ff; color: white; text-align: center; padding: 9px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; display: block;">⚡ Mở Zalo Mini App An Tín</a>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
@@ -1472,7 +1424,7 @@ function showAIResultAndChatInterface() {
     `;
     document.body.appendChild(modal);
 
-    // Gắn sự kiện click xử lý trực tiếp
+    // Gắn sự kiện trực tiếp bằng JavaScript để đảm bảo ăn click 100%
     document.getElementById('ai-close-modal-x').onclick = function() {
         document.body.removeChild(modal);
     };
@@ -1486,21 +1438,9 @@ function showAIResultAndChatInterface() {
     };
 
     document.getElementById('ai-user-input').onkeypress = function(e) {
-        if (e.key === 'Enter') handleAISend();
-    };
-
-    document.getElementById('reg-submit-btn').onclick = function() {
-        const name = document.getElementById('reg-name').value.trim();
-        const phone = document.getElementById('reg-phone').value.trim();
-        const address = document.getElementById('reg-address').value.trim();
-
-        if (!name || !phone || !address) {
-            alert("⚠️ Vui lòng điền đầy đủ họ tên, số điện thoại và địa chỉ để An Tín hỗ trợ!");
-            return;
+        if (e.key === 'Enter') {
+            handleAISend();
         }
-
-        alert("🎉 Cảm ơn anh/chị " + name + "! Yêu cầu đăng ký kiểm tra đã được gửi thành công. Kỹ thuật viên sẽ liên hệ lại qua số " + phone + " trong giây lát!");
-        document.body.removeChild(modal);
     };
 }
 
@@ -1511,7 +1451,7 @@ function handleAISend() {
 
     let userText = input.value;
     chatBox.innerHTML += `
-        <div style="margin-bottom: 8px; text-align: right;">
+        <div style="margin-bottom: 10px; text-align: right;">
             <span style="background: #e2e8f0; color: #1e293b; padding: 8px 12px; border-radius: 6px; display: inline-block; text-align: left; max-width: 85%;">
                 👤 <b>Bạn:</b> ${userText}
             </span>
@@ -1521,9 +1461,9 @@ function handleAISend() {
 
     setTimeout(() => {
         chatBox.innerHTML += `
-            <div style="margin-bottom: 8px;">
+            <div style="margin-bottom: 10px;">
                 <span style="background: #f1f5f9; color: #1e3c72; padding: 8px 12px; border-radius: 6px; display: inline-block; max-width: 85%;">
-                    🤖 <b>AI Kỹ Thuật:</b> Dạ về vấn đề "${userText}", anh/chị cứ kiểm tra theo hướng dẫn phía trên nhé. Nếu cần gọi thợ gấp, anh/chị có thể điền form đăng ký phía dưới ạ!
+                    🤖 <b>AI Kỹ Thuật:</b> Dạ về vấn đề "${userText}", anh/chị cứ thao tác theo hướng dẫn trên nhé. Nếu cần hỗ trợ trực tiếp, bên em sẽ cử kỹ thuật viên liên hệ lại ngay ạ!
                 </span>
             </div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -1535,9 +1475,9 @@ function endAIChat() {
     if (!chatBox) return;
     
     chatBox.innerHTML += `
-        <div style="margin-bottom: 8px; text-align: center;">
+        <div style="margin-bottom: 10px; text-align: center;">
             <span style="background: #fed7d7; color: #c53030; padding: 8px 12px; border-radius: 6px; display: inline-block; font-weight: bold; font-size: 12px;">
-                🔒 Hội thoại đã được kết thúc. Cảm ơn anh/chị đã tin tưởng dịch vụ An Tín!
+                🔒 Hội thoại đã được kết thúc. Cảm ơn anh/chị đã sử dụng dịch vụ của An Tín!
             </span>
         </div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
