@@ -725,16 +725,13 @@
     <button class="error-item-btn" onclick="selectErrorItem('Bộ điều khiển trung gian Hub Gateway không phản hồi')"><span>🎛️ [SmartHome] Hub điều khiển trung tâm offline không rõ nguyên nhân</span><i class="fa-solid fa-chevron-right"></i></button>
 
     <button class="error-item-btn" onclick="selectErrorItem('Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin')"><span>☀️ [Đèn NLMT] Đèn năng lượng mặt trời không sáng / Mau hết pin</span><i class="fa-solid fa-chevron-right"></i></button>
-    <button class="error-item-btn" onclick="selectErrorItem('Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc')"><span>🔋 [Đèn NLMT] Tấm pin sạc không vào điện / Hỏng bo mạch sạc</span><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="error-item-btn" onclick="selectErrorItem('Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc')"><span>🔋 [Đèn NLMT] Tấm pin sạc không vào điện / Hỏng bo mạch sạc</span></button>
+    <button class="error-item-btn" onclick="selectErrorItem('Máy chấm công không nhận vân tay / Lỗi kết nối mạng LAN')"><span>⏰ [Văn Phòng] Máy chấm công không nhận vân tay / Lỗi kết nối LAN</span></button>
+    <button class="error-item-btn" onclick="selectErrorItem('Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài được')"><span>☎️ [Văn Phòng] Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài</span></button>
 
-    <!-- 2 LỖI MỚI BỔ SUNG (18 VÀ 19) -->
-    <button class="error-item-btn" onclick="selectErrorItem('Máy chấm công không nhận vân tay / Lỗi kết nối mạng LAN')"><span>⏰ [Văn Phòng] Máy chấm công không nhận vân tay / Lỗi kết nối LAN</span><i class="fa-solid fa-chevron-right"></i></button>
-    <button class="error-item-btn" onclick="selectErrorItem('Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài được')"><span>☎️ [Văn Phòng] Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài</span><i class="fa-solid fa-chevron-right"></i></button>
-</div>
-                        <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC</button>
-                    </div>
-                </div>
-            </div>
+    <!-- Nút chẩn đoán nằm trong khung hoặc ngay liền kề tùy layout gốc -->
+    <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC</button>
+    </div> <!-- Đóng thẻ div id="errorScrollList" ở đây là chuẩn xác nhất -->
         </main>
 
         <footer class="chat-footer">
