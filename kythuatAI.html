@@ -1322,7 +1322,7 @@
         document.getElementById('ai-result').style.display = 'block';
     }
 
-// Lắng nghe sự kiện click vào nút xanh CHẨN ĐOÁN LỖI
+// Lắng nghe sự kiện click nút chuẩn đoán lỗi
 document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll("button, div, span");
     buttons.forEach(el => {
@@ -1341,11 +1341,11 @@ function runAIEffects() {
         <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.9); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; color: white; backdrop-filter: blur(5px);">
             <div style="position: relative; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
                 <div style="position: absolute; width: 100%; height: 100%; border: 4px solid rgba(0, 255, 204, 0.2); border-radius: 50%;"></div>
-                <div class="ai-spinner" style="width: 100%; height: 100%; border: 4px solid transparent; border-top: 4px solid #00ffcc; border-bottom: 4px solid #38ef7d; border-radius: 50%; animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;"></div>
-                <span style="font-size: 24px;">🤖</span>
+                <div style="width: 100%; height: 100%; border: 4px solid transparent; border-top: 4px solid #00ffcc; border-bottom: 4px solid #38ef7d; border-radius: 50%; animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;"></div>
+                <span style="font-size: 24px; position: absolute;">🤖</span>
             </div>
-            <h2 id="ai-status-text" style="margin-top: 25px; color: #00ffcc; font-size: 22px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 0 10px rgba(0,255,204,0.5);">🚀 AI An Tín đang kích hoạt hệ thống...</h2>
-            <p style="color: #a0aec0; font-size: 14px; margin-top: 8px; animation: pulse 1.5s infinite;">⚡ Đang phân tích chuyên sâu kho tri thức kỹ thuật đa ngành...</p>
+            <h2 id="ai-status-text" style="margin-top: 25px; color: #00ffcc; font-size: 22px; text-transform: uppercase; letter-spacing: 1.5px;">🚀 AI An Tín đang kích hoạt hệ thống...</h2>
+            <p style="color: #a0aec0; font-size: 14px; margin-top: 8px;">⚡ Đang phân tích chuyên sâu kho tri thức kỹ thuật đa ngành...</p>
         </div>
     `;
     document.body.appendChild(overlay);
@@ -1355,7 +1355,6 @@ function runAIEffects() {
         style.id = 'ai-anim-style';
         style.innerHTML = `
             @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-            @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
             @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         `;
         document.head.appendChild(style);
@@ -1382,66 +1381,50 @@ function showAIResultAndChatInterface() {
         <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; backdrop-filter: blur(3px);">
             <div style="background: #ffffff; width: 90%; max-width: 680px; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; max-height: 90vh; animation: slideUp 0.4s ease-out;">
                 
-                <!-- Header Modal -->
                 <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="margin: 0; font-size: 19px; display: flex; align-items: center; gap: 8px;">✨ KẾT QUẢ CHUẨN ĐOÁN THÔNG MINH</h3>
-                    <span id="close-ai-modal" style="cursor: pointer; font-size: 26px; font-weight: bold; transition: 0.2s; color: #fff;" onmouseover="this.style.color='#00ffcc'" onmouseout="this.style.color='#fff'">&times;</span>
+                    <h3 style="margin: 0; font-size: 19px;">✨ KẾT QUẢ CHUẨN ĐOÁN THÔNG MINH</h3>
+                    <span onclick="document.body.removeChild(document.getElementById('ai-result-modal'))" style="cursor: pointer; font-size: 26px; font-weight: bold; color: #fff;">&times;</span>
                 </div>
 
-                <!-- Body Nội dung -->
                 <div style="padding: 22px; overflow-y: auto; flex: 1; background: #f8f9fa;">
-                    
-                    <!-- Box Lỗi nhận diện -->
-                    <div style="background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 14px; border-radius: 6px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
-                        <h4 style="margin: 0 0 6px 0; color: #2e7d32; font-size: 15px; display: flex; align-items: center; gap: 6px;">🎯 Vấn đề phát hiện:</h4>
+                    <div style="background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 14px; border-radius: 6px; margin-bottom: 15px;">
+                        <h4 style="margin: 0 0 6px 0; color: #2e7d32; font-size: 15px;">🎯 Vấn đề phát hiện:</h4>
                         <p style="margin: 0; font-size: 14px; color: #2c3e50; font-weight: 500;">Thiết bị đang gặp sự cố kết nối ngoại tuyến / gián đoạn tín hiệu đường truyền dữ liệu.</p>
                     </div>
 
-                    <!-- Box Hướng dẫn xử lý -->
-                    <div style="background: #e3f2fd; border-left: 5px solid #1976d2; padding: 14px; border-radius: 6px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
-                        <h4 style="margin: 0 0 8px 0; color: #1976d2; font-size: 15px; display: flex; align-items: center; gap: 6px;">🛠️ Hướng dẫn khắc phục nhanh tại nhà:</h4>
+                    <div style="background: #e3f2fd; border-left: 5px solid #1976d2; padding: 14px; border-radius: 6px; margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 8px 0; color: #1976d2; font-size: 15px;">🛠️ Hướng dẫn khắc phục nhanh tại nhà:</h4>
                         <p style="margin: 0; font-size: 14px; color: #2c3e50; line-height: 1.6;">
                             1️⃣ Kiểm tra nguồn điện cấp ổn định cho thiết bị.<br>
-                            2️⃣ Khởi động lại bộ định tuyến Hub / Router WiFi (tắt nguồn 10 giây rồi bật lại).<br>
+                            2️⃣ Khởi động lại bộ định tuyến Hub / Router WiFi.<br>
                             3️⃣ Kiểm tra lại dây cáp mạng kết nối tín hiệu.
                         </p>
                     </div>
 
-                    <!-- Khu vực Chat hỏi đáp AI -->
                     <div style="border-top: 2px dashed #cbd5e1; padding-top: 18px;">
-                        <h4 style="margin: 0 0 10px 0; color: #1e3c72; font-size: 15px; display: flex; align-items: center; gap: 6px;">💬 Trò chuyện trực tiếp với Chuyên Gia Kỹ Thuật AI:</h4>
+                        <h4 style="margin: 0 0 10px 0; color: #1e3c72; font-size: 15px;">💬 Trò chuyện trực tiếp với Chuyên Gia Kỹ Thuật AI:</h4>
                         
-                        <div id="ai-chat-box" style="height: 150px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; overflow-y: auto; font-size: 13px; margin-bottom: 12px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+                        <div id="ai-chat-box" style="height: 150px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; overflow-y: auto; font-size: 13px; margin-bottom: 12px;">
                             <div style="margin-bottom: 10px; color: #1e3c72; background: #f1f5f9; padding: 8px 12px; border-radius: 6px; width: fit-content; max-width: 85%;">
                                 🤖 <b>AI Kỹ Thuật:</b> Dạ em đã chuẩn đoán xong lỗi trên. Anh/chị có cần em hướng dẫn chi tiết thêm bước nào không ạ?
                             </div>
                         </div>
 
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn tại đây..." style="flex: 1; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; transition: 0.2s;" onfocus="this.style.borderColor='#1e3c72'">
-                            <button id="ai-send-btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 0 22px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(56, 239, 125, 0.4); transition: 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">🚀 Gửi</button>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn tại đây..." style="flex: 1; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none;" onkeypress="if(event.key === 'Enter') handleAISend()">
+                            <button onclick="handleAISend()" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 0 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; white-space: nowrap;">🚀 Gửi</button>
+                            <button onclick="endAIChat()" style="background: #e53e3e; color: white; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; white-space: nowrap;">🛑 Kết thúc</button>
                         </div>
                     </div>
-
                 </div>
 
             </div>
         </div>
     `;
     document.body.appendChild(modal);
-
-    document.getElementById('ai-send-btn').onclick = sendAIChatMessage;
-    document.getElementById('ai-user-input').onkeypress = function(e) {
-        if (e.key === 'Enter') {
-            sendAIChatMessage();
-        }
-    };
-    document.getElementById('close-ai-modal').onclick = function() {
-        document.body.removeChild(modal);
-    };
 }
 
-function sendAIChatMessage() {
+function handleAISend() {
     const input = document.getElementById('ai-user-input');
     const chatBox = document.getElementById('ai-chat-box');
     if (!input || !input.value.trim()) return;
@@ -1460,11 +1443,27 @@ function sendAIChatMessage() {
         chatBox.innerHTML += `
             <div style="margin-bottom: 10px;">
                 <span style="background: #f1f5f9; color: #1e3c72; padding: 8px 12px; border-radius: 6px; display: inline-block; max-width: 85%;">
-                    🤖 <b>AI Kỹ Thuật:</b> Dạ về vấn đề "${userText}", anh/chị cứ thao tác theo hướng dẫn trên trước nhé. Nếu đèn tín hiệu vẫn báo lỗi, hệ thống sẽ tự động chuyển thông tin cho kỹ thuật viên gọi lại hỗ trợ ngay ạ!
+                    🤖 <b>AI Kỹ Thuật:</b> Dạ về vấn đề "${userText}", anh/chị cứ thao tác theo hướng dẫn trên nhé. Nếu cần hỗ trợ trực tiếp, bên em sẽ cử kỹ thuật viên liên hệ lại ngay ạ!
                 </span>
             </div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
     }, 1000);
+}
+
+function endAIChat() {
+    const chatBox = document.getElementById('ai-chat-box');
+    chatBox.innerHTML += `
+        <div style="margin-bottom: 10px; text-align: center;">
+            <span style="background: #fed7d7; color: #c53030; padding: 8px 12px; border-radius: 6px; display: inline-block; font-weight: bold; font-size: 12px;">
+                🔒 Hội thoại đã được kết thúc. Cảm ơn anh/chị đã sử dụng dịch vụ của An Tín!
+            </span>
+        </div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    setTimeout(() => {
+        const modal = document.getElementById('ai-result-modal');
+        if (modal) document.body.removeChild(modal);
+    }, 2000);
 }
     
 </script>
