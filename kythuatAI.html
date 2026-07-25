@@ -1159,6 +1159,35 @@ const KNOWLEDGE_BASE = [
     
     ];
 
+// 2. CHÈN ĐOẠN CODE NÀY VÀO SAU MẢNG DỮ LIỆU
+    function renderKnowledgeBase(list = KNOWLEDGE_BASE) {
+        const container = document.querySelector('.error-list-container'); // <-- Thay bằng class thực tế của khung chứa danh sách trên HTML
+        if (!container) return;
+        
+        container.innerHTML = ''; 
+
+        list.forEach((item, index) => {
+            const itemHtml = `
+                <div class="error-item-btn d-flex align-items-center justify-content-between p-3 mb-2 rounded border bg-white shadow-sm" style="cursor: pointer;" data-index="${index}">
+                    <div class="d-flex align-items-center">
+                        <span class="me-3 fs-5">${item.issue.split(' ')[0]}</span>
+                        <div>
+                            <h6 class="mb-0 fw-bold text-dark">${item.issue}</h6>
+                            <small class="text-muted">${item.empathy}</small>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-primary"></i>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', itemHtml);
+        });
+    }
+
+    // Gọi hàm khi trang vừa tải xong
+    document.addEventListener('DOMContentLoaded', () => {
+        renderKnowledgeBase(KNOWLEDGE_BASE);
+    });    
+
     function processUserQuery(query) {
         const chatBody = document.getElementById('chatBody');
 
