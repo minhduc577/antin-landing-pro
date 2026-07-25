@@ -938,6 +938,612 @@
         processUserQuery(query);
     }
 
+const errorDatabase = {
+  "phan_1_camera": [
+    {
+      "id": "CAM-01",
+      "nhom": "🔴 [Khẩn Cấp] Không lên hình / mất tín hiệu",
+      "hien_tuyen": "⚠️ Camera hoàn toàn đen màn hình hoặc báo No Video",
+      "nguyen_nhan": "🔍 Lỏng jack nguồn, đứt cáp tín hiệu hoặc hỏng nguồn DC 12V",
+      "xu_ly": "🛠️ KIỂM TRA NGAY: Đo điện áp nguồn 12V, cắm lại jack BNC/RJ45 hoặc thay dây cáp mới."
+    },
+    {
+      "id": "CAM-02",
+      "nhom": "🔴 [Khẩn Cấp] Không lên hình / mất tín hiệu",
+      "hien_tuyen": "🌙 Mất tín hiệu camera ban đêm",
+      "nguyen_nhan": "🔍 Đèn hồng ngoại bị hỏng hoặc nguồn không đủ công suất khi bật hồng ngoại",
+      "xu_ly": "⚡ NÂNG CẤP NGAY: Thay thế nguồn dòng cao hơn (A lớn hơn) hoặc thay cụm đèn hồng ngoại mới."
+    },
+    {
+      "id": "CAM-03",
+      "nhom": "🔴 [Khẩn Cấp] Không lên hình / mất tín hiệu",
+      "hien_tuyen": "🔄 Camera chớp nháy liên tục lúc lên lúc mất",
+      "nguyen_nhan": "🔍 Điện áp sụt áp trên đường dây dài hoặc lỏng chân cắm",
+      "xu_ly": "⚡ XỬ LÝ NHANH: Đi lại đường dây nguồn riêng hoặc lắp nguồn tổng đặt gần vị trí camera."
+    },
+    {
+      "id": "CAM-04",
+      "nhom": "🔴 [Khẩn Cấp] Không lên hình / mất tín hiệu",
+      "hien_tuyen": "🔌 Đầu ghi không nhận 1 mắt camera cụ thể",
+      "nguyen_nhan": "🔍 Lỗi cổng port trên đầu ghi hoặc hỏng switch mạng PoE",
+      "xu_ly": "👉 HÀNH ĐỘNG: Cắm thử sang cổng port khác trên đầu ghi hoặc switch để test."
+    },
+    {
+      "id": "CAM-05",
+      "nhom": "🔴 [Khẩn Cấp] Không lên hình / mất tín hiệu",
+      "hien_tuyen": "🎨 Camera analog bị mất màu hoàn toàn",
+      "nguyen_nhan": "🔍 Lỗi chuẩn tín hiệu giữa camera (PAL/NTSC) và đầu ghi hoặc đứt cáp đồng trục",
+      "xu_ly": "⚙️ KHẮC PHỤC: Đổi định dạng tín hiệu trong phần cài đặt camera hoặc thay cáp mới."
+    },
+    {
+      "id": "CAM-06",
+      "nhom": "🔴 [Khẩn Cấp] Không lên hình / mất tín hiệu",
+      "hien_tuyen": "💥 Mất tín hiệu toàn bộ hệ thống camera",
+      "nguyen_nhan": "🔍 Mất nguồn tổng cấp cho toàn bộ hệ thống hoặc hỏng thiết bị trung tâm",
+      "xu_ly": "🚨 KIỂM TRA KHẨN: Kiểm tra aptomat tổng cấp nguồn camera và các thiết bị đổi nguồn trung tâm."
+    },
+    {
+      "id": "CAM-07",
+      "nhom": "📉 Hình ảnh kém chất lượng",
+      "hien_tuyen": "〰️ Hình ảnh camera bị nhiễu sóng, sọc ngang",
+      "nguyen_nhan": "🔍 Điện áp bị nhiễu từ đường dây điện lực chạy song song",
+      "xu_ly": "🛡️ XỬ LÝ NGAY: Tách rời cáp tín hiệu khỏi nguồn 220V, thay dây chống nhiễu chuyên dụng."
+    },
+    {
+      "id": "CAM-08",
+      "nhom": "📉 Hình ảnh kém chất lượng",
+      "hien_tuyen": "🌫️ Hình ảnh bị mờ đục, nhòe",
+      "nguyen_nhan": "🔍 Ống kính camera bị bám bụi, nước mưa đọng hoặc vân tay",
+      "xu_ly": "✨ BẢO TRÌ: Dùng khăn mềm chuyên dụng vệ sinh sạch sẽ mặt kính và ống kính bên ngoài."
+    },
+    {
+      "id": "CAM-09",
+      "nhom": "📉 Hình ảnh kém chất lượng",
+      "hien_tuyen": "🎨 Màu sắc camera bị ám vàng, ám tím hoặc lệch màu",
+      "nguyen_nhan": "🔍 Lỗi cảm biến ánh sáng (IC lọc hồng ngoại - IRCUT) bị kẹt",
+      "xu_ly": "🔄 KHỞI ĐỘNG LẠI: Khởi động lại camera hoặc gõ nhẹ vào thân máy để bật lẫy IRCUT."
+    },
+    {
+      "id": "CAM-10",
+      "nhom": "📉 Hình ảnh kém chất lượng",
+      "hien_tuyen": "💡 Hình ảnh ban đêm bị trắng lóa (hiệu ứng đèn pha)",
+      "nguyen_nhan": "🔍 Hồng ngoại phản chiếu ngược lại mặt kính hoặc vật cản quá gần",
+      "xu_ly": "📐 ĐIỀU CHỈNH: Đổi góc hướng camera tránh vật cản che chắn trực tiếp trước ống kính."
+    },
+    {
+      "id": "CAM-11",
+      "nhom": "📉 Hình ảnh kém chất lượng",
+      "hien_tuyen": "🔢 Hình bị vỡ hạt, phân giải thấp bất thường",
+      "nguyen_nhan": "🔍 Đang để độ phân giải Sub-stream (phụ) trên màn hình xem trực tiếp",
+      "xu_ly": "⚙️ TỐI ƯU HÓA: Chuyển cấu hình xem trực tiếp sang chế độ Main-stream (chính) nét cao."
+    },
+    {
+      "id": "CAM-12",
+      "nhom": "📉 Hình ảnh kém chất lượng",
+      "hien_tuyen": "🔃 Hình ảnh bị ngược đầu hoặc lật gương",
+      "nguyen_nhan": "🔍 Cài đặt sai thông số hình ảnh trên phần mềm quản lý",
+      "xu_ly": "👉 THao TÁC: Vào Cài đặt (Configuration) -> Image -> Bật tính năng Flip/Mirror."
+    },
+    {
+      "id": "CAM-13",
+      "nhom": "🌐 Không xem được từ xa",
+      "hien_tuyen": "📱 Không xem được camera trên điện thoại khi ra ngoài",
+      "nguyen_nhan": "🔍 Mất kết nối Internet của đầu ghi hoặc lỗi tên miền Cloud P2P",
+      "xu_ly": "🔄 XỬ LÝ: Kiểm tra đèn mạng trên đầu ghi, khởi động lại modem mạng internet."
+    },
+    {
+      "id": "CAM-14",
+      "nhom": "🌐 Không xem được từ xa",
+      "hien_tuyen": "❌ Báo lỗi Network Unreachable / Offline trên app điện thoại",
+      "nguyen_nhan": "🔍 Đầu ghi bị đổi địa chỉ IP hoặc cấu hình sai Subnet Mask/Gateway",
+      "xu_ly": "⚙️ CÀI ĐẶT: Kiểm tra cấu hình mạng LAN tĩnh hoặc chuyển về nhận IP động (DHCP)."
+    },
+    {
+      "id": "CAM-15",
+      "nhom": "🌐 Không xem được từ xa",
+      "hien_tuyen": "📶 Xem camera qua WiFi nhà được nhưng 4G không xem được",
+      "nguyen_nhan": "🔍 Lỗi cấu hình DNS trên đầu ghi hình hoặc nhà mạng chặn cổng",
+      "xu_ly": "🌐 ĐỔI DNS: Cài đặt DNS của đầu ghi thành 8.8.8.8 và 8.8.4.4."
+    },
+    {
+      "id": "CAM-16",
+      "nhom": "🌐 Không xem được từ xa",
+      "hien_tuyen": "🔒 Quét mã QR gán thiết bị báo lỗi thiết bị đã được thêm",
+      "nguyen_nhan": "🔍 Camera đang được quản lý bởi một tài khoản Cloud khác",
+      "xu_ly": "🔑 MỞ KHÓA: Dùng tài khoản cũ hủy liên kết (unbind) hoặc tiến hành reset cứng camera."
+    },
+    {
+      "id": "CAM-17",
+      "nhom": "🌐 Không xem được từ xa",
+      "hien_tuyen": "🐢 Tốc độ tải hình ảnh từ xa bị chậm, giật lag",
+      "nguyen_nhan": "🔍 Băng thông mạng Internet tại nơi lắp đặt quá yếu (Upload thấp)",
+      "xu_ly": "🚀 TỐI ƯU: Giảm độ phân giải khung hình phụ hoặc liên hệ nhà mạng nâng cấp gói cước."
+    },
+    {
+      "id": "CAM-18",
+      "nhom": "🌐 Không xem được từ xa",
+      "hien_tuyen": "📲 Ứng dụng xem camera bị văng ra hoặc không load được hình",
+      "nguyen_nhan": "🔍 Ứng dụng trên điện thoại bị lỗi phiên bản cũ hoặc đầy bộ nhớ đệm",
+      "xu_ly": "🔄 CẬP NHẬT: Xóa cache ứng dụng hoặc tải phiên bản App mới nhất từ Store."
+    },
+    {
+      "id": "CAM-19",
+      "nhom": "⚙️ Lỗi đầu ghi hình NVR/DVR",
+      "hien_tuyen": "🔄 Đầu ghi tự khởi động lại liên tục (looping)",
+      "nguyen_nhan": "🔍 Nguồn điện cấp cho đầu ghi không đủ dòng hoặc lỗi phần cứng mainboard",
+      "xu_ly": "⚡ THAY THẾ: Sử dụng adapter nguồn đầu ghi chính hãng có dòng tải cao hơn."
+    },
+    {
+      "id": "CAM-20",
+      "nhom": "⚙️ Lỗi đầu ghi hình NVR/DVR",
+      "hien_tuyen": "🔔 Đầu ghi kêu tiếng tít tít ngắt quãng liên tục",
+      "nguyen_nhan": "🔍 Cảnh báo lỗi ổ cứng, xung đột địa chỉ IP hoặc mất kết nối mạng",
+      "xu_ly": "🛠️ XỬ LÝ: Vào mục Alarm/Exception trên đầu ghi để tắt cảnh báo hoặc kiểm tra ổ cứng."
+    },
+    {
+      "id": "CAM-21",
+      "nhom": "⚙️ Lỗi đầu ghi hình NVR/DVR",
+      "hien_tuyen": "🔑 Không truy cập được vào giao diện cài đặt do quên mật khẩu",
+      "nguyen_nhan": "🔍 Người dùng quên password quản trị (Admin)",
+      "xu_ly": "📧 KHÔI PHỤC: Sử dụng tính năng reset mật khẩu qua Email hoặc liên hệ hãng lấy file kích hoạt."
+    },
+    {
+      "id": "CAM-22",
+      "nhom": "⚙️ Lỗi đầu ghi hình NVR/DVR",
+      "hien_tuyen": "🖱️ Đầu ghi không nhận chuột hoặc bàn phím cắm qua cổng USB",
+      "nguyen_nhan": "🔍 Lỗi cổng USB hoặc thiếu nguồn cấp cổng USB trên main đầu ghi",
+      "xu_ly": "👉 KIỂM TRA: Cắm chuột sang cổng USB khác (trước/sau) hoặc thay chuột mới."
+    },
+    {
+      "id": "CAM-23",
+      "nhom": "⚙️ Lỗi đầu ghi hình NVR/DVR",
+      "hien_tuyen": "📺 Cổng xuất hình ảnh HDMI/VGA trên đầu ghi không lên hình",
+      "nguyen_nhan": "🔍 Độ phân giải đầu ghi vượt quá khả năng hiển thị của màn hình TV/Monitor",
+      "xu_ly": "⚙️ ĐIỀU CHỈNH: Cắm qua màn hình khác hạ độ phân giải xuống 1080P hoặc 720P."
+    },
+    {
+      "id": "CAM-24",
+      "nhom": "⚙️ Lỗi đầu ghi hình NVR/DVR",
+      "hien_tuyen": "💻 Đầu ghi bị treo đơ giao diện, không bấm được chuột",
+      "nguyen_nhan": "🔍 Nhiệt độ đầu ghi quá cao hoặc tràn bộ nhớ đệm tạm thời",
+      "xu_ly": "❄️ LÀM MÁT: Rút nguồn điện khởi động lại thiết bị và đặt nơi thoáng mát."
+    },
+    {
+      "id": "CAM-25",
+      "nhom": "💾 Lỗi lưu trữ ổ cứng HDD",
+      "hien_tuyen": "❌ Đầu ghi báo lỗi No Disk hoặc không tìm thấy ổ cứng",
+      "nguyen_nhan": "🔍 Lỏng cáp nguồn/cáp dữ liệu SATA hoặc ổ cứng chưa được định dạng",
+      "xu_ly": "🛠️ KHẮC PHỤC: Kiểm tra cáp SATA, cấp nguồn cho HDD hoặc tiến hành Format lại ổ cứng."
+    },
+    {
+      "id": "CAM-26",
+      "nhom": "💾 Lỗi lưu trữ ổ cứng HDD",
+      "hien_tuyen": "📂 Không xem lại được lịch sử ghi hình cũ",
+      "nguyen_nhan": "🔍 Ổ cứng bị full dung lượng và không bật chế độ ghi đè (Overwrite)",
+      "xu_ly": "⚙️ CẤU HÌNH: Bật lại tính năng ghi hình tự động ghi đè khi ổ cứng đầy."
+    },
+    {
+      "id": "CAM-27",
+      "nhom": "💾 Lỗi lưu trữ ổ cứng HDD",
+      "hien_tuyen": "🔊 Ổ cứng phát ra tiếng kêu lạch cạch liên tục",
+      "nguyen_nhan": "🔍 Ổ cứng HDD bị lỗi cơ, hỏng đầu đọc bên trong",
+      "xu_ly": "🚨 THAY NGAY: Lắp đặt ngay ổ cứng chuyên dụng mới để bảo vệ dữ liệu quan trọng."
+    },
+    {
+      "id": "CAM-28",
+      "nhom": "💾 Lỗi lưu trữ ổ cứng HDD",
+      "hien_tuyen": "⏱️ Thời gian lưu trữ dữ liệu bị ngắn hơn thực tế",
+      "nguyen_nhan": "🔍 Tăng số lượng camera hoặc nâng độ phân giải khiến ổ cứng nhanh đầy",
+      "xu_ly": "💾 NÂNG CẤP: Lắp ổ cứng dung lượng lớn hơn hoặc bật chế độ ghi hình theo chuyển động."
+    },
+    {
+      "id": "CAM-29",
+      "nhom": "💾 Lỗi lưu trữ ổ cứng HDD",
+      "hien_tuyen": "⚠️ Lỗi phân vùng dữ liệu không thể ghi đè",
+      "nguyen_nhan": "🔍 Lỗi firmware ổ cứng hoặc xung đột hệ thống tệp tin",
+      "xu_ly": "🧹 LÀM SẠCH: Thực hiện Format xóa sạch dữ liệu trực tiếp trên trình quản lý đầu ghi."
+    },
+    {
+      "id": "CAM-30",
+      "nhom": "⚡ Nguồn điện và phần cứng",
+      "hien_tuyen": "🔥 Adapter nguồn camera bị nóng ran và cháy nổ",
+      "nguyen_nhan": "🔍 Chất lượng nguồn kém, quá tải công suất hoặc sét đánh lan truyền",
+      "xu_ly": "🛡️ THAY MỚI: Dùng adapter chính hãng, chất lượng cao có tích hợp chống sét lan truyền."
+    },
+    {
+      "id": "CAM-31",
+      "nhom": "⚡ Nguồn điện và phần cứng",
+      "hien_tuyen": "💧 Vỏ camera ngoài trời bị đọng nước bên trong ống kính",
+      "nguyen_nhan": "🔍 Gioăng cao su chống nước bị lão hóa, hở khe hở",
+      "xu_ly": "🛠️ XỬ LÝ: Tháo vỏ sấy khô, thay gioăng cao su mới và dán keo silicon chống nước tuyệt đối."
+    },
+    {
+      "id": "CAM-32",
+      "nhom": "⚡ Nguồn điện và phần cứng",
+      "hien_tuyen": "🔩 Chân đế camera bị lỏng lẻo, gục xuống sau thời gian sử dụng",
+      "nguyen_nhan": "🔍 Ốc siết khớp xoay bị lỏng do gió bão hoặc rung động",
+      "xu_ly": "🔧 SIẾT CHẶT: Dùng lục giác hoặc tua vít siết chặt lại các khớp cố định góc độ."
+    },
+    {
+      "id": "CAM-33",
+      "nhom": "⚡ Nguồn điện và phần cứng",
+      "hien_tuyen": "🔌 Cổng kết nối RJ45 ngoài trời bị oxy hóa rỉ sét",
+      "nguyen_nhan": "🔍 Không bọc băng dính chống nước hoặc hộp kỹ thuật bảo vệ kém",
+      "xu_ly": "🛡️ BẢO VỆ: Bấm lại hạt mạng mới, quấn băng dính chống nước và đưa vào hộp kỹ thuật."
+    }
+  ],
+  "phan_2_wifi": [
+    {
+      "id": "WIFI-01",
+      "nhom": "📶 Sóng yếu, chập chờn, hay rớt mạng",
+      "hien_tuyen": "📉 Sóng WiFi chập chờn lúc có lúc không ở các phòng xa",
+      "nguyen_nhan": "🔍 Khoảng cách quá xa, bị cản trở bởi tường bê tông dày",
+      "xu_ly": "🚀 NÂNG CẤP: Lắp thêm bộ kích sóng (Repeater) hoặc chuyển sang hệ thống Mesh WiFi toàn diện."
+    },
+    {
+      "id": "WIFI-02",
+      "nhom": "📶 Sóng yếu, chập chờn, hay rớt mạng",
+      "hien_tuyen": "💥 Thiết bị kết nối WiFi liên tục bị văng mạng (disconnect)",
+      "nguyen_nhan": "🔍 Quá tải số lượng thiết bị truy cập vào cùng một băng tần Router",
+      "xu_ly": "⚙️ TỐI ƯU: Phân chia lại thiết bị sang băng tần 5GHz hoặc nâng cấp Router chịu tải cao."
+    },
+    {
+      "id": "WIFI-03",
+      "nhom": "📶 Sóng yếu, chập chờn, hay rớt mạng",
+      "hien_tuyen": "〰️ WiFi bị nhiễu sóng nặng do trùng kênh (Channel)",
+      "nguyen_nhan": "🔍 Quá nhiều mạng WiFi xung quanh phát cùng kênh tần số 2.4GHz",
+      "xu_ly": "👉 ĐỔI KÊNH: Đăng nhập Router đổi kênh phát sóng cố định sang kênh 1, 6 hoặc 11."
+    },
+    {
+      "id": "WIFI-04",
+      "nhom": "📶 Sóng yếu, chập chờn, hay rớt mạng",
+      "hien_tuyen": "⚡ Thiết bị kết nối sóng 5GHz nhưng chập chờn",
+      "nguyen_nhan": "🔍 Tần số 5GHz khả năng xuyên tường rất kém, gặp vật cản là mất sóng",
+      "xu_ly": "📍 ĐIỀU CHỈNH: Đứng gần thiết bị phát hoặc chuyển sang băng tần 2.4GHz nếu ở phòng khác."
+    },
+    {
+      "id": "WIFI-05",
+      "nhom": "📶 Sóng yếu, chập chờn, hay rớt mạng",
+      "hien_tuyen": "🕒 Rớt mạng đột ngột vào các khung giờ cao điểm",
+      "nguyen_nhan": "🔍 Nhà mạng bị nghẽn băng thông quốc tế hoặc thiết bị bị quá nhiệt",
+      "xu_ly": "🔄 KHỞI ĐỘNG: Khởi động lại modem nhà mạng và đặt nơi thông thoáng."
+    },
+    {
+      "id": "WIFI-06",
+      "nhom": "🌐 Kết nối wifi nhưng không vào được Internet",
+      "hien_tuyen": "⚠️ Kết nối WiFi thành công nhưng hiện dấu chấm than vàng / Không có Internet",
+      "nguyen_nhan": "🔍 Mất kết nối tín hiệu từ nhà mạng hoặc lỗi cấp phát IP (DHCP)",
+      "xu_ly": "🚨 KIỂM TRA: Khởi động lại Modem chính, kiểm tra cáp quang báo tín hiệu LOS."
+    },
+    {
+      "id": "WIFI-07",
+      "nhom": "🌐 Kết nối wifi nhưng không vào được Internet",
+      "hien_tuyen": "⏳ Thiết bị báo lỗi Obtaining IP address... (Đang lấy địa chỉ IP)",
+      "nguyen_nhan": "🔍 Dịch vụ cấp phát IP DHCP trên Router bị treo hoặc đầy pool IP",
+      "xu_ly": "🔄 XỬ LÝ: Khởi động lại Router hoặc cấu hình IP tĩnh cho thiết bị truy cập."
+    },
+    {
+      "id": "WIFI-08",
+      "nhom": "🌐 Kết nối wifi nhưng không vào được Internet",
+      "hien_tuyen": "❌ Trình duyệt web báo lỗi DNS_PROBE_FINISHED_NXDOMAIN",
+      "nguyen_nhan": "🔍 Lỗi phân giải tên miền DNS của nhà mạng",
+      "xu_ly": "🌐 ĐỔI DNS: Cài đặt Google DNS (8.8.8.8) hoặc Cloudflare (1.1.1.1) ngay lập tức."
+    },
+    {
+      "id": "WIFI-09",
+      "nhom": "🌐 Kết nối wifi nhưng không vào được Internet",
+      "hien_tuyen": "📋 Mạng WiFi đòi đăng nhập trang chào (Captive Portal) liên tục",
+      "nguyen_nhan": "🔍 Lỗi xác thực phiên kết nối hoặc thiết bị chưa được cấp quyền truy cập",
+      "xu_ly": "⚙️ CÀI ĐẶT: Kiểm tra lại gói cước hoặc cấu hình xác thực của bộ phát WiFi doanh nghiệp."
+    },
+    {
+      "id": "WIFI-10",
+      "nhom": "🌐 Kết nối wifi nhưng không vào được Internet",
+      "hien_tuyen": "💻 Một số thiết bị vào được mạng, một số thiết bị không vào được",
+      "nguyen_nhan": "🔍 Thiết bị bị lỗi cấu hình mạng cục bộ hoặc bị chặn MAC Address",
+      "xu_ly": "👉 THAO TÁC: Quên mạng WiFi (Forget Network) trên thiết bị rồi kết nối lại từ đầu."
+    },
+    {
+      "id": "WIFI-11",
+      "nhom": "🐢 Tốc độ mạng chậm",
+      "hien_tuyen": "📉 Tốc độ mạng đo được thấp hơn nhiều so với gói cước đăng ký",
+      "nguyen_nhan": "🔍 Đứt cáp quang biển, nghẽn mạng cục bộ hoặc dây mạng LAN bị suy hao",
+      "xu_ly": "📞 LIÊN HỆ: Kiểm tra tốc độ qua Speedtest, gọi ngay tổng đài nhà mạng kiểm tra."
+    },
+    {
+      "id": "WIFI-12",
+      "nhom": "🐢 Tốc độ mạng chậm",
+      "hien_tuyen": "🎥 Xem video bị giật lag liên tục mặc dù sóng WiFi căng tràn",
+      "nguyen_nhan": "🔍 Băng thông bị chiếm dụng quá nhiều bởi các thiết bị tải nặng (download/torrent)",
+      "xu_ly": "⚙️ CÀI ĐẶT: Kích hoạt tính năng giới hạn băng thông (QoS) trên Router quản lý."
+    },
+    {
+      "id": "WIFI-13",
+      "nhom": "🐢 Tốc độ mạng chậm",
+      "hien_tuyen": "🔌 Sử dụng cáp mạng LAN nối dài nhưng tốc độ bị bóp xuống 100Mbps",
+      "nguyen_nhan": "🔍 Cáp mạng chỉ bấm 4 sợi thay vì đủ 8 sợi hoặc switch mạng cũ",
+      "xu_ly": "🛠️ BẤM LẠI: Làm lại đầu cáp chuẩn 8 sợi hoặc nâng cấp Switch mạng Gigabit (1000Mbps)."
+    },
+    {
+      "id": "WIFI-14",
+      "nhom": "🐢 Tốc độ mạng chậm",
+      "hien_tuyen": "🌙 Mạng chậm đột ngột vào các khung giờ buổi tối",
+      "nguyen_nhan": "🔍 Lưu lượng truy cập chung của khu vực tăng cao quá tải",
+      "xu_ly": "🚀 NÂNG CẤP: Đăng ký nâng cấp gói cước cáp quang tốc độ cao hơn."
+    },
+    {
+      "id": "WIFI-15",
+      "nhom": "⚙️ Lỗi Router / Modem",
+      "hien_tuyen": "🔥 Router WiFi nóng ran, tự khởi động lại ngẫu nhiên",
+      "nguyen_nhan": "🔍 Nguồn adapter không ổn định hoặc thiết bị đặt trong không gian kín",
+      "xu_ly": "❄️ BẢO VỆ: Đặt modem nơi thoáng mát, vệ sinh bụi bẩn và thay nguồn chuẩn."
+    },
+    {
+      "id": "WIFI-16",
+      "nhom": "⚙️ Lỗi Router / Modem",
+      "hien_tuyen": "🔐 Không thể truy cập vào trang quản trị của Router (192.168.1.1)",
+      "nguyen_nhan": "🔍 Nhập sai địa chỉ IP gateway hoặc máy tính không kết nối đúng mạng",
+      "xu_ly": "👉 KIỂM TRA: Xem lại địa chỉ IP gateway mặc định in trên tem đáy thiết bị."
+    },
+    {
+      "id": "WIFI-17",
+      "nhom": "⚙️ Lỗi Router / Modem",
+      "hien_tuyen": "🛑 Router bị treo cứng (đèn báo đứng yên không nhấp nháy)",
+      "nguyen_nhan": "🔍 Tràn RAM phần cứng do xử lý quá nhiều gói tin liên tục",
+      "xu_ly": "🔄 RESET: Nhấn giữ nút Reset hoặc rút nguồn cắm lại sau 10 giây."
+    },
+    {
+      "id": "WIFI-18",
+      "nhom": "⚙️ Lỗi Router / Modem",
+      "hien_tuyen": "❌ Cổng cắm LAN trên Router bị mất đèn tín hiệu Link",
+      "nguyen_nhan": "🔍 Cháy cổng port LAN do sét đánh lan truyền hoặc lỏng cáp",
+      "xu_ly": "👉 ĐỔI CỔNG: Cắm dây mạng sang cổng LAN khác còn hoạt động trên thiết bị."
+    },
+    {
+      "id": "WIFI-19",
+      "nhom": "⚙️ Lỗi Router / Modem",
+      "hien_tuyen": "🚨 Đèn LOS trên Modem nhà mạng sáng đỏ",
+      "nguyen_nhan": "🔍 Đứt cáp quang ngoài trời hoặc lỏng đầu quang SC/APC",
+      "xu_ly": "📞 GỌI THỢ: Liên hệ ngay tổng đài nhà mạng (VNPT/Viettel/FPT) để cử thợ hàn cáp."
+    },
+    {
+      "id": "WIFI-20",
+      "nhom": "🔒 Bảo mật mạng WiFi",
+      "hien_tuyen": "👥 Mạng WiFi tự động bị chậm đột ngột do có người dùng ké",
+      "nguyen_nhan": "🔍 Mật khẩu WiFi quá yếu hoặc bị lộ cho người ngoài",
+      "xu_ly": "🔑 BẢO MẬT: Đổi mật khẩu WiFi mạnh hơn và bật chế độ mã hóa WPA2/WPA3."
+    },
+    {
+      "id": "WIFI-21",
+      "nhom": "🔒 Bảo mật mạng WiFi",
+      "hien_tuyen": "🕵️ Thiết bị lạ xuất hiện trong danh sách kết nối Router",
+      "nguyen_nhan": "🔍 Bị lộ mã PIN WPS hoặc bị dò mật khẩu truy cập",
+      "xu_ly": "🛡️ CHẶN NGAY: Tắt tính năng WPS trên Router và chặn địa chỉ MAC của thiết bị lạ."
+    },
+    {
+      "id": "WIFI-22",
+      "nhom": "🔒 Bảo mật mạng WiFi",
+      "hien_tuyen": "👁️ Không ẩn được tên mạng WiFi (Disable SSID Broadcast)",
+      "nguyen_nhan": "🔍 Cài đặt sai trên một số dòng modem đời cũ không hỗ trợ ẩn SSID",
+      "xu_ly": "🚀 NÂNG CẤP: Cập nhật firmware hoặc sử dụng bộ phát phụ hỗ trợ ẩn tên mạng."
+    }
+  ],
+  "phan_3_dien_gia_dinh": [
+    {
+      "id": "DIEN-01",
+      "nhom": "⚡ Cầu dao (CB/Aptomat) & nguồn tổng",
+      "hien_tuyen": "💥 Aptomat tổng tự động ngắt (nhảy CB) liên tục khi bật lên",
+      "nguyen_nhan": "🔍 Xảy ra hiện tượng chập điện cục bộ trong hệ thống hoặc quá tải công suất",
+      "xu_ly": "🚨 KIỂM TRA: Ngắt thiết bị công suất lớn, tìm đường dây chập cháy rồi mới bật lại CB."
+    },
+    {
+      "id": "DIEN-02",
+      "nhom": "⚡ Cầu dao (CB/Aptomat) & nguồn tổng",
+      "hien_tuyen": "⚡ Aptomat chống giật (RCBO/RCCB) cứ bật lên là sập ngay",
+      "nguyen_nhan": "🔍 Có thiết bị bị rò rỉ điện ra vỏ hoặc đường dây âm tường bị ẩm ướt rò điện",
+      "xu_ly": "🛠️ XỬ LÝ: Kiểm tra thiết bị ẩm (bình nóng lạnh, máy bơm) và đo điện trở cách điện."
+    },
+    {
+      "id": "DIEN-03",
+      "nhom": "⚡ Cầu dao (CB/Aptomat) & nguồn tổng",
+      "hien_tuyen": "🔧 Cần gạt Aptomat bị lỏng lẻo, không giữ được nấc ON",
+      "nguyen_nhan": "🔍 Lò xo bên trong aptomat bị hỏng hoặc tiếp điểm bị cháy dính",
+      "xu_ly": "🛡️ THAY MỚI: Lắp đặt ngay aptomat mới có dòng định mức phù hợp để đảm bảo an toàn."
+    },
+    {
+      "id": "DIEN-04",
+      "nhom": "⚡ Cầu dao (CB/Aptomat) & nguồn tổng",
+      "hien_tuyen": "🔊 Aptomat phát ra tiếng kêu rè rè và nóng ran",
+      "nguyen_nhan": "🔍 Ốc vít siết cọc đấu nối bị lỏng gây đánh lửa phóng điện",
+      "xu_ly": "⚡ AN TOÀN: Ngắt điện tổng, dùng tua vít siết chặt lại các cọc đấu nối dây điện."
+    },
+    {
+      "id": "DIEN-05",
+      "nhom": "⚡ Cầu dao (CB/Aptomat) & nguồn tổng",
+      "hien_tuyen": "🌑 Mất điện toàn bộ nhà nhưng aptomat tổng không nhảy",
+      "nguyen_nhan": "🔍 Mất điện lưới ngoài đường hoặc đứt cầu chì/cầu dao ngoài trụ điện",
+      "xu_ly": "📞 KIỂM TRA: Hỏi nhà hàng xóm xem có điện không, liên hệ tổng đài điện lực khu vực."
+    },
+    {
+      "id": "DIEN-06",
+      "nhom": "🔌 Ổ cắm, công tắc, dây dẫn điện",
+      "hien_tuyen": "🔌 Ổ cắm điện bị lỏng chân cắm, cắm phích vào bị rơi ra",
+      "nguyen_nhan": "🔍 Lò xo kẹp bên trong ổ cắm bị giãn rộng sau thời gian dài sử dụng",
+      "xu_ly": "🛠️ THAY THẾ: Lắp đặt ổ cắm điện mới chất lượng cao để tiếp xúc điện tốt nhất."
+    },
+    {
+      "id": "DIEN-07",
+      "nhom": "🔌 Ổ cắm, công tắc, dây dẫn điện",
+      "hien_tuyen": "🔥 Ổ cắm điện có mùi khét nhẹ và xẹt lửa khi cắm thiết bị",
+      "nguyen_nhan": "🔍 Tiếp xúc kém gây phóng điện hồ quang sinh nhiệt làm cháy ổ cắm",
+      "xu_ly": "🚨 NGẮT ĐIỆN: Cắt nguồn ngay, kiểm tra và thay thế ổ cắm cùng đoạn dây cháy xém."
+    },
+    {
+      "id": "DIEN-08",
+      "nhom": "🔌 Ổ cắm, công tắc, dây dẫn điện",
+      "hien_tuyen": "💡 Công tắc đèn bật không có tác dụng hoặc bị kẹt cứng",
+      "nguyen_nhan": "🔍 Tiếp điểm bên trong công tắc bị mô-binh cháy đen hoặc hỏng lò xo",
+      "xu_ly": "🛠️ THAY MỚI: Lắp đặt công tắc đèn mới hoạt động bền bỉ."
+    },
+    {
+      "id": "DIEN-09",
+      "nhom": "🔌 Ổ cắm, công tắc, dây dẫn điện",
+      "hien_tuyen": "⚠️ Dây dẫn điện đi nổi bị sờn vỏ, lộ lõi đồng bên trong",
+      "nguyen_nhan": "🔍 Do chuột cắn, va đập cơ học hoặc lão hóa nhựa vỏ dây",
+      "xu_ly": "🛡️ XỬ LÝ: Quấn băng dính cách điện chuyên dụng hoặc thay thế đoạn dây mới an toàn."
+    },
+    {
+      "id": "DIEN-10",
+      "nhom": "🔌 Ổ cắm, công tắc, dây dẫn điện",
+      "hien_tuyen": "🌡️ Tường nhà tại vị trí đi ngầm dây điện bị nóng ấm bất thường",
+      "nguyen_nhan": "🔍 Dây dẫn âm tường bị quá tải nhiệt hoặc chập chờn rò điện ngầm",
+      "xu_ly": "🚨 KIỂM TRA: Đo dòng tải thực tế, tìm vị trí điểm nóng để cắt nối lại đường dây."
+    },
+    {
+      "id": "DIEN-11",
+      "nhom": "💡 Hệ thống chiếu sáng",
+      "hien_tuyen": "✨ Bóng đèn LED bị nhấp nháy liên tục khi bật",
+      "nguyen_nhan": "🔍 Hỏng bộ nguồn driver LED bên trong hoặc công tắc đấu nhầm dây trung tính",
+      "xu_ly": "🛠️ SỬA CHỮA: Thay thế nguồn driver LED mới hoặc đấu lại công tắc đúng dây pha."
+    },
+    {
+      "id": "DIEN-12",
+      "nhom": "💡 Hệ thống chiếu sáng",
+      "hien_tuyen": "🌙 Bóng đèn LED tắt công tắc rồi nhưng vẫn thấy sáng mờ mờ",
+      "nguyen_nhan": "🔍 Công tắc đang ngắt dây trung tính (Nguội) thay vì ngắt dây nóng (Pha)",
+      "xu_ly": "⚡ ĐẤU NỐI: Đổi chiều đấu nối dây tại công tắc để ngắt tuyệt đối dây pha."
+    },
+    {
+      "id": "DIEN-13",
+      "nhom": "💡 Hệ thống chiếu sáng",
+      "hien_tuyen": "💡 Đèn tuýp huỳnh quang cũ bật lâu mới sáng hoặc mờ hai đầu",
+      "nguyen_nhan": "🔍 Hỏng tắc te (starter) hoặc bóng đã cạn khí huỳnh quang",
+      "xu_ly": "🚀 NÂNG CẤP: Thay tắc te mới hoặc chuyển đổi sang dùng đèn LED tuýp tiết kiệm điện."
+    },
+    {
+      "id": "DIEN-14",
+      "nhom": "💡 Hệ thống chiếu sáng",
+      "hien_tuyen": "📉 Đèn LED âm trần bị rơi xệ một bên chóa",
+      "nguyen_nhan": "🔍 Lò xo kẹp giữ đèn bị gãy hoặc thạch cao trần bị mục",
+      "xu_ly": "🛠️ GIA CỐ: Thay lò xo kẹp mới hoặc gia cố lại khung xương thạch cao chắc chắn."
+    },
+    {
+      "id": "DIEN-15",
+      "nhom": "🌀 Thiết bị điện gia dụng (quạt, bơm...)",
+      "hien_tuyen": "🔄 Quạt điện bật không quay, dùng tay quay trớn mới chạy",
+      "nguyen_nhan": "🔍 Tụ đề của quạt bị khô hoặc hỏng, bạc đạn bị khô dầu kẹt cốt",
+      "xu_ly": "🛠️ BẢO DƯỠNG: Thay tụ điện đề mới cho quạt và tra dầu mỡ vào bạc đạn cốt quạt."
+    },
+    {
+      "id": "DIEN-16",
+      "nhom": "🌀 Thiết bị điện gia dụng (quạt, bơm...)",
+      "hien_tuyen": "💧 Máy bơm nước kêu o o nhưng không lên nước",
+      "nguyen_nhan": "🔍 Mất nước mồi, kẹt cánh quạt bơm hoặc tụ điện máy bơm bị yếu",
+      "xu_ly": "⚙️ MỒI NƯỚC: Bơm nước mồi vào buồng bơm, kiểm tra cánh quạt và thay tụ nếu cần."
+    },
+    {
+      "id": "DIEN-17",
+      "nhom": "🌀 Thiết bị điện gia dụng (quạt, bơm...)",
+      "hien_tuyen": "🌡️ Bình nóng lạnh bật lâu nhưng nước không nóng",
+      "nguyen_nhan": "🔍 Hỏng thanh gia nhiệt (may so) hoặc hỏng rơ le nhiệt bảo vệ",
+      "xu_ly": "🛠️ XỬ LÝ: Kiểm tra rơ le, reset nút bảo vệ hoặc thay thế thanh gia nhiệt mới."
+    },
+    {
+      "id": "DIEN-18",
+      "nhom": "🌀 Thiết bị điện gia dụng (quạt, bơm...)",
+      "hien_tuyen": "❌ Nồi cơm điện cắm điện không vào đèn báo",
+      "nguyen_nhan": "🔍 Đứt cầu chì nhiệt bảo vệ bên trong hoặc lỏng dây nguồn cắm",
+      "xu_ly": "🔧 SỬA CHỮA: Kiểm tra dây nguồn và thay thế cầu chì nhiệt chuyên dụng bên trong."
+    },
+    {
+      "id": "DIEN-19",
+      "nhom": "🌀 Thiết bị điện gia dụng (quạt, bơm...)",
+      "hien_tuyen": "🌪️ Máy giặt rung lắc mạnh và kêu to khi vắt",
+      "nguyen_nhan": "🔍 Quần áo bị dồn lệch một bên hoặc hỏng lò xo giảm xóc lồng giặt",
+      "xu_ly": "⚖️ CÂN CHỈNH: Rải đều quần áo trong lồng giặt, cân chỉnh lại chân máy giặt phẳng."
+    },
+    {
+      "id": "DIEN-20",
+      "nhom": "⚠️ An toàn điện — cảnh báo cần lưu ý",
+      "hien_tuyen": "⚡ Chạm tay vào vỏ máy giặt / bình nóng lạnh bị tê giật nhẹ",
+      "nguyen_nhan": "🔍 Thiết bị chưa được đấu nối hệ thống dây tiếp địa (dây mát chống giật)",
+      "xu_ly": "🛡️ LẮP ĐẶT: Thi công ngay hệ thống cọc tiếp địa nối đất an toàn cho toàn bộ thiết bị."
+    },
+    {
+      "id": "DIEN-21",
+      "nhom": "⚠️ An toàn điện — cảnh báo cần lưu ý",
+      "hien_tuyen": "🔥 Mùi khét nhựa cháy phát ra từ khu vực bảng điện tổng",
+      "nguyen_nhan": "🔍 Quá tải đường dây sinh nhiệt chảy vỏ nhựa cách điện",
+      "xu_ly": "🚨 CẮT ĐIỆN NGAY: Ngắt ngay aptomat tổng, kiểm tra tiết diện dây dẫn phù hợp công suất."
+    },
+    {
+      "id": "DIEN-22",
+      "nhom": "⚠️ An toàn điện — cảnh báo cần lưu ý",
+      "hien_tuyen": "⚠️ Hệ thống điện bị nhiễm điện cảm ứng sang các đường ống nước",
+      "nguyen_nhan": "🔍 Dây điện chạm vào ống nước kim loại hoặc rò rỉ điện âm tường",
+      "xu_ly": "🔍 KIỂM TRA: Dùng bút thử điện rà soát, tìm điểm rò rỉ để cách ly xử lý ngay."
+    },
+    {
+      "id": "DIEN-23",
+      "nhom": "⚠️ An toàn điện — cảnh báo cần lưu ý",
+      "hien_tuyen": "🌧️ Ổ cắm điện bị ngập nước do mưa tạt",
+      "nguyen_nhan": "🔍 Lắp đặt ổ cắm ngoài trời không có hộp bảo vệ chống nước che đậy",
+      "xu_ly": "🚨 NGẮT NGUỒN: Cắt điện lập tức, sấy khô và lắp hộp che mưa chuyên dụng."
+    }
+  ],
+  "phan_4_khoa_thong_minh": [
+    {
+      "id": "KHOA-01",
+      "nhom": "🔐 Khóa cửa điện tử / Khóa thông minh",
+      "hien_tuyen": "❌ Khóa thông minh không nhận vân tay, báo lỗi đỏ liên tục",
+      "nguyen_nhan": "🔍 Vân tay bị ướt, bám bẩn hoặc mắt đọc sinh trắc học bị xước/bẩn",
+      "xu_ly": "✨ VỆ SINH: Dùng khăn mềm lau sạch mắt đọc vân tay, tiến hành đăng ký lại vân tay mới."
+    },
+    {
+      "id": "KHOA-02",
+      "nhom": "🔐 Khóa cửa điện tử / Khóa thông minh",
+      "hien_tuyen": "🔋 Khóa báo pin yếu liên tục hoặc không lên màn hình",
+      "nguyen_nhan": "🔍 Pin AA lắp trong khóa bị cạn kiệt năng lượng",
+      "xu_ly": "⚡ THAY PIN: Lắp toàn bộ pin mới (nên dùng pin kiềm Alkaline) hoặc cấp nguồn khẩn cấp qua cổng MicroUSB/Type-C."
+    },
+    {
+      "id": "KHOA-03",
+      "nhom": "🔐 Khóa cửa điện tử / Khóa thông minh",
+      "hien_tuyen": "🚪 Khóa bị kẹt chốt, không mở được cửa dù nhập đúng mật khẩu",
+      "nguyen_nhan": "🔍 Cánh cửa bị xệ khiến lưỡi gà và chốt gió bị tì chặt vào khung bao cửa",
+      "xu_ly": "👉 XỬ LÝ: Đẩy nhẹ cánh cửa vào trong hoặc nhấc nhẹ tay nắm để giải phóng áp lực lên chốt."
+    },
+    {
+      "id": "KHOA-04",
+      "nhom": "🔐 Khóa cửa điện tử / Khóa thông minh",
+      "hien_tuyen": "📡 Không kết nối được khóa với App điện thoại qua Bluetooth/WiFi",
+      "nguyen_nhan": "🔍 Bluetooth trên điện thoại chưa bật hoặc khoảng cách quá xa, hoặc lỗi Gateway",
+      "xu_ly": "📶 KẾT NỐI: Đưa điện thoại lại gần khóa, bật Bluetooth và reset lại mô-đun mạng trên khóa."
+    },
+    {
+      "id": "KHOA-05",
+      "nhom": "🔐 Khóa cửa điện tử / Khóa thông minh",
+      "hien_tuyen": "🔢 Bàn phím cảm ứng số bị liệt không bấm được mã số",
+      "nguyen_nhan": "🔍 Bề mặt bàn phím bị dính nước, dầu mỡ hoặc đọng hơi ẩm",
+      "xu_ly": "✨ LÀM SẠCH: Dùng khăn khô lau sạch bề mặt cảm ứng, tháo pin khởi động lại khóa."
+    },
+    {
+      "id": "KHOA-06",
+      "nhom": "🔐 Khóa cửa điện tử / Khóa thông minh",
+      "hien_tuyen": "🚨 Khóa tự động phát ra tiếng kêu báo động hú còi liên tục",
+      "nguyen_nhan": "🔍 Có người cố tình nhập sai mật khẩu quá số lần quy định hoặc cửa chưa đóng kín",
+      "xu_ly": "🔑 TẮT BÁO ĐỘNG: Nhập mật khẩu chủ (Master) chính xác và kiểm tra độ đóng của cửa."
+    },
+    {
+      "id": "KHOA-07",
+      "nhom": "🔐 Khóa cửa điện tử / Khóa thông minh",
+      "hien_tuyen": "🔑 Chìa khóa cơ dự phòng không đút vào được ổ khóa hoặc khó vặn",
+      "nguyen_nhan": "🔍 Ổ khóa cơ lâu ngày không sử dụng bị bám bụi bẩn hoặc kẹt rỉ sét bên trong",
+      "xu_ly": "🛠️ BÔI TRƠN: Xịt dung dịch bôi trơn chuyên dụng (RP7) vào ổ khóa cơ rồi thao tác nhẹ nhàng lại."
+    }
+  ]
+};    
+    
     // KHO DỮ LIỆU ĐA NGÀNH
     const KNOWLEDGE_BASE = [
         {
