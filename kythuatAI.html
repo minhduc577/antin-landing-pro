@@ -1134,30 +1134,26 @@
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-// Hàm gửi dữ liệu form chuẩn hóa tuyệt đối qua Webhook Make.com
+// Hàm gửi dữ liệu form 3 trường kèm toàn bộ lịch sử chat sống động lên Make.com
 function submitRepairBooking(errorTopic) {
-    let nameInput = document.getElementById('repairName');
-    let phoneInput = document.getElementById('repairPhone');
-    let addressInput = document.getElementById('repairAddress');
-
-    let name = nameInput ? nameInput.value.trim() : "";
-    let phone = phoneInput ? phoneInput.value.trim() : "";
-    let address = addressInput ? addressInput.value.trim() : "";
+    let name = document.getElementById('repairName').value.trim();
+    let phone = document.getElementById('repairPhone').value.trim();
+    let address = document.getElementById('repairAddress').value.trim();
 
     if(!name || !phone || !address) {
         alert('⚠️ Vui lòng điền đầy đủ thông tin: Họ tên, Số điện thoại và Địa chỉ để Kỹ thuật An Tín hỗ trợ bạn tốt nhất nhé!');
         return;
     }
 
-    // Lấy toàn bộ lịch sử trò chuyện với AI
+    // Lấy toàn bộ lịch sử trò chuyện từ mảng chat trên giao diện
     let chatHistoryString = "";
     if (typeof chatHistoryLog !== 'undefined' && chatHistoryLog.length > 0) {
         chatHistoryString = chatHistoryLog.map(item => `[${item.sender}]: ${item.message}`).join("\n");
     } else {
-        chatHistoryString = "Không có lịch sử trao đổi chi tiết.";
+        chatHistoryString = "Khách hàng gửi yêu cầu trực tiếp từ form tư vấn/khảo sát.";
     }
 
-    // Đóng gói dữ liệu dạng phẳng chuẩn JSON gửi lên Make
+    // Đóng gói payload khớp 100% các biến trên Make.com (name, phone, address, issue, time, interaction_history)
     let payload = {
         name: name,
         phone: phone,
@@ -1178,7 +1174,7 @@ function submitRepairBooking(errorTopic) {
     fetch(webhookUrl, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
     })
@@ -1187,10 +1183,10 @@ function submitRepairBooking(errorTopic) {
             submitBtn.innerHTML = '<i class="fa-solid fa-circle-check fa-beat" style="color: #ffffff; margin-right: 6px;"></i> Gửi yêu cầu thành công! 🎉';
             submitBtn.style.backgroundColor = '#10B981';
         }
-        alert('🎉 Gửi yêu cầu thành công! Kỹ thuật An Tín sẽ liên hệ lại với bạn qua số điện thoại ' + phone + ' trong vài phút tới.');
+        alert('🎉 Gửi yêu cầu thành công! Kỹ thuật An Tín đã nhận được lịch sử chat và sẽ liên hệ lại với bạn qua số điện thoại ' + phone + ' sớm nhất.');
     })
     .catch(error => {
-        console.error('Lỗi gửi webhook:', error);
+        console.error('Lỗi:', error);
         if (submitBtn) {
             submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Đã tiếp nhận yêu cầu!';
             submitBtn.style.backgroundColor = '#059669';
