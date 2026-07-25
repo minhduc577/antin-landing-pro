@@ -1273,34 +1273,32 @@ function submitRepairBooking(errorTopic) {
 // Khởi tạo mảng lưu lịch sử chat nếu chưa có
 if (typeof chatHistoryLog === 'undefined') {
     var chatHistoryLog = [];
+    // Bắt sự kiện Enter trực tiếp cho khung chat
+document.addEventListener("keydown", function(e) {
+    if (e.key === 'Enter') {
+        let activeInput = document.activeElement;
+        if (activeInput && (activeInput.tagName === 'INPUT' || activeInput.tagName === 'TEXTAREA')) {
+            let userText = activeInput.value.trim();
+            if (!userText) return;
+
+            // Lưu vào mảng chat log
+            if (typeof chatHistoryLog !== 'undefined') {
+                chatHistoryLog.push({ sender: 'Khách hàng', message: userText });
+                chatHistoryLog.push({ sender: 'AI Kỹ Thuật', message: '🤖 [Siêu AI An Tín]: Đã tiếp nhận triệu chứng. Hệ thống đang phân tích kho tri thức 78+ lỗi đa ngành.' });
+            }
+
+            // Cập nhật trạng thái hiển thị
+            let statusText = document.getElementById('aiRealtimeStatusText');
+            if (statusText) {
+                statusText.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> <span><b>Đã ghi nhận:</b> "${userText}" -> Lưu vào bộ nhớ AI thành công!</span>`;
+            }
+            
+            activeInput.value = '';
+        }
+    }
+});
 }
 
-// Xử lý sự kiện khi bấm nút Gửi hoặc Enter ở khung chat dưới cùng
-document.addEventListener("DOMContentLoaded", function() {
-    const chatInput = document.querySelector('input[placeholder*="Hoặc nhập bất kỳ mã lỗi"]');
-    // Hoặc bắt theo class/id của ô input chat thực tế của bạn
-    if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                let userText = chatInput.value.trim();
-                if (!userText) return;
-
-                // 1. Lưu tin nhắn người dùng vào log
-                chatHistoryLog.push({ sender: 'Khách hàng', message: userText });
-
-                // 2. Giả lập phản hồi thông minh từ AI kỹ thuật An Tín
-                let aiResponse = "Chào bạn, chuyên gia AI An Tín đã ghi nhận triệu chứng: '" + userText + "'. Để khắc phục tận gốc, bạn vui lòng điền thông tin vào form phía trên hoặc gọi ngay hotline để kỹ thuật hỗ trợ trực tiếp nhé!";
-                chatHistoryLog.push({ sender: 'AI Kỹ Thuật', message: aiResponse });
-
-                // 3. Hiển thị thông báo trạng thái lên Trung Tâm Siêu AI
-                let statusText = document.getElementById('aiRealtimeStatusText');
-                if (statusText) {
-                    statusText.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> <span><b>AI đã phân tích:</b> ${userText} -> Đã lưu vào lịch sử truyền về hệ thống!</span>`;
-                }
-
-                chatInput.value = '';
-            }
-        });
     }
 });
 
