@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V5.0)</title>
+    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V6.0)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -324,24 +324,23 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
         }
 
         .checklist-items li {
             font-size: 12.5px;
             color: var(--text-primary);
             position: relative;
-            padding-left: 18px;
+            padding-left: 20px;
             line-height: 1.4;
         }
 
         .checklist-items li::before {
-            content: "✓";
+            content: "🛠️";
             position: absolute;
             left: 0;
             top: 0;
-            color: var(--primary-light);
-            font-weight: bold;
+            font-size: 11px;
         }
 
         .alert-safety {
@@ -535,7 +534,7 @@
             transform: translateY(-1px);
         }
 
-        .zalo-quick-box {
+        .zalo-action-container {
             display: flex;
             gap: 8px;
             margin-top: 10px;
@@ -557,10 +556,32 @@
             text-decoration: none;
             animation: pulseZalo 1.8s infinite;
         }
+        .btn-zalo-oa {
+            flex: 1;
+            background: linear-gradient(135deg, #0088ff, #0055cc);
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 11.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            animation: pulseZaloOA 1.8s infinite;
+        }
         @keyframes pulseZalo {
             0% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.5); }
             70% { box-shadow: 0 0 0 8px rgba(0, 104, 255, 0); }
             100% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0); }
+        }
+        @keyframes pulseZaloOA {
+            0% { box-shadow: 0 0 0 0 rgba(0, 136, 255, 0.5); }
+            70% { box-shadow: 0 0 0 8px rgba(0, 136, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 136, 255, 0); }
         }
 
         .chat-footer {
@@ -731,7 +752,7 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V5.0)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V6.0)</p>
             </div>
         </div>
         <div>
@@ -907,13 +928,14 @@
         processUserQuery(query);
     }
 
-    // HỆ THỐNG KHO DỮ LIỆU ĐA NGÀNH
+    // HỆ THỐNG KHO DỮ LIỆU ĐA NGÀNH (ĐÃ BỔ SUNG CHI TIẾT HƯỚNG DẪN TỰ SỬA CHỮA CHO KHÁCH HÀNG)
     const KNOWLEDGE_BASE = [
         {
             keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip", "camera"],
             issue: "Camera / Đầu ghi báo Offline (Ngoại tuyến)",
             empathy: "🤝 An Tín hiểu sự bất tiện khi hệ thống giám sát an ninh bị gián đoạn.",
             cause: "Đầu ghi/Camera mất thông số IP, lỏng dây mạng RJ45, hoặc sụt nguồn Adapter 12V.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra đèn nguồn Adapter của camera/đầu ghi xem có sáng không.<br>2. Kiểm tra jack cắm mạng RJ45 xem có bị lỏng chốt hoặc đèn tín hiệu ở cổng mạng có chớp nháy không.<br>3. Khởi động lại (tắt nguồn rồi bật lại) Modem mạng và đầu ghi hình.",
             steps: [
                 "<b>Bước 1:</b> Kiểm tra đèn tín hiệu cổng mạng LAN phía sau đầu ghi và Switch mạng.",
                 "<b>Bước 2:</b> Khởi động lại (Reset nguồn) Modem nhà mạng và Đầu ghi hình.",
@@ -925,6 +947,7 @@
             issue: "Lỗi ổ cứng HDD / Không xem lại được dữ liệu",
             empathy: "🛡️ Dữ liệu camera rất quan trọng đối với việc bảo vệ tài sản của anh/chị.",
             cause: "Ổ cứng HDD bị hỏng cơ, lỏng cáp nguồn/SATA bên trong đầu ghi, hoặc chưa định dạng.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Lắng nghe xem ổ cứng có tiếng kêu lạch cạch hoặc không quay không.<br>2. Kiểm tra lại giắc nguồn và cáp tín hiệu SATA nối từ bo mạch đầu ghi vào ổ cứng.<br>3. Vào phần Menu > Lưu trữ > Định dạng (Format) lại ổ cứng trực tiếp trên đầu ghi.",
             steps: [
                 "<b>Bước 1:</b> Vào mục Quản lý Lưu trữ (Storage) trên đầu ghi kiểm tra trạng thái ổ cứng.",
                 "<b>Bước 2:</b> Tiến hành Format (Định dạng lại) ổ cứng, nếu báo lỗi Bad Sector cần thay mới.",
@@ -936,6 +959,7 @@
             issue: "Modem WiFi rớt mạng liên tục / Chấm than vàng",
             empathy: "💡 Mạng internet chập chờn gây ảnh hưởng trực tiếp đến công việc của bạn.",
             cause: "Quá tải thiết bị truy cập, treo băng thông hoặc nhà mạng suy hao tín hiệu quang.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Rút phích cắm điện Router WiFi trong vòng 30 giây rồi cắm lại.<br>2. Kiểm tra xem đèn PON/LOS trên modem nhà mạng có bị nhấp nháy đỏ hay không.<br>3. Đổi mật khẩu WiFi hoặc giảm bớt số lượng thiết bị truy cập đồng thời.",
             steps: [
                 "<b>Bước 1:</b> Rút nguồn bộ phát WiFi, đợi 30 giây rồi cắm lại để giải phóng RAM.",
                 "<b>Bước 2:</b> Kiểm tra số lượng thiết bị truy cập thực tế có vượt quá tải của Router không.",
@@ -979,6 +1003,8 @@
             const aiRow = document.createElement('div');
             aiRow.className = 'message-row ai';
 
+            const uniqueId = 'form_' + Date.now();
+
             if (matched) {
                 aiRow.innerHTML = `
                     <div class="msg-bubble">
@@ -987,28 +1013,40 @@
                             <div class="title"><i class="fa-solid fa-triangle-exclamation"></i> Chẩn đoán: ${matched.issue}</div>
                             <div class="cause"><b>Nguyên nhân cốt lõi:</b> ${matched.cause}</div>
                         </div>
+                        
+                        <!-- HƯỚNG DẪN KHÁCH HÀNG TỰ SỬA LỖI -->
+                        <div class="checklist-container" style="background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-light); margin-top: 10px;">
+                            <div class="checklist-title" style="color: var(--primary-light);"><i class="fa-solid fa-book-open-reader"></i> Hướng dẫn khách hàng tự xử lý:</div>
+                            <p style="font-size: 12.5px; color: var(--text-primary); margin-top: 4px; line-height: 1.5;">${matched.guide}</p>
+                        </div>
+
                         <div class="checklist-container">
-                            <div class="checklist-title"><i class="fa-solid fa-list-check"></i> Quy trình khắc phục chuẩn kỹ thuật:</div>
+                            <div class="checklist-title"><i class="fa-solid fa-list-check"></i> Quy trình khắc phục chuyên sâu chuẩn kỹ thuật:</div>
                             <ul class="checklist-items">
                                 ${matched.steps.map(step => `<li>${step}</li>`).join('')}
                             </ul>
                         </div>
                         <div class="alert-safety">
-                            <i class="fa-solid fa-shield-cat"></i> <b>Hỗ trợ chuyên sâu:</b> Nếu đã thử các bước trên nhưng chưa khắc phục được, hãy liên hệ kỹ thuật viên An Tín hỗ trợ tận nơi!
+                            <i class="fa-solid fa-shield-cat"></i> <b>Hỗ trợ tận nơi:</b> Nếu đã thử các bước trên nhưng chưa khắc phục được, hãy điền thông tin bên dưới để kỹ thuật viên An Tín hỗ trợ xử lý!
                         </div>
                         <div class="repair-booking-box">
                             <h4><i class="fa-solid fa-screwdriver-wrench"></i> Đăng Ký Kiểm Tra & Sửa Chữa Tại Chỗ</h4>
                             <div class="form-field-group">
-                                <label>Họ và tên / Tên đơn vị:</label>
-                                <input type="text" id="cusName" placeholder="Nhập tên của bạn...">
+                                <label>Họ và tên quý khách: <span style="color:red">*</span></label>
+                                <input type="text" id="name_${uniqueId}" placeholder="Nhập họ và tên...">
                             </div>
                             <div class="form-field-group">
-                                <label>Số điện thoại liên hệ:</label>
-                                <input type="tel" id="cusPhone" placeholder="Nhập số điện thoại...">
+                                <label>Số điện thoại liên hệ: <span style="color:red">*</span></label>
+                                <input type="tel" id="phone_${uniqueId}" placeholder="Nhập số điện thoại...">
                             </div>
-                            <button class="btn-submit-repair" onclick="submitRepairRequest('${matched.issue}')"><i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU HỖ TRỢ NGAY</button>
-                            <div class="zalo-quick-box">
-                                <a href="https://zalo.me/0909000000" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Chat Zalo Nhanh</a>
+                            <div class="form-field-group">
+                                <label>Địa chỉ sửa chữa / khảo sát: <span style="color:red">*</span></label>
+                                <input type="text" id="address_${uniqueId}" placeholder="Nhập số nhà, đường, quận/huyện...">
+                            </div>
+                            <button class="btn-submit-repair" onclick="submitRepairRequest('${matched.issue}', '${uniqueId}')"><i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU HỖ TRỢ NGAY</button>
+                            <div class="zalo-action-container">
+                                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
+                                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-oa"><i class="fa-solid fa-star"></i> Quan tâm Zalo OA</a>
                             </div>
                         </div>
                     </div>`;
@@ -1016,14 +1054,27 @@
                 aiRow.innerHTML = `
                     <div class="msg-bubble">
                         <div class="empathy-header">🤝 An Tín đã ghi nhận vấn đề: "${query}"</div>
-                        <p style="font-size:13px; color:var(--text-secondary); margin-top:6px;">Hệ thống đang đối chiếu với hơn 1000+ mã lỗi chuyên sâu đa ngành. Vui lòng kết nối trực tiếp với đội ngũ kỹ thuật để được hỗ trợ xử lý nhanh chóng nhất!</p>
+                        <p style="font-size:13px; color:var(--text-secondary); margin-top:6px;">Hệ thống đang đối chiếu với hơn 1000+ mã lỗi chuyên sâu đa ngành. Vui lòng cung cấp đầy đủ thông tin bên dưới để kỹ thuật viên liên hệ hỗ trợ trực tiếp!</p>
+                        
                         <div class="repair-booking-box" style="margin-top:12px;">
-                            <h4><i class="fa-solid fa-headset"></i> Kỹ Thuật Viên Trực Tuyến Hỗ Trợ</h4>
+                            <h4><i class="fa-solid fa-headset"></i> Kỹ Thuật Viên Hỗ Trợ Trực Tuyến</h4>
                             <div class="form-field-group">
-                                <label>Số điện thoại của bạn:</label>
-                                <input type="tel" id="cusPhoneFallback" placeholder="Nhập số điện thoại...">
+                                <label>Họ và tên quý khách: <span style="color:red">*</span></label>
+                                <input type="text" id="name_${uniqueId}" placeholder="Nhập họ và tên...">
                             </div>
-                            <button class="btn-submit-repair" onclick="submitRepairRequest('${query}')"><i class="fa-solid fa-bolt"></i> YÊU CẦU KỸ THUẬT GỌI LẠI NGAY</button>
+                            <div class="form-field-group">
+                                <label>Số điện thoại liên hệ: <span style="color:red">*</span></label>
+                                <input type="tel" id="phone_${uniqueId}" placeholder="Nhập số điện thoại...">
+                            </div>
+                            <div class="form-field-group">
+                                <label>Địa chỉ sửa chữa / khảo sát: <span style="color:red">*</span></label>
+                                <input type="text" id="address_${uniqueId}" placeholder="Nhập số nhà, đường, quận/huyện...">
+                            </div>
+                            <button class="btn-submit-repair" onclick="submitRepairRequest('${query}', '${uniqueId}')"><i class="fa-solid fa-bolt"></i> YÊU CẦU KỸ THUẬT GỌI LẠI NGAY</button>
+                            <div class="zalo-action-container">
+                                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
+                                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-oa"><i class="fa-solid fa-star"></i> Quan tâm Zalo OA</a>
+                            </div>
                         </div>
                     </div>`;
             }
@@ -1032,16 +1083,18 @@
         }, 800);
     }
 
-    function submitRepairRequest(issueName) {
-        const nameInput = document.getElementById('cusName') || document.getElementById('cusPhoneFallback');
-        const phoneInput = document.getElementById('cusPhone') || document.getElementById('cusPhoneFallback');
+    // HÀM KIỂM TRA ĐIỀU KIỆN 3 TRƯỜNG: TÊN, PHONE, ĐỊA CHỈ TRƯỚC KHI GỬI
+    function submitRepairRequest(issueName, uniqueId) {
+        const nameVal = document.getElementById(`name_${uniqueId}`).value.trim();
+        const phoneVal = document.getElementById(`phone_${uniqueId}`).value.trim();
+        const addressVal = document.getElementById(`address_${uniqueId}`).value.trim();
         
-        if (!phoneInput || !phoneInput.value.trim()) {
-            alert('⚠️ Vui lòng nhập số điện thoại để kỹ thuật viên liên hệ lại!');
+        if (!nameVal || !phoneVal || !addressVal) {
+            alert('⚠️ Vui lòng điền đầy đủ 3 trường bắt buộc: [Họ tên], [Số điện thoại] và [Địa chỉ sửa chữa/khảo sát] để gửi yêu cầu!');
             return;
         }
         
-        alert(`🎉 Cảm ơn bạn đã đăng ký! Yêu cầu hỗ trợ xử lý sự cố [${issueName}] đã được chuyển đến bộ phận kỹ thuật An Tín. Chúng tôi sẽ gọi lại cho bạn trong vòng 5 phút.`);
+        alert(`🎉 Chúc mừng ${nameVal}! Yêu cầu xử lý sự cố [${issueName}] tại địa chỉ "${addressVal}" đã được ghi nhận. Kỹ thuật viên An Tín sẽ gọi điện qua số ${phoneVal} và qua Zalo 0914060339 để hỗ trợ bạn trong 5 phút tới!`);
     }
 
     function calculateAI() {
@@ -1049,12 +1102,11 @@
         const days = parseInt(document.getElementById('storage_days').value) || 15;
         const res = parseInt(document.getElementById('resolution').value) || 4;
 
-        // Công thức tính dung lượng lưu trữ tương đối cho hệ thống camera
         let bitRatePerCam = res === 2 ? 2.5 : (res === 4 ? 4.5 : 8.0); // Mbps
         let totalStorageTB = ((count * bitRatePerCam * 3600 * 24 * days) / (8 * 1024 * 1024 * 1024)).toFixed(1);
         let totalBandwidth = (count * bitRatePerCam).toFixed(1);
 
-        document.getElementById('res-hdd',).textContent = `${totalStorageTB} TB`;
+        document.getElementById('res-hdd').textContent = `${totalStorageTB} TB`;
         document.getElementById('res-bandwidth').textContent = `${totalBandwidth} Mbps`;
 
         const advicesList = document.getElementById('res-advices');
