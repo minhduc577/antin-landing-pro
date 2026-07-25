@@ -1322,7 +1322,6 @@
         document.getElementById('ai-result').style.display = 'block';
     }
 
-// Lắng nghe sự kiện click nút chuẩn đoán lỗi
 document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll("button, div, span");
     buttons.forEach(el => {
@@ -1338,7 +1337,7 @@ function runAIEffects() {
     const overlay = document.createElement('div');
     overlay.id = 'ai-processing-overlay';
     overlay.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.9); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; color: white; backdrop-filter: blur(5px);">
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.9); z-index: 2147483647; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; color: white; backdrop-filter: blur(5px);">
             <div style="position: relative; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
                 <div style="position: absolute; width: 100%; height: 100%; border: 4px solid rgba(0, 255, 204, 0.2); border-radius: 50%;"></div>
                 <div style="width: 100%; height: 100%; border: 4px solid transparent; border-top: 4px solid #00ffcc; border-bottom: 4px solid #38ef7d; border-radius: 50%; animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;"></div>
@@ -1375,15 +1374,17 @@ function runAIEffects() {
 }
 
 function showAIResultAndChatInterface() {
+    if (document.getElementById('ai-result-modal')) return;
+
     const modal = document.createElement('div');
     modal.id = 'ai-result-modal';
     modal.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; backdrop-filter: blur(3px);">
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 2147483647; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; backdrop-filter: blur(3px);">
             <div style="background: #ffffff; width: 90%; max-width: 680px; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; max-height: 90vh; animation: slideUp 0.4s ease-out;">
                 
                 <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;">
                     <h3 style="margin: 0; font-size: 19px;">✨ KẾT QUẢ CHUẨN ĐOÁN THÔNG MINH</h3>
-                    <span onclick="document.body.removeChild(document.getElementById('ai-result-modal'))" style="cursor: pointer; font-size: 26px; font-weight: bold; color: #fff;">&times;</span>
+                    <span id="ai-close-modal-x" style="cursor: pointer; font-size: 26px; font-weight: bold; color: #fff;">&times;</span>
                 </div>
 
                 <div style="padding: 22px; overflow-y: auto; flex: 1; background: #f8f9fa;">
@@ -1410,10 +1411,10 @@ function showAIResultAndChatInterface() {
                             </div>
                         </div>
 
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn tại đây..." style="flex: 1; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none;" onkeypress="if(event.key === 'Enter') handleAISend()">
-                            <button onclick="handleAISend()" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 0 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; white-space: nowrap;">🚀 Gửi</button>
-                            <button onclick="endAIChat()" style="background: #e53e3e; color: white; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; white-space: nowrap;">🛑 Kết thúc</button>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn tại đây..." style="flex: 1; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none;">
+                            <button id="ai-send-btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 11px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; white-space: nowrap;">🚀 Gửi</button>
+                            <button id="ai-end-btn" style="background: #e53e3e; color: white; border: none; padding: 11px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; white-space: nowrap;">🛑 Kết thúc</button>
                         </div>
                     </div>
                 </div>
@@ -1422,6 +1423,25 @@ function showAIResultAndChatInterface() {
         </div>
     `;
     document.body.appendChild(modal);
+
+    // Gắn sự kiện trực tiếp bằng JavaScript để đảm bảo ăn click 100%
+    document.getElementById('ai-close-modal-x').onclick = function() {
+        document.body.removeChild(modal);
+    };
+
+    document.getElementById('ai-send-btn').onclick = function() {
+        handleAISend();
+    };
+
+    document.getElementById('ai-end-btn').onclick = function() {
+        endAIChat();
+    };
+
+    document.getElementById('ai-user-input').onkeypress = function(e) {
+        if (e.key === 'Enter') {
+            handleAISend();
+        }
+    };
 }
 
 function handleAISend() {
@@ -1452,6 +1472,8 @@ function handleAISend() {
 
 function endAIChat() {
     const chatBox = document.getElementById('ai-chat-box');
+    if (!chatBox) return;
+    
     chatBox.innerHTML += `
         <div style="margin-bottom: 10px; text-align: center;">
             <span style="background: #fed7d7; color: #c53030; padding: 8px 12px; border-radius: 6px; display: inline-block; font-weight: bold; font-size: 12px;">
