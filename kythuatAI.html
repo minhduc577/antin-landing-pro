@@ -1134,19 +1134,17 @@
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-// Hàm gửi dữ liệu form chuẩn hóa khớp hoàn toàn với template Make.com
+// Hàm gửi dữ liệu form chuẩn hóa tuyệt đối qua Webhook Make.com
 function submitRepairBooking(errorTopic) {
-    let name = document.getElementById('repairName').value.trim();
-    let phone = document.getElementById('repairPhone').value.trim();
-    let address = document.getElementById('repairAddress').value.trim();
+    let nameInput = document.getElementById('repairName');
+    let phoneInput = document.getElementById('repairPhone');
+    let addressInput = document.getElementById('repairAddress');
+
+    let name = nameInput ? nameInput.value.trim() : "";
+    let phone = phoneInput ? phoneInput.value.trim() : "";
+    let address = addressInput ? addressInput.value.trim() : "";
 
     if(!name || !phone || !address) {
-        let formContainer = document.getElementById('repairName').closest('form') || document.querySelector('.repair-form-container') || document.body;
-        if (formContainer) {
-            formContainer.style.animation = 'none';
-            formContainer.offsetHeight;
-            formContainer.style.animation = 'shake 0.5s ease-in-out';
-        }
         alert('⚠️ Vui lòng điền đầy đủ thông tin: Họ tên, Số điện thoại và Địa chỉ để Kỹ thuật An Tín hỗ trợ bạn tốt nhất nhé!');
         return;
     }
@@ -1159,7 +1157,7 @@ function submitRepairBooking(errorTopic) {
         chatHistoryString = "Không có lịch sử trao đổi chi tiết.";
     }
 
-    // Cấu trúc payload khớp hoàn toàn với template HTML bên Make.com (name, phone, address, issue, time, interaction_history)
+    // Đóng gói dữ liệu dạng phẳng chuẩn JSON gửi lên Make
     let payload = {
         name: name,
         phone: phone,
@@ -1173,8 +1171,6 @@ function submitRepairBooking(errorTopic) {
     if (submitBtn) {
         submitBtn.innerHTML = '<i class="fa-solid fa-rocket fa-bounce" style="margin-right: 6px;"></i> Đang truyền dữ liệu & Lịch sử AI...';
         submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.85';
-        submitBtn.style.cursor = 'wait';
     }
 
     let webhookUrl = "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc";
@@ -1182,7 +1178,7 @@ function submitRepairBooking(errorTopic) {
     fetch(webhookUrl, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=UTF-8'
         },
         body: JSON.stringify(payload)
     })
@@ -1190,30 +1186,18 @@ function submitRepairBooking(errorTopic) {
         if (submitBtn) {
             submitBtn.innerHTML = '<i class="fa-solid fa-circle-check fa-beat" style="color: #ffffff; margin-right: 6px;"></i> Gửi yêu cầu thành công! 🎉';
             submitBtn.style.backgroundColor = '#10B981';
-            submitBtn.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.5)';
-            submitBtn.style.transform = 'scale(1.02)';
         }
-        
-        setTimeout(() => {
-            let container = submitBtn.closest('.repair-container') || submitBtn.parentElement;
-            if (container && !document.getElementById('successNotificationBanner')) {
-                let banner = document.createElement('div');
-                banner.id = 'successNotificationBanner';
-                banner.style.cssText = 'margin-top: 15px; padding: 12px; background: #ECFDF5; border: 1px solid #10B981; color: #065F46; border-radius: 8px; font-size: 14px; text-align: center; animation: fadeIn 0.5s ease-in-out;';
-                banner.innerHTML = `<i class="fa-solid fa-headset" style="color: #059669; font-size: 16px; margin-right: 5px;"></i> Cảm ơn <b>${name}</b>! Đội ngũ kỹ thuật An Tín đã nhận được yêu cầu & lịch sử chat, sẽ liên hệ lại qua số <b>${phone}</b> trong vòng 15 phút tới!`;
-                container.appendChild(banner);
-            }
-        }, 600);
+        alert('🎉 Gửi yêu cầu thành công! Kỹ thuật An Tín sẽ liên hệ lại với bạn qua số điện thoại ' + phone + ' trong vài phút tới.');
     })
     .catch(error => {
+        console.error('Lỗi gửi webhook:', error);
         if (submitBtn) {
-            submitBtn.innerHTML = '<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> Đã tiếp nhận yêu cầu!';
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Đã tiếp nhận yêu cầu!';
             submitBtn.style.backgroundColor = '#059669';
-            submitBtn.style.boxShadow = '0 0 10px rgba(5, 150, 105, 0.4)';
         }
     });
 }
-
+    
     function calculateAIParams() {
         let type = document.getElementById('calcSystemType').value;
         let qty = parseInt(document.getElementById('calcQuantity').value) || 4;
