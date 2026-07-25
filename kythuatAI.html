@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V6.4)</title>
+    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V6.2)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -761,7 +761,7 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V6.4)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V6.2)</p>
             </div>
         </div>
         <div>
@@ -882,9 +882,6 @@
     // Mảng lưu trữ toàn bộ lịch sử hội thoại/tương tác giữa khách và AI trong phiên
     let chatHistoryLog = [];
 
-    // Biến ghi nhận chính xác vấn đề/lỗi hệ thống camera hoặc thiết bị mà khách hàng đang quan tâm/tương tác mới nhất
-    let currentCustomerIssue = "Khách tra cứu tổng quan hệ thống";
-
     function switchTab(tabId, btnEl) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -911,7 +908,6 @@
     let currentlySelectedError = "";
     function selectErrorItem(errorName) {
         currentlySelectedError = errorName;
-        currentCustomerIssue = errorName; // Cập nhật lỗi khách đang quan tâm
         document.querySelectorAll('.error-item-btn').forEach(btn => {
             btn.style.background = '#f8fafc';
             btn.style.borderColor = 'transparent';
@@ -939,7 +935,6 @@
         const query = inputEl.value.trim();
         if (!query) return;
         inputEl.value = '';
-        currentCustomerIssue = query; // Cập nhật trực tiếp vấn đề khách vừa nhập
         processUserQuery(query);
     }
 
@@ -1166,7 +1161,6 @@
             const uniqueId = 'form_' + Date.now();
 
             if (matched) {
-                currentCustomerIssue = matched.issue; // Cập nhật chính xác tên sự cố theo kho
                 aiResponseText = `Chẩn đoán: ${matched.issue}. Nguyên nhân: ${matched.cause}. Hướng dẫn tự xử lý: ${matched.guide}`;
                 aiRow.innerHTML = `
                     <div class="msg-bubble">
@@ -1204,9 +1198,9 @@
                                 <label>Địa chỉ sửa chữa / khảo sát: <span style="color:red">*</span></label>
                                 <input type="text" id="address_${uniqueId}" placeholder="Nhập số nhà, đường, quận/huyện...">
                             </div>
-                            <button class="btn-submit-repair" onclick="submitRepairRequest('${uniqueId}')"><i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU HỖ TRỢ NGAY</button>
+                            <button class="btn-submit-repair" onclick="submitRepairRequest('${matched.issue}', '${uniqueId}')"><i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU HỖ TRỢ NGAY</button>
                             
-                            <!-- CÁC NÚT ZALO -->
+                            <!-- CÁC NÚT ZALO ĐÃ CHÈN LINK MỚI -->
                             <div class="zalo-action-container">
                                 <div class="zalo-row">
                                     <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
@@ -1237,9 +1231,9 @@
                                 <label>Địa chỉ sửa chữa / khảo sát: <span style="color:red">*</span></label>
                                 <input type="text" id="address_${uniqueId}" placeholder="Nhập số nhà, đường, quận/huyện...">
                             </div>
-                            <button class="btn-submit-repair" onclick="submitRepairRequest('${uniqueId}')"><i class="fa-solid fa-bolt"></i> YÊU CẦU KỸ THUẬT GỌI LẠI NGAY</button>
+                            <button class="btn-submit-repair" onclick="submitRepairRequest('${query}', '${uniqueId}')"><i class="fa-solid fa-bolt"></i> YÊU CẦU KỸ THUẬT GỌI LẠI NGAY</button>
                             
-                            <!-- CÁC NÚT ZALO -->
+                            <!-- CÁC NÚT ZALO ĐÃ CHÈN LINK MỚI -->
                             <div class="zalo-action-container">
                                 <div class="zalo-row">
                                     <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
@@ -1259,8 +1253,8 @@
         }, 800);
     }
 
-    // GỬI WEBHOOK MAKE KÈM ĐẦY ĐỦ TÊN, SĐT, ĐỊA CHỈ VÀ LỖI CAMERA KHÁCH ĐANG TƯƠNG TÁC
-    function submitRepairRequest(uniqueId) {
+    // GỬI WEBHOOK MAKE KÈM NHẬT KÝ TƯƠNG TÁC (CHAT LOG)
+    function submitRepairRequest(issueName, uniqueId) {
         const nameVal = document.getElementById(`name_${uniqueId}`).value.trim();
         const phoneVal = document.getElementById(`phone_${uniqueId}`).value.trim();
         const addressVal = document.getElementById(`address_${uniqueId}`).value.trim();
@@ -1271,16 +1265,16 @@
             return;
         }
 
-        // ĐỊNH DẠNG TOÀN BỘ LỊCH SỬ TƯƠNG TÁC
+        // ĐỊNH DẠNG TOÀN BỘ LỊCH SỬ TƯƠNG TÁC TRƯỚC KHI KHÁCH YÊU CẦU HỖ TRỢ KHÔNG THÀNH CÔNG
         let interactionLogSummary = chatHistoryLog.map(item => `[${item.time}] ${item.sender}: ${item.text}`).join('\n');
         
-        // DỮ LIỆU PAYLOAD GỬI ĐẾN WEBHOOK MAKE
+        // DỮ LIỆU PAYLOAD GỬI ĐẾN WEBHOOK MAKE (ĐÃ CÓ LOG NHẬT KÝ TƯƠNG TÁC)
         const payload = {
             name: nameVal,
             phone: phoneVal,
             address: addressVal,
-            issue: currentCustomerIssue, // Lỗi/vấn đề cụ thể camera khách đang tương tác
-            interaction_history: interactionLogSummary, // Toàn bộ lịch sử hỏi đáp
+            issue: issueName,
+            interaction_history: interactionLogSummary, // Nội dung chi tiết quá trình khách tương tác với AI xử lý lỗi không thành công
             time: new Date().toLocaleString('vi-VN')
         };
 
@@ -1294,11 +1288,11 @@
             body: JSON.stringify(payload)
         })
         .then(response => {
-            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu xử lý sự cố [${currentCustomerIssue}] cùng thông tin liên hệ đã được gửi thành công qua Webhook Make.`);
+            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu xử lý sự cố [${issueName}] cùng nhật ký tương tác tự xử lý chưa thành công đã được gửi qua Webhook Make đến email của bạn. Kỹ thuật viên sẽ liên hệ số ${phoneVal} trong 5 phút tới!`);
         })
         .catch(error => {
             console.error('Lỗi khi gửi webhook:', error);
-            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu lỗi [${currentCustomerIssue}] đã được ghi nhận. Kỹ thuật viên An Tín sẽ gọi lại cho bạn qua số ${phoneVal} trong thời gian sớm nhất!`);
+            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu đã được ghi nhận kèm lịch sử tương tác. Kỹ thuật viên An Tín sẽ gọi lại cho bạn qua số ${phoneVal} trong thời gian sớm nhất!`);
         });
     }
 
@@ -1321,173 +1315,6 @@
         `;
         document.getElementById('ai-result').style.display = 'block';
     }
-
-document.addEventListener("DOMContentLoaded", function() {
-    const buttons = document.querySelectorAll("button, div, span");
-    buttons.forEach(el => {
-        if (el.innerText && el.innerText.includes("CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC")) {
-            el.addEventListener("click", function() {
-                runAIEffects();
-            });
-        }
-    });
-});
-
-function runAIEffects() {
-    const overlay = document.createElement('div');
-    overlay.id = 'ai-processing-overlay';
-    overlay.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.9); z-index: 2147483647; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; color: white; backdrop-filter: blur(5px);">
-            <div style="position: relative; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                <div style="position: absolute; width: 100%; height: 100%; border: 4px solid rgba(0, 255, 204, 0.2); border-radius: 50%;"></div>
-                <div style="width: 100%; height: 100%; border: 4px solid transparent; border-top: 4px solid #00ffcc; border-bottom: 4px solid #38ef7d; border-radius: 50%; animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;"></div>
-                <span style="font-size: 24px; position: absolute;">🤖</span>
-            </div>
-            <h2 id="ai-status-text" style="margin-top: 25px; color: #00ffcc; font-size: 22px; text-transform: uppercase; letter-spacing: 1.5px;">🚀 AI An Tín đang kích hoạt hệ thống...</h2>
-            <p style="color: #a0aec0; font-size: 14px; margin-top: 8px;">⚡ Đang phân tích chuyên sâu kho tri thức kỹ thuật đa ngành...</p>
-        </div>
-    `;
-    document.body.appendChild(overlay);
-
-    if (!document.getElementById('ai-anim-style')) {
-        const style = document.createElement('style');
-        style.id = 'ai-anim-style';
-        style.innerHTML = `
-            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-            @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        `;
-        document.head.appendChild(style);
-    }
-
-    setTimeout(() => {
-        document.getElementById('ai-status-text').innerText = "🔍 Đang đối soát mã lỗi & kiểm tra tuyến cáp...";
-    }, 1200);
-
-    setTimeout(() => {
-        document.getElementById('ai-status-text').innerText = "✨ Đã tối ưu hóa giải pháp! Đang hiển thị kết quả...";
-    }, 2500);
-
-    setTimeout(() => {
-        document.body.removeChild(overlay);
-        showAIResultAndChatInterface();
-    }, 3500);
-}
-
-function showAIResultAndChatInterface() {
-    if (document.getElementById('ai-result-modal')) return;
-
-    const modal = document.createElement('div');
-    modal.id = 'ai-result-modal';
-    modal.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 2147483647; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; backdrop-filter: blur(3px);">
-            <div style="background: #ffffff; width: 90%; max-width: 680px; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; max-height: 90vh; animation: slideUp 0.4s ease-out;">
-                
-                <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="margin: 0; font-size: 19px;">✨ KẾT QUẢ CHUẨN ĐOÁN THÔNG MINH</h3>
-                    <span id="ai-close-modal-x" style="cursor: pointer; font-size: 26px; font-weight: bold; color: #fff;">&times;</span>
-                </div>
-
-                <div style="padding: 22px; overflow-y: auto; flex: 1; background: #f8f9fa;">
-                    <div style="background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 14px; border-radius: 6px; margin-bottom: 15px;">
-                        <h4 style="margin: 0 0 6px 0; color: #2e7d32; font-size: 15px;">🎯 Vấn đề phát hiện:</h4>
-                        <p style="margin: 0; font-size: 14px; color: #2c3e50; font-weight: 500;">Thiết bị đang gặp sự cố kết nối ngoại tuyến / gián đoạn tín hiệu đường truyền dữ liệu.</p>
-                    </div>
-
-                    <div style="background: #e3f2fd; border-left: 5px solid #1976d2; padding: 14px; border-radius: 6px; margin-bottom: 20px;">
-                        <h4 style="margin: 0 0 8px 0; color: #1976d2; font-size: 15px;">🛠️ Hướng dẫn khắc phục nhanh tại nhà:</h4>
-                        <p style="margin: 0; font-size: 14px; color: #2c3e50; line-height: 1.6;">
-                            1️⃣ Kiểm tra nguồn điện cấp ổn định cho thiết bị.<br>
-                            2️⃣ Khởi động lại bộ định tuyến Hub / Router WiFi.<br>
-                            3️⃣ Kiểm tra lại dây cáp mạng kết nối tín hiệu.
-                        </p>
-                    </div>
-
-                    <div style="border-top: 2px dashed #cbd5e1; padding-top: 18px;">
-                        <h4 style="margin: 0 0 10px 0; color: #1e3c72; font-size: 15px;">💬 Trò chuyện trực tiếp với Chuyên Gia Kỹ Thuật AI:</h4>
-                        
-                        <div id="ai-chat-box" style="height: 150px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; overflow-y: auto; font-size: 13px; margin-bottom: 12px;">
-                            <div style="margin-bottom: 10px; color: #1e3c72; background: #f1f5f9; padding: 8px 12px; border-radius: 6px; width: fit-content; max-width: 85%;">
-                                🤖 <b>AI Kỹ Thuật:</b> Dạ em đã chuẩn đoán xong lỗi trên. Anh/chị có cần em hướng dẫn chi tiết thêm bước nào không ạ?
-                            </div>
-                        </div>
-
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn tại đây..." style="flex: 1; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none;">
-                            <button id="ai-send-btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 11px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; white-space: nowrap;">🚀 Gửi</button>
-                            <button id="ai-end-btn" style="background: #e53e3e; color: white; border: none; padding: 11px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; white-space: nowrap;">🛑 Kết thúc</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-
-    // Gắn sự kiện trực tiếp bằng JavaScript để đảm bảo ăn click 100%
-    document.getElementById('ai-close-modal-x').onclick = function() {
-        document.body.removeChild(modal);
-    };
-
-    document.getElementById('ai-send-btn').onclick = function() {
-        handleAISend();
-    };
-
-    document.getElementById('ai-end-btn').onclick = function() {
-        endAIChat();
-    };
-
-    document.getElementById('ai-user-input').onkeypress = function(e) {
-        if (e.key === 'Enter') {
-            handleAISend();
-        }
-    };
-}
-
-function handleAISend() {
-    const input = document.getElementById('ai-user-input');
-    const chatBox = document.getElementById('ai-chat-box');
-    if (!input || !input.value.trim()) return;
-
-    let userText = input.value;
-    chatBox.innerHTML += `
-        <div style="margin-bottom: 10px; text-align: right;">
-            <span style="background: #e2e8f0; color: #1e293b; padding: 8px 12px; border-radius: 6px; display: inline-block; text-align: left; max-width: 85%;">
-                👤 <b>Bạn:</b> ${userText}
-            </span>
-        </div>`;
-    input.value = '';
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    setTimeout(() => {
-        chatBox.innerHTML += `
-            <div style="margin-bottom: 10px;">
-                <span style="background: #f1f5f9; color: #1e3c72; padding: 8px 12px; border-radius: 6px; display: inline-block; max-width: 85%;">
-                    🤖 <b>AI Kỹ Thuật:</b> Dạ về vấn đề "${userText}", anh/chị cứ thao tác theo hướng dẫn trên nhé. Nếu cần hỗ trợ trực tiếp, bên em sẽ cử kỹ thuật viên liên hệ lại ngay ạ!
-                </span>
-            </div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }, 1000);
-}
-
-function endAIChat() {
-    const chatBox = document.getElementById('ai-chat-box');
-    if (!chatBox) return;
-    
-    chatBox.innerHTML += `
-        <div style="margin-bottom: 10px; text-align: center;">
-            <span style="background: #fed7d7; color: #c53030; padding: 8px 12px; border-radius: 6px; display: inline-block; font-weight: bold; font-size: 12px;">
-                🔒 Hội thoại đã được kết thúc. Cảm ơn anh/chị đã sử dụng dịch vụ của An Tín!
-            </span>
-        </div>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-    
-    setTimeout(() => {
-        const modal = document.getElementById('ai-result-modal');
-        if (modal) document.body.removeChild(modal);
-    }, 2000);
-}
-    
 </script>
 </body>
 </html>
