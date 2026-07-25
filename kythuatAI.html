@@ -839,7 +839,9 @@
     }
 
     // HỆ THỐNG KHO DỮ LIỆU ĐA NGÀNH (MỞ RỘNG VÔ TẬN)
-    const KNOWLEDGE_BASE = [
+
+const KNOWLEDGE_BASE = [
+        // ================= DANH SÁCH GỐC =================
         {
             keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip", "camera"],
             issue: "Camera / Đầu ghi báo Offline (Ngoại tuyến)",
@@ -917,7 +919,244 @@
                 "<b>Bước 2:</b> Giữ nút reset trên công tắc thông minh để kết nối lại cấu hình App."
             ],
             safety: "⚠️ Đảm bảo điện thoại kết nối đúng băng tần WiFi 2.4GHz khi cài đặt."
-        }
+        },
+
+        // ================= PHẦN 1: HỆ THỐNG CAMERA GIÁM SÁT =================
+        {
+            keywords: ["no signal", "video loss", "màn hình đen", "mất tín hiệu", "không lên hình"],
+            issue: "🔴 Màn hình đen, báo 'No Signal' / 'Video Loss'",
+            empathy: "🤝 An Tín hiểu sự bất tiện khi hệ thống giám sát bị mất tín hiệu hình ảnh.",
+            cause: "Đứt cáp tín hiệu, lỏng đầu jack (BNC/RJ45), hoặc lỗi cổng kết nối.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra trực quan đường dây cáp tín hiệu từ camera về đầu ghi.",
+                "<b>Bước 2:</b> Kiểm tra, bấm lại đầu cáp (jack BNC hoặc hạt mạng RJ45).",
+                "<b>Bước 3:</b> Đo thông mạch bằng đồng hồ đo VOM để xác định cáp đứt ngầm."
+            ],
+            safety: "⚠️ Thao tác cẩn thận, ngắt nguồn hệ thống khi kiểm tra đấu nối."
+        },
+        {
+            keywords: ["không nhận nguồn", "đèn led không sáng", "cháy mạch camera"],
+            issue: "⚡ Camera không nhận nguồn (đèn LED không sáng)",
+            empathy: "🤝 An Tín sẽ giúp bạn kiểm tra phần cấp nguồn thiết bị.",
+            cause: "Hỏng adapter nguồn, đứt dây nguồn cấp hoặc cháy mạch bên trong camera.",
+            steps: [
+                "<b>Bước 1:</b> Đo điện áp đầu ra của adapter (đảm bảo đúng chuẩn 12V DC hoặc nguồn PoE).",
+                "<b>Bước 2:</b> Kiểm tra đoạn dây dẫn nguồn xem có bị đứt gãy hay oxy hóa không.",
+                "<b>Bước 3:</b> Thay thế nguồn mới tương thích nếu adapter cũ đã hỏng."
+            ],
+            safety: "⚡ Tránh để nguồn điện chạm chập gây nguy hiểm cháy nổ."
+        },
+        {
+            keywords: ["chập chờn", "tự tắt", "nguồn yếu", "sụt áp"],
+            issue: "🔌 Camera lên hình rồi tự tắt, chập chờn",
+            empathy: "🤝 An Tín hỗ trợ khắc phục tình trạng sụt áp nguồn điện camera.",
+            cause: "Nguồn yếu, sụt áp do dây dẫn quá dài, hoặc tiếp xúc điện kém.",
+            steps: [
+                "<b>Bước 1:</b> Dùng nguồn điện có công suất lớn hơn cho hệ thống.",
+                "<b>Bước 2:</b> Rút ngắn khoảng cách đi dây hoặc tăng tiết diện dây nguồn.",
+                "<b>Bước 3:</b> Kiểm tra lại các điểm đấu nối nguồn."
+            ],
+            safety: "⚠️ Đảm bảo dây dẫn đủ tiết diện để truyền tải điện áp ổn định."
+        },
+        {
+            keywords: ["mất kênh", "xung đột ip", "cổng poe"],
+            issue: "🎛️ Đầu ghi báo mất kênh dù dây vẫn tốt",
+            empathy: "🤝 An Tín giúp bạn xử lý xung đột mạng nội bộ của camera.",
+            cause: "Xung đột địa chỉ IP giữa các camera hoặc lỗi cổng PoE trên đầu ghi.",
+            steps: [
+                "<b>Bước 1:</b> Đổi IP tĩnh cho từng camera để tránh trùng lặp.",
+                "<b>Bước 2:</b> Thử cắm cáp camera sang cổng PoE khác trên đầu ghi/switch.",
+                "<b>Bước 3:</b> Khởi động lại thiết bị sau khi thay đổi IP."
+            ],
+            safety: "⚠️ Quản lý rõ dải IP mạng nội bộ."
+        },
+        {
+            keywords: ["vào nước", "chết mạch", "ngoài trời"],
+            issue: "💧 Camera ngoài trời bị vào nước, chết mạch",
+            empathy: "🤝 An Tín chia sẻ sự cố hư hỏng do thời tiết ẩm ướt.",
+            cause: "Gioăng cao su chống nước bị hở, điểm khoan tường hoặc đấu nối chưa bít keo kín.",
+            steps: [
+                "<b>Bước 1:</b> Tháo camera kiểm tra, sấy khô bo mạch nếu vừa mới ngấm nước.",
+                "<b>Bước 2:</b> Thay thế gioăng cao su bảo vệ nếu bị chai cứng, lão hóa.",
+                "<b>Bước 3:</b> Bơm keo silicon chống nước tuyệt đối tại các điểm đấu nối và chân đế."
+            ],
+            safety: "⚠️ Ngắt nguồn điện trước khi tháo gỡ thiết bị ngoài trời."
+        },
+        {
+            keywords: ["sấm sét", "cháy main", "chống sét"],
+            issue: "⚡ Camera bị cháy main sau khi có sấm sét",
+            empathy: "🤝 An Tín hỗ trợ giải pháp bảo vệ thiết bị trước thiên tai.",
+            cause: "Chưa lắp đặt thiết bị chống sét lan truyền trên đường dây tín hiệu/nguồn.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra mức độ hư hỏng bo mạch chính của camera.",
+                "<b>Bước 2:</b> Lắp đặt thiết bị chống sét lan truyền chuyên dụng cho tuyến cáp mạng/nguồn.",
+                "<b>Bước 3:</b> Thay thế mainboard hoặc camera mới nếu bị sét đánh cháy hoàn toàn."
+            ],
+            safety: "⚡ Kiểm tra hệ thống tiếp địa chống sét toàn nhà."
+        },
+        {
+            keywords: ["nhiễu hạt", "ám xanh", "ám hồng", "ban đêm"],
+            issue: "🌙 Hình nhiễu hạt, ám xanh/hồng ban đêm",
+            empathy: "🤝 An Tín hỗ trợ tối ưu hóa chất lượng hiển thị ban đêm cho bạn.",
+            cause: "Cảm biến ánh sáng khu vực yếu, hoặc linh kiện cảm biến hồng ngoại kém chất lượng.",
+            steps: [
+                "<b>Bước 1:</b> Tăng cường ánh sáng bổ trợ cho khu vực cần giám sát ban đêm.",
+                "<b>Bước 2:</b> Kiểm tra cài đặt chế độ hồng ngoại (IR) trong phần mềm đầu ghi.",
+                "<b>Bước 3:</b> Cân nhắc nâng cấp dòng camera chuyên dụng có cảm biến ánh sáng tốt hơn."
+            ],
+            safety: "⚠️ Đảm bảo an toàn khi leo cao chỉnh hướng camera."
+        },
+        {
+            keywords: ["hình mờ", "lệch tiêu cự", "hơi ẩm"],
+            issue: "🔍 Hình mờ, không nét dù đã lau ống kính",
+            empathy: "🤝 An Tín giúp bạn lấy lại góc nhìn sắc nét cho camera.",
+            cause: "Lệch tiêu cự do va chạm cơ học hoặc hơi ẩm lọt vào bên trong ống kính.",
+            steps: [
+                "<b>Bước 1:</b> Canh chỉnh lại tiêu cự ống kính (nếu dòng camera hỗ trợ).",
+                "<b>Bước 2:</b> Kiểm tra và xử lý hơi ẩm bên trong mặt kính.",
+                "<b>Bước 3:</b> Thay thế cụm ống kính mới nếu bị ố mờ vĩnh viễn."
+            ],
+            safety: "⚠️ Thao tác nhẹ nhàng tránh làm trầy xước thấu kính."
+        },
+        {
+            keywords: ["sọc ngang", "nhấp nháy", "nhiễu điện từ"],
+            issue: "📺 Hình bị sọc ngang, nhấp nháy",
+            empathy: "🤝 An Tín hỗ trợ loại bỏ hiện tượng nhiễu hình ảnh.",
+            cause: "Nhiễu điện từ trường hoặc sai tần số quét (50Hz / 60Hz).",
+            steps: [
+                "<b>Bước 1:</b> Chỉnh lại thông số tần số quét trong menu cài đặt camera.",
+                "<b>Bước 2:</b> Tách xa đường dây tín hiệu camera ra khỏi dây điện lực công suất lớn.",
+                "<b>Bước 3:</b> Kiểm tra lại lớp bọc chống nhiễu của cáp tín hiệu."
+            ],
+            safety: "⚡ Tránh đi dây tín hiệu song song sát đường điện dân dụng."
+        },
+        {
+            keywords: ["offline", "app báo offline", "ghi hình tại chỗ"],
+            issue: "📱 App báo 'Offline' dù camera vẫn ghi hình tại chỗ",
+            empathy: "🤝 An Tín hiểu cảm giác khó chịu khi không xem được camera từ xa.",
+            cause: "Mất kết nối Internet WAN tại nhà, hoặc nhà mạng chặn cổng P2P.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra đường truyền Internet chính và đèn tín hiệu trên Modem.",
+                "<b>Bước 2:</b> Khởi động lại Modem mạng và Đầu ghi hình để làm mới kết nối.",
+                "<b>Bước 3:</b> Kiểm tra cấu hình mạng nội bộ và tính năng P2P trên app quản lý."
+            ],
+            safety: "⚠️ Không tự ý reset cứng thiết bị nếu không nắm rõ thông tin cấu hình."
+        },
+        {
+            keywords: ["disk error", "no disk", "lỗi ổ cứng", "không ghi đè"],
+            issue: "💽 Báo 'Disk Error' / 'No Disk' / Không ghi đè dữ liệu",
+            empathy: "🤝 An Tín giúp bạn khôi phục hệ thống lưu trữ dữ liệu.",
+            cause: "Ổ cứng chưa được định dạng, lỏng cáp SATA/nguồn, hoặc ổ cứng đã hỏng bad sector.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra lại cáp nguồn và cáp dữ liệu SATA kết nối ổ cứng.",
+                "<b>Bước 2:</b> Vào menu đầu ghi thực hiện format (định dạng) lại ổ cứng.",
+                "<b>Bước 3:</b> Bật tính năng 'Ghi đè khi đầy' và thay thế ổ cứng chuyên dụng nếu báo lỗi phần cứng."
+            ],
+            safety: "⚠️ Sao lưu dữ liệu quan trọng trước khi tiến hành định dạng ổ cứng."
+        },
+
+        // ================= PHẦN 2: MẠNG WIFI & THIẾT BỊ MẠNG =================
+        {
+            keywords: ["sóng yếu", "phòng xa", "rớt mạng", "chập chờn wifi"],
+            issue: "📶 Sóng yếu ở phòng xa router, rớt mạng liên tục",
+            empathy: "🤝 An Tín đồng hành giúp bạn khắc phục vùng chết sóng WiFi.",
+            cause: "Vật cản dày (tường bê tông, gương kính), khoảng cách quá xa thiết bị phát.",
+            steps: [
+                "<b>Bước 1:</b> Đặt lại vị trí Router ra khu vực trung tâm, thoáng đãng trong nhà.",
+                "<b>Bước 2:</b> Lắp đặt thêm thiết bị mở rộng sóng (Access Point) hoặc hệ thống Mesh WiFi.",
+                "<b>Bước 3:</b> Ưu tiên sử dụng băng tần 5GHz hoặc đi dây LAN phụ trợ."
+            ],
+            safety: "⚠️ Đặt thiết bị nơi thoáng khí, tránh ẩm thấp."
+        },
+        {
+            keywords: ["no internet", "lỗi dns", "biểu tượng wifi báo"],
+            issue: "🌐 Biểu tượng wifi báo 'No Internet' / Lỗi DNS",
+            empathy: "🤝 An Tín hỗ trợ kết nối internet gia đình của bạn.",
+            cause: "Mất tín hiệu từ nhà mạng ISP (đứt cáp quang) hoặc lỗi phân giải địa chỉ DNS.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra đèn LOS/PON trên Modem quang nhà mạng.",
+                "<b>Bước 2:</b> Đổi địa chỉ DNS sang Google (8.8.8.8) hoặc Cloudflare (1.1.1.1).",
+                "<b>Bước 3:</b> Khởi động lại toàn bộ hệ thống phát mạng theo đúng thứ tự."
+            ],
+            safety: "⚠️ Không tự ý can thiệp vào hộp phối quang (OBO) của nhà mạng."
+        },
+        {
+            keywords: ["dùng chùa", "đổi pass", "bảo mật wifi"],
+            issue: "🔒 Nghi ngờ có người dùng 'chùa' wifi / Đổi mật khẩu",
+            empathy: "🤝 An Tín bảo vệ mạng gia đình an toàn trước truy cập trái phép.",
+            cause: "Mật khẩu wifi quá yếu hoặc lộ thông tin, sử dụng chuẩn mã hóa cũ.",
+            steps: [
+                "<b>Bước 1:</b> Truy cập trang quản trị router, kiểm tra danh sách thiết bị đang kết nối.",
+                "<b>Bước 2:</b> Đổi mật khẩu wifi mạnh hơn, kết hợp chữ, số và ký tự đặc biệt.",
+                "<b>Bước 3:</b> Chuyển chuẩn mã hóa sang WPA2-PSK hoặc WPA3."
+            ],
+            safety: "⚠️ Không chia sẻ mã QR hoặc mật khẩu quản trị cho người lạ."
+        },
+
+        // ================= PHẦN 3: THIẾT BỊ ĐIỆN GIA ĐÌNH =================
+        {
+            keywords: ["cb nhảy", "aptomat nhảy", "chạm chập", "khi bật thiết bị"],
+            issue: "⚡ CB nhảy ngay khi bật thiết bị / Chạm chập điện",
+            empathy: "🤝 An Tín hỗ trợ xử lý sự cố điện năng an toàn.",
+            cause: "Thiết bị cắm vào bị chập mạch bên trong hoặc đường dây quá tải dòng.",
+            steps: [
+                "<b>Bước 1:</b> Ngắt ngay nguồn thiết bị nghi ngờ gây chập.",
+                "<b>Bước 2:</b> Kiểm tra kỹ phích cắm, dây dẫn và thiết bị tiêu thụ điện.",
+                "<b>Bước 3:</b> Gọi thợ điện chuyên nghiệp kiểm tra cách điện nếu CB tổng vẫn tiếp tục sập."
+            ],
+            safety: "⚡ TUYỆT ĐỐI KHÔNG CỐ GẮNG GIỮ CB NẾU CỨ BẬT LÊN LẠI NHẢY NGAY."
+        },
+        {
+            keywords: ["cb chống giật", "rcd", "elcb", "nhảy liên tục"],
+            issue: "🛡️ CB chống giật (RCD/ELCB) nhảy liên tục không rõ lý do",
+            empathy: "🤝 An Tín giúp bạn đảm bảo an toàn điện chống rò rỉ.",
+            cause: "Có thiết bị bị rò điện nhẹ ra vỏ (thường là máy nước nóng, máy giặt, ẩm mốc ổ cắm).",
+            steps: [
+                "<b>Bước 1:</b> Ngắt lần lượt các cầu dao nhánh để khoanh vùng khu vực rò điện.",
+                "<b>Bước 2:</b> Kiểm tra các thiết bị điện ngâm nước hoặc ẩm ướt trong nhà.",
+                "<b>Bước 3:</b> Đo điện trở cách điện và kiểm tra hệ thống dây tiếp địa (nối đất)."
+            ],
+            safety: "⚡ Rò điện rất nguy hiểm gây giật điện tử vong, cần xử lý ngay lập tức."
+        },
+        {
+            keywords: ["tê giật nhẹ", "vỏ kim loại", "tủ lạnh", "máy giặt", "rò điện"],
+            issue: "⚠️ Tê/giật nhẹ khi chạm vỏ kim loại thiết bị (tủ lạnh, máy giặt)",
+            empathy: "🤝 An Tín nhắc nhở bạn đặc biệt chú ý sự cố rò điện ra vỏ này.",
+            cause: "Thiết bị bị hở cách điện bên trong hoặc gia đình chưa lắp dây tiếp địa (nối đất).",
+            steps: [
+                "<b>Bước 1:</b> Ngắt điện thiết bị ngay lập tức, ngưng sử dụng tạm thời.",
+                "<b>Bước 2:</b> Đảo chiều phích cắm nguồn hoặc kiểm tra dây nguồn.",
+                "<b>Bước 3:</b> Thi công bổ sung hệ thống dây tiếp địa (nối đất) an toàn cho toàn bộ thiết bị."
+            ],
+            safety: "⚡ CỰC KỲ NGUY HIỂM: Có nguy cơ tai nạn điện giật nặng nếu tiếp tục sử dụng."
+        },
+
+        // ================= PHẦN 4: KHÓA CỬA ĐIỆN TỬ =================
+        {
+            keywords: ["không nhận vân tay", "bụi bẩn", "khóa thông minh"],
+            issue: "🔐 Khóa không nhận vân tay / Bụi bẩn cảm biến",
+            empathy: "🤝 An Tín hỗ trợ khôi phục quyền truy cập cửa thông minh cho bạn.",
+            cause: "Bụi bẩn, độ ẩm bám trên mặt kính cảm biến, hoặc ngón tay bị khô/xước vân tay.",
+            steps: [
+                "<b>Bước 1:</b> Dùng khăn mềm khô vệ sinh sạch sẽ mặt kính cảm biến vân tay.",
+                "<b>Bước 2:</b> Đăng ký bổ sung thêm vân tay mới vào bộ nhớ khóa.",
+                "<b>Bước 3:</b> Thử mở cửa bằng phương thức khác (thẻ từ, mã số, chìa cơ) nếu vân tay lỗi nặng."
+            ],
+            safety: "⚠️ Giữ chìa khóa cơ dự phòng ở nơi an toàn ngoài nhà."
+        },
+        {
+            keywords: ["hết pin hoàn toàn", "không vào được nhà", "pin 9v cứu hộ"],
+            issue: "🚨 Hết pin hoàn toàn, không vào được nhà",
+            empathy: "🤝 An Tín cung cấp giải pháp khẩn cấp khi khóa sập nguồn.",
+            cause: "Khóa kiệt pin hoàn toàn mà không kịp thay thế trước đó.",
+            steps: [
+                "<b>Bước 1:</b> Sử dụng viên pin vuông 9V áp vào hai cực tiếp điểm sạc khẩn cấp bên ngoài khóa.",
+                "<b>Bước 2:</b> Nhập mã số/vân tay để mở cửa khi có nguồn điện tạm thời cấp vào.",
+                "<b>Bước 3:</b> Vào nhà và tiến hành thay ngay bộ pin mới cho khóa."
+            ],
+            safety: "⚠️ Luôn mang theo chìa khóa cơ dự phòng cất ở nơi an toàn ngoài nhà."
+        }    
+    
     ];
 
     function processUserQuery(query) {
