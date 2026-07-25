@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V6.0)</title>
+    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V6.1)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -216,7 +216,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            max-width: 92%;
+            max-width: 94%;
             animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -752,7 +752,7 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V6.0)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V6.1)</p>
             </div>
         </div>
         <div>
@@ -784,10 +784,9 @@
                             <span><i class="fa-solid fa-database"></i> Tra Cứu Kho 1000+ Lỗi Đa Ngành:</span>
                             <span class="total-badge" id="totalErrorCount">1000+ Lỗi</span>
                         </div>
-                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Nhập từ khóa lỗi (VD: hikvision, dhcp, aptomat, rớt mạng, khóa kẹt...)" onkeyup="filterErrorList()">
+                        <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Nhập từ khóa lỗi (hikvision, dhcp, aptomat, rớt mạng, khóa kẹt...)" onkeyup="filterErrorList()">
 
                         <div class="error-scroll-list" id="errorScrollList">
-                            <!-- DANH SÁCH LỖI MẪU ĐẠI DIỆN ĐƯỢC NẠP SẴN -->
                             <button class="error-item-btn" onclick="selectErrorItem('Camera mất kết nối / Báo Offline / Mất IP')"><span>🔴 [Camera] Camera mất kết nối / Báo Offline / Mất IP</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Không xem lại được dữ liệu / Lỗi ổ cứng HDD')"><span>💾 [Camera] Không xem lại lịch sử ghi hình / Lỗi ổ cứng</span><i class="fa-solid fa-chevron-right"></i></button>
                             <button class="error-item-btn" onclick="selectErrorItem('Ban đêm bị tối đen / Không thấy hồng ngoại')"><span>🌙 [Camera] Camera ban đêm bị tối đen / Không thấy hồng ngoại</span><i class="fa-solid fa-chevron-right"></i></button>
@@ -878,7 +877,6 @@
         btnEl.classList.add('active');
     }
 
-    // TÌM KIẾM THỜI GIAN THỰC TRONG KHO HÀNG NGÀN LỖI
     function filterErrorList() {
         const query = document.getElementById('searchErrorInput').value.toLowerCase();
         const items = document.querySelectorAll('.error-item-btn');
@@ -928,14 +926,14 @@
         processUserQuery(query);
     }
 
-    // HỆ THỐNG KHO DỮ LIỆU ĐA NGÀNH (ĐÃ BỔ SUNG CHI TIẾT HƯỚNG DẪN TỰ SỬA CHỮA CHO KHÁCH HÀNG)
+    // KHO DỮ LIỆU ĐÃ ĐƯỢC BỔ SUNG ĐẦY ĐỦ HƯỚNG DẪN TỰ XỬ LÝ CHO TẤT CẢ CÁC LỖI
     const KNOWLEDGE_BASE = [
         {
             keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip", "camera"],
             issue: "Camera / Đầu ghi báo Offline (Ngoại tuyến)",
             empathy: "🤝 An Tín hiểu sự bất tiện khi hệ thống giám sát an ninh bị gián đoạn.",
             cause: "Đầu ghi/Camera mất thông số IP, lỏng dây mạng RJ45, hoặc sụt nguồn Adapter 12V.",
-            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra đèn nguồn Adapter của camera/đầu ghi xem có sáng không.<br>2. Kiểm tra jack cắm mạng RJ45 xem có bị lỏng chốt hoặc đèn tín hiệu ở cổng mạng có chớp nháy không.<br>3. Khởi động lại (tắt nguồn rồi bật lại) Modem mạng và đầu ghi hình.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra đèn nguồn Adapter của camera/đầu ghi.<br>2. Kiểm tra giắc cắm mạng RJ45 xem có lỏng chốt không.<br>3. Khởi động lại Modem mạng và đầu ghi hình.",
             steps: [
                 "<b>Bước 1:</b> Kiểm tra đèn tín hiệu cổng mạng LAN phía sau đầu ghi và Switch mạng.",
                 "<b>Bước 2:</b> Khởi động lại (Reset nguồn) Modem nhà mạng và Đầu ghi hình.",
@@ -947,7 +945,7 @@
             issue: "Lỗi ổ cứng HDD / Không xem lại được dữ liệu",
             empathy: "🛡️ Dữ liệu camera rất quan trọng đối với việc bảo vệ tài sản của anh/chị.",
             cause: "Ổ cứng HDD bị hỏng cơ, lỏng cáp nguồn/SATA bên trong đầu ghi, hoặc chưa định dạng.",
-            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Lắng nghe xem ổ cứng có tiếng kêu lạch cạch hoặc không quay không.<br>2. Kiểm tra lại giắc nguồn và cáp tín hiệu SATA nối từ bo mạch đầu ghi vào ổ cứng.<br>3. Vào phần Menu > Lưu trữ > Định dạng (Format) lại ổ cứng trực tiếp trên đầu ghi.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Lắng nghe xem ổ cứng có tiếng kêu lạch cạch hoặc không quay không.<br>2. Kiểm tra lại giắc nguồn và cáp tín hiệu SATA nối từ bo mạch đầu ghi.<br>3. Vào Menu > Lưu trữ > Định dạng (Format) lại ổ cứng.",
             steps: [
                 "<b>Bước 1:</b> Vào mục Quản lý Lưu trữ (Storage) trên đầu ghi kiểm tra trạng thái ổ cứng.",
                 "<b>Bước 2:</b> Tiến hành Format (Định dạng lại) ổ cứng, nếu báo lỗi Bad Sector cần thay mới.",
@@ -959,11 +957,155 @@
             issue: "Modem WiFi rớt mạng liên tục / Chấm than vàng",
             empathy: "💡 Mạng internet chập chờn gây ảnh hưởng trực tiếp đến công việc của bạn.",
             cause: "Quá tải thiết bị truy cập, treo băng thông hoặc nhà mạng suy hao tín hiệu quang.",
-            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Rút phích cắm điện Router WiFi trong vòng 30 giây rồi cắm lại.<br>2. Kiểm tra xem đèn PON/LOS trên modem nhà mạng có bị nhấp nháy đỏ hay không.<br>3. Đổi mật khẩu WiFi hoặc giảm bớt số lượng thiết bị truy cập đồng thời.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Rút phích cắm điện Router WiFi trong vòng 30 giây rồi cắm lại.<br>2. Kiểm tra xem đèn PON/LOS trên modem nhà mạng có bị nhấp nháy đỏ không.<br>3. Đổi mật khẩu WiFi hoặc giảm bớt số lượng thiết bị truy cập đồng thời.",
             steps: [
                 "<b>Bước 1:</b> Rút nguồn bộ phát WiFi, đợi 30 giây rồi cắm lại để giải phóng RAM.",
                 "<b>Bước 2:</b> Kiểm tra số lượng thiết bị truy cập thực tế có vượt quá tải của Router không.",
                 "<b>Bước 3:</b> Gọi tổng đài nhà mạng kiểm tra tín hiệu cáp quang đầu vào nếu đèn LOS đỏ nhấp nháy."
+            ]
+        },
+        {
+            keywords: ["mạng lan", "dhcp", "cáp quang", "cổng kết nối"],
+            issue: "Lỗi đứt cáp quang / Mạng LAN không nhận IP từ DHCP",
+            empathy: "🌐 Kết nối mạng dây ổn định là huyết mạch của hệ thống dữ liệu doanh nghiệp.",
+            cause: "Hỏng cổng switch, đứt cáp tín hiệu mạng âm tường hoặc lỗi cấp phát DHCP từ Router.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra xem đèn tín hiệu tại cổng Switch/Router mạng có sáng không.<br>2. Rút đầu bấm mạng RJ45 cắm lại hoặc thay thử dây nhảy mạng khác.<br>3. Khởi động lại thiết bị phát DHCP Router chính.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra đầu bấm RJ45 xem có bị oxy hóa hoặc lỏng chân tiếp xúc không.",
+                "<b>Bước 2:</b> Kiểm tra cài đặt IP tĩnh hoặc bật lại chế độ nhận diện tự động DHCP trên máy tính/thiết bị.",
+                "<b>Bước 3:</b> Dùng máy test mạng kiểm tra thông mạch cáp LAN âm tường."
+            ]
+        },
+        {
+            keywords: ["aptomat", "nhảy ngắt", "chập cháy", "điện dân dụng"],
+            issue: "Aptomat (CB) tổng cứ bật lên lại nhảy ngắt",
+            empathy: "⚡ An toàn điện là ưu tiên hàng đầu để bảo vệ gia đình và thiết bị.",
+            cause: "Đang xảy ra sự cố chập tải cục bộ, rò điện ẩm ướt hoặc quá tải thiết bị công suất lớn.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Rút phích cắm tất cả các thiết bị điện đang sử dụng trong khu vực.<br>2. Bật lại Aptomat, nếu không nhảy nữa thì cắm từng thiết bị để tìm ra thiết bị bị chập.<br>3. Kiểm tra các ổ cắm có bị dính nước hoặc bốc mùi khét không.",
+            steps: [
+                "<b>Bước 1:</b> Ngắt toàn bộ các Aptomat nhánh trước khi bật Aptomat tổng.",
+                "<b>Bước 2:</b> Bật lần lượt từng Aptomat nhánh để xác định chính xác nhánh phòng đang bị sự cố chập.",
+                "<b>Bước 3:</b> Kiểm tra các thiết bị có công suất lớn như bình nóng lạnh, điều hòa, bếp từ."
+            ]
+        },
+        {
+            keywords: ["ổ cắm", "mùi khét", "đánh lửa", "chập chờn"],
+            issue: "Ổ cắm điện bị chập chờn / Mùi khét / Phát tia lửa",
+            empathy: "🔥 Cảnh báo nguy cơ cháy nổ do lỏng điểm tiếp xúc ổ cắm điện.",
+            cause: "Lỏng lò xo tiếp xúc bên trong ổ cắm, tiếp điểm bị mô-ve đánh lửa hoặc quá tải nhiệt.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Ngay lập tức ngắt Aptomat khu vực ổ cắm đó.<br>2. Không tiếp tục sử dụng thiết bị cắm tại ổ cắm đang có mùi khét.<br>3. Kiểm tra xem bề mặt ổ cắm có bị biến dạng nhiệt hoặc ngả vàng không.",
+            steps: [
+                "<b>Bước 1:</b> Cúp cầu dao điện khu vực ổ cắm trước khi kiểm tra.",
+                "<b>Bước 2:</b> Tháo mặt nạ ổ cắm kiểm tra các ốc vít siết dây điện có bị lỏng hoặc cháy xém không.",
+                "<b>Bước 3:</b> Thay thế ổ cắm mới chịu tải cao hơn nếu lõi đồng bên trong đã bị hỏng."
+            ]
+        },
+        {
+            keywords: ["bóng đèn", "nhấp nháy", "chấn lưu", "led"],
+            issue: "Bóng đèn LED bị nhấp nháy liên tục hoặc sáng mờ",
+            empathy: "💡 Ánh sáng chập chờn gây mỏi mắt và khó chịu cho không gian sinh hoạt.",
+            cause: "Hỏng nguồn Driver (chấn lưu) LED, lỏng công tắc điện hoặc nguồn điện áp không ổn định.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra lại công tắc bật tắt xem có bị lỏng tiếp điểm không.<br>2. Tháo bóng đèn kiểm tra nguồn Driver bên trong xem có bị cháy phù tụ không.<br>3. Thử đổi bóng sang vị trí đuôi đèn khác để kiểm tra.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra nguồn điện áp cấp vào bộ đèn có đạt chuẩn 220V không.",
+                    "<b>Bước 2:</b> Thay thế bộ nguồn Driver LED tương thích công suất.",
+                "<b>Bước 3:</b> Kiểm tra các mối nối dây điện âm trần."
+            ]
+        },
+        {
+            keywords: ["vân tay", "pin yếu", "khóa thông minh", "mã số"],
+            issue: "Khóa thông minh không nhận vân tay / Báo lỗi PIN",
+            empathy: "🔐 Sự cố khóa điện tử ảnh hưởng trực tiếp đến việc ra vào nhà của bạn.",
+            cause: "Pin yếu dưới ngưỡng hoạt động, mắt đọc vân tay bám bụi bẩn hoặc lệch trục chốt cửa.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Thay thế toàn bộ pin mới (nên dùng pin kiềm Alkaline chính hãng).<br>2. Dùng khăn mềm khô lau sạch mắt đọc vân tay quang học/sinh trắc.<br>3. Sử dụng chìa khóa cơ dự phòng để mở cửa trong trường hợp khẩn cấp.",
+            steps: [
+                "<b>Bước 1:</b> Thay ngay bộ 4 hoặc 8 viên pin mới, kiểm tra cực âm dương chuẩn xác.",
+                "<b>Bước 2:</b> Sử dụng nguồn sạc dự phòng (PowerBank) cắm vào cổng MicroUSB/Type-C khẩn cấp bên ngoài khóa.",
+                "<b>Bước 3:</b> Vệ sinh bề mặt cảm biến vân tay bằng tăm bông sạch."
+            ]
+        },
+        {
+            keywords: ["kẹt chốt", "cánh cửa", "lệch ổ khóa", "mở từ trong"],
+            issue: "Khóa cửa điện tử bị kẹt chốt / Không mở được từ trong",
+            empathy: "🚪 An Tín hỗ trợ xử lý ngay các sự cố kẹt khóa khẩn cấp tại nhà.",
+            cause: "Cánh cửa bị xệ bản lề làm lệch tâm chốt khóa, hoặc kẹt rãnh cơ học bên trong.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra xem cánh cửa có bị xệ hoặc cấn vào khung bao cửa không.<br>2. Đẩy hoặc ép nhẹ cánh cửa vào trong khi vặn tay nắm hoặc bấm mở.<br>3. Tra một ít dầu bôi trơn chuyên dụng vào các chốt thép.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra độ rơ và căn chỉnh lại bản lề cánh cửa nếu bị xệ.",
+                "<b>Bước 2:</b> Không dùng lực quá mạnh bẻ gãy tay nắm cơ học.",
+                "<b>Bước 3:</b> Liên hệ kỹ thuật chuyên môn tháo lắp căn chỉnh lại ổ cơ."
+            ]
+        },
+        {
+            keywords: ["zigbee", "tuya", "smarthome", "app điện thoại", "công tắc thông minh"],
+            issue: "Công tắc thông minh Zigbee / Tuya mất kết nối App",
+            empathy: "🏠 Hệ thống nhà thông minh mất kết nối khiến các kịch bản tự động bị ngưng trệ.",
+            cause: "Mất kết nối sóng WiFi trung tâm, bộ điều khiển Hub mất nguồn hoặc treo hệ thống.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra Modem WiFi nhà bạn có đang hoạt động bình thường không.<br>2. Khởi động lại bộ điều khiển trung tâm Hub Gateway.<br>3. Nhấn giữ nút nguồn công tắc để reset cấu hình kết nối mạng.",
+            steps: [
+                "<b>Bước 1:</b> Đảm bảo điện thoại và thiết bị cùng kết nối chung băng tần WiFi 2.4GHz.",
+                "<b>Bước 2:</b> Kiểm tra đèn trạng thái trên công tắc có nhấp nháy chờ kết nối không.",
+                "<b>Bước 3:</b> Thực hiện ghép nối lại thiết bị (Re-pairing) trên ứng dụng Smart Life / Tuya."
+            ]
+        },
+        {
+            keywords: ["hub", "gateway", "trung tâm", "offline"],
+            issue: "Bộ điều khiển trung gian Hub Gateway không phản hồi",
+            empathy: "🎛️ Hub trung tâm là bộ não của toàn bộ thiết bị nhà thông minh.",
+            cause: "Mất nguồn Adapter nguồn Hub, đứt cáp mạng LAN kết nối Hub hoặc lỗi định tuyến IP.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra đèn nguồn trên thiết bị Hub Gateway.<br>2. Rút nguồn điện cấp cho Hub và cắm lại sau 10 giây.<br>3. Kiểm tra dây cáp mạng kết nối từ Hub vào Router WiFi.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra kết nối Internet tại khu vực đặt Hub.",
+                "<b>Bước 2:</b> Reset cứng Hub bằng cách giữ nút reset phía sau từ 5-10 giây.",
+                "<b>Bước 3:</b> Thêm lại thiết bị trên ứng dụng quản lý nhà thông minh."
+            ]
+        },
+        {
+            keywords: ["đèn năng lượng", "mặt trời", "không sáng", "mau hết pin"],
+            issue: "Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin",
+            empathy: "☀️ Hệ thống chiếu sáng năng lượng xanh giúp tiết kiệm và an ninh tối ưu.",
+            cause: "Tấm pin năng lượng bị che khuất bám bụi bẩn, hoặc pin lưu trữ chai sau thời gian dài.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Dùng khăn ẩm lau sạch bề mặt tấm pin năng lượng mặt trời.<br>2. Đảm bảo ban ngày tấm pin nhận được tối đa ánh nắng trực tiếp (không bị bóng râm che).<br>3. Kiểm tra giắc cắm chống nước nối giữa tấm pin và thân đèn.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra góc nghiêng của tấm pin hướng về phía đón nắng tốt nhất.",
+                "<b>Bước 2:</b> Kiểm tra dung lượng lưu trữ của khối pin sạc Lithium bên trong đèn.",
+                "<b>Bước 3:</b> Thay thế pin lưu trữ mới nếu cell pin đã bị chai phù."
+            ]
+        },
+        {
+            keywords: ["tấm pin", "sạc không vào", "mạch sạc", "nlmt"],
+            issue: "Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc",
+            empathy: "🔋 Đảm bảo hiệu suất chuyển đổi năng lượng tối đa cho hệ thống đèn.",
+            cause: "Đứt dây dẫn từ tấm pin xuống đèn, nứt kính tấm pin hoặc hỏng bo mạch quản lý sạc.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra dây dẫn từ tấm pin có bị chuột cắn hoặc đứt gãy do thời tiết không.<br>2. Đo điện áp đầu ra của tấm pin dưới trời nắng bằng đồng hồ vạn năng.<br>3. Kiểm tra giắc cắm xem có bị rỉ sét do nước mưa ngấm vào không.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra ngoại quan mặt kính tấm pin có bị nứt vỡ hay đổi màu không.",
+                "<b>Bước 2:</b> Vệ sinh và xịt keo chống nước tại các điểm đấu nối jack cắm.",
+                "<b>Bước 3:</b> Thay thế bo mạch sạc hoặc tấm pin mới nếu bị lỗi linh kiện bên trong."
+            ]
+        },
+        {
+            keywords: ["máy chấm công", "vân tay", "chấm công", "lỗi lan"],
+            issue: "Máy chấm công không nhận vân tay / Lỗi kết nối mạng LAN",
+            empathy: "⏰ Đảm bảo dữ liệu quản lý nhân sự và chấm công hoạt động thông suốt.",
+            cause: "Mắt đọc vân tay bám mồ hôi/vân tay mờ, lỏng cáp mạng LAN hoặc thay đổi dải IP mạng.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Dùng khăn mềm vệ sinh sạch bề mặt mắt đọc quang học của máy chấm công.<br>2. Khởi động lại máy chấm công bằng cách ngắt nguồn và bật lại.<br>3. Kiểm tra địa chỉ IP của máy chấm công có trùng khớp với dải mạng công ty không.",
+            steps: [
+                "<b>Bước 1:</b> Đăng ký thêm vân tay dự phòng cho nhân viên nếu vân tay chính bị mờ.",
+                "<b>Bước 2:</b> Kiểm tra đèn tín hiệu cổng cắm mạng phía sau máy chấm công.",
+                "<b>Bước 3:</b> Đồng bộ lại thời gian và dữ liệu chấm công qua phần mềm trên máy tính."
+            ]
+        },
+        {
+            keywords: ["tổng đài", "nội bộ", "mất tín hiệu", "gọi ra ngoài"],
+            issue: "Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài được",
+            empathy: "☎️ Duy trì liên lạc thông suốt là yếu tố cốt lõi của mọi văn phòng doanh nghiệp.",
+            cause: "Mất nguồn tổng đài, đứt cáp đường bưu điện trung kế CO hoặc lỗi cấu hình đầu số.",
+            guide: "<b>Hướng dẫn khách hàng tự kiểm tra & xử lý tại nhà:</b><br>1. Kiểm tra đèn nguồn của thiết bị tổng đài nội bộ (PBX / IP PBX).<br>2. Kiểm tra đường dây điện thoại bưu điện cắm vào cổng CO line.<br>3. Khởi động lại thiết bị tổng đài và các điện thoại IP phone.",
+            steps: [
+                "<b>Bước 1:</b> Kiểm tra tín hiệu các máy nhánh nội bộ có nghe tiếng tút thông báo không.",
+                "<b>Bước 2:</b> Kiểm tra cước phí dịch vụ đường truyền với nhà mạng cung cấp.",
+                "<b>Bước 3:</b> Gọi kỹ thuật kiểm tra phần cứng card tổng đài."
             ]
         }
     ];
@@ -971,14 +1113,12 @@
     function processUserQuery(query) {
         const chatBody = document.getElementById('chatBody');
         
-        // 1. Hiển thị tin nhắn của User
         const userRow = document.createElement('div');
         userRow.className = 'message-row user';
         userRow.innerHTML = `<div class="msg-bubble">${query}</div>`;
         chatBody.appendChild(userRow);
         chatBody.scrollTop = chatBody.scrollHeight;
 
-        // 2. Hiển thị trạng thái AI đang phân tích (Typing)
         const typingRow = document.createElement('div');
         typingRow.className = 'message-row ai';
         typingRow.id = 'typingIndicator';
@@ -991,7 +1131,6 @@
         chatBody.appendChild(typingRow);
         chatBody.scrollTop = chatBody.scrollHeight;
 
-        // 3. Xử lý logic tìm kiếm tri thức
         setTimeout(() => {
             const typingEl = document.getElementById('typingIndicator');
             if (typingEl) typingEl.remove();
@@ -1046,7 +1185,7 @@
                             <button class="btn-submit-repair" onclick="submitRepairRequest('${matched.issue}', '${uniqueId}')"><i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU HỖ TRỢ NGAY</button>
                             <div class="zalo-action-container">
                                 <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
-                                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-oa"><i class="fa-solid fa-star"></i> Quan tâm Zalo OA</a>
+                                <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-zalo-oa"><i class="fa-solid fa-star"></i> Quan tâm Zalo OA</a>
                             </div>
                         </div>
                     </div>`;
@@ -1073,7 +1212,7 @@
                             <button class="btn-submit-repair" onclick="submitRepairRequest('${query}', '${uniqueId}')"><i class="fa-solid fa-bolt"></i> YÊU CẦU KỸ THUẬT GỌI LẠI NGAY</button>
                             <div class="zalo-action-container">
                                 <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
-                                <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-oa"><i class="fa-solid fa-star"></i> Quan tâm Zalo OA</a>
+                                <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-zalo-oa"><i class="fa-solid fa-star"></i> Quan tâm Zalo OA</a>
                             </div>
                         </div>
                     </div>`;
@@ -1083,18 +1222,44 @@
         }, 800);
     }
 
-    // HÀM KIỂM TRA ĐIỀU KIỆN 3 TRƯỜNG: TÊN, PHONE, ĐỊA CHỈ TRƯỚC KHI GỬI
+    // HÀM KIỂM TRA ĐIỀU KIỆN 3 TRƯỜNG & GỬI WEBHOOK MAKE (GỬI MAIL)
     function submitRepairRequest(issueName, uniqueId) {
         const nameVal = document.getElementById(`name_${uniqueId}`).value.trim();
         const phoneVal = document.getElementById(`phone_${uniqueId}`).value.trim();
         const addressVal = document.getElementById(`address_${uniqueId}`).value.trim();
         
+        // CHẶN GỬI KHI CÓ TRƯỜNG TRỐNG
         if (!nameVal || !phoneVal || !addressVal) {
-            alert('⚠️ Vui lòng điền đầy đủ 3 trường bắt buộc: [Họ tên], [Số điện thoại] và [Địa chỉ sửa chữa/khảo sát] để gửi yêu cầu!');
+            alert('⚠️ Vui lòng điền đầy đủ 3 trường bắt buộc: [Họ và tên quý khách], [Số điện thoại liên hệ] và [Địa chỉ sửa chữa / khảo sát] trước khi gửi!');
             return;
         }
         
-        alert(`🎉 Chúc mừng ${nameVal}! Yêu cầu xử lý sự cố [${issueName}] tại địa chỉ "${addressVal}" đã được ghi nhận. Kỹ thuật viên An Tín sẽ gọi điện qua số ${phoneVal} và qua Zalo 0914060339 để hỗ trợ bạn trong 5 phút tới!`);
+        // DỮ LIỆU GỬI ĐẾN WEBHOOK MAKE
+        const payload = {
+            name: nameVal,
+            phone: phoneVal,
+            address: addressVal,
+            issue: issueName,
+            time: new Date().toLocaleString('vi-VN')
+        };
+
+        const makeWebhookUrl = 'https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc';
+
+        // GỬI REQUEST BẰNG FETCH API
+        fetch(makeWebhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu xử lý sự cố [${issueName}] tại địa chỉ "${addressVal}" đã được chuyển tới hệ thống An Tín qua Webhook Make. Kỹ thuật viên sẽ liên hệ qua số ${phoneVal} trong 5 phút tới!`);
+        })
+        .catch(error => {
+            console.error('Lỗi khi gửi webhook:', error);
+            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu xử lý sự cố [${issueName}] đã được ghi nhận. Kỹ thuật viên An Tín sẽ gọi lại cho bạn qua số ${phoneVal} trong thời gian sớm nhất!`);
+        });
     }
 
     function calculateAI() {
@@ -1102,7 +1267,7 @@
         const days = parseInt(document.getElementById('storage_days').value) || 15;
         const res = parseInt(document.getElementById('resolution').value) || 4;
 
-        let bitRatePerCam = res === 2 ? 2.5 : (res === 4 ? 4.5 : 8.0); // Mbps
+        let bitRatePerCam = res === 2 ? 2.5 : (res === 4 ? 4.5 : 8.0);
         let totalStorageTB = ((count * bitRatePerCam * 3600 * 24 * days) / (8 * 1024 * 1024 * 1024)).toFixed(1);
         let totalBandwidth = (count * bitRatePerCam).toFixed(1);
 
