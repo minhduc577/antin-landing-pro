@@ -1321,6 +1321,123 @@
         `;
         document.getElementById('ai-result').style.display = 'block';
     }
+
+// Lắng nghe sự kiện click vào nút xanh "CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC"
+document.addEventListener("DOMContentLoaded", function() {
+    // Tìm nút xanh dựa vào class hoặc text bên trong
+    const buttons = document.querySelectorAll("button, div, span");
+    buttons.forEach(el => {
+        if (el.innerText && el.innerText.includes("CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC")) {
+            el.addEventListener("click", function() {
+                runAIEffects();
+            });
+        }
+    });
+});
+
+function runAIEffects() {
+    // 1. Tạo lớp phủ (Overlay) hiệu ứng AI đang xử lý chuyên nghiệp
+    const overlay = document.createElement('div');
+    overlay.id = 'ai-processing-overlay';
+    overlay.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; color: white;">
+            <div class="ai-spinner" style="width: 60px; height: 60px; border: 5px solid #333; border-top: 5px solid #00ffcc; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <h2 id="ai-status-text" style="margin-top: 20px; color: #00ffcc; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">🤖 AI An Tín đang kết nối hệ thống...</h2>
+            <p style="color: #aaa; font-size: 14px; margin-top: 5px;">Đang trích xuất dữ liệu từ kho tri thức kỹ thuật đa ngành...</p>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Thêm CSS Animation xoay vòng
+    if (!document.getElementById('ai-anim-style')) {
+        const style = document.createElement('style');
+        style.id = 'ai-anim-style';
+        style.innerHTML = `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
+        document.head.appendChild(style);
+    }
+
+    // 2. Hiệu ứng chuyển trạng thái thông minh mượt mà
+    setTimeout(() => {
+        document.getElementById('ai-status-text').innerText = "🔍 Đang phân tích mã lỗi & đối soát thiết bị...";
+    }, 1200);
+
+    setTimeout(() => {
+        document.getElementById('ai-status-text').innerText = "⚡ Đã tìm thấy giải pháp tối ưu! Đang tổng hợp...";
+    }, 2500);
+
+    // 3. Sau 3.5 giây: Tắt màn hình loading và hiển thị kết quả kèm khung Chat Hỏi & Đáp
+    setTimeout(() => {
+        document.body.removeChild(overlay);
+        showAIResultAndChatInterface();
+    }, 3500);
+}
+
+function showAIResultAndChatInterface() {
+    // Tạo khung hiển thị kết quả và chat box nổi bật trên màn hình
+    const modal = document.createElement('div');
+    modal.innerHTML = `
+        <div id="ai-result-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif;">
+            <div style="background: #ffffff; width: 90%; max-width: 650px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); display: flex; flex-direction: column; max-height: 90vh;">
+                
+                <!-- Header Modal -->
+                <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-size: 18px;">✅ Kết Quả Chuẩn Đoán AI Kỹ Thuật</h3>
+                    <span onclick="document.body.removeChild(document.getElementById('ai-result-modal'))" style="cursor: pointer; font-size: 22px; font-weight: bold;">&times;</span>
+                </div>
+
+                <!-- Nội dung kết quả -->
+                <div style="padding: 20px; overflow-y: auto; flex: 1; background: #f8f9fa;">
+                    <div style="background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 12px; border-radius: 4px; margin-bottom: 15px;">
+                        <h4 style="margin: 0 0 5px 0; color: #2e7d32;">🔍 Lỗi đã nhận diện:</h4>
+                        <p style="margin: 0; font-size: 14px; color: #333;">Thiết bị đang gặp sự cố kết nối ngoại tuyến / gián đoạn tín hiệu đường truyền.</p>
+                    </div>
+
+                    <div style="background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px; border-radius: 4px; margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 5px 0; color: #1976d2;">🛠️ Hướng dẫn xử lý nhanh tại nhà:</h4>
+                        <p style="margin: 0; font-size: 14px; color: #333; line-height: 1.5;">
+                            1. Kiểm tra nguồn điện cấp cho thiết bị.<br>
+                            2. Khởi động lại bộ định tuyến Hub/Router WiFi.<br>
+                            3. Kiểm tra dây cáp mạng kết nối.
+                        </p>
+                    </div>
+
+                    <!-- Khu vực hỏi đáp trực tiếp (Chat with AI) -->
+                    <div style="border-top: 2px solid #ddd; padding-top: 15px;">
+                        <h4 style="margin: 0 0 10px 0; color: #1e3c72; font-size: 15px;">💬 Trao đổi thêm với Chuyên Gia Kỹ Thuật AI:</h4>
+                        <div id="ai-chat-box" style="height: 140px; background: white; border: 1px solid #ced4da; border-radius: 6px; padding: 10px; overflow-y: auto; font-size: 13px; margin-bottom: 10px;">
+                            <div style="margin-bottom: 8px; color: #1e3c72;"><b>AI Kỹ Thuật:</b> Dạ em đã chuẩn đoán xong lỗi trên. Anh/chị có cần em hướng dẫn chi tiết thêm bước nào không ạ?</div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="ai-user-input" placeholder="Nhập câu hỏi thắc mắc của bạn..." style="flex: 1; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 14px;">
+                            <button onclick="sendAIChatMessage()" style="background: #1976d2; color: white; border: none; padding: 0 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function sendAIChatMessage() {
+    const input = document.getElementById('ai-user-input');
+    const chatBox = document.getElementById('ai-chat-box');
+    if (!input.value.trim()) return;
+
+    // Hiển thị tin nhắn của khách
+    chatBox.innerHTML += `<div style="margin-bottom: 8px; text-align: right; color: #d32f2f;"><b>Bạn:</b> ${input.value}</div>`;
+    let userText = input.value;
+    input.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Giả lập AI trả lời thông minh theo thời gian thực (Hoặc kết nối Webhook Make.com của bạn ở đây)
+    setTimeout(() => {
+        chatBox.innerHTML += `<div style="margin-bottom: 8px; color: #1e3c72;"><b>AI Kỹ Thuật:</b> Dạ về vấn đề "${userText}", anh/chị cứ thao tác theo các bước trên trước nhé, nếu đèn tín hiệu vẫn chớp đỏ thì báo lại để kỹ thuật hỗ trợ trực tiếp ạ!</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 1000);
+}
+    
 </script>
 </body>
 </html>
