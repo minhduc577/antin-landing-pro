@@ -1134,23 +1134,19 @@
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-// Hàm gửi dữ liệu form 3 trường qua Make.com webhook và email thông báo kèm lịch sử chat
+// Hàm gửi dữ liệu form chuẩn hóa khớp hoàn toàn với template Make.com
 function submitRepairBooking(errorTopic) {
     let name = document.getElementById('repairName').value.trim();
     let phone = document.getElementById('repairPhone').value.trim();
     let address = document.getElementById('repairAddress').value.trim();
 
     if(!name || !phone || !address) {
-        // Hiệu ứng cảnh báo chuyên nghiệp, sinh động hơn thay vì alert thuần
         let formContainer = document.getElementById('repairName').closest('form') || document.querySelector('.repair-form-container') || document.body;
-        
-        // Tạo hiệu ứng rung nhẹ (shake) thu hút sự chú ý vào form nếu thiếu thông tin
         if (formContainer) {
             formContainer.style.animation = 'none';
-            formContainer.offsetHeight; // trigger reflow
+            formContainer.offsetHeight;
             formContainer.style.animation = 'shake 0.5s ease-in-out';
         }
-        
         alert('⚠️ Vui lòng điền đầy đủ thông tin: Họ tên, Số điện thoại và Địa chỉ để Kỹ thuật An Tín hỗ trợ bạn tốt nhất nhé!');
         return;
     }
@@ -1163,18 +1159,18 @@ function submitRepairBooking(errorTopic) {
         chatHistoryString = "Không có lịch sử trao đổi chi tiết.";
     }
 
+    // Cấu trúc payload khớp hoàn toàn với template HTML bên Make.com (name, phone, address, issue, time, interaction_history)
     let payload = {
-        tieu_de_loi: errorTopic,
-        ten_khach_hang: name,
-        so_dien_thoai: phone,
-        dia_chi_sua_chua: address,
-        thoi_gian_gui: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
-        chat_history: chatHistoryString
+        name: name,
+        phone: phone,
+        address: address,
+        issue: errorTopic || "Yêu cầu khảo sát / sửa chữa tại chỗ",
+        time: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
+        interaction_history: chatHistoryString
     };
 
     let submitBtn = document.querySelector('.btn-submit-repair');
     if (submitBtn) {
-        // Thêm hiệu ứng sóng động xoay vòng cho icon lúc đang xử lý
         submitBtn.innerHTML = '<i class="fa-solid fa-rocket fa-bounce" style="margin-right: 6px;"></i> Đang truyền dữ liệu & Lịch sử AI...';
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.85';
@@ -1192,14 +1188,12 @@ function submitRepairBooking(errorTopic) {
     })
     .then(response => {
         if (submitBtn) {
-            // Hiệu ứng thành công kích thích hành động, màu sắc bắt mắt
             submitBtn.innerHTML = '<i class="fa-solid fa-circle-check fa-beat" style="color: #ffffff; margin-right: 6px;"></i> Gửi yêu cầu thành công! 🎉';
-            submitBtn.style.backgroundColor = '#10B981'; // Màu xanh lá hiện đại
+            submitBtn.style.backgroundColor = '#10B981';
             submitBtn.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.5)';
             submitBtn.style.transform = 'scale(1.02)';
         }
         
-        // Hiển thị thêm hộp thoại chúc mừng/thông báo chi tiết ẩn chứa cảm giác thân thiện
         setTimeout(() => {
             let container = submitBtn.closest('.repair-container') || submitBtn.parentElement;
             if (container && !document.getElementById('successNotificationBanner')) {
