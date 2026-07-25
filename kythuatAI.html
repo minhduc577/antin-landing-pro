@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V6.3)</title>
+    <title>AI Kỹ Thuật An Tín - Kho Tri Thức Hàng Ngàn Sự Cố Đa Ngành (V6.4)</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -761,7 +761,7 @@
             </div>
             <div class="header-title">
                 <h1>AI Kỹ Thuật An Tín</h1>
-                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V6.3)</p>
+                <p><i class="fa-solid fa-shield-halved"></i> Kho Tri Thức Mở Rộng 1000+ Lỗi Đa Ngành (V6.4)</p>
             </div>
         </div>
         <div>
@@ -883,7 +883,7 @@
     let chatHistoryLog = [];
 
     // Biến ghi nhận chính xác vấn đề/lỗi hệ thống camera hoặc thiết bị mà khách hàng đang quan tâm/tương tác mới nhất
-    let currentCustomerIssue = "Chưa xác định lỗi cụ thể";
+    let currentCustomerIssue = "Khách tra cứu tổng quan hệ thống";
 
     function switchTab(tabId, btnEl) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -1206,7 +1206,7 @@
                             </div>
                             <button class="btn-submit-repair" onclick="submitRepairRequest('${uniqueId}')"><i class="fa-solid fa-paper-plane"></i> GỬI YÊU CẦU HỖ TRỢ NGAY</button>
                             
-                            <!-- CÁC NÚT ZALO ĐÃ CHÈN LINK MỚI -->
+                            <!-- CÁC NÚT ZALO -->
                             <div class="zalo-action-container">
                                 <div class="zalo-row">
                                     <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
@@ -1239,7 +1239,7 @@
                             </div>
                             <button class="btn-submit-repair" onclick="submitRepairRequest('${uniqueId}')"><i class="fa-solid fa-bolt"></i> YÊU CẦU KỸ THUẬT GỌI LẠI NGAY</button>
                             
-                            <!-- CÁC NÚT ZALO ĐÃ CHÈN LINK MỚI -->
+                            <!-- CÁC NÚT ZALO -->
                             <div class="zalo-action-container">
                                 <div class="zalo-row">
                                     <a href="https://zalo.me/0914060339" target="_blank" class="btn-zalo-inline"><i class="fa-brands fa-whatsapp"></i> Zalo: 0914 060 339</a>
@@ -1259,7 +1259,7 @@
         }, 800);
     }
 
-    // GỬI WEBHOOK MAKE KÈM NHẬT KÝ TƯƠNG TÁC VÀ LỖI CHÍNH XÁC KHÁCH ĐANG QUAN TÂM
+    // GỬI WEBHOOK MAKE KÈM ĐẦY ĐỦ TÊN, SĐT, ĐỊA CHỈ VÀ LỖI CAMERA KHÁCH ĐANG TƯƠNG TÁC
     function submitRepairRequest(uniqueId) {
         const nameVal = document.getElementById(`name_${uniqueId}`).value.trim();
         const phoneVal = document.getElementById(`phone_${uniqueId}`).value.trim();
@@ -1271,16 +1271,16 @@
             return;
         }
 
-        // ĐỊNH DẠNG TOÀN BỘ LỊCH SỬ TƯƠNG TÁC TRƯỚC KHI KHÁCH YÊU CẦU HỖ TRỢ KHÔNG THÀNH CÔNG
+        // ĐỊNH DẠNG TOÀN BỘ LỊCH SỬ TƯƠNG TÁC
         let interactionLogSummary = chatHistoryLog.map(item => `[${item.time}] ${item.sender}: ${item.text}`).join('\n');
         
-        // DỮ LIỆU PAYLOAD GỬI ĐẾN WEBHOOK MAKE (BỔ SUNG CHÍNH XÁC VẤN ĐỀ/LỖI CAMERA KHÁCH ĐANG QUAN TÂM)
+        // DỮ LIỆU PAYLOAD GỬI ĐẾN WEBHOOK MAKE
         const payload = {
             name: nameVal,
             phone: phoneVal,
             address: addressVal,
-            issue: currentCustomerIssue, // Lỗi/vấn đề cụ thể khách hàng đang quan tâm/tương tác
-            interaction_history: interactionLogSummary, // Toàn bộ lịch sử hỏi đáp tự xử lý không thành công
+            issue: currentCustomerIssue, // Lỗi/vấn đề cụ thể camera khách đang tương tác
+            interaction_history: interactionLogSummary, // Toàn bộ lịch sử hỏi đáp
             time: new Date().toLocaleString('vi-VN')
         };
 
@@ -1294,11 +1294,11 @@
             body: JSON.stringify(payload)
         })
         .then(response => {
-            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu xử lý sự cố [${currentCustomerIssue}] cùng nhật ký tương tác đã được gửi thành công qua Webhook Make đến email của bạn.`);
+            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu xử lý sự cố [${currentCustomerIssue}] cùng thông tin liên hệ đã được gửi thành công qua Webhook Make.`);
         })
         .catch(error => {
             console.error('Lỗi khi gửi webhook:', error);
-            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu lỗi [${currentCustomerIssue}] đã được ghi nhận kèm lịch sử tương tác. Kỹ thuật viên An Tín sẽ gọi lại cho bạn qua số ${phoneVal} trong thời gian sớm nhất!`);
+            alert(`🎉 Cảm ơn ${nameVal}! Yêu cầu lỗi [${currentCustomerIssue}] đã được ghi nhận. Kỹ thuật viên An Tín sẽ gọi lại cho bạn qua số ${phoneVal} trong thời gian sớm nhất!`);
         });
     }
 
