@@ -701,8 +701,9 @@
                             <span class="total-badge" id="totalErrorCount">1000+ Lỗi</span>
                         </div>
                         <input type="text" id="searchErrorInput" class="search-error-input" placeholder="🔍 Nhập từ khóa lỗi (VD: hikvision, dhcp, aptomat, rớt mạng, khóa kẹt...)" onkeyup="filterErrorList()">
-                        
-<div class="error-scroll-list" id="errorScrollList">
+
+                        <div class="error-scroll-list" id="errorScrollList">
+                            
     <!-- DANH SÁCH LỖI MẪU ĐẠI DIỆN ĐƯỢC NẠP SẴN -->
     <button class="error-item-btn" onclick="selectErrorItem('Camera mất kết nối / Báo Offline / Mất IP')"><span>🔴 [Camera] Camera mất kết nối / Báo Offline / Mất IP</span><i class="fa-solid fa-chevron-right"></i></button>
     <button class="error-item-btn" onclick="selectErrorItem('Không xem lại được dữ liệu / Lỗi ổ cứng HDD')"><span>💾 [Camera] Không xem lại lịch sử ghi hình / Lỗi ổ cứng</span><i class="fa-solid fa-chevron-right"></i></button>
@@ -725,13 +726,17 @@
     <button class="error-item-btn" onclick="selectErrorItem('Bộ điều khiển trung gian Hub Gateway không phản hồi')"><span>🎛️ [SmartHome] Hub điều khiển trung tâm offline không rõ nguyên nhân</span><i class="fa-solid fa-chevron-right"></i></button>
 
     <button class="error-item-btn" onclick="selectErrorItem('Đèn năng lượng mặt trời không sáng ban đêm / Mau hết pin')"><span>☀️ [Đèn NLMT] Đèn năng lượng mặt trời không sáng / Mau hết pin</span><i class="fa-solid fa-chevron-right"></i></button>
-    <button class="error-item-btn" onclick="selectErrorItem('Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc')"><span>🔋 [Đèn NLMT] Tấm pin sạc không vào điện / Hỏng bo mạch sạc</span></button>
-    <button class="error-item-btn" onclick="selectErrorItem('Máy chấm công không nhận vân tay / Lỗi kết nối mạng LAN')"><span>⏰ [Văn Phòng] Máy chấm công không nhận vân tay / Lỗi kết nối LAN</span></button>
-    <button class="error-item-btn" onclick="selectErrorItem('Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài được')"><span>☎️ [Văn Phòng] Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài</span></button>
+    <button class="error-item-btn" onclick="selectErrorItem('Tấm pin năng lượng mặt trời không nhận sạc / Hỏng mạch sạc')"><span>🔋 [Đèn NLMT] Tấm pin sạc không vào điện / Hỏng bo mạch sạc</span><i class="fa-solid fa-chevron-right"></i></button>
 
-    <!-- Nút chẩn đoán nằm trong khung hoặc ngay liền kề tùy layout gốc -->
-    <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC</button>
-    </div> <!-- Đóng thẻ div id="errorScrollList" ở đây là chuẩn xác nhất -->
+    <!-- 2 LỖI MỚI BỔ SUNG (18 VÀ 19) -->
+    <button class="error-item-btn" onclick="selectErrorItem('Máy chấm công không nhận vân tay / Lỗi kết nối mạng LAN')"><span>⏰ [Văn Phòng] Máy chấm công không nhận vân tay / Lỗi kết nối LAN</span><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="error-item-btn" onclick="selectErrorItem('Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài được')"><span>☎️ [Văn Phòng] Tổng đài nội bộ mất tín hiệu / Không gọi ra ngoài</span><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+                     
+                        <button class="btn-diagnose-submit" onclick="submitSelectedError()"><i class="fa-solid fa-bolt"></i> CHẨN ĐOÁN LỖI ĐÃ CHỌN NGAY LẬP TỨC</button>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer class="chat-footer">
@@ -840,8 +845,8 @@
     }
 
     // HỆ THỐNG KHO DỮ LIỆU ĐA NGÀNH (MỞ RỘNG VÔ TẬN)
-
-const KNOWLEDGE_BASE = [
+    const KNOWLEDGE_BASE = [
+       const KNOWLEDGE_BASE = [
         // ================= DANH SÁCH GỐC =================
         {
             keywords: ["offline", "ngoại tuyến", "không kết nối", "mất mạng", "mất ip", "camera"],
@@ -1156,10 +1161,8 @@ const KNOWLEDGE_BASE = [
                 "<b>Bước 3:</b> Vào nhà và tiến hành thay ngay bộ pin mới cho khóa."
             ],
             safety: "⚠️ Luôn mang theo chìa khóa cơ dự phòng cất ở nơi an toàn ngoài nhà."
-        }    
-
-     // ... 17 lỗi lên trên ...
-    // Thêm lỗi 18, 19, ...
+        }
+    // Thêm lỗi mới thứ 20, 21, ... tùy ý ở đây:
     {
         keywords: ["máy in", "kẹt giấy", "không in được", "in ấn"],
         issue: "🖨️ Máy in bị kẹt giấy hoặc không nhận lệnh in từ máy tính",
@@ -1182,39 +1185,8 @@ const KNOWLEDGE_BASE = [
         ],
         safety: "⚠️ Đảm bảo nguồn điện PoE hoặc Adapter nguồn ổn định."
     }
-    // Cứ tiếp tục thêm các dấu phẩy và object mới vào đây...    
-    
-    ]; // <--- Kết thúc mảng KNOWLEDGE_BASE
-
-// 2. CHÈN ĐOẠN CODE NÀY VÀO SAU MẢNG DỮ LIỆU
-    function renderKnowledgeBase(list = KNOWLEDGE_BASE) {
-        const container = document.getElementById('errorScrollList');
-        if (!container) return;
-        
-        container.innerHTML = ''; 
-
-        list.forEach((item, index) => {
-            const itemHtml = `
-                <div class="error-item-btn d-flex align-items-center justify-content-between p-3 mb-2 rounded border bg-white shadow-sm" style="cursor: pointer;" data-index="${index}">
-                    <div class="d-flex align-items-center">
-                        <span class="me-3 fs-5">${item.issue.split(' ')[0]}</span>
-                        <div>
-                            <h6 class="mb-0 fw-bold text-dark">${item.issue}</h6>
-                            <small class="text-muted">${item.empathy}</small>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-right text-primary"></i>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', itemHtml);
-        });
-    }
-
-    // Gọi hàm khi trang vừa tải xong
-
-    document.addEventListener('DOMContentLoaded', () => {
-        renderKnowledgeBase(KNOWLEDGE_BASE);
-    }); 
+    // Cứ tiếp tục thêm các dấu phẩy và object mới vào đây...
+    ];
 
     function processUserQuery(query) {
         const chatBody = document.getElementById('chatBody');
