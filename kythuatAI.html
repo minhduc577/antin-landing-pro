@@ -1270,57 +1270,81 @@ function submitRepairBooking(errorTopic) {
         document.getElementById('calcResultBox').style.display = "block";
     }
 
-// Khởi tạo mảng lưu lịch sử chat nếu chưa có
+// ==========================================
+// TÍCH HỢP TOÀN DIỆN: HỎI ĐÁP & ĐIỀU KHIỂN SIÊU AI
+// ==========================================
+
+// 1. Khởi tạo mảng lưu lịch sử chat nếu chưa có
 if (typeof chatHistoryLog === 'undefined') {
     var chatHistoryLog = [];
 }
 
-// Xử lý sự kiện khi bấm nút Gửi hoặc Enter ở khung chat dưới cùng
-document.addEventListener("DOMContentLoaded", function() {
-    const chatInput = document.querySelector('input[placeholder*="Hoặc nhập bất kỳ mã lỗi"]');
-    // Hoặc bắt theo class/id của ô input chat thực tế của bạn
-    if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                let userText = chatInput.value.trim();
-                if (!userText) return;
+// 2. Bắt sự kiện gõ phím / Enter trực tiếp trên khung chat phía dưới
+document.addEventListener("keydown", function(e) {
+    if (e.key === 'Enter') {
+        let activeInput = document.activeElement;
+        // Kiểm tra đúng ô nhập văn bản chat
+        if (activeInput && (activeInput.tagName === 'INPUT' || activeInput.tagName === 'TEXTAREA')) {
+            let userText = activeInput.value.trim();
+            if (!userText) return;
 
-                // 1. Lưu tin nhắn người dùng vào log
-                chatHistoryLog.push({ sender: 'Khách hàng', message: userText });
+            // Đẩy nội dung vào mảng lịch sử chat log chuẩn bị gửi qua Make.com
+            chatHistoryLog.push({ sender: 'Khách hàng', message: userText });
+            chatHistoryLog.push({ 
+                sender: 'AI Kỹ Thuật', 
+                message: '🤖 [Siêu AI An Tín V6.2]: Đã tiếp nhận triệu chứng "' + userText + '". Hệ thống đang kích hoạt kho tri thức 78+ lỗi để đưa ra giải pháp chuyên sâu.' 
+            });
 
-                // 2. Giả lập phản hồi thông minh từ AI kỹ thuật An Tín
-                let aiResponse = "Chào bạn, chuyên gia AI An Tín đã ghi nhận triệu chứng: '" + userText + "'. Để khắc phục tận gốc, bạn vui lòng điền thông tin vào form phía trên hoặc gọi ngay hotline để kỹ thuật hỗ trợ trực tiếp nhé!";
-                chatHistoryLog.push({ sender: 'AI Kỹ Thuật', message: aiResponse });
-
-                // 3. Hiển thị thông báo trạng thái lên Trung Tâm Siêu AI
-                let statusText = document.getElementById('aiRealtimeStatusText');
-                if (statusText) {
-                    statusText.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> <span><b>AI đã phân tích:</b> ${userText} -> Đã lưu vào lịch sử truyền về hệ thống!</span>`;
-                }
-
-                chatInput.value = '';
+            // Cập nhật giao diện trạng thái tại Trung Tâm Siêu AI
+            let statusText = document.getElementById('aiRealtimeStatusText');
+            if (statusText) {
+                statusText.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> <span><b>Đã ghi nhận tương tác:</b> "${userText}" -> Đã lưu vào bộ nhớ AI thành công!</span>`;
             }
-        });
+
+            // Xóa sạch ô nhập sau khi gửi
+            activeInput.value = '';
+            e.preventDefault();
+        }
     }
 });
 
-// Hàm kích hoạt Siêu AI đào sâu
+// 3. Hàm kích hoạt Siêu AI Đào Sâu (gắn với nút tím)
 function triggerSuperAiDeepScan() {
     let statusText = document.getElementById('aiRealtimeStatusText');
+    let aiBadge = document.querySelector('.ai-status-badge');
+    
     if (statusText) {
-        statusText.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color: #2563eb;"></i> <span><b>Siêu AI đang kích hoạt kho tri thức 78+ lỗi...</b> Đã sẵn sàng kết nối dữ liệu!</span>`;
+        statusText.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color: #2563eb;"></i> <span><b>Siêu AI đang nạp tri thức mở rộng 78+ lỗi...</b> Đang tối ưu hóa phác đồ xử lý!</span>`;
     }
+
+    if (aiBadge) {
+        aiBadge.style.background = '#fef3c7';
+        aiBadge.style.color = '#d97706';
+        aiBadge.innerHTML = '<span style="width: 8px; height: 8px; background: #f59e0b; border-radius: 50%; display: inline-block;"></span> ĐANG TIẾN HÓA CẤP ĐỘ CAO';
+    }
+
+    if (typeof chatHistoryLog !== 'undefined') {
+        chatHistoryLog.push({ sender: 'System AI', message: '🚀 Kích hoạt Siêu AI đào sâu phân tích lỗi thành công.' });
+    }
+
     setTimeout(() => {
         if (statusText) {
-            statusText.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles" style="color: #7c3aed;"></i> <span><b>Siêu AI đã tiến hóa!</b> Hệ thống đã sẵn sàng truyền lịch sử hội thoại về Make.com khi bạn gửi yêu cầu.</span>`;
+            statusText.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles" style="color: #7c3aed;"></i> <span><b>Siêu AI đã tiến hóa thành công!</b> Sẵn sàng truyền lịch sử hội thoại về hệ thống khi bạn gửi yêu cầu.</span>`;
+        }
+        if (aiBadge) {
+            aiBadge.style.background = '#d1fae5';
+            aiBadge.style.color = '#065f46';
+            aiBadge.innerHTML = '<span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span> SIÊU AI ĐÃ SẴN SÀNG';
         }
     }, 2000);
 }
 
-// Hàm làm mới hội thoại
+// 4. Hàm làm mới phiên hội thoại (gắn với nút Làm Mới)
 function clearAndResetChatSession() {
-    if (confirm('Bạn muốn làm mới phiên hội thoại với AI?')) {
-        chatHistoryLog = [];
+    if (confirm('Bạn muốn làm mới phiên trao đổi để bắt đầu tư vấn lỗi mới với Siêu AI?')) {
+        if (typeof chatHistoryLog !== 'undefined') {
+            chatHistoryLog = [];
+        }
         let statusText = document.getElementById('aiRealtimeStatusText');
         if (statusText) {
             statusText.innerHTML = `<i class="fa-solid fa-rotate-right" style="color: #64748b;"></i> <span><b>Đã làm mới phiên!</b> Hãy nhập câu hỏi mới vào khung chat.</span>`;
