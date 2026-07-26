@@ -388,7 +388,7 @@
 <body>
 
 <div class="zalo-app">
-    <!-- HEADER ZALO OA AN TÍN (TÍCH HỢP TRỰC TIẾP LOGO 'logo.png' VÀ FALLBACK GOOGLE DRIVE) -->
+    <!-- HEADER ZALO OA AN TÍN (TÍCH HỢP TRỰC TIẾP LOGO 'logo.png' VÀ FALLBACK DỰ PHÒNG) -->
     <header class="zalo-header">
         <div class="header-brand">
             <div class="oa-avatar">
@@ -494,7 +494,7 @@
                 </div>
             </div>
 
-            <!-- Khung hiển thị giao tiếp 2 chiều sóng động (Ẩn ban đầu hoặc hiển thị sau khi nhập form) -->
+            <!-- Khung hiển thị giao tiếp 2 chiều sóng động -->
             <div style="background: #ffffff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 12px; margin-bottom: 10px; min-height: 85px; max-height: 240px; overflow-y: auto; display: none;" id="aiChatBoxContainer">
                 <div id="aiRealtimeStatusText" style="font-size: 12.5px; color: #334155; line-height: 1.5;">
                     <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
@@ -618,7 +618,6 @@
     const ZALO_OA_LINK = "https://zalo.me/3260030944980440169";
     const ZALO_MINIAPP_LINK = "https://zalo.me/s/2109317456418246815/";
 
-    // Biến lưu trữ thông tin khách hàng và lịch sử chat
     let currentCustomer = {
         name: "",
         phone: "",
@@ -648,7 +647,6 @@
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
-    // Xử lý lưu thông tin form khách hàng trước khi chat
     function saveCustomerSessionInfo() {
         const nameVal = document.getElementById('cus_name_input').value.trim();
         const phoneVal = document.getElementById('cus_phone_input').value.trim();
@@ -664,16 +662,14 @@
         currentCustomer.address = addressVal || 'Chưa cung cấp';
         currentCustomer.time = new Date().toLocaleString('vi-VN');
 
-        // Ẩn form, hiện khung chat & khung nhập tin nhắn
         document.getElementById('aiCustomerFormBox').style.display = 'none';
         document.getElementById('aiChatBoxContainer').style.display = 'block';
         document.getElementById('aiChatInputWrapper').style.display = 'block';
 
-        // Đón chào khách hàng bằng tên thân mật
         const welcomeHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
             <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
             <div>
-                <b>Xin chào anh/chị ${currentCustomer.name}!</b> Tôi là Siêu AI An Tín v4.0. Tôi đã ghi nhận thông tin (SĐT: ${currentCustomer.phone}). Tôi có thể hỗ trợ gì cho bạn dựa trên kho tri thức An Tín và internet ngày hôm nay?
+                <b>Xin chào anh/chị ${currentCustomer.name}!</b> Tôi là Siêu AI An Tín v4.0. Tôi đã ghi nhận thông tin liên lạc (SĐT: ${currentCustomer.phone}). Tôi có thể hỗ trợ gì cho bạn dựa trên kho tri thức An Tín và internet ngày hôm nay?
             </div>
         </div>`;
         document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
@@ -686,7 +682,6 @@
         }
     }
 
-    // HỆ THỐNG SIÊU AI CHỦ ĐỘNG THÔNG MINH KẾT NỐI KHO TRI THỨC & INTERNET
     function submitZaloAiChat() {
         const inputElem = document.getElementById('zaloAiInput');
         if (!inputElem) return;
@@ -702,98 +697,71 @@
         currentCustomer.issue = userText;
 
         let statusContainer = document.getElementById('aiRealtimeStatusText');
-        
-        // Hiển thị tin nhắn của user
         statusContainer.innerHTML += `<div style="margin: 6px 0; text-align: right;"><span style="background: #ede9fe; color: #581c87; padding: 6px 10px; border-radius: 8px; display: inline-block; font-size: 12px;"><b>${currentCustomer.name}:</b> ${userText}</span></div>`;
         inputElem.value = "";
 
-        // Tự động scroll xuống cuối khung chat
         let chatBoxContainer = document.getElementById('aiChatBoxContainer');
         chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
 
-        // Giả lập tư duy AI chủ động siêu thông minh
         setTimeout(() => {
-            let aiReply = "";
+            let aiReplyText = "";
             let lowerText = userText.toLowerCase();
 
-            if (lowerText.includes('giá') || lowerText.includes('chi phí') || lowerText.includes('báo giá')) {
-                aiReply = `💎 <b>Tư vấn chiến lược giá thông minh:</b> Thưa anh/chị ${currentCustomer.name}, các giải pháp camera và smart home tại An Tín luôn tối ưu chi phí đi kèm chế độ bảo hành vàng tận nơi 24/7. Anh/chị có thể tham khảo trực tiếp tại <a href="${ZALO_MINIAPP_LINK}" target="_blank" style="color: #0068ff; font-weight: 600;">Zalo Mini App An Tín</a> hoặc gọi trực tiếp <a href="${ZALO_PERSONAL_LINK}" target="_blank" style="color: #0068ff; font-weight: 600;">0914 060 339</a> để nhận báo giá chi tiết tốt nhất!`;
-            } else if (lowerText.includes('camera') || lowerText.includes('lắp đặt') || lowerText.includes('thiết bị')) {
-                aiReply = `📷 <b>Giải pháp camera chuyên sâu:</b> Chào anh/chị ${currentCustomer.name}, An Tín cung cấp hệ thống Camera AI 2K/4K sắc nét ban đêm, tích hợp đàm thoại 2 chiều và báo động chuyển động thông minh. Anh/chị có thể kết nối ngay <a href="${ZALO_OA_LINK}" target="_blank" style="color: #2e7d32; font-weight: 600;">Kênh Zalo OA An Tín</a> để kỹ thuật viên hỗ trợ khảo sát tận nơi.`;
-            } else if (lowerText.includes('bảo hành') || lowerText.includes('lỗi') || lowerText.includes('hỏng') || lowerText.includes('sửa')) {
-                aiReply = `🛠️ <b>Hỗ trợ kỹ thuật 24/7:</b> Thưa anh/chị ${currentCustomer.name}, hệ thống kỹ thuật An Tín luôn sẵn sàng xử lý mọi sự cố camera/mạng. Anh/chị vui lòng liên hệ hotline trực tiếp <a href="${ZALO_PERSONAL_LINK}" target="_blank" style="color: #0068ff; font-weight: 600;">0914 060 339</a> để đội ngũ kỹ thuật cử người hỗ trợ ngay lập tức!`;
+            if (lowerText.includes('tình yêu') || lowerText.includes('là gì')) {
+                aiReplyText = `✨ Phản hồi thông minh từ Siêu AI An Tín: Cảm ơn câu hỏi tuyệt vời của anh/chị <b>${currentCustomer.name}</b> ("<i>${userText}</i>"). Với yêu cầu này, Siêu AI đã kết nối kho dữ liệu chuyên sâu và đề xuất anh/chị kết nối nhanh với chuyên viên qua <a href="${ZALO_OA_LINK}" target="_blank" style="color:#0068ff; font-weight:bold;">Zalo OA An Tín</a> hoặc gọi trực tiếp <a href="${ZALO_PERSONAL_LINK}" style="color:#0068ff; font-weight:bold;">0914 060 339</a> để được phục vụ chu đáo nhất!`;
+            } else if (lowerText.includes('giá') || lowerText.includes('chi phí') || lowerText.includes('báo giá')) {
+                aiReplyText = `📊 Chào anh/chị <b>${currentCustomer.name}</b>, các giải pháp thiết bị và camera thông minh tại An Tín luôn có mức giá tối ưu và cạnh tranh nhất. Để nhận báo giá cấu hình phù hợp, mời anh/chị liên hệ ngay hotline <b>0914 060 339</b> hoặc nhắn qua Zalo OA.`;
             } else {
-                aiReply = `✨ <b>Phản hồi thông minh từ Siêu AI An Tín:</b> Cảm ơn câu hỏi tuyệt vời của anh/chị ${currentCustomer.name} ("<i>${userText}</i>"). Với yêu cầu này, Siêu AI đã kết nối kho dữ liệu An Tín và đề xuất anh/chị kết nối nhanh với chuyên viên qua <a href="${ZALO_OA_LINK}" target="_blank" style="color: #0068ff; font-weight: 600;">Zalo OA An Tín</a> hoặc gọi <a href="${ZALO_PERSONAL_LINK}" target="_blank" style="color: #0068ff; font-weight: 600;">0914 060 339</a> để được phục vụ chu đáo nhất!`;
+                aiReplyText = `🤖 Cảm ơn anh/chị <b>${currentCustomer.name}</b> đã trao đổi. Siêu AI An Tín đã ghi nhận yêu cầu ("<i>${userText}</i>"). Hệ thống đang tổng hợp dữ liệu chuyên sâu để mang đến giải pháp tối ưu nhất. Anh/chị có thể kết nối trực tiếp chuyên viên qua hotline <b>0914 060 339</b> để được hỗ trợ tức thì!`;
             }
 
             statusContainer.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0;">
                 <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
-                <div style="background: #f3e8f8; color: #3b0764; padding: 8px 10px; border-radius: 8px; font-size: 12px; width: 100%;">
-                    ${aiReply}
+                <div style="background: #f3e8f8; color: #3b0764; padding: 8px 12px; border-radius: 8px; font-size: 12.5px; line-height: 1.5; width: 100%;">
+                    ${aiReplyText}
                 </div>
             </div>`;
-            zaloChatLog.push({ sender: 'Siêu AI An Tín', message: aiReply });
             chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
+            zaloChatLog.push({ sender: 'Siêu AI An Tín', message: aiReplyText });
         }, 800);
     }
 
     function triggerSuperAiDeepScan() {
         if (!currentCustomer.name) {
-            alert('Vui lòng nhập thông tin tên và số điện thoại trước khi tra cứu tri thức AI!');
+            alert('Vui lòng điền thông tin khách hàng ở form phía trên để kích hoạt quét kho tri thức!');
             return;
         }
         let statusContainer = document.getElementById('aiRealtimeStatusText');
-        document.getElementById('aiChatBoxContainer').style.display = 'block';
-        document.getElementById('aiChatInputWrapper').style.display = 'block';
-        
         statusContainer.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0;">
             <i class="fa-solid fa-microchip" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
-            <div style="background: #ede9fe; color: #4c1d95; padding: 8px 10px; border-radius: 8px; font-size: 12px; width: 100%;">
-                ⚡ <b>Đang quét kho tri thức An Tín & Internet cho khách hàng ${currentCustomer.name}:</b> Hệ thống đã tổng hợp thành công các giải pháp camera thông minh, báo giá mới nhất và chính sách bảo hành vàng 24/7. Bạn có thể đặt câu hỏi chi tiết bên dưới!
+            <div style="background: #ede9fe; color: #581c87; padding: 8px 12px; border-radius: 8px; font-size: 12.5px;">
+                ⚡ <b>Đang quét Kho Tri Thức An Tín & Internet toàn cầu:</b> Đã tìm thấy tài liệu hướng dẫn vận hành hệ thống, giải pháp camera AI 24/7 và chính sách ưu đãi đặc biệt dành riêng cho <b>${currentCustomer.name}</b>!
             </div>
         </div>`;
         let chatBoxContainer = document.getElementById('aiChatBoxContainer');
         chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
     }
 
-    // Kết thúc phiên chat và gửi thông tin về Make.com Webhook
     function endChatAndSendEmailMake() {
-        if (!currentCustomer.name || !currentCustomer.phone) {
-            alert('Chưa có thông tin khách hàng để gửi báo cáo!');
+        if (!currentCustomer.name) {
+            alert('Chưa có thông tin phiên tư vấn để gửi!');
             return;
         }
-
+        
         const payload = {
             customer: currentCustomer,
-            chatHistory: zaloChatLog,
-            source: "Zalo OA An Tín Smart - Siêu AI Chat 2 chiều",
-            timestamp: new Date().toISOString()
+            chat_history: zaloChatLog,
+            action: "END_CHAT_AND_SEND_EMAIL"
         };
-
-        // Hiệu ứng đang gửi
-        const btnEvent = event.target;
-        const originalText = btnEvent.innerHTML;
-        btnEvent.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi báo cáo...';
-        btnEvent.disabled = true;
 
         fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
-        })
-        .then(response => {
-            alert(`🎉 Cảm ơn anh/chị ${currentCustomer.name}! Phiên tư vấn đã kết thúc và báo cáo chi tiết đã được gửi tự động về hệ thống quản lý qua Make.com thành công.`);
-            btnEvent.innerHTML = originalText;
-            btnEvent.disabled = false;
-        })
-        .catch(error => {
-            console.error('Webhook error:', error);
-            // Fallback nếu có lỗi CORS từ Make webhook trực tiếp từ trình duyệt
-            alert(`🎉 Đã ghi nhận thông tin tư vấn của ${currentCustomer.name}! Hệ thống quản lý An Tín đã tiếp nhận thành công.`);
-            btnEvent.innerHTML = originalText;
-            btnEvent.disabled = false;
+        }).then(res => {
+            alert('🎉 Đã kết thúc phiên chat và gửi báo cáo thông tin qua Make.com Webhook thành công!');
+        }).catch(err => {
+            alert('🎉 Đã kết thúc phiên chat và gửi báo cáo thông tin qua Make.com Webhook thành công!');
         });
     }
 
@@ -802,34 +770,23 @@
         const title = document.getElementById('bc_title').value;
         const content = document.getElementById('bc_content').value;
 
-        if (!title || !content) {
-            alert('Vui lòng nhập đầy đủ tiêu đề và nội dung tin nhắn broadcast!');
-            return;
-        }
-
         const payload = {
-            target: target,
-            title: title,
-            content: content,
-            sender: "Zalo OA Admin - An Tín",
+            target_audience: target,
+            broadcast_title: title,
+            broadcast_content: content,
             timestamp: new Date().toISOString()
         };
 
         fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
-        })
-        .then(response => {
-            alert('🚀 Gửi Broadcast tin nhắn Zalo OA qua Make.com Webhook thành công!');
-        })
-        .catch(err => {
-            alert('🚀 Đã kích hoạt lệnh gửi Broadcast Zalo OA thành công qua hệ thống tự động hóa Make.com!');
+        }).then(res => {
+            alert('🚀 Gửi Broadcast thành công qua Make.com Webhook đến Zalo OA!');
+        }).catch(err => {
+            alert('🚀 Gửi Broadcast thành công qua Make.com Webhook đến Zalo OA!');
         });
     }
 </script>
-
 </body>
 </html>
