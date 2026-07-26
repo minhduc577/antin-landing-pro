@@ -629,7 +629,7 @@
                 let htmlText = await response.text();
                 let tempDiv = document.createElement('div');
                 tempDiv.innerHTML = htmlText;
-                knowledgeBaseContextText = tempDiv.innerText.slice(0, 5000); // Lấy toàn bộ nội dung chi tiết 78 lỗi
+                knowledgeBaseContextText = tempDiv.innerText.slice(0, 5000);
                 console.log("🌟 Đã tự động nạp ngầm thành công kho tri thức từ kythuatAI.html!");
             } else {
                 knowledgeBaseContextText = "Kho tri thức chuẩn An Tín Smart: Chuyên xử lý 78 lỗi camera, thiết bị mạng, nhà thông minh và an ninh.";
@@ -640,22 +640,21 @@
         }
     }
 
-    // Chạy ngay khi load trang
     window.addEventListener('DOMContentLoaded', () => {
         silentLoadKnowledgeBase();
     });
 
-    // ĐỒNG HỒ CHẠY NGẦM 3 PHÚT & TỰ ĐỘNG GỬI DỮ LIỆU KHI RỜI TRANG / CHUYỂN TRANG
+    // KÍCH HOẠT ĐỒNG HỒ 3 PHÚT & BẮT SỰ KIỆN RỜI TRANG ĐỂ GỬI MAIL QUA MAKE.COM
     function initBackgroundTimerAndListeners() {
         if (backgroundTimerStarted) return;
         backgroundTimerStarted = true;
 
-        // Đếm ngược 3 phút (180,000 ms) tự động gửi dữ liệu qua Webhook
+        // Đếm ngược 3 phút tự động bắn email báo cáo
         setTimeout(() => {
             triggerAutoSendReport("Hết thời gian phiên làm việc 3 phút tự động gom lịch sử.");
         }, 3 * 60 * 1000);
 
-        // Bắt sự kiện khi khách chuyển trang hoặc rời đi
+        // Bắt sự kiện rời trang / chuyển tab tuyệt đối chính xác
         window.addEventListener('beforeunload', () => {
             triggerAutoSendReport("Khách hàng rời trang / chuyển trang.");
         });
@@ -672,7 +671,6 @@
         if (!currentCustomer.name && zaloChatLog.length === 0) return; 
         dataSentToMake = true;
 
-        // Định dạng lịch sử chat thành dạng chuỗi văn bản sạch để đẩy vào biến interaction_history
         let formattedHistory = zaloChatLog.map(item => `[${item.sender}]: ${item.message}`).join("\n");
 
         const payload = {
@@ -687,10 +685,18 @@
             knowledge_context_used: knowledgeBaseContextText ? "Đã nạp ngầm 78 lỗi từ kythuatAI.html" : "Mặc định"
         };
 
-        // Gửi ngầm qua navigator.sendBeacon hoặc fetch keepalive
+        // Sử dụng navigator.sendBeacon - Phương pháp tối ưu nhất để gửi dữ liệu ngầm không bị trình duyệt hủy bỏ
         if (navigator.sendBeacon) {
             let blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-            navigator.sendBeacon(SECURE_ZALO_WEBHOOK_ENDPOINT, blob);
+            let success = navigator.sendBeacon(SECURE_ZALO_WEBHOOK_ENDPOINT, blob);
+            if (!success) {
+                fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    keepalive: true
+                }).catch(e => console.log(e));
+            }
         } else {
             fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
                 method: 'POST',
@@ -746,7 +752,7 @@
         document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
         zaloChatLog.push({ sender: 'Siêu AI An Tín', message: `Chào mừng ${currentCustomer.name} bắt đầu phiên tư vấn.` });
 
-        // Khởi động đồng hồ ngầm 3 phút sau khi khách nhập thông tin bắt đầu chat
+        // Kích hoạt bộ đếm giờ ngầm ngay khi khách bấm xác nhận thông tin
         initBackgroundTimerAndListeners();
     }
 
@@ -777,7 +783,6 @@
         let chatBoxContainer = document.getElementById('aiChatBoxContainer');
         chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
 
-        // Phản hồi thông minh dựa trên kho tri thức 78 lỗi từ kythuatAI.html
         setTimeout(() => {
             let aiReply = `Cảm ơn anh/chị ${currentCustomer.name} đã quan tâm. Dựa trên cơ sở dữ liệu 78 lỗi kỹ thuật An Tín, vấn đề "${userText}" của bạn được xử lý nhanh chóng bằng thiết bị chính hãng, bảo hành tận nơi. Bạn có muốn kết nối ngay với kỹ thuật viên trưởng qua Hotline 0914060339 không ạ?`;
             
