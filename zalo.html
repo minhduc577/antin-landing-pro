@@ -388,11 +388,11 @@
 <body>
 
 <div class="zalo-app">
-    <!-- HEADER ZALO OA AN TÍN (SỬ DỤNG LOGO CHÍNH XÁC LOGO.png ĐÃ FIX HIỂN THỊ) -->
+    <!-- HEADER ZALO OA AN TÍN (SỬ DỤNG CHÍNH XÁC LOGO_2.png) -->
     <header class="zalo-header">
         <div class="header-brand">
             <div class="oa-avatar">
-                <img src="LOGO.png" alt="Logo An Tín" onerror="this.src='author.jpg';">
+                <img src="LOGO_2.png" alt="Logo An Tín" onerror="this.src='LOGO.png';">
                 <div class="oa-verified"><i class="fa-solid fa-check"></i></div>
             </div>
             <div class="header-title">
@@ -440,7 +440,7 @@
             </div>
         </div>
 
-        <!-- TRUNG TÂM KẾT NỐI ZALO NHANH (SỬ DỤNG ĐỦ 3 LINK ZALO CỦA BẠN) -->
+        <!-- TRUNG TÂM KẾT NỐI ZALO NHANH -->
         <div class="z-card" style="border: 1.5px solid #0068ff; background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -469,7 +469,7 @@
         <div class="z-card" style="border: 1.5px solid #7c3aed; background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 20px; animation: bounceIcon 2s infinite;">🧠</span>
+                    <span style="font-size: 20px;">🧠</span>
                     <div>
                         <h3 style="margin: 0; color: #6b21a8; font-size: 14px; border:none; padding:0;">TRUNG TÂM SIÊU AI 2 CHIỀU</h3>
                         <p style="margin: 2px 0 0 0; font-size: 11px; color: #7e22ce;">Bộ não chuyên gia AI đối đáp thông minh & tự động hóa</p>
@@ -600,9 +600,6 @@
 </div>
 
 <script>
-    // ----------------------------------------------------
-    // GIỮ NGUYÊN HOÀN TOÀN CÁC LINK MAKE.COM & ZALO CHÍNH XÁC
-    // ----------------------------------------------------
     const SECURE_ZALO_WEBHOOK_ENDPOINT = "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc";
     const ZALO_PERSONAL_LINK = "https://zalo.me/0914060339";
     const ZALO_OA_LINK = "https://zalo.me/3260030944980440169";
@@ -629,7 +626,6 @@
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
-    // BỘ NÃO SIÊU AI 2 CHIỀU ĐỐI ĐÁP THÔNG MINH & TIẾN HÓA
     function submitZaloAiChat() {
         const inputElem = document.getElementById('zaloAiInput');
         if (!inputElem) return;
@@ -639,8 +635,6 @@
         zaloChatLog.push({ sender: 'Quản trị viên', message: userText });
 
         let statusContainer = document.getElementById('aiRealtimeStatusText');
-        
-        // Phân tích thông minh câu lệnh để giả lập đối đáp chuyên gia AI An Tín
         let aiReply = "";
         let lowerText = userText.toLowerCase();
 
@@ -665,7 +659,6 @@
             box.scrollTop = box.scrollHeight;
         }
 
-        // Gửi ngầm bảo mật dữ liệu qua Webhook Make.com
         fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
