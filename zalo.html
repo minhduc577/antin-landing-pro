@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d47a1">
-    <title>Hệ Thống Vận Hành Zalo OA & Siêu AI An Tín</title>
+    <title>Hệ Thống Vận Hành Zalo OA & An Tín</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -264,12 +264,6 @@
             100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
         }
 
-        @keyframes pulseDot {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.25); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.8; }
-        }
-
         .z-btn {
             background: linear-gradient(135deg, var(--zalo-color), var(--zalo-hover));
             color: #ffffff;
@@ -423,7 +417,7 @@
         </button>
     </nav>
 
-    <!-- TAB 1: TỔNG QUAN OA & KẾT NỐI ZALO TRỰC TIẾP -->
+    <!-- TAB 1: TỔNG QUAN OA & GỬI THÔNG TIN KHÁCH HÀNG TỚI MAKE.COM -->
     <div id="tab-dashboard" class="zalo-panel active">
         <div class="broadcast-stats">
             <div class="stat-box">
@@ -465,66 +459,36 @@
             </div>
         </div>
 
-        <!-- TRUNG TÂM SIÊU AI 2 CHIỀU THÔNG MINH TUYỆT DIỆU -->
+        <!-- FORM ĐĂNG KÝ / GỬI THÔNG TIN KHÁCH HÀNG TỚI MAKE.COM WEBHOOK -->
         <div class="z-card" style="border: 1.5px solid #7c3aed; background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 20px;">🧠</span>
-                    <div>
-                        <h3 style="margin: 0; color: #6b21a8; font-size: 14px; border:none; padding:0;">TRUNG TÂM SIÊU AI 2 CHIỀU CHỦ ĐỘNG</h3>
-                        <p style="margin: 2px 0 0 0; font-size: 11px; color: #7e22ce;">Bộ não siêu thông minh chat 2 chiều mượt mà như chuyên gia thật 24/7</p>
-                    </div>
-                </div>
-                <!-- BỘ ĐẾM NGƯỢC ẨN CHẠY NGẦM 2 PHÚT (120 GIÂY) -->
-                <div id="aiTimerDisplayBadge" style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 5px;">
-                    <span style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; display: inline-block; animation: pulseDot 1.5s infinite;"></span>
-                    Tự động out: <span id="countdownTimerText">02:00</span>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <span style="font-size: 20px;">📋</span>
+                <div>
+                    <h3 style="margin: 0; color: #6b21a8; font-size: 14px; border:none; padding:0;">GỬI THÔNG TIN YÊU CẦU TƯ VẤN (MAKE.COM)</h3>
+                    <p style="margin: 2px 0 0 0; font-size: 11px; color: #7e22ce;">Nhập thông tin để hệ thống lập tức gửi Email tự động qua Webhook</p>
                 </div>
             </div>
 
-            <!-- FORM ĐIỀN THÔNG TIN KHÁCH HÀNG -->
-            <div id="aiCustomerFormBox" style="background: #fdf4ff; border: 1.5px dashed #c084fc; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-                <p style="font-size: 12px; font-weight: 700; color: #6b21a8; margin-bottom: 8px;"><i class="fa-solid fa-id-card"></i> Vui lòng điền thông tin để Siêu AI tiện xưng hô và hỗ trợ:</p>
-                <div style="display: grid; grid-template-columns: 1fr; gap: 8px;">
-                    <input type="text" id="cus_name_input" class="z-control" placeholder="👤 Nhập họ và tên của bạn..." style="font-size: 12px; border-color: #d8b4fe;">
-                    <input type="tel" id="cus_phone_input" class="z-control" placeholder="📞 Nhập số điện thoại..." style="font-size: 12px; border-color: #d8b4fe;">
-                    <input type="text" id="cus_address_input" class="z-control" placeholder="📍 Nhập địa chỉ của bạn..." style="font-size: 12px; border-color: #d8b4fe;">
-                    <button onclick="saveCustomerSessionInfo()" style="background: linear-gradient(135deg, #7c3aed, #4f46e5); color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 3px 10px rgba(124,58,237,0.3);">
-                        <i class="fa-solid fa-rocket"></i> Xác Nhận & Bắt Đầu Trò Chuyện AI 2 Chiều
-                    </button>
+            <div style="display: flex; flex-direction: column; gap: 8px;" id="customerRegistrationForm">
+                <div class="z-form-group" style="margin-bottom: 6px;">
+                    <label style="color: #6b21a8;">Họ và tên khách hàng:</label>
+                    <input type="text" id="cus_name_input" class="z-control" placeholder="Nhập họ và tên..." style="border-color: #d8b4fe;">
                 </div>
-            </div>
-
-            <!-- Khung hiển thị giao tiếp 2 chiều sóng động -->
-            <div style="background: #ffffff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 12px; margin-bottom: 10px; min-height: 85px; max-height: 240px; overflow-y: auto; display: none;" id="aiChatBoxContainer">
-                <div id="aiRealtimeStatusText" style="font-size: 12.5px; color: #334155; line-height: 1.5;">
-                    <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
-                        <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
-                        <div>
-                            <b>Xin chào! Tôi là Siêu AI An Tín v4.5 chủ động thông minh.</b> Tôi đã sẵn sàng kết nối kho tri thức để tư vấn sâu sát cùng bạn. Hãy trao đổi ngay vấn đề của bạn nhé!
-                        </div>
-                    </div>
+                <div class="z-form-group" style="margin-bottom: 6px;">
+                    <label style="color: #6b21a8;">Số điện thoại liên hệ:</label>
+                    <input type="tel" id="cus_phone_input" class="z-control" placeholder="Nhập số điện thoại..." style="border-color: #d8b4fe;">
                 </div>
-            </div>
+                <div class="z-form-group" style="margin-bottom: 6px;">
+                    <label style="color: #6b21a8;">Địa chỉ lắp đặt / Khách hàng:</label>
+                    <input type="text" id="cus_address_input" class="z-control" placeholder="Nhập địa chỉ..." style="border-color: #d8b4fe;">
+                </div>
+                <div class="z-form-group" style="margin-bottom: 10px;">
+                    <label style="color: #6b21a8;">Nội dung yêu cầu / Vấn đề cần hỗ trợ:</label>
+                    <textarea id="cus_issue_input" class="z-control" rows="3" placeholder="Nhập nội dung yêu cầu tư vấn camera, kỹ thuật..." style="border-color: #d8b4fe; resize:none;">Tư vấn giải pháp lắp đặt camera trọn gói và hỗ trợ kỹ thuật tận nơi.</textarea>
+                </div>
 
-            <!-- Các nút bấm kích thích hành động nhanh -->
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
-                <a href="kythuatai.html" target="_blank" style="flex: 1; min-width: 130px; background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #ffffff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);">
-                    <i class="fa-solid fa-microchip"></i> Tra Cứu Kho Tri Thức
-                </a>
-                <a href="https://zalo.me/3260030944980440169" target="_blank" style="background: #22c55e; color: #fff; padding: 9px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 5px;">
-                    <i class="fa-solid fa-headset"></i> Zalo OA
-                </a>
-                <button onclick="endChatAndSendEmailMake()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);">
-                    <i class="fa-solid fa-paper-plane"></i> Kết Thúc & Gửi Mail
-                </button>
-            </div>
-
-            <!-- Khung nhập lệnh trò chuyện 2 chiều trực tiếp -->
-            <div style="position: relative; display: none;" id="aiChatInputWrapper">
-                <input type="text" placeholder="Nhập câu hỏi, thắc mắc hoặc yêu cầu tư vấn với Siêu AI..." class="z-control" id="zaloAiInput" style="padding-right: 38px; font-size: 12.5px; border-color: #d8b4fe;" onkeypress="handleAiKeyPress(event)">
-                <button onclick="submitZaloAiChat()" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: #7c3aed; color: #fff; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <i class="fa-solid fa-paper-plane" style="font-size: 11px;"></i>
+                <button onclick="submitCustomerDataToMake()" style="background: linear-gradient(135deg, #7c3aed, #4f46e5); color: #fff; border: none; padding: 11px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(124,58,237,0.3);">
+                    <i class="fa-solid fa-paper-plane"></i> GỬI THÔNG TIN VỀ EMAIL (MAKE.COM)
                 </button>
             </div>
         </div>
@@ -615,77 +579,6 @@
 
 <script>
     const SECURE_ZALO_WEBHOOK_ENDPOINT = "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc";
-    const ZALO_PERSONAL_LINK = "https://zalo.me/0914060339";
-    const ZALO_OA_LINK = "https://zalo.me/3260030944980440169";
-    const ZALO_MINIAPP_LINK = "https://zalo.me/s/2109317456418246815/";
-
-    let currentCustomer = {
-        name: "",
-        phone: "",
-        address: "",
-        issue: "Yêu cầu tư vấn thông minh / Hỗ trợ kỹ thuật từ Siêu AI An Tín",
-        time: new Date().toLocaleString('vi-VN')
-    };
-
-    if (typeof zaloChatLog === 'undefined') {
-        var zaloChatLog = [];
-    }
-
-    let countdownSeconds = 120;
-    let sessionTimerInterval = null;
-    let hasSentAutoReport = false;
-
-    function startAutoSessionCountdown() {
-        if (sessionTimerInterval) clearInterval(sessionTimerInterval);
-        sessionTimerInterval = setInterval(() => {
-            countdownSeconds--;
-            let min = Math.floor(countdownSeconds / 60);
-            let sec = countdownSeconds % 60;
-            let timeStr = (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
-            
-            let timerEl = document.getElementById('countdownTimerText');
-            if (timerEl) timerEl.innerText = timeStr;
-
-            if (countdownSeconds <= 0) {
-                clearInterval(sessionTimerInterval);
-                if (!hasSentAutoReport) {
-                    hasSentAutoReport = true;
-                    autoSendPayloadToBeaconMake("Hết thời gian phiên chat tự động (2 phút)");
-                }
-            }
-        }, 1000);
-    }
-
-    window.addEventListener('beforeunload', function (e) {
-        if (currentCustomer.name && !hasSentAutoReport) {
-            hasSentAutoReport = true;
-            autoSendPayloadToBeaconMake("Khách hàng chuyển trang / rời khỏi phiên");
-        }
-    });
-
-    function autoSendPayloadToBeaconMake(reasonNote) {
-        const payload = {
-            trigger_reason: reasonNote,
-            customer_name: currentCustomer.name || "Khách vãng lai ẩn danh",
-            phone: currentCustomer.phone || "Chưa cập nhật",
-            address: currentCustomer.address || "Chưa cập nhật",
-            latest_issue: currentCustomer.issue,
-            chat_history: zaloChatLog,
-            timestamp: new Date().toLocaleString('vi-VN')
-        };
-
-        if (navigator.sendBeacon) {
-            let blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-            navigator.sendBeacon(SECURE_ZALO_WEBHOOK_ENDPOINT, blob);
-        } else {
-            fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-                keepalive: true
-            }).catch(err => {});
-        }
-    }
 
     function switchZaloTab(tabId, btnEl) {
         document.querySelectorAll('.zalo-panel').forEach(el => el.classList.remove('active'));
@@ -704,85 +597,42 @@
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
-    function saveCustomerSessionInfo() {
+    // Gửi thông tin form khách hàng trực tiếp khớp với các trường dữ liệu Make.com để bắn Email
+    function submitCustomerDataToMake() {
         const nameVal = document.getElementById('cus_name_input').value.trim();
         const phoneVal = document.getElementById('cus_phone_input').value.trim();
         const addressVal = document.getElementById('cus_address_input').value.trim();
+        const issueVal = document.getElementById('cus_issue_input').value.trim();
 
         if (!nameVal || !phoneVal) {
-            alert('Vui lòng nhập đầy đủ Tên và Số điện thoại để Siêu AI xưng hô và hỗ trợ bạn tốt nhất!');
+            alert('Vui lòng nhập đầy đủ Tên và Số điện thoại khách hàng!');
             return;
         }
 
-        currentCustomer.name = nameVal;
-        currentCustomer.phone = phoneVal;
-        currentCustomer.address = addressVal || 'Chưa cung cấp';
-        currentCustomer.time = new Date().toLocaleString('vi-VN');
+        // Đóng gói các trường giá trị theo đúng format cấu trúc nhận diện của Make.com
+        const payload = {
+            type: "CUSTOMER_INQUIRY_FORM",
+            customer_name: nameVal,
+            phone: phoneVal,
+            address: addressVal || "Chưa cung cấp",
+            latest_issue: issueVal || "Yêu cầu tư vấn dịch vụ từ Zalo OA An Tín",
+            timestamp: new Date().toLocaleString('vi-VN')
+        };
 
-        document.getElementById('aiCustomerFormBox').style.display = 'none';
-        document.getElementById('aiChatBoxContainer').style.display = 'block';
-        document.getElementById('aiChatInputWrapper').style.display = 'block';
-
-        startAutoSessionCountdown();
-
-        const welcomeHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
-            <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
-            <div>
-                <b>Dạ, chào anh/chị ${currentCustomer.name}!</b> Em là Siêu AI An Tín v4.5 chủ động thông minh. Em đã ghi nhận thông tin liên lạc của anh/chị. Anh/chị đang quan tâm đến giải pháp lắp đặt camera hoặc dịch vụ gì ạ?
-            </div>
-        </div>`;
-        document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
-    }
-
-    function submitZaloAiChat() {
-        const inputEl = document.getElementById('zaloAiInput');
-        const query = inputEl.value.trim();
-        if (!query) return;
-
-        const chatBox = document.getElementById('aiRealtimeStatusText');
-        
-        // Thêm câu hỏi của user
-        chatBox.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; justify-content: flex-end;">
-            <div style="background: #f3e8f8; padding: 8px 12px; border-radius: 8px; max-width: 80%;">
-                <b>Bạn:</b> ${query}
-            </div>
-        </div>`;
-        
-        zaloChatLog.push({ sender: currentCustomer.name, message: query, time: new Date().toLocaleTimeString('vi-VN') });
-        currentCustomer.issue = query;
-        inputEl.value = '';
-
-        // Giả lập AI phản hồi thông minh
-        setTimeout(() => {
-            let aiReply = `Dạ em đã ghi nhận yêu cầu "${query}" của anh/chị ${currentCustomer.name}. Hệ thống An Tín sẽ hỗ trợ ngay và kết nối kỹ thuật viên chuyên sâu cho anh/chị qua số điện thoại ${currentCustomer.phone}!`;
-            
-            chatBox.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
-                <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
-                <div style="background: #f8fafc; padding: 8px 12px; border-radius: 8px; border: 1px solid #e9d5ff; max-width: 80%;">
-                    <b>Siêu AI An Tín:</b> ${aiReply}
-                </div>
-            </div>`;
-            
-            zaloChatLog.push({ sender: "Siêu AI An Tín", message: aiReply, time: new Date().toLocaleTimeString('vi-VN') });
-            
-            let container = document.getElementById('aiChatBoxContainer');
-            container.scrollTop = container.scrollHeight;
-        }, 800);
-    }
-
-    function handleAiKeyPress(e) {
-        if (e.key === 'Enter') {
-            submitZaloAiChat();
-        }
-    }
-
-    function endChatAndSendEmailMake() {
-        if (!currentCustomer.name) {
-            alert('Vui lòng hoàn tất thông tin cá nhân trước khi gửi kết quả!');
-            return;
-        }
-        autoSendPayloadToBeaconMake("Khách hàng chủ động bấm Kết Thúc & Gửi Mail");
-        alert('🎉 Đã gửi toàn bộ thông tin phiên chat và lịch sử tư vấn về hệ thống Make.com thành công!');
+        fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => {
+            alert('🎉 Gửi thông tin và kích hoạt gửi Email qua Make.com thành công!');
+            document.getElementById('cus_name_input').value = '';
+            document.getElementById('cus_phone_input').value = '';
+            document.getElementById('cus_address_input').value = '';
+        })
+        .catch(err => {
+            alert('⚠️ Đã gửi lệnh thực thi qua hệ thống tự động Make.com.');
+        });
     }
 
     function sendBroadcastViaWebhook() {
