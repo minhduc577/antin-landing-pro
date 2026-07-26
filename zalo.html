@@ -424,7 +424,7 @@
     </nav>
 
     <!-- TAB 1: TỔNG QUAN OA & KẾT NỐI ZALO TRỰC TIẾP -->
-    <div id="tab-dashboard" class="zalo-panel">
+    <div id="tab-dashboard" class="zalo-panel active">
         <div class="broadcast-stats">
             <div class="stat-box">
                 <span class="lbl"><i class="fa-solid fa-users" style="color:var(--zalo-color)"></i> Quan Tâm</span>
@@ -614,7 +614,6 @@
 </div>
 
 <script>
-    // GIỮ NGUYÊN 100% CÁC LINK HỆ THỐNG THEO YÊU CẦU
     const SECURE_ZALO_WEBHOOK_ENDPOINT = "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc";
     const ZALO_PERSONAL_LINK = "https://zalo.me/0914060339";
     const ZALO_OA_LINK = "https://zalo.me/3260030944980440169";
@@ -632,7 +631,6 @@
         var zaloChatLog = [];
     }
 
-    // BỘ ĐẾM NGƯỢC 2 PHÚT (120 GIÂY) & TỰ ĐỘNG GỬI MAIL QUA MAKE KHI HẾT GIỜ HOẶC CHUYỂN TRANG
     let countdownSeconds = 120;
     let sessionTimerInterval = null;
     let hasSentAutoReport = false;
@@ -658,7 +656,6 @@
         }, 1000);
     }
 
-    // Lắng nghe sự kiện khách hàng rời trang hoặc chuyển tab/trang khác
     window.addEventListener('beforeunload', function (e) {
         if (currentCustomer.name && !hasSentAutoReport) {
             hasSentAutoReport = true;
@@ -677,7 +674,6 @@
             timestamp: new Date().toLocaleString('vi-VN')
         };
 
-        // Sử dụng sendBeacon để đảm bảo gửi dữ liệu ngay cả khi người dùng chuyển trang ngay lập tức
         if (navigator.sendBeacon) {
             let blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
             navigator.sendBeacon(SECURE_ZALO_WEBHOOK_ENDPOINT, blob);
@@ -727,7 +723,6 @@
         document.getElementById('aiChatBoxContainer').style.display = 'block';
         document.getElementById('aiChatInputWrapper').style.display = 'block';
 
-        // Bắt đầu chạy ngầm đếm ngược 2 phút
         startAutoSessionCountdown();
 
         const welcomeHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
@@ -746,7 +741,6 @@
         }
     }
 
-    /* KỊCH BẢN CHAT 2 CHIỀU CHỦ ĐỘNG THÔNG MINH */
     function submitZaloAiChat() {
         const inputElem = document.getElementById('zaloAiInput');
         if (!inputElem) return;
