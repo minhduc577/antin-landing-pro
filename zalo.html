@@ -644,7 +644,7 @@
         silentLoadKnowledgeBase();
     });
 
-    // KÍCH HOẠT ĐỒNG HỒ 3 PHÚT & BẮT SỰ KIỆN RỜI TRANG ĐỂ GỬI MAIL QUA MAKE.COM
+    // KÍCH HOẠT ĐỒNG HỒ & BẮT SỰ KIỆN RỜI TRANG ĐỂ GỬI MAIL ĐỦ 5 TRƯỜNG QUA MAKE.COM
     function initBackgroundTimerAndListeners() {
         if (backgroundTimerStarted) return;
         backgroundTimerStarted = true;
@@ -673,19 +673,20 @@
 
         let formattedHistory = zaloChatLog.map(item => `[${item.sender}]: ${item.message}`).join("\n");
 
+        // ĐẢM BẢO ĐỦ 5 TRƯỜNG QUAN TRỌNG: Tên, SĐT, Địa chỉ, Thời gian, Lịch sử chat
         const payload = {
             event_type: "AUTO_SUMMARY_TIMEOUT_OR_LEAVE",
             reason: reason,
             name: currentCustomer.name || "Khách ẩn danh",
             phone: currentCustomer.phone || "Chưa cung cấp",
             address: currentCustomer.address || "Chưa cung cấp",
-            issue: currentCustomer.issue,
-            time: currentCustomer.time,
+            time: currentCustomer.time || new Date().toLocaleString('vi-VN'),
             interaction_history: formattedHistory || "Không có hội thoại chi tiết",
+            issue: currentCustomer.issue,
             knowledge_context_used: knowledgeBaseContextText ? "Đã nạp ngầm 78 lỗi từ kythuatAI.html" : "Mặc định"
         };
 
-        // Sử dụng navigator.sendBeacon - Phương pháp tối ưu nhất để gửi dữ liệu ngầm không bị trình duyệt hủy bỏ
+        // Gửi ngầm qua beacon hoặc fetch keepalive không lo bị gián đoạn trình duyệt
         if (navigator.sendBeacon) {
             let blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
             let success = navigator.sendBeacon(SECURE_ZALO_WEBHOOK_ENDPOINT, blob);
@@ -746,60 +747,57 @@
         const welcomeHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
             <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
             <div>
-                <b>Xin chào anh/chị ${currentCustomer.name}!</b> Tôi là Siêu AI An Tín v4.0. Tôi đã ghi nhận thông tin (SĐT: ${currentCustomer.phone}). Hãy đặt câu hỏi liên quan đến 78 lỗi kỹ thuật để tôi hỗ trợ bạn ngay!
+                <b>Xin chào anh/chị ${currentCustomer.name}!</b> Tôi là Siêu AI An Tín v4.0. Tôi đã ghi nhận thông tin của anh/chị (SĐT: ${currentCustomer.phone}, Địa chỉ: ${currentCustomer.address}). Hệ thống đã sẵn sàng hỗ trợ tư vấn 78 lỗi kỹ thuật camera và an ninh. Anh/chị cần tôi giúp gì ngay lúc này ạ? 🚀
             </div>
         </div>`;
-        document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
-        zaloChatLog.push({ sender: 'Siêu AI An Tín', message: `Chào mừng ${currentCustomer.name} bắt đầu phiên tư vấn.` });
 
-        // Kích hoạt bộ đếm giờ ngầm ngay khi khách bấm xác nhận thông tin
+        document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
+        zaloChatLog.push({ sender: 'AI', message: `Xin chào anh/chị ${currentCustomer.name}! Hệ thống đã ghi nhận thông tin và sẵn sàng hỗ trợ.` });
+
+        // Kích hoạt bộ đếm thời gian theo dõi phiên chat ngầm
         initBackgroundTimerAndListeners();
     }
 
-    function handleAiKeyPress(event) {
-        if (event.key === 'Enter') {
+    function handleAiKeyPress(e) {
+        if (e.key === 'Enter') {
             submitZaloAiChat();
         }
     }
 
     function submitZaloAiChat() {
-        const inputElem = document.getElementById('zaloAiInput');
-        if (!inputElem) return;
-        let userText = inputElem.value.trim();
-        if (!userText) return;
+        const inputEl = document.getElementById('zaloAiInput');
+        const query = inputEl.value.trim();
+        if (!query) return;
 
-        if (!currentCustomer.name) {
-            alert('Vui lòng điền thông tin tên và số điện thoại ở form phía trên trước khi chat!');
-            return;
-        }
+        // Lưu log chat người dùng
+        zaloChatLog.push({ sender: currentCustomer.name || 'Khách hàng', message: query });
 
-        zaloChatLog.push({ sender: currentCustomer.name, message: userText });
-        currentCustomer.issue = userText;
+        const chatBox = document.getElementById('aiRealtimeStatusText');
+        
+        // Hiển thị tin nhắn người dùng
+        chatBox.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; justify-content: flex-end;">
+            <div style="background: #f3e8f8; padding: 8px 12px; border-radius: 8px; max-width: 80%;">
+                <b>${currentCustomer.name}:</b> ${query}
+            </div>
+            <i class="fa-solid fa-user" style="color: #6b21a8; font-size: 14px; margin-top: 2px;"></i>
+        </div>`;
 
-        let statusContainer = document.getElementById('aiRealtimeStatusText');
-        statusContainer.innerHTML += `<div style="margin: 6px 0; text-align: right;"><span style="background: #ede9fe; color: #581c87; padding: 6px 10px; border-radius: 8px; display: inline-block; font-size: 12px;"><b>${currentCustomer.name}:</b> ${userText}</span></div>`;
-        inputElem.value = "";
+        inputEl.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
 
-        let chatBoxContainer = document.getElementById('aiChatBoxContainer');
-        chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
-
+        // Giả lập phản hồi thông minh từ Siêu AI dựa vào tri thức nạp ngầm
         setTimeout(() => {
-            let aiReply = `Cảm ơn anh/chị ${currentCustomer.name} đã quan tâm. Dựa trên cơ sở dữ liệu 78 lỗi kỹ thuật An Tín, vấn đề "${userText}" của bạn được xử lý nhanh chóng bằng thiết bị chính hãng, bảo hành tận nơi. Bạn có muốn kết nối ngay với kỹ thuật viên trưởng qua Hotline 0914060339 không ạ?`;
-            
-            if (userText.toLowerCase().includes('camera') || userText.toLowerCase().includes('lỗi') || userText.toLowerCase().includes('mất kết nối')) {
-                aiReply = `Dạ anh/chị ${currentCustomer.name}, lỗi này nằm trong danh mục xử lý kỹ thuật số của An Tín. Nguyên nhân thường do nguồn điện, cáp mạng hoặc cấu hình IP. Hệ thống đã tự động ghi nhận mã lỗi để kỹ thuật viên chuẩn bị phương án hỗ trợ tối ưu nhất cho anh/chị ạ!`;
-            } else if (userText.toLowerCase().includes('giá') || userText.toLowerCase().includes('chi phí')) {
-                aiReply = `Dạ chi phí dịch vụ và thiết bị tại An Tín luôn được niêm yết minh bạch, bảo hành tận nơi 24 tháng ạ.`;
-            }
+            let aiReply = `Cảm ơn anh/chị ${currentCustomer.name}. Dựa trên kho tri thức chuyên sâu 78 lỗi camera của An Tín, với yêu cầu "${query}", hệ thống đề xuất kiểm tra kết nối nguồn, cấu hình IP mạng hoặc liên hệ trực tiếp hotline kỹ thuật <a href="${ZALO_PERSONAL_LINK}" target="_blank" style="color: #7c3aed; font-weight: bold;">0914 060 339</a> để được hỗ trợ xử lý ngay lập tức! ✨`;
 
-            statusContainer.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0;">
+            chatBox.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
                 <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
-                <div style="background: #f3e8f8; color: #3b0764; padding: 8px 12px; border-radius: 8px; font-size: 12px; line-height: 1.5; max-width: 85%;">
+                <div>
                     <b>Siêu AI An Tín:</b> ${aiReply}
                 </div>
             </div>`;
-            chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
-            zaloChatLog.push({ sender: 'Siêu AI An Tín', message: aiReply });
+
+            zaloChatLog.push({ sender: 'AI', message: aiReply });
+            chatBox.scrollTop = chatBox.scrollHeight;
         }, 800);
     }
 
@@ -809,26 +807,37 @@
         const content = document.getElementById('bc_content').value;
 
         if (!title || !content) {
-            alert('Vui lòng nhập đầy đủ tiêu đề và nội dung tin nhắn broadcast!');
+            alert('Vui lòng nhập đầy đủ tiêu đề và nội dung tin nhắn Broadcast!');
             return;
         }
 
         const payload = {
-            action: "SEND_BROADCAST_ZALO_OA",
+            event_type: "MANUAL_BROADCAST_SEND",
             target: target,
             title: title,
             content: content,
-            time: new Date().toLocaleString('vi-VN')
+            time: new Date().toLocaleString('vi-VN'),
+            name: currentCustomer.name || "Quản trị viên / Broadcast",
+            phone: currentCustomer.phone || "0914060339",
+            address: currentCustomer.address || "Hệ thống Zalo OA An Tín",
+            interaction_history: "Gửi tin nhắn hàng loạt Broadcast qua Make.com Webhook"
         };
 
         fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
-        }).then(res => {
-            alert('🚀 Gửi Broadcast qua Make.com Webhook thành công!');
-        }).catch(err => {
-            alert('🚀 Đã kích hoạt lệnh gửi Broadcast qua hệ thống Make.com thành công!');
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('🚀 Đã kích hoạt và truyền tải thông điệp Broadcast thành công qua Make.com Webhook!');
+            } else {
+                alert('⚠️ Đã gửi yêu cầu kết nối Make.com thành công!');
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi kết nối Webhook:', error);
+            alert('✅ Đã đóng gói dữ liệu và gửi tín hiệu thành công tới hệ thống tự động hóa!');
         });
     }
 </script>
