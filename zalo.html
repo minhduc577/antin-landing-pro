@@ -388,11 +388,11 @@
 <body>
 
 <div class="zalo-app">
-    <!-- HEADER ZALO OA AN TÍN (TÍCH HỢP TRỰC TIẾP LOGO 'logo.png' VÀ FALLBACK DỰ PHÒNG) -->
+    <!-- HEADER ZALO OA AN TÍN (TÍCH HỢP TRỰC TIẾP LOGO 'author.png' VÀ FALLBACK DỰ PHÒNG) -->
     <header class="zalo-header">
         <div class="header-brand">
             <div class="oa-avatar">
-                <img src="logo.png" alt="Logo An Tín" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/d/1RsHWAO3EqrazI08BlsXjhi4LVotLci4k=s800';">
+                <img src="author.png" alt="Logo An Tín" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/d/1RsHWAO3EqrazI08BlsXjhi4LVotLci4k=s800';">
                 <div class="oa-verified"><i class="fa-solid fa-check"></i></div>
             </div>
             <div class="header-title">
@@ -506,17 +506,20 @@
                 </div>
             </div>
 
-            <!-- Các nút bấm kích thích hành động nhanh -->
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
-                <button onclick="triggerSuperAiDeepScan()" style="flex: 1; min-width: 130px; background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #ffffff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);">
-                    <i class="fa-solid fa-microchip"></i> Tra Cứu Kho Tri Thức
+            <!-- Các nút bấm kích thích hành động nhanh & Đồng hồ đếm ngược -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; align-items: center;">
+                <button onclick="triggerSuperAiDeepScan()" style="flex: 1; min-width: 120px; background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #ffffff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);">
+                    <i class="fa-solid fa-microchip"></i> Tra Cứu Tri Thức
                 </button>
                 <a href="https://zalo.me/3260030944980440169" target="_blank" style="background: #22c55e; color: #fff; padding: 9px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 5px;">
                     <i class="fa-solid fa-headset"></i> Zalo OA
                 </a>
-                <button onclick="endChatAndSendEmailMake()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);">
-                    <i class="fa-solid fa-paper-plane"></i> Kết Thúc & Gửi Mail
-                </button>
+                
+                <!-- THAY THẾ NÚT KẾT THÚC BẰNG ĐỒNG HỒ ĐẾM NGƯỢC 60 GIÂY -->
+                <div id="countdownTimerBox" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #f59e0b; color: #92400e; padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 6px; box-shadow: 0 3px 8px rgba(245, 158, 11, 0.2);">
+                    <i class="fa-solid fa-stopwatch" style="font-size: 14px; color: #d97706;"></i>
+                    <span>Tự động out: <span id="countdownNumber" style="color: #b45309; font-size: 13px;">60</span>s</span>
+                </div>
             </div>
 
             <!-- Khung nhập lệnh trò chuyện 2 chiều trực tiếp -->
@@ -630,6 +633,10 @@
         var zaloChatLog = [];
     }
 
+    let countdownInterval = null;
+    let countdownSeconds = 60;
+    let hasEndedSession = false;
+
     function switchZaloTab(tabId, btnEl) {
         document.querySelectorAll('.zalo-panel').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.zalo-tab-btn').forEach(el => el.classList.remove('active'));
@@ -674,6 +681,33 @@
         </div>`;
         document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
         zaloChatLog.push({ sender: 'Siêu AI An Tín', message: `Chào mừng ${currentCustomer.name} bắt đầu phiên tư vấn chủ động.` });
+
+        // Khởi động đồng hồ đếm ngược 60 giây khi bắt đầu phiên chat
+        startCountdownTimer();
+    }
+
+    function startCountdownTimer() {
+        if (countdownInterval) clearInterval(countdownInterval);
+        countdownSeconds = 60;
+        hasEndedSession = false;
+
+        countdownInterval = setInterval(() => {
+            countdownSeconds--;
+            let numElem = document.getElementById('countdownNumber');
+            if (numElem) numElem.innerText = countdownSeconds;
+
+            if (countdownSeconds <= 0 && !hasEndedSession) {
+                clearInterval(countdownInterval);
+                hasEndedSession = true;
+                triggerAutoOutAndSendEmail();
+            }
+        }, 1000);
+    }
+
+    function resetCountdown() {
+        if (!hasEndedSession) {
+            countdownSeconds = 60; // Reset lại 60s khi người dùng tương tác tiếp
+        }
     }
 
     function handleAiKeyPress(event) {
@@ -694,6 +728,8 @@
             return;
         }
 
+        resetCountdown(); // Reset đồng hồ khi có tương tác mới
+
         zaloChatLog.push({ sender: currentCustomer.name, message: userText });
         currentCustomer.issue = userText;
 
@@ -708,7 +744,7 @@
         let thinkingId = 'thinking_' + Date.now();
         statusContainer.innerHTML += `<div id="${thinkingId}" style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0; color: #6b21a8; font-style: italic; font-size: 12px;">
             <i class="fa-solid fa-robot fa-spin" style="font-size: 14px; margin-top: 2px;"></i>
-            <div>Siêu AI đang phân tích kho tri thức và tra cứu hệ thống cho anh/chị ${currentCustomer.name}...</div>
+            <div>Siêu AI đang phân tích kho tri thức và tra cứu hệ thống siêu tốc cho anh/chị ${currentCustomer.name}...</div>
         </div>`;
         chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
 
@@ -719,13 +755,13 @@
             let aiReplyText = "";
             let lowerText = userText.toLowerCase();
 
-            // Kịch bản phản hồi chủ động thông minh 2 chiều
-            if (lowerText.includes('camera') || lowerText.includes('lắp') || lowerText.includes('giá')) {
-                aiReplyText = `Dạ, em hiểu rồi ạ! Đối với nhu cầu về hệ thống camera an ninh, An Tín có sẵn các giải pháp AI nhận diện thông minh, hồng ngoại ban đêm sắc nét.<br><br>Để em tư vấn đúng cấu hình và tiết kiệm chi phí nhất cho anh/chị <b>${currentCustomer.name}</b>, không biết khu vực mình cần lắp đặt là trong nhà hay ngoài trời, và khoảng bao nhiêu góc quay ạ?`;
-            } else if (lowerText.includes('lỗi') || lowerText.includes('hỏng') || lowerText.includes('offline') || lowerText.includes('không xem được')) {
-                aiReplyText = `Dạ em rất tiếc vì sự cố này làm gián đoạn việc quan sát của anh/chị <b>${currentCustomer.name}</b> ạ!<br><br>Anh/chị thử kiểm tra giúp em xem thiết bị đã cắm lại nguồn điện và modem Wi-Fi có đang hoạt động ổn định không nhé? Nếu vẫn chưa được, anh/chị có thể kết nối ngay với chuyên viên kỹ thuật qua <a href="${ZALO_PERSONAL_LINK}" target="_blank" style="color:#0068ff; font-weight:bold;">Hotline 0914 060 339</a> để được hỗ trợ xử lý từ xa lập tức ạ!`;
+            // Kịch bản phản hồi chủ động thông minh 2 chiều cấp độ cao
+            if (lowerText.includes('camera') || lowerText.includes('lắp') || lowerText.includes('giá') || lowerText.includes('báo giá')) {
+                aiReplyText = `✨ Dạ tuyệt vời quá anh/chị <b>${currentCustomer.name}</b> ơi! Hệ thống camera AI thông minh của An Tín đang có gói ưu đãi cực tốt, nhận diện khuôn mặt chuẩn xác 100% ban đêm có màu.<br><br>Để em gửi ngay bảng giá chi tiết kèm ưu đãi lắp đặt tận nơi cho mình, không biết công trình của mình là nhà riêng, văn phòng hay cửa hàng ạ?`;
+            } else if (lowerText.includes('lỗi') || lowerText.includes('hỏng') || lowerText.includes('offline') || lowerText.includes('không xem được') || lowerText.includes('sửa')) {
+                aiReplyText = `🚨 Dạ em rất tiếc vì sự cố này làm gián đoạn việc quan sát của anh/chị <b>${currentCustomer.name}</b>!<br><br>Anh/chị vui lòng kiểm tra nguồn điện hoặc kết nối mạng Wi-Fi giúp em nhé. Nếu cần xử lý nhanh từ xa, chuyên viên kỹ thuật đang trực sẵn tại <a href="${ZALO_PERSONAL_LINK}" target="_blank" style="color:#0068ff; font-weight:bold;">Hotline 0914 060 339</a> hỗ trợ tức thì ạ!`;
             } else {
-                aiReplyText = `✨ Dạ, em đã ghi nhận ý kiến của anh/chị <b>${currentCustomer.name}</b> ("<i>${userText}</i>"). Dựa trên hệ thống An Tín Smart, em đã tổng hợp dữ liệu chuyên sâu để mang đến giải pháp tối ưu nhất.<br><br>Anh/chị có muốn em kết nối trực tiếp với chuyên viên kỹ thuật qua <a href="${ZALO_OA_LINK}" target="_blank" style="color:#0068ff; font-weight:bold;">Zalo OA An Tín</a> hoặc gọi hotline <a href="${ZALO_PERSONAL_LINK}" style="color:#0068ff; font-weight:bold;">0914 060 339</a> để được hỗ trợ tức thì không ạ?`;
+                aiReplyText = `🚀 Dạ, em đã thấu hiểu và ghi nhận yêu cầu tuyệt vời của anh/chị <b>${currentCustomer.name}</b> ("<i>${userText}</i>"). Dựa trên cơ sở dữ liệu chuyên sâu An Tín Smart, em đề xuất giải pháp tối ưu nhất cho vấn đề này.<br><br>Anh/chị có muốn em kết nối trực tiếp với chuyên gia kỹ thuật trưởng qua <a href="${ZALO_OA_LINK}" target="_blank" style="color:#0068ff; font-weight:bold;">Zalo OA An Tín</a> hoặc gọi trực tiếp <a href="${ZALO_PERSONAL_LINK}" style="color:#0068ff; font-weight:bold;">0914 060 339</a> để được hỗ trợ chuyên sâu ngay lập tức không ạ?`;
             }
 
             statusContainer.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0;">
@@ -744,21 +780,30 @@
             alert('Vui lòng nhập thông tin tên và số điện thoại trước khi tra cứu kho tri thức!');
             return;
         }
+        resetCountdown();
         let statusContainer = document.getElementById('aiRealtimeStatusText');
         statusContainer.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0;">
             <i class="fa-solid fa-microchip" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
             <div style="background: #ede9fe; padding: 8px 12px; border-radius: 8px; color: #4c1d95; font-size: 12.5px;">
-                ⚡ <b>Đã quét toàn bộ Kho Tri Thức & Cơ Sở Dữ Liệu An Tín Smart!</b> Hệ thống sẵn sàng cung cấp các tài liệu kỹ thuật, hướng dẫn cấu hình và báo giá mới nhất cho anh/chị <b>${currentCustomer.name}</b>. Anh/chị cần tra cứu tài liệu của sản phẩm nào ạ?
+                ⚡ <b>Đã quét toàn bộ Kho Tri Thức & Cơ Sở Dữ Liệu An Tín Smart!</b> Hệ thống sẵn sàng cung cấp tài liệu kỹ thuật và giải pháp tối ưu cho anh/chị <b>${currentCustomer.name}</b>. Anh/chị muốn xem tài liệu của thiết bị nào ạ?
             </div>
         </div>`;
         let chatBoxContainer = document.getElementById('aiChatBoxContainer');
         chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
     }
 
-    function endChatAndSendEmailMake() {
-        if (!currentCustomer.name) {
-            alert('Chưa có thông tin phiên làm việc để gửi báo cáo!');
-            return;
+    // Tự động kết thúc và gửi mail khi hết 60 giây đếm ngược
+    function triggerAutoOutAndSendEmail() {
+        let statusContainer = document.getElementById('aiRealtimeStatusText');
+        if (statusContainer) {
+            statusContainer.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0;">
+                <i class="fa-solid fa-robot" style="color: #d97706; font-size: 16px; margin-top: 2px;"></i>
+                <div style="background: #fef3c7; padding: 8px 12px; border-radius: 8px; color: #b45309; font-size: 12.5px; font-weight: 600; width: 100%;">
+                    ⏳ Nếu quý khách không có câu hỏi gì thêm, tôi xin out để phục vụ khách hàng khác. Cảm ơn anh/chị ${currentCustomer.name} đã kết nối cùng hệ thống An Tín Smart!
+                </div>
+            </div>`;
+            let chatBoxContainer = document.getElementById('aiChatBoxContainer');
+            chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
         }
 
         const payload = {
@@ -767,7 +812,8 @@
             address: currentCustomer.address,
             latest_issue: currentCustomer.issue,
             chat_history: zaloChatLog,
-            timestamp: currentCustomer.time
+            timestamp: currentCustomer.time,
+            status: "Auto-out after 60s inactivity"
         };
 
         fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
@@ -775,11 +821,16 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         }).then(res => {
-            alert('🎉 Đã kết thúc phiên chat và gửi báo cáo chi tiết về Email thành công qua Make.com Webhook!');
+            console.log('Đã gửi báo cáo phiên làm việc tự động về email qua Make.com thành công.');
         }).catch(err => {
-            // Fallback an toàn khi mạng chặn CORS
-            alert('🎉 Đã đóng phiên làm việc và gửi tóm tắt thông tin tương tác của anh/chị ' + currentCustomer.name + ' về hệ thống email quản lý thành công!');
+            console.log('Đã hoàn tất phiên giao dịch.');
         });
+
+        // Ẩn khung chat sau khi out để chuyển sang trạng thái sẵn sàng đón khách mới
+        setTimeout(() => {
+            let timerBox = document.getElementById('countdownTimerBox');
+            if (timerBox) timerBox.innerHTML = `<i class="fa-solid fa-check-circle" style="color: #10b981;"></i> <span>Đã kết thúc phiên</span>`;
+        }, 1500);
     }
 
     function sendBroadcastViaWebhook() {
