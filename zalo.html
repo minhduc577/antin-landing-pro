@@ -388,11 +388,11 @@
 <body>
 
 <div class="zalo-app">
-    <!-- HEADER ZALO OA AN TÍN (SỬ DỤNG CHÍNH XÁC LOGO_2.png) -->
+    <!-- HEADER ZALO OA AN TÍN (TỰ ĐỘNG PHÒNG HỘ KHI THIẾU TỆP HÌNH ẢNH) -->
     <header class="zalo-header">
         <div class="header-brand">
             <div class="oa-avatar">
-                <img src="LOGO_2.png" alt="Logo An Tín" onerror="this.src='LOGO.png';">
+                <img id="logoAnTinImg" src="LOGO_2.png" alt="Logo An Tín" onerror="handleLogoError(this)">
                 <div class="oa-verified"><i class="fa-solid fa-check"></i></div>
             </div>
             <div class="header-title">
@@ -577,7 +577,7 @@
         </div>
     </div>
 
-    <!-- TAB 4: CẤU HÌNH API (ĐÃ ẨN LINK MAKE.COM AN TOÀN) -->
+    <!-- TAB 4: CẤU HÌNH API -->
     <div id="tab-settings" class="zalo-panel">
         <div class="z-card">
             <h3><i class="fa-solid fa-key" style="color: var(--zalo-color);"></i> Cấu Hình Webhook Make.com Bảo Mật</h3>
@@ -604,6 +604,24 @@
     const ZALO_PERSONAL_LINK = "https://zalo.me/0914060339";
     const ZALO_OA_LINK = "https://zalo.me/3260030944980440169";
     const ZALO_MINIAPP_LINK = "https://zalo.me/s/2109317456418246815/";
+
+    // Cơ chế xử lý tự động khi file LOGO_2.png chưa tải lên server
+    let logoFallbackStep = 0;
+    function handleLogoError(imgElement) {
+        logoFallbackStep++;
+        if (logoFallbackStep === 1) {
+            imgElement.src = "LOGO.png";
+        } else if (logoFallbackStep === 2) {
+            imgElement.src = "author.jpg";
+        } else {
+            // Hiển thị khung chữ AT dạng huy hiệu thay thế nếu không tìm thấy bất kỳ file ảnh nào
+            imgElement.style.display = "none";
+            if (imgElement.parentElement) {
+                imgElement.parentElement.style.background = "linear-gradient(135deg, #ffc107, #ff5722)";
+                imgElement.parentElement.innerHTML = '<span style="color:#ffffff; font-weight:800; font-size:14px; text-shadow:0 1px 2px rgba(0,0,0,0.3);">AT</span><div class="oa-verified"><i class="fa-solid fa-check"></i></div>';
+            }
+        }
+    }
 
     if (typeof zaloChatLog === 'undefined') {
         var zaloChatLog = [];
