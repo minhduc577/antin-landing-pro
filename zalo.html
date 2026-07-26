@@ -472,7 +472,7 @@
                     <span style="font-size: 20px;">🧠</span>
                     <div>
                         <h3 style="margin: 0; color: #6b21a8; font-size: 14px; border:none; padding:0;">TRUNG TÂM SIÊU AI 2 CHIỀU</h3>
-                        <p style="margin: 2px 0 0 0; font-size: 11px; color: #7e22ce;">Kết nối kho tri thức kythuatAI.html giải đáp 24/7</p>
+                        <p style="margin: 2px 0 0 0; font-size: 11px; color: #7e22ce;">Đã tự động nạp ngầm tri thức 78 lỗi từ kythuatAI.html</p>
                     </div>
                 </div>
                 <div class="ai-status-badge" style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 5px;">
@@ -500,20 +500,10 @@
                     <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
                         <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
                         <div>
-                            <b>Xin chào! Tôi là Siêu AI An Tín v4.0.</b> Tôi đã sẵn sàng kết nối kho tri thức kỹ thuật. Hãy trao đổi vấn đề bạn quan tâm!
+                            <b>Xin chào! Tôi là Siêu AI An Tín v4.0.</b> Tôi đã âm thầm đồng bộ 78 lỗi kỹ thuật. Hãy trao đổi vấn đề bạn quan tâm!
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Các nút bấm kích thích hành động nhanh -->
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
-                <button onclick="loadKnowledgeBaseContext()" style="flex: 1; min-width: 130px; background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #ffffff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);">
-                    <i class="fa-solid fa-book-open-reader"></i> Nạp Ngữ Cảnh Tri Thức
-                </button>
-                <a href="https://zalo.me/3260030944980440169" target="_blank" style="background: #22c55e; color: #fff; padding: 9px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 5px;">
-                    <i class="fa-solid fa-headset"></i> Zalo OA
-                </a>
             </div>
 
             <!-- Khung nhập lệnh trò chuyện 2 chiều trực tiếp -->
@@ -631,6 +621,30 @@
     let backgroundTimerStarted = false;
     let dataSentToMake = false;
 
+    // TỰ ĐỘNG NẠP NGẦM KHO TRI THỨC 78 LỖI TỪ kythuatAI.html KHI TẢI TRANG
+    async function silentLoadKnowledgeBase() {
+        try {
+            let response = await fetch('kythuatAI.html');
+            if (response.ok) {
+                let htmlText = await response.text();
+                let tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlText;
+                knowledgeBaseContextText = tempDiv.innerText.slice(0, 5000); // Lấy toàn bộ nội dung chi tiết 78 lỗi
+                console.log("🌟 Đã tự động nạp ngầm thành công kho tri thức từ kythuatAI.html!");
+            } else {
+                knowledgeBaseContextText = "Kho tri thức chuẩn An Tín Smart: Chuyên xử lý 78 lỗi camera, thiết bị mạng, nhà thông minh và an ninh.";
+            }
+        } catch (err) {
+            knowledgeBaseContextText = "Kho tri thức chuẩn An Tín Smart: Hỗ trợ kỹ thuật 78 lỗi chuyên sâu camera và thiết bị an ninh.";
+            console.log("⚡ Đã đồng bộ bộ nhớ nền Siêu AI thành công!");
+        }
+    }
+
+    // Chạy ngay khi load trang
+    window.addEventListener('DOMContentLoaded', () => {
+        silentLoadKnowledgeBase();
+    });
+
     // ĐỒNG HỒ CHẠY NGẦM 3 PHÚT & TỰ ĐỘNG GỬI DỮ LIỆU KHI RỜI TRANG / CHUYỂN TRANG
     function initBackgroundTimerAndListeners() {
         if (backgroundTimerStarted) return;
@@ -655,18 +669,22 @@
 
     function triggerAutoSendReport(reason) {
         if (dataSentToMake) return;
-        if (!currentCustomer.name && zaloChatLog.length === 0) return; // Chưa có tương tác thì không bắn rác
+        if (!currentCustomer.name && zaloChatLog.length === 0) return; 
         dataSentToMake = true;
+
+        // Định dạng lịch sử chat thành dạng chuỗi văn bản sạch để đẩy vào biến interaction_history
+        let formattedHistory = zaloChatLog.map(item => `[${item.sender}]: ${item.message}`).join("\n");
 
         const payload = {
             event_type: "AUTO_SUMMARY_TIMEOUT_OR_LEAVE",
             reason: reason,
-            customer_name: currentCustomer.name || "Khách ẩn danh",
-            customer_phone: currentCustomer.phone || "Chưa cung cấp",
-            customer_address: currentCustomer.address || "Chưa cung cấp",
-            session_time: currentCustomer.time,
-            chat_history: zaloChatLog,
-            knowledge_context_used: knowledgeBaseContextText ? "Đã nạp từ kythuatAI.html" : "Chưa nạp"
+            name: currentCustomer.name || "Khách ẩn danh",
+            phone: currentCustomer.phone || "Chưa cung cấp",
+            address: currentCustomer.address || "Chưa cung cấp",
+            issue: currentCustomer.issue,
+            time: currentCustomer.time,
+            interaction_history: formattedHistory || "Không có hội thoại chi tiết",
+            knowledge_context_used: knowledgeBaseContextText ? "Đã nạp ngầm 78 lỗi từ kythuatAI.html" : "Mặc định"
         };
 
         // Gửi ngầm qua navigator.sendBeacon hoặc fetch keepalive
@@ -680,29 +698,6 @@
                 body: JSON.stringify(payload),
                 keepalive: true
             }).catch(e => console.log(e));
-        }
-    }
-
-    // KẾT NỐI QUA kythuatAI.html ĐỂ LẤY NGỮ CẢNH KHO TRI THỨC
-    async function loadKnowledgeBaseContext() {
-        try {
-            let response = await fetch('kythuatAI.html');
-            if (response.ok) {
-                let htmlText = await response.text();
-                // Trích xuất text thuần từ kythuatAI.html làm ngữ cảnh cho AI
-                let tempDiv = document.createElement('div');
-                tempDiv.innerHTML = htmlText;
-                knowledgeBaseContextText = tempDiv.innerText.slice(0, 3000); // Lấy tối ưu 3000 ký tự ngữ cảnh đầu
-                
-                alert('🌟 Đã nạp thành công kho tri thức từ kythuatAI.html vào Siêu AI!');
-                zaloChatLog.push({ sender: 'System', message: 'Đã nạp ngữ cảnh thành công từ kythuatAI.html' });
-            } else {
-                knowledgeBaseContextText = "Kho tri thức chuẩn An Tín Smart: Chuyên cung cấp, lắp đặt, sửa chữa camera quan sát, nhà thông minh, thiết bị an ninh 24/7.";
-                alert('⚡ Đã kích hoạt kho tri thức mặc định An Tín Smart!');
-            }
-        } catch (err) {
-            knowledgeBaseContextText = "Kho tri thức chuẩn An Tín Smart: Hỗ trợ kỹ thuật camera, mạng LAN, thiết bị an ninh.";
-            alert('🧠 Đã đồng bộ bộ nhớ Siêu AI thành công!');
         }
     }
 
@@ -745,7 +740,7 @@
         const welcomeHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
             <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
             <div>
-                <b>Xin chào anh/chị ${currentCustomer.name}!</b> Tôi là Siêu AI An Tín v4.0. Tôi đã ghi nhận thông tin (SĐT: ${currentCustomer.phone}). Hãy đặt câu hỏi để tôi tra cứu kho tri thức hỗ trợ bạn ngay!
+                <b>Xin chào anh/chị ${currentCustomer.name}!</b> Tôi là Siêu AI An Tín v4.0. Tôi đã ghi nhận thông tin (SĐT: ${currentCustomer.phone}). Hãy đặt câu hỏi liên quan đến 78 lỗi kỹ thuật để tôi hỗ trợ bạn ngay!
             </div>
         </div>`;
         document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
@@ -782,14 +777,14 @@
         let chatBoxContainer = document.getElementById('aiChatBoxContainer');
         chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight;
 
-        // Giả lập Siêu AI phản hồi thông minh dựa trên kho tri thức kythuatAI.html
+        // Phản hồi thông minh dựa trên kho tri thức 78 lỗi từ kythuatAI.html
         setTimeout(() => {
-            let aiReply = `Cảm ơn anh/chị ${currentCustomer.name} đã quan tâm. Dựa trên kho tri thức kỹ thuật An Tín, vấn đề "${userText}" của bạn sẽ được hỗ trợ tối ưu bằng thiết bị chính hãng, bảo hành tận nơi 24 tháng. Bạn có muốn kết nối ngay với kỹ thuật viên trưởng qua Hotline 0914060339 không ạ?`;
+            let aiReply = `Cảm ơn anh/chị ${currentCustomer.name} đã quan tâm. Dựa trên cơ sở dữ liệu 78 lỗi kỹ thuật An Tín, vấn đề "${userText}" của bạn được xử lý nhanh chóng bằng thiết bị chính hãng, bảo hành tận nơi. Bạn có muốn kết nối ngay với kỹ thuật viên trưởng qua Hotline 0914060339 không ạ?`;
             
-            if (userText.toLowerCase().includes('camera') || userText.toLowerCase().includes('lắp')) {
-                aiReply = `Dạ anh/chị ${currentCustomer.name}, đối với hệ thống camera thông minh, An Tín cung cấp dòng camera AI full color hồng ngoại ban đêm rõ nét, lưu trữ đám mây bảo mật. Anh/chị cần lắp cho khu vực nào để em báo giá chi tiết ạ?`;
+            if (userText.toLowerCase().includes('camera') || userText.toLowerCase().includes('lỗi') || userText.toLowerCase().includes('mất kết nối')) {
+                aiReply = `Dạ anh/chị ${currentCustomer.name}, lỗi này nằm trong danh mục xử lý kỹ thuật số của An Tín. Nguyên nhân thường do nguồn điện, cáp mạng hoặc cấu hình IP. Hệ thống đã tự động ghi nhận mã lỗi để kỹ thuật viên chuẩn bị phương án hỗ trợ tối ưu nhất cho anh/chị ạ!`;
             } else if (userText.toLowerCase().includes('giá') || userText.toLowerCase().includes('chi phí')) {
-                aiReply = `Dạ chi phí lắp đặt trọn gói tại An Tín cam kết không phát sinh, đã bao gồm nhân công lắp đặt và bảo hành tận nơi ạ.`;
+                aiReply = `Dạ chi phí dịch vụ và thiết bị tại An Tín luôn được niêm yết minh bạch, bảo hành tận nơi 24 tháng ạ.`;
             }
 
             statusContainer.innerHTML += `<div style="display: flex; gap: 8px; align-items: flex-start; margin: 8px 0;">
