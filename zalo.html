@@ -620,9 +620,7 @@
         time: new Date().toLocaleString('vi-VN')
     };
 
-    // Khai báo mảng log toàn cục an toàn tuyệt đối
     window.zaloChatLog = window.zaloChatLog || [];
-
     let knowledgeBaseContextText = "";
     let backgroundTimerStarted = false;
     let dataSentToMake = false;
@@ -668,7 +666,7 @@
         });
     }
 
-    // Hàm gửi tự động chứa đầy đủ 5 trường dữ liệu quan trọng qua Make.com để bắn Email
+    // HÀM GỬI DỮ LIỆU TỰ ĐỘNG CHỨA ĐỦ 5 TRƯỜNG DỮ LIỆU QUAN TRỌNG QUA MAKE.COM
     function triggerAutoSendReport(reason) {
         if (dataSentToMake) return;
         if (!currentCustomer.name && window.zaloChatLog.length === 0) return; 
@@ -676,8 +674,8 @@
 
         let formattedHistory = window.zaloChatLog.map(item => `[${item.sender}]: ${item.message}`).join("\n");
 
-        // Đủ 5 trường: tên, phone, địa chỉ, thời gian, toàn bộ lịch sử chát với AI
-        const payload = {
+        // Đóng gói 5 trường dữ liệu rõ ràng chuẩn form-urlencoded giúp Make.com nhận diện chính xác
+        const payloadData = {
             event_type: "AUTO_SUMMARY_TIMEOUT_OR_LEAVE",
             reason: reason,
             name: currentCustomer.name || "Khách ẩn danh",
@@ -689,14 +687,14 @@
             knowledge_context_used: knowledgeBaseContextText ? "Đã nạp ngầm 78 lỗi từ kythuatAI.html" : "Mặc định"
         };
 
-        const jsonPayload = JSON.stringify(payload);
-        
-        // Sử dụng mode: 'no-cors' để tránh triệt để lỗi CORS Policy từ Make.com
+        const formBody = Object.keys(payloadData).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(payloadData[key])).join('&');
+
         fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: jsonPayload,
-            mode: 'no-cors'
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: formBody
         }).catch(() => {});
     }
 
@@ -707,7 +705,7 @@
             return;
         }
         
-        dataSentToMake = false; // Reset cờ để cho phép đẩy dữ liệu
+        dataSentToMake = false; 
         triggerAutoSendReport("Khách hàng chủ động bấm gửi yêu cầu qua email.");
         alert('🚀 Đã đóng gói toàn bộ 5 trường dữ liệu (Tên, SĐT, Địa chỉ, Thời gian, Lịch sử chat) và gửi tín hiệu thành công lên hệ thống tự động hóa Make.com!');
     }
@@ -749,7 +747,7 @@
         document.getElementById('aiCustomerFormBox').style.display = 'none';
         document.getElementById('aiChatBoxContainer').style.display = 'block';
         document.getElementById('aiChatInputWrapper').style.display = 'block';
-        document.getElementById('aiSendReportWrapper').style.display = 'block'; // Hiển thị nút gửi email chuyên nghiệp
+        document.getElementById('aiSendReportWrapper').style.display = 'block';
 
         const welcomeHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
             <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
@@ -814,7 +812,7 @@
             return;
         }
 
-        const payload = {
+        const payloadData = {
             event_type: "MANUAL_BROADCAST_SEND",
             target: target,
             title: title,
@@ -826,11 +824,12 @@
             interaction_history: "Gửi tin nhắn hàng loạt Broadcast qua Make.com Webhook"
         };
 
+        const formBody = Object.keys(payloadData).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(payloadData[key])).join('&');
+
         fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            mode: 'no-cors'
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+            body: formBody
         })
         .then(() => {
             alert('🚀 Đã kích hoạt và truyền tải thông điệp Broadcast thành công qua Make.com Webhook!');
