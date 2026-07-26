@@ -613,9 +613,8 @@
         time: new Date().toLocaleString('vi-VN')
     };
 
-    if (typeof zaloChatLog === 'undefined') {
-        var zaloChatLog = [];
-    }
+    // Khai báo mảng log toàn cục an toàn tuyệt đối
+    window.zaloChatLog = window.zaloChatLog || [];
 
     let knowledgeBaseContextText = "";
     let backgroundTimerStarted = false;
@@ -630,13 +629,11 @@
                 let tempDiv = document.createElement('div');
                 tempDiv.innerHTML = htmlText;
                 knowledgeBaseContextText = tempDiv.innerText.slice(0, 5000);
-                console.log("🌟 Đã tự động nạp ngầm thành công kho tri thức từ kythuatAI.html!");
             } else {
                 knowledgeBaseContextText = "Kho tri thức chuẩn An Tín Smart: Chuyên xử lý 78 lỗi camera, thiết bị mạng, nhà thông minh và an ninh.";
             }
         } catch (err) {
             knowledgeBaseContextText = "Kho tri thức chuẩn An Tín Smart: Hỗ trợ kỹ thuật 78 lỗi chuyên sâu camera và thiết bị an ninh.";
-            console.log("⚡ Đã đồng bộ bộ nhớ nền Siêu AI thành công!");
         }
     }
 
@@ -644,36 +641,36 @@
         silentLoadKnowledgeBase();
     });
 
-    // KÍCH HOẠT ĐỒNG HỒ & BẮT SỰ KIỆN RỜI TRANG ĐỂ GỬI MAIL ĐỦ 5 TRƯỜNG QUA MAKE.COM
+    // KÍCH HOẠT ĐỒNG HỒ & BẮT SỰ KIỆN GỬI NGẦM CHÍNH XÁC
     function initBackgroundTimerAndListeners() {
         if (backgroundTimerStarted) return;
         backgroundTimerStarted = true;
 
-        // Đếm ngược 3 phút tự động bắn email báo cáo
+        // Định kỳ kiểm tra hoặc gửi sau 3 phút
         setTimeout(() => {
-            triggerAutoSendReport("Hết thời gian phiên làm việc 3 phút tự động gom lịch sử.");
+            triggerAutoSendReport("Hết thời gian phiên làm việc tự động gom lịch sử.");
         }, 3 * 60 * 1000);
 
-        // Bắt sự kiện rời trang / chuyển tab tuyệt đối chính xác
-        window.addEventListener('beforeunload', () => {
-            triggerAutoSendReport("Khách hàng rời trang / chuyển trang.");
+        // Bắt sự kiện người dùng chuyển trang hoặc ẩn tab trình duyệt
+        window.addEventListener('pagehide', () => {
+            triggerAutoSendReport("Khách hàng đóng hoặc rời trang.");
         });
 
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') {
-                triggerAutoSendReport("Khách hàng ẩn trang / chuyển tab khác.");
+                triggerAutoSendReport("Khách hàng ẩn tab hoặc chuyển ứng dụng.");
             }
         });
     }
 
     function triggerAutoSendReport(reason) {
         if (dataSentToMake) return;
-        if (!currentCustomer.name && zaloChatLog.length === 0) return; 
+        if (!currentCustomer.name && window.zaloChatLog.length === 0) return; 
         dataSentToMake = true;
 
-        let formattedHistory = zaloChatLog.map(item => `[${item.sender}]: ${item.message}`).join("\n");
+        // Định dạng lịch sử chat chuẩn văn bản hiển thị đẹp trên HTML Email của Make
+        let formattedHistory = window.zaloChatLog.map(item => `[${item.sender}]: ${item.message}`).join("\n");
 
-        // ĐẢM BẢO ĐỦ 5 TRƯỜNG QUAN TRỌNG: Tên, SĐT, Địa chỉ, Thời gian, Lịch sử chat
         const payload = {
             event_type: "AUTO_SUMMARY_TIMEOUT_OR_LEAVE",
             reason: reason,
@@ -686,25 +683,26 @@
             knowledge_context_used: knowledgeBaseContextText ? "Đã nạp ngầm 78 lỗi từ kythuatAI.html" : "Mặc định"
         };
 
-        // Gửi ngầm qua beacon hoặc fetch keepalive không lo bị gián đoạn trình duyệt
+        // Gửi ngầm qua beacon hoặc fetch keepalive để chắc chắn Make nhận được dữ liệu trước khi trang đóng hẳn
+        const jsonPayload = JSON.stringify(payload);
         if (navigator.sendBeacon) {
-            let blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+            let blob = new Blob([jsonPayload], { type: 'application/json' });
             let success = navigator.sendBeacon(SECURE_ZALO_WEBHOOK_ENDPOINT, blob);
             if (!success) {
                 fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
+                    body: jsonPayload,
                     keepalive: true
-                }).catch(e => console.log(e));
+                }).catch(() => {});
             }
         } else {
             fetch(SECURE_ZALO_WEBHOOK_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
+                body: jsonPayload,
                 keepalive: true
-            }).catch(e => console.log(e));
+            }).catch(() => {});
         }
     }
 
@@ -716,8 +714,10 @@
         if (btnEl) btnEl.classList.add('active');
     }
 
-    document.getElementById('bc_title').addEventListener('input', updatePreview);
-    document.getElementById('bc_content').addEventListener('input', updatePreview);
+    const bcTitleEl = document.getElementById('bc_title');
+    const bcContentEl = document.getElementById('bc_content');
+    if(bcTitleEl) bcTitleEl.addEventListener('input', updatePreview);
+    if(bcContentEl) bcContentEl.addEventListener('input', updatePreview);
 
     function updatePreview() {
         const title = document.getElementById('bc_title').value;
@@ -752,9 +752,9 @@
         </div>`;
 
         document.getElementById('aiRealtimeStatusText').innerHTML = welcomeHtml;
-        zaloChatLog.push({ sender: 'AI', message: `Xin chào anh/chị ${currentCustomer.name}! Hệ thống đã ghi nhận thông tin và sẵn sàng hỗ trợ.` });
+        window.zaloChatLog.push({ sender: 'AI', message: `Xin chào anh/chị ${currentCustomer.name}! Hệ thống đã ghi nhận thông tin và sẵn sàng hỗ trợ.` });
 
-        // Kích hoạt bộ đếm thời gian theo dõi phiên chat ngầm
+        // Kích hoạt bộ đếm thời gian theo dõi phiên chat ngầm ngay khi xác nhận thông tin
         initBackgroundTimerAndListeners();
     }
 
@@ -770,7 +770,7 @@
         if (!query) return;
 
         // Lưu log chat người dùng
-        zaloChatLog.push({ sender: currentCustomer.name || 'Khách hàng', message: query });
+        window.zaloChatLog.push({ sender: currentCustomer.name || 'Khách hàng', message: query });
 
         const chatBox = document.getElementById('aiRealtimeStatusText');
         
@@ -796,7 +796,7 @@
                 </div>
             </div>`;
 
-            zaloChatLog.push({ sender: 'AI', message: aiReply });
+            window.zaloChatLog.push({ sender: 'AI', message: aiReply });
             chatBox.scrollTop = chatBox.scrollHeight;
         }, 800);
     }
