@@ -658,6 +658,26 @@
         window.addEventListener('DOMContentLoaded', () => {
             getStoredKB();
         });
+
+<!-- Nhúng 57 kịch bản từ tệp cùng thư mục -->
+<script src="./knowledge-data.js"></script>
+
+<!-- File script xử lý giao diện và logic AI của bạn (ví dụ) -->
+<script>
+  // Kiểm tra dữ liệu đã được load thành công vào biến toàn cục KNOWLEDGE_SCENARIOS
+  console.log("Đã nạp thành công:", KNOWLEDGE_SCENARIOS.length, "kịch bản.");
+
+  // Hàm tìm kiếm kịch bản khi người dùng chat
+  function searchKnowledge(userQuery) {
+    const keyword = userQuery.toLowerCase();
+    const matched = KNOWLEDGE_SCENARIOS.find(item => 
+      item.title.toLowerCase().includes(keyword) || 
+      item.content.toLowerCase().includes(keyword)
+    );
+    
+    return matched ? matched.content : "Vui lòng liên hệ Zalo OA (Hotline: 0914.060.339) để được hỗ trợ trong 5 giây.";
+  }
+        
     </script>
 
     <!-- ADMIN DASHBOARD MODAL -->
