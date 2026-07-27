@@ -467,19 +467,68 @@
         }
 
         // ==========================================
-        // QUẢN TRỊ 55 KỊCH BẢN & LƯU TRỮ VĨNH VIỄN (LOCALSTORAGE)
+        // QUẢN TRỊ 55 KỊCH BẢN CHI TIẾT & LƯU TRỮ VĨNH VIỄN (LOCALSTORAGE)
         // ==========================================
         const ADMIN_SECRET_KEY = "ANTIN@2026_SecuredKey#Pro"; 
 
-        // Khởi tạo danh sách 55 kịch bản mẫu ban đầu (nếu chưa có trong bộ nhớ trình duyệt)
-        const defaultKnowledgeBases = [];
-        for (let i = 1; i <= 55; i++) {
-            defaultKnowledgeBases.push({
-                title: `Kịch bản tri thức chuẩn An Tín #${i}`,
-                category: i % 3 === 0 ? 'service' : (i % 2 === 0 ? 'tech' : 'pdf'),
-                content: `Nội dung chi tiết cấu hình, thông số kỹ thuật và hướng dẫn xử lý chuẩn cho kịch bản hệ thống số ${i}.`
-            });
-        }
+        // 55 kịch bản tri thức chi tiết chuẩn An Tín 25 năm
+        const defaultKnowledgeBases = [
+            { title: "Quy trình chuẩn đoán lỗi bo mạch nguồn điện tử cao cấp", category: "tech", content: "Sử dụng camera hồng ngoại và dao động ký đo xung nhịp thạch anh để định vị linh kiện sụt áp." },
+            { title: "Hướng dẫn tích hợp Webhook đồng bộ Lead tự động về Zalo OA", category: "service", content: "Cấu hình JSON payload đẩy thông tin khách hàng kèm mức độ HOT/WARM trực tiếp sang API Zalo." },
+            { title: "Cẩm nang tra cứu mã lỗi thiết bị công nghiệp 25 năm An Tín", category: "pdf", content: "Tổng hợp 500+ mã lỗi thường gặp trên các dòng máy tự động hóa và trạm biến áp." },
+            { title: "Giải pháp bảo trì định kỳ hệ thống điện thông minh nhà xưởng", category: "service", content: "Quy trình kiểm tra điện trở cách điện, nhiệt độ đầu nối cáp và hiệu chuẩn thiết bị đo." },
+            { title: "Xử lý sự cố mất pha và sụt áp đột ngột trên lưới điện công nghiệp", category: "tech", content: "Kiểm tra rơ le bảo vệ mất pha, khởi động từ và đo đạc cân bằng phụ tải 3 pha." },
+            { title: "Hướng dẫn vận hành hệ thống AI nhận diện hình ảnh quang học", category: "tech", content: "Thiết lập góc chụp tiêu chuẩn, ánh sáng tối ưu để AI phân tích chi tiết cơ khí chính xác." },
+            { title: "Chính sách bảo hành vàng thiết bị điện tử độc quyền An Tín", category: "service", content: "Bảo hành toàn diện 24 tháng, hỗ trợ kỹ thuật tận nơi trong vòng 2 giờ tại khu vực TP.HCM." },
+            { title: "Cẩm nang hướng dẫn sử dụng phần mềm quản lý trạm biến áp số", category: "pdf", content: "Tài liệu chi tiết các bước cấu hình SCADA và giám sát trạng thái thiết bị thời gian thực." },
+            { title: "Quy trình kiểm định an toàn điện và tiếp địa nhà xưởng", category: "tech", content: "Đo điện trở tiếp địa dưới 4 ohm theo tiêu chuẩn kỹ thuật điện quốc gia." },
+            { title: "Giải pháp tiết kiệm điện năng cho hệ thống lạnh công nghiệp", category: "service", content: "Ứng dụng biến tần điều khiển lưu lượng bơm giải nhiệt và tối ưu hóa hệ số công suất cos phi." },
+            { title: "Xử lý lỗi nhiễu tín hiệu cảm biến trong môi trường công nghiệp nặng", category: "tech", content: "Sử dụng cáp bọc giáp chống nhiễu, đi dây tách biệt với nguồn lực công suất lớn." },
+            { title: "Hướng dẫn cài đặt và cấu hình bộ điều khiển nhiệt độ PID", category: "tech", content: "Phương pháp dò thông số tự động (Auto-tuning) để đạt độ ổn định nhiệt cao nhất." },
+            { title: "Cẩm nang giải pháp tự động hóa dây chuyền sản xuất cơ khí", category: "pdf", content: "Tài liệu thiết kế tủ điện điều khiển PLC kết hợp màn hình HMI cảm ứng." },
+            { title: "Quy trình xử lý khẩn cấp khi xảy ra chập cháy ngắn mạch tủ điện", category: "tech", content: "Ngắt aptomat tổng ngay lập tức, sử dụng bình chữa cháy CO2 và kiểm tra nguyên nhân." },
+            { title: "Dịch vụ nâng cấp hệ thống điều khiển cũ sang công nghệ AI IoT", category: "service", content: "Thay thế bo mạch đời cũ, tích hợp module kết nối không dây giám sát từ xa qua điện thoại." },
+            { title: "Hướng dẫn kiểm tra và bảo dưỡng biến tần công suất lớn", category: "tech", content: "Vệ sinh quạt tản nhiệt, kiểm tra độ rò rỉ tụ điện DC link và siết chặt các đầu cosse." },
+            { title: "Cẩm nang quy chuẩn thiết kế hệ thống chống sét trực tiếp và lan truyền", category: "pdf", content: "Hướng dẫn lắp đặt kim thu sét phát tia tiên đạo sớm và thiết bị cắt lọc sét đường nguồn." },
+            { title: "Giải pháp quản lý kho thông minh tích hợp mã vạch và AI", category: "service", content: "Tối ưu hóa không gian lưu trữ và kiểm kê hàng hóa tự động qua ứng dụng di động." },
+            { title: "Xử lý lỗi treo màn hình HMI và mất kết nối PLC", category: "tech", content: "Kiểm tra cáp truyền thông RS485/Ethernet, địa chỉ IP và nguồn cấp 24VDC." },
+            { title: "Hướng dẫn lập trình cơ bản khối hàm PID trong PLC Siemens/Mitsubishi", category: "tech", content: "Ví dụ thực tế cấu hình vòng lặp điều khiển áp suất và lưu lượng đường ống." },
+            { title: "Cẩm nang an toàn lao động trong vận hành và sửa chữa điện", category: "pdf", content: "Quy tắc 5 bước cắt điện, khóa tủ, treo biển báo và thử không có điện trước khi thao tác." },
+            { title: "Dịch vụ tư vấn thiết kế và thi công hệ thống điện năng lượng mặt trời", category: "service", content: "Khảo sát bức xạ mặt trời, tính toán công suất hòa lưới và tối ưu chi phí đầu tư." },
+            { title: "Xử lý hiện tượng sóng hài bậc cao trong hệ thống điện nhà xưởng", category: "tech", content: "Lắp đặt bộ lọc sóng hài chủ động (AHF) để bảo vệ thiết bị điện tử nhạy cảm." },
+            { title: "Hướng dẫn sử dụng thiết bị đo chất lượng điện năng (Power Quality Analyzer)", category: "tech", content: "Cách đọc biểu đồ sụt áp, méo dạng sóng hài và hệ số công suất." },
+            { title: "Cẩm nang giải pháp camera giám sát an ninh AI thông minh", category: "pdf", content: "Nhận diện khuôn mặt, phát hiện xâm nhập vùng cấm và cảnh báo qua còi hú." },
+            { title: "Dịch vụ cung cấp và thay thế linh kiện chính hãng An Tín", category: "service", content: "Cam kết nguồn gốc xuất xứ rõ ràng, đầy đủ chứng nhận CO/CQ cho mọi thiết bị." },
+            { title: "Quy trình hiệu chuẩn cảm biến đo lưu lượng điện từ", category: "tech", content: "Kiểm tra độ chính xác điểm không và hệ số nhân lưu lượng định mức." },
+            { title: "Hướng dẫn khắc phục lỗi động cơ servo báo quá dòng (Overcurrent)", category: "tech", content: "Kiểm tra cơ khí kẹt trục, thông số gia tốc và bộ hãm điện trở phanh." },
+            { title: "Cẩm nang kiến thức tự động hóa công nghiệp 4.0 từ chuyên gia An Tín", category: "pdf", content: "Lộ trình chuyển đổi số toàn diện cho doanh nghiệp sản xuất vừa và nhỏ." },
+            { title: "Giải pháp giám sát nhiệt độ tủ điện từ xa qua mạng không dây", category: "tech", content: "Sử dụng cảm biến dán không dây IoT cảnh báo sớm nguy cơ quá nhiệt." },
+            { title: "Quy trình kiểm tra hệ thống báo cháy tự động addressable", category: "tech", content: "Test khói, test nhiệt định kỳ cho từng đầu báo địa chỉ trong tòa nhà." },
+            { title: "Dịch vụ đào tạo và chuyển giao công nghệ vận hành tủ điện thông minh", category: "service", content: "Chương trình huấn luyện thực tế cho đội ngũ kỹ thuật vận hành tại nhà máy." },
+            { title: "Xử lý sự cố đứt gãy cáp quang truyền thông nội bộ nhà xưởng", category: "tech", content: "Sử dụng máy đo OTDR xác định chính xác điểm đứt và tiến hành hàn nối quang." },
+            { title: "Hướng dẫn cấu hình mạng Profinet/Modbus TCP trong công nghiệp", category: "tech", content: "Thiết lập bảng ánh xạ vùng nhớ dữ liệu giữa master và các slave node." },
+            { title: "Cẩm nang tiêu chuẩn kỹ thuật lắp đặt máng cáp và ống luồn dây", category: "pdf", content: "Khoảng cách quang treo đỡ, tiếp địa vỏ máng cáp và bán kính uốn cong dây." },
+            { title: "Giải pháp tối ưu hóa năng lượng cho tòa nhà thông minh (Smart Building)", category: "service", content: "Tự động hóa chiếu sáng, điều hòa không khí theo thời gian thực và cảm biến hiện diện." },
+            { title: "Xử lý lỗi rơ le nhiệt nhảy ngắt liên tục trên động cơ công suất lớn", category: "tech", content: "Đo dòng điện thực tế từng pha so với định mức danh định của motor." },
+            { title: "Hướng dẫn cài đặt thông số biến tần điều khiển bơm tăng áp ổn định áp lực", category: "tech", content: "Cấu hình chế độ ngủ đông (Sleep Mode) khi không có nhu cầu sử dụng nước." },
+            { title: "Cẩm nang lựa chọn thiết bị đóng cắt Aptomat (MCB, MCCB, ACB) chuẩn xác", category: "pdf", content: "Tính toán dòng ngắn mạch cực đại Icu và chọn đường đặc tính cắt quá tải." },
+            { title: "Dịch vụ cứu hộ kỹ thuật khẩn cấp 24/7 toàn khu vực miền Nam", category: "service", content: "Đội ngũ chuyên gia có mặt xử lý sự cố dây chuyền sản xuất ngay trong đêm." },
+            { title: "Quy trình bảo dưỡng hệ thống máy phát điện dự phòng công nghiệp", category: "tech", content: "Kiểm tra dầu bôi trơn, nước làm mát, ắc quy khởi động và chạy thử tải định kỳ." },
+            { title: "Hướng dẫn đọc và phân tích sơ đồ nguyên lý mạch điện điều khiển", category: "tech", content: "Kỹ năng tra cứu ký hiệu thiết bị, tiếp điểm phụ và dòng năng lượng." },
+            { title: "Cẩm nang giải pháp kiểm soát ra vào (Access Control) bằng vân tay và thẻ từ", category: "pdf", content: "Tích hợp phần mềm chấm công, quản lý cửa phân làn xoắn tripod." },
+            { title: "Dịch vụ tư vấn giải pháp chuyển đổi số nhà máy thông minh Smart Factory", category: "service", content: "Đánh giá mức độ sẵn sàng công nghệ số và lập kế hoạch đầu tư tổng thể." },
+            { title: "Xử lý lỗi kết nối Wifi công nghiệp bị chập chờn trong nhà xưởng rộng", category: "tech", content: "Quy hoạch kênh phát sóng, bổ sung bộ phát sóng chuyên dụng Industrial AP." },
+            { title: "Hướng dẫn sử dụng máy hiện sóng (Oscilloscope) đo tín hiệu xung PWM", category: "tech", content: "Cách thiết lập thời gian quét, mức trigger và đầu dò giảm áp 10X." },
+            { title: "Cẩm nang quy chuẩn an toàn phòng cháy chữa cháy cho hệ thống điện", category: "pdf", content: "Các yêu cầu về khoảng cách an toàn, vật liệu chống cháy và thiết bị ngắt khẩn cấp." },
+            { title: "Giải pháp tự động châm hóa học xử lý nước thải công nghiệp", category: "service", content: "Đo pH tự động điều khiển bơm định lượng hóa chất chính xác theo thời gian thực." },
+            { title: "Xử lý hiện tượng sụt áp đường dây dài cấp điện cho trạm bơm xa", category: "tech", content: "Tính toán tiết diện cáp đồng phù hợp và bù công suất phản kháng tại nguồn." },
+            { title: "Hướng dẫn cấu hình tường lửa (Firewall) bảo mật hệ thống mạng SCADA", category: "tech", content: "Thiết lập vùng mạng phân tách DMZ, VLAN bảo vệ dữ liệu sản xuất cốt lõi." },
+            { title: "Cẩm nang tiêu chuẩn thiết kế chiếu sáng công nghiệp và văn phòng", category: "pdf", content: "Bảng tra độ rọi Lux tiêu chuẩn cho từng khu vực làm việc theo TCVN." },
+            { title: "Dịch vụ kiểm tra và đánh giá chất lượng điện năng tổng thể nhà máy", category: "service", content: "Cung cấp báo cáo chuyên sâu về sóng hài, hệ số công suất và tổn thất điện năng." },
+            { title: "Xử lý lỗi hỏng bo mạch do môi trường độ ẩm cao và hóa chất ăn mòn", category: "tech", content: "Quy trình vệ sinh mạch bằng dung dịch chuyên dụng và phủ keo chống ẩm bảo vệ." },
+            { title: "Hướng dẫn sử dụng phần mềm mô phỏng mạch điện và logic PLC", category: "tech", content: "Kiểm tra chương trình trước khi nạp thực tế để đảm bảo tuyệt đối an toàn." },
+            { title: "Tổng kết cẩm nang kỹ thuật 25 năm phát triển hệ sinh thái An Tín", category: "pdf", content: "Tài liệu lưu trữ lịch sử phát triển, các công trình tiêu biểu và tầm nhìn công nghệ tương lai." }
+        ];
 
         function getStoredKB() {
             const data = localStorage.getItem('antin_knowledge_bases_55');
@@ -599,7 +648,6 @@
             document.getElementById('kbCategory').value = item.category;
             document.getElementById('kbContent').value = item.content;
             
-            // Xóa item cũ để chuẩn bị cập nhật mới khi bấm huấn luyện lại
             list.splice(index, 1);
             saveStoredKB(list);
             renderKBTable();
@@ -608,7 +656,6 @@
             document.getElementById('kbTitle').focus();
         }
 
-        // Tự động render bảng lần đầu khi load trang
         window.addEventListener('DOMContentLoaded', () => {
             getStoredKB();
         });
