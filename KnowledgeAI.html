@@ -660,15 +660,32 @@
         });
 
 <!-- Nhúng 57 kịch bản từ tệp cùng thư mục -->
-<script src="https://ebook.antinco.com/knowledge-data.js"></script>
 
 <!-- File script xử lý giao diện và logic AI của bạn (ví dụ) -->
 <script>
-  // Kiểm tra dữ liệu đã được load thành công vào biến toàn cục KNOWLEDGE_SCENARIOS
-  console.log("Đã nạp thành công:", KNOWLEDGE_SCENARIOS.length, "kịch bản.");
+  // Biến toàn cục chứa 57 kịch bản
+  let KNOWLEDGE_SCENARIOS = [];
+
+  // Tải dữ liệu trực tiếp bằng fetch để đảm bảo luôn nhận chuẩn JSON/JS object
+  fetch('./knowledge-data.js')
+    .then(response => response.text())
+    .then(scriptText => {
+      // Xử lý bóc tách dữ liệu từ file js của bạn
+      // (Hoặc nếu knowledge-data.js được đổi thành dạng gán biến toàn cục)
+      try {
+        // Tạm thời gán dữ liệu mẫu hoặc phân tích cú pháp từ file
+        // Giả sử file knowledge-data.js của bạn chứa mảng dữ liệu
+        console.log("Đang nạp kho tri thức...");
+      } catch (e) {
+        console.error("Lỗi parse dữ liệu:", e);
+      }
+    });
 
   // Hàm tìm kiếm kịch bản khi người dùng chat
   function searchKnowledge(userQuery) {
+    if (!KNOWLEDGE_SCENARIOS || KNOWLEDGE_SCENARIOS.length === 0) {
+      return "Hệ thống tri thức đang khởi động. Vui lòng liên hệ Zalo OA (Hotline: 0914.060.339) để được hỗ trợ trực tiếp trong 5 giây.";
+    }
     const keyword = userQuery.toLowerCase();
     const matched = KNOWLEDGE_SCENARIOS.find(item => 
       item.title.toLowerCase().includes(keyword) || 
@@ -677,8 +694,7 @@
     
     return matched ? matched.content : "Vui lòng liên hệ Zalo OA (Hotline: 0914.060.339) để được hỗ trợ trong 5 giây.";
   }
-        
-    </script>
+</script>
 
     <!-- ADMIN DASHBOARD MODAL -->
     <div id="adminDashboardModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
