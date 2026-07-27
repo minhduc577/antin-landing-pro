@@ -7,21 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
-
-    <!-- Header / Navbar -->
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+<!-- Header / Navbar tích hợp Logo.png và hiệu ứng AI -->
+    <header class="border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-lg">
         <div class="flex items-center gap-3">
-            <div class="bg-purple-600 p-2 rounded-xl text-white font-bold text-xl shadow-lg shadow-purple-600/40">
-                <i class="fa-solid fa-cube"></i>
-            </div>
-            <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                AN TÍN ECOSYSTEM AI
-            </span>
+            <a href="#" class="flex items-center gap-3 group">
+                <!-- Chèn logo.png theo đúng yêu cầu -->
+                <img src="logo.png" alt="An Tín Logo" class="h-10 w-auto object-contain rounded-xl shadow-md transition transform group-hover:scale-105">
+                <span class="text-xl font-black tracking-wider bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+                    AN TÍN ECOSYSTEM AI
+                </span>
+            </a>
         </div>
         <div class="flex items-center gap-4">
-            <a href="https://zalo.me/0914060339" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition shadow-md flex items-center gap-2">
-                <i class="fa-solid fa-headset"></i> Hotline: 0914.060.339
+            <a href="https://zalo.me/0914060339" target="_blank" class="relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-600/30 transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-headset animate-bounce text-cyan-200"></i>
+                <span>Hotline: 0914.060.339</span>
+                <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                </span>
             </a>
         </div>
     </header>
