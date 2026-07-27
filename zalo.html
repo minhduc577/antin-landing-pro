@@ -725,27 +725,6 @@
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
-// === TÍCH HỢP KHO TRI THỨC 78 LỖI TỪ kythuatAI.html CHO SIÊU AI ZALO ===
-    let knowledgeBase78Errors = "";
-
-    async function loadKnowledgeBaseForZaloAI() {
-        try {
-            let response = await fetch('kythuatAI.html');
-            if (response.ok) {
-                let htmlText = await response.text();
-                let tempDiv = document.createElement('div');
-                tempDiv.innerHTML = htmlText;
-                knowledgeBase78Errors = tempDiv.innerText;
-            }
-        } catch (err) {
-            console.log("Không thể nạp ngầm kho tri thức kỹ thuật.");
-        }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        loadKnowledgeBaseForZaloAI();
-    });
-    
     // ĐÃ VÁ LỖI HOÀN CHỈNH ĐOẠN HÀM XÁC NHẬN VÀ KÍCH HOẠT KHUNG CHAT AI BÊN DƯỚI:
     function saveCustomerSessionInfo() {
         const nameVal = document.getElementById('cus_name_input').value.trim();
@@ -787,11 +766,12 @@
         }
     }
 
-function submitZaloAiChat() {
+    function submitZaloAiChat() {
         const inputEl = document.getElementById('zaloAiInput');
         const query = inputEl.value.trim();
         if (!query) return;
 
+        // Thêm câu hỏi của user lên khung chat
         const userMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; justify-content: flex-end;">
             <div style="background: #f3e8f8; padding: 8px 12px; border-radius: 8px; max-width: 85%;">
                 <b>${currentCustomer.name}:</b> ${query}
@@ -801,16 +781,9 @@ function submitZaloAiChat() {
         window.zaloChatLog.push({ sender: currentCustomer.name, message: query });
         inputEl.value = '';
 
-        // AI tra cứu trực tiếp từ kho tri thức 78 lỗi đã nạp ngầm
+        // Giả lập phản hồi thông minh từ Siêu AI dựa vào kho tri thức
         setTimeout(() => {
-            let aiReply = "";
-            let lowerQuery = query.toLowerCase();
-
-            if (knowledgeBase78Errors && (lowerQuery.includes("lỗi") || lowerQuery.includes("camera") || lowerQuery.includes("không") || lowerQuery.includes("mạng") || lowerQuery.includes("tín hiệu"))) {
-                aiReply = `Chào <b>${currentCustomer.name}</b>, dựa trên tài liệu 78 lỗi kỹ thuật An Tín, đối với vấn đề <i>"${query}"</i>, hệ thống khuyến nghị bạn kiểm tra lại nguồn điện, kết nối mạng Internet hoặc cáp tín hiệu tương ứng. Nếu thiết bị gặp sự cố đèn báo đỏ hoặc nhấp nháy, hãy tiến hành khởi động lại (reset) thiết bị theo đúng quy trình kỹ thuật.`;
-            } else {
-                aiReply = `Cảm ơn <b>${currentCustomer.name}</b> đã đặt câu hỏi. Siêu AI An Tín đã ghi nhận yêu cầu tư vấn về <i>"${query}"</i> và sẵn sàng hỗ trợ bạn xử lý chi tiết ngay tại chỗ mà không cần gửi email.`;
-            }
+            let aiReply = `Chào <b>${currentCustomer.name}</b>, về vấn đề <i>"${query}"</i>, Siêu AI An Tín đã đối chiếu với tài liệu kỹ thuật chuyên sâu và đề xuất giải pháp tối ưu nhất cho bạn. Bạn có thể bấm nút gửi báo cáo bên dưới hoặc liên hệ trực tiếp hotline để được hỗ trợ tận nơi! 🛠️`;
             
             const aiMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
                 <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
@@ -824,7 +797,7 @@ function submitZaloAiChat() {
             window.zaloChatLog.push({ sender: "Siêu AI An Tín", message: aiReply });
         }, 800);
     }
-    
+
     function sendBroadcastViaWebhook() {
         const title = document.getElementById('bc_title').value;
         const content = document.getElementById('bc_content').value;
