@@ -787,46 +787,44 @@
         }
     }
 
-    function submitZaloAiChat() {
+function submitZaloAiChat() {
         const inputEl = document.getElementById('zaloAiInput');
         const query = inputEl.value.trim();
         if (!query) return;
 
-        // Thêm câu hỏi của user lên khung chat
-
-const userMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; justify-content: flex-end;">
-        <div style="background: #f3e8f8; padding: 8px 12px; border-radius: 8px; max-width: 85%;">
-            <b>${currentCustomer.name}:</b> ${query}
-        </div>
-    </div>`;
-    document.getElementById('aiRealtimeStatusText').innerHTML += userMsgHtml;
-    window.zaloChatLog.push({ sender: currentCustomer.name, message: query });
-    inputEl.value = '';
-
-    // AI tra cứu trực tiếp từ kho tri thức 78 lỗi đã nạp ngầm
-    setTimeout(() => {
-        let aiReply = "";
-        let lowerQuery = query.toLowerCase();
-
-        if (knowledgeBase78Errors && (lowerQuery.includes("lỗi") || lowerQuery.includes("camera") || lowerQuery.includes("không") || lowerQuery.includes("mạng") || lowerQuery.includes("tín hiệu"))) {
-            aiReply = `Chào <b>${currentCustomer.name}</b>, dựa trên tài liệu 78 lỗi kỹ thuật An Tín, đối với vấn đề <i>"${query}"</i>, hệ thống khuyến nghị bạn kiểm tra lại nguồn điện, kết nối mạng Internet hoặc cáp tín hiệu tương ứng. Nếu thiết bị gặp sự cố đèn báo đỏ hoặc nhấp nháy, hãy tiến hành khởi động lại (reset) thiết bị theo đúng quy trình kỹ thuật.`;
-        } else {
-            aiReply = `Cảm ơn <b>${currentCustomer.name}</b> đã đặt câu hỏi. Siêu AI An Tín đã ghi nhận yêu cầu tư vấn về <i>"${query}"</i> và sẵn sàng hỗ trợ bạn xử lý chi tiết ngay tại chỗ mà không cần gửi email.`;
-        }
-        
-        const aiMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
-            <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
-            <div style="background: #f8fafc; padding: 8px 12px; border-radius: 8px; border: 1px solid #e9d5ff; max-width: 85%;">
-                ${aiReply}
+        const userMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; justify-content: flex-end;">
+            <div style="background: #f3e8f8; padding: 8px 12px; border-radius: 8px; max-width: 85%;">
+                <b>${currentCustomer.name}:</b> ${query}
             </div>
         </div>`;
-        const chatBox = document.getElementById('aiRealtimeStatusText');
-        chatBox.innerHTML += aiMsgHtml;
-        chatBox.parentElement.scrollTop = chatBox.parentElement.scrollHeight;
-        window.zaloChatLog.push({ sender: "Siêu AI An Tín", message: aiReply });
-    }, 800);
-}        
-        
+        document.getElementById('aiRealtimeStatusText').innerHTML += userMsgHtml;
+        window.zaloChatLog.push({ sender: currentCustomer.name, message: query });
+        inputEl.value = '';
+
+        // AI tra cứu trực tiếp từ kho tri thức 78 lỗi đã nạp ngầm
+        setTimeout(() => {
+            let aiReply = "";
+            let lowerQuery = query.toLowerCase();
+
+            if (knowledgeBase78Errors && (lowerQuery.includes("lỗi") || lowerQuery.includes("camera") || lowerQuery.includes("không") || lowerQuery.includes("mạng") || lowerQuery.includes("tín hiệu"))) {
+                aiReply = `Chào <b>${currentCustomer.name}</b>, dựa trên tài liệu 78 lỗi kỹ thuật An Tín, đối với vấn đề <i>"${query}"</i>, hệ thống khuyến nghị bạn kiểm tra lại nguồn điện, kết nối mạng Internet hoặc cáp tín hiệu tương ứng. Nếu thiết bị gặp sự cố đèn báo đỏ hoặc nhấp nháy, hãy tiến hành khởi động lại (reset) thiết bị theo đúng quy trình kỹ thuật.`;
+            } else {
+                aiReply = `Cảm ơn <b>${currentCustomer.name}</b> đã đặt câu hỏi. Siêu AI An Tín đã ghi nhận yêu cầu tư vấn về <i>"${query}"</i> và sẵn sàng hỗ trợ bạn xử lý chi tiết ngay tại chỗ mà không cần gửi email.`;
+            }
+            
+            const aiMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
+                <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
+                <div style="background: #f8fafc; padding: 8px 12px; border-radius: 8px; border: 1px solid #e9d5ff; max-width: 85%;">
+                    ${aiReply}
+                </div>
+            </div>`;
+            const chatBox = document.getElementById('aiRealtimeStatusText');
+            chatBox.innerHTML += aiMsgHtml;
+            chatBox.parentElement.scrollTop = chatBox.parentElement.scrollHeight;
+            window.zaloChatLog.push({ sender: "Siêu AI An Tín", message: aiReply });
+        }, 800);
+    }
+    
     function sendBroadcastViaWebhook() {
         const title = document.getElementById('bc_title').value;
         const content = document.getElementById('bc_content').value;
