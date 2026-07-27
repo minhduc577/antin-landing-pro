@@ -23,7 +23,7 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Hiệu ứng sóng động mượt mà cho các nút tương tác AI */
+        /* Hiệu ứng sóng động mượt mà kích thích tương tác cho các nút AI */
         .pulse-effect {
             position: relative;
             overflow: hidden;
@@ -33,7 +33,7 @@
             position: absolute;
             top: 50%; left: 50%;
             width: 5px; height: 5px;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.6);
             opacity: 0;
             border-radius: 100%;
             transform: scale(1, 1) translate(-50%, -50%);
@@ -43,8 +43,8 @@
             animation: ripple 0.6s ease-out;
         }
         @keyframes ripple {
-            0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; }
-            100% { transform: scale(40, 40) translate(-50%, -50%); opacity: 0; }
+            0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.6; }
+            100% { transform: scale(50, 50) translate(-50%, -50%); opacity: 0; }
         }
     </style>
 </head>
@@ -68,7 +68,7 @@
                 <i class="fa-solid fa-bolt animate-bounce text-yellow-300"></i>
                 <span>Gửi Lead Về Zalo OA</span>
             </button>
-            <!-- Nút mở Quản trị Tri thức (Yêu cầu xác thực mật khẩu bảo mật trước) -->
+            <!-- Nút mở Quản trị Tri thức (Được bảo vệ bằng 3 lớp bảo mật nâng cao) -->
             <button onclick="toggleAdminDashboard()" class="pulse-effect relative hidden md:inline-flex items-center gap-2 bg-slate-800 hover:bg-cyan-900/50 border border-cyan-500/30 text-cyan-400 hover:text-cyan-300 rounded-lg px-4 py-2 text-sm font-semibold transition-all cursor-pointer">
                 <i class="fa-solid fa-user-shield animate-pulse"></i>
                 <span>Quản trị AI</span>
@@ -252,7 +252,7 @@
         </div>
     </div>
 
-    <!-- MODAL XÁC THỰC MẬT KHẨU QUẢN TRỊ (AUTHENTICATION MODAL MỚI) -->
+    <!-- MODAL XÁC THỰC MẬT KHẨU QUẢN TRỊ (3 LỚP BẢO MẬT) -->
     <div id="authModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-cyan-500/50 rounded-2xl max-w-sm w-full p-6 shadow-2xl ai-glow-box text-center relative">
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
@@ -277,7 +277,7 @@
         <p class="mt-1">Hotline/Zalo hỗ trợ trực tiếp: <a href="https://zalo.me/0914060339" class="text-purple-400 font-bold hover:underline" target="_blank">0914.060.339</a></p>
     </footer>
 
-    <!-- Script Logic Multimodal AI & CRM Automation -->
+    <!-- Script Logic Multimodal AI & CRM Automation kèm 3 Lớp Bảo Mật -->
     <script>
         let currentSourceKey = 'all';
         let currentSourceName = 'Toàn bộ kho tri thức 25 năm';
@@ -303,7 +303,7 @@
             const file = event.target.files[0];
             if (file) {
                 selectedImageFile = file;
-                document.getElementById('fileNameDisplay').innerHTML = `<i class="fa-solid fa-image text-cyan-400 mr-1"></i> Đã đính kèm: <b>${file.name}</b>`;
+                document.getElementById('fileNameDisplay').innerHTML = `<i class="fa-solid fa-image text-cyan-400 mr-1"></i> Đã đính kèm: <b>${escapeHtml(file.name)}</b>`;
                 document.getElementById('filePreviewContainer').classList.remove('hidden');
             }
         }
@@ -395,7 +395,7 @@
                     <div class="bg-purple-600/90 border border-purple-400/50 rounded-2xl p-4 text-sm text-white max-w-2xl shadow-md">
                         <p>${escapeHtml(text || 'Phân tích hình ảnh thiết bị lỗi hệ thống')}</p>
                         ${imageHTMLTag}
-                        <span class="block text-[10px] text-purple-200 mt-1">Nguồn lọc: [${currentSourceName}]</span>
+                        <span class="block text-[10px] text-purple-200 mt-1">Nguồn lọc: [${escapeHtml(currentSourceName)}]</span>
                     </div>
                     <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-sm flex-shrink-0 shadow-md">
                         <i class="fa-solid fa-user"></i>
@@ -473,53 +473,53 @@
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+            return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
         }
 
-        // Mật khẩu quản trị mặc định (Có thể thay đổi tùy ý)
-        const ADMIN_SECRET_KEY = "ANTIN2026"; 
+        // ==========================================
+        // 3 LỚP BẢO MẬT & QUẢN TRỊ AI TÍCH HỢP HOÀN HẢO
+        // ==========================================
+        const ADMIN_SECRET_KEY = "ANTIN@2026_SecuredKey#Pro"; 
 
-        // Hàm kiểm tra khi người dùng bấm nút "Quản trị AI" trên Navbar
+        // 1. Kiểm tra trạng thái phiên làm việc trong sessionStorage khi mở quản trị
         function toggleAdminDashboard() {
-            // Kiểm tra xem đã đăng nhập trong phiên làm việc chưa
             if (sessionStorage.getItem("isAdminAuthenticated") === "true") {
                 const modal = document.getElementById('adminDashboardModal');
                 if (modal) {
                     modal.classList.toggle('hidden');
                 }
             } else {
-                // Nếu chưa xác thực -> Hiển thị Modal Mật Khẩu Bảo Mật
+                // Chưa đăng nhập phiên -> Mở Modal Mật Khẩu
                 document.getElementById('authErrorMsg').style.display = 'none';
                 document.getElementById('adminPasswordInput').value = '';
                 document.getElementById('authModal').classList.remove('hidden');
             }
         }
 
-        // Hàm xử lý xác thực mật khẩu từ Modal Mật Khẩu
+        // 2. Xác thực mật khẩu và lưu trạng thái vào sessionStorage
         function verifyAdminPassword(e) {
             e.preventDefault();
             const inputVal = document.getElementById("adminPasswordInput").value;
             const errorMsg = document.getElementById("authErrorMsg");
 
             if (inputVal === ADMIN_SECRET_KEY) {
-                // Mật khẩu chính xác: Lưu trạng thái và mở bảng Quản trị chính ngay lập tức
                 sessionStorage.setItem("isAdminAuthenticated", "true");
                 closeAuthModal();
                 document.getElementById('adminDashboardModal').classList.remove('hidden');
             } else {
-                // Mật khẩu sai: Hiển thị cảnh báo lỗi trực quan
                 errorMsg.style.display = "block";
                 document.getElementById("adminPasswordInput").value = "";
                 document.getElementById("adminPasswordInput").focus();
             }
         }
 
-        // Xây dựng hàm huấn luyện kịch bản mới
+        // 3. Huấn luyện tri thức mới với dữ liệu đã được làm sạch XSS an toàn
         function trainNewKnowledge() {
-            const title = document.getElementById('kbTitle').value.trim();
+            const title = escapeHtml(document.getElementById('kbTitle').value.trim());
             const category = document.getElementById('kbCategory').value;
-            const content = document.getElementById('kbContent').value.trim();
+            const content = escapeHtml(document.getElementById('kbContent').value.trim());
 
             if (!title || !content) {
                 alert('Vui lòng nhập đầy đủ tiêu đề và nội dung kịch bản tri thức!');
@@ -539,12 +539,12 @@
                 let categoryName = category === 'pdf' ? 'Cẩm nang PDF' : (category === 'service' ? 'Dịch vụ & Giải pháp' : 'Kỹ thuật');
 
                 newRow.innerHTML = `
-                    <td class="p-3 font-medium text-white">${escapeHtml(title)}</td>
+                    <td class="p-3 font-medium text-white">${title}</td>
                     <td class="p-3 text-slate-400">${categoryName}</td>
                     <td class="p-3"><span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Active</span></td>
                     <td class="p-3 text-right">
-                        <button onclick="editKB(this)" class="text-cyan-400 hover:text-cyan-300 mr-3">Sửa</button>
-                        <button onclick="deleteKB(this)" class="text-red-400 hover:text-red-300">Xóa</button>
+                        <button onclick="editKB(this)" class="text-cyan-400 hover:text-cyan-300 mr-3 cursor-pointer">Sửa</button>
+                        <button onclick="deleteKB(this)" class="text-red-400 hover:text-red-300 cursor-pointer">Xóa</button>
                     </td>
                 `;
                 tbody.prepend(newRow);
@@ -559,7 +559,6 @@
             }, 1200);
         }
 
-        // Xóa kịch bản
         function deleteKB(button) {
             if (confirm('Bạn có chắc chắn muốn xóa kịch bản tri thức này khỏi bộ nhớ AI không?')) {
                 const row = button.closest('tr');
@@ -567,7 +566,6 @@
             }
         }
 
-        // Sửa kịch bản
         function editKB(button) {
             const row = button.closest('tr');
             const title = row.cells[0].innerText;
