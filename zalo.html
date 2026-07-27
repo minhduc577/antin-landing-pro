@@ -807,50 +807,49 @@ function submitZaloAiChat() {
         }
         inputEl.value = '';
 
-        // Siêu AI Hùng Biện Đa Năng - Phản hồi thông minh, chuyên nghiệp và kích thích hành động
+        // Siêu AI Hùng Biện Đa Năng - Sắp xếp lại thứ tự ưu tiên nhận diện thông minh
         setTimeout(() => {
             let lowerQuery = query.toLowerCase();
             let aiReply = "";
             let actionButtons = "";
 
-            // 1. Nhánh xử lý Lỗi kỹ thuật / Sự cố thiết bị (Chuẩn hóa từ kythuatAI.html)
-            if (lowerQuery.includes("offline") || lowerQuery.includes("mất kết nối") || lowerQuery.includes("không xem được") || lowerQuery.includes("camera") || lowerQuery.includes("lỗi") || lowerQuery.includes("hỏng")) {
+            // 1. ƯU TIÊN 1: Hỏi mua hàng, tư vấn sản phẩm, báo giá
+            if (lowerQuery.includes("mua") || lowerQuery.includes("tư vấn") || lowerQuery.includes("giá") || lowerQuery.includes("chi phí") || lowerQuery.includes("lắp") || lowerQuery.includes("báo giá") || lowerQuery.includes("sản phẩm")) {
+                aiReply = `💎 Chào <b>${custName}</b>, đầu tư cho sự an toàn và tiện nghi luôn là sự lựa chọn tuyệt vời nhất! Tại An Tín, chúng tôi cung cấp các giải pháp camera an ninh, thiết bị thông minh chính hãng với độ nét cao và bảo hành trọn đời.<br>` +
+                          `✨ Hãy để chuyên viên của chúng tôi hỗ trợ khảo sát miễn phí tận nơi giúp bạn chọn được thiết bị ưng ý nhất!`;
+                
+                actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button onclick="triggerAutoSendReport('Khách đăng ký tư vấn mua camera/thiết bị qua chat AI')" style="background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📋 Đăng Ký Khảo Sát Miễn Phí</button>
+                </div>`;
+            } 
+            // 2. ƯU TIÊN 2: Báo lỗi, sự cố kỹ thuật, hỏng hóc thực tế
+            else if (lowerQuery.includes("offline") || lowerQuery.includes("mất kết nối") || lowerQuery.includes("không xem được") || lowerQuery.includes("lỗi") || lowerQuery.includes("hỏng") || lowerQuery.includes("sửa") || lowerQuery.includes("mất hình")) {
                 aiReply = `💡 <b>Chẩn đoán chuyên sâu từ Siêu AI An Tín:</b><br>` +
                           `• <b>Triệu chứng:</b> Thiết bị gặp sự cố hoặc mất tín hiệu đường truyền.<br>` +
                           `• <b>Nguyên nhân gốc rễ:</b> Tín hiệu mạng chập chờn, suy hao cáp hoặc sụt áp nguồn cấp.<br>` +
                           `• <b>Giải pháp xử lý tại chỗ:</b><br>` +
                           ` &nbsp;1️⃣ Kiểm tra lại giắc cắm nguồn & cáp tín hiệu vật lý.<br>` +
                           ` &nbsp;2️⃣ Tiến hành khởi động lại (Reset/Reboot) hệ thống.<br>` +
-                          ` &nbsp;3️⃣ Đảm bảo nguồn điện áp đầu vào ổn định chuẩn.<br>` +
-                          `🔥 <i>Đừng để sự cố làm gián đoạn an ninh của bạn! Đội ngũ kỹ thuật An Tín luôn sẵn sàng hỗ trợ trực tiếp tận nơi.</i>`;
+                          `🔥 <i>Đội ngũ kỹ thuật An Tín luôn sẵn sàng hỗ trợ trực tiếp tận nơi cho bạn!</i>`;
                 
                 actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
                     <button onclick="triggerAutoSendReport('Khách yêu cầu hỗ trợ kỹ thuật trực tiếp qua nút AI')" style="background: #7c3aed; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">🛠️ Yêu Cầu Thợ Sửa Chữa Ngay</button>
                 </div>`;
             } 
-            // 2. Nhánh xử lý Báo giá / Chi phí / Đầu tư
-            else if (lowerQuery.includes("giá") || lowerQuery.includes("chi phí") || lowerQuery.includes("bao nhiêu") || lowerQuery.includes("tiền") || lowerQuery.includes("báo giá")) {
-                aiReply = `💎 Chào <b>${custName}</b>, đầu tư cho sự an toàn và tiện nghi luôn là sự đầu tư thông minh nhất! Tại An Tín, chúng tôi không bán thiết bị đơn thuần mà mang đến **giải pháp trọn gói tối ưu chi phí tuyệt đối** theo không gian thực tế của bạn.<br>` +
-                          `✨ Nhận ngay suất **Khảo sát & Báo giá miễn phí tận nơi** trong hôm nay để tối ưu toàn diện ngân sách!`;
-                
-                actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
-                    <button onclick="triggerAutoSendReport('Khách đăng ký khảo sát và báo giá qua chat AI')" style="background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📋 Đăng Ký Khảo Sát Miễn Phí</button>
-                </div>`;
-            } 
-            // 3. Nhánh giao tiếp chào hỏi / Tán gẫu đa năng
-            else if (lowerQuery.includes("chào") || lowerQuery.includes("hi") || lowerQuery.includes("hello") || lowerQuery.includes("ai là ai") || lowerQuery.includes("tên gì")) {
-                aiReply = `✨ Xin chào <b>${custName}</b>! Tôi là **Siêu AI An Tín v5.0** – Trợ lý ảo thông minh đa năng, sẵn sàng đồng hành và thấu hiểu bạn 24/7. 🚀<br>` +
-                          `Tôi có thể giúp bạn tra cứu nhanh 78+ lỗi kỹ thuật chuyên sâu, tư vấn giải pháp nhà thông minh, camera an ninh hay hỗ trợ kết nối trực tiếp với chuyên gia hàng đầu. Hôm nay tôi có thể hỗ trợ gì tuyệt vời cho bạn nào?`;
+            // 3. ƯU TIÊN 3: Chào hỏi, giao tiếp xã giao
+            else if (lowerQuery.includes("chào") || lowerQuery.includes("hi") || lowerQuery.includes("hello")) {
+                aiReply = `✨ Xin chào <b>${custName}</b>! Tôi là **Siêu AI An Tín v5.0** – Trợ lý ảo thông minh đa năng, sẵn sàng đồng hành cùng bạn 24/7. 🚀<br>` +
+                          `Tôi có thể giúp bạn tư vấn chọn mua thiết bị, tra cứu 78+ lỗi kỹ thuật hoặc kết nối trực tiếp với chuyên gia. Bạn đang quan tâm vấn đề gì nào?`;
                 
                 actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
                     <button onclick="document.getElementById('zaloAiInput').value='Tư vấn giải pháp camera trọn gói'; submitZaloAiChat();" style="background: #059669; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">🔍 Tư Vấn Giải Pháp</button>
-                    <button onclick="document.getElementById('zaloAiInput').value='Kiểm tra lỗi thiết bị'; submitZaloAiChat();" style="background: #7c3aed; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">⚙️ Tra Cứu 78 Lỗi</button>
+                    <button onclick="document.getElementById('zaloAiInput').value='Camera bị offline xử lý sao'; submitZaloAiChat();" style="background: #7c3aed; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">⚙️ Tra Cứu Lỗi</button>
                 </div>`;
             } 
-            // 4. Nhánh mặc định thông minh, uyển chuyển bao quát mọi vấn đề
+            // 4. MẶC ĐỊNH: Phản hồi hùng biện đa năng linh hoạt
             else {
-                aiReply = `🌟 Cảm ơn <b>${custName}</b> đã chia sẻ góc nhìn rất thú vị về <i>"${query}"</i>. Siêu AI An Tín đã ghi nhận dữ liệu hệ thống.<br>` +
-                          `Bên cạnh việc làm chủ 78+ chuyên đề kỹ thuật khắt khe, tôi luôn ở đây để kết nối bạn với những dịch vụ tối ưu nhất từ An Tín. Bạn có muốn kết nối ngay với chuyên viên tư vấn cao cấp để được hỗ trợ chi tiết không?`;
+                aiReply = `🌟 Cảm ơn <b>${custName}</b> đã chia sẻ rất thú vị về <i>"${query}"</i>. Siêu AI An Tín đã ghi nhận dữ liệu hệ thống.<br>` +
+                          `Tôi luôn ở đây để kết nối bạn với những giải pháp tối ưu nhất từ An Tín. Bạn có muốn kết nối ngay với chuyên viên tư vấn cao cấp để được hỗ trợ chi tiết không?`;
                 
                 actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
                     <button onclick="triggerAutoSendReport('Khách yêu cầu kết nối chuyên viên cao cấp qua chat AI')" style="background: #d97706; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📞 Kết Nối Chuyên Viên Ngay</button>
