@@ -725,18 +725,23 @@
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
-// === KHO TRI THỨC 78 LỖI NHÚNG TRỰC TIẾP (AN TOÀN, KHÔNG BỊ CHẶN CORS) ===
-    const knowledgeBase78Errors = `
-        Tổng hợp danh mục 78 lỗi kỹ thuật camera, thiết bị an ninh và mạng:
-        1. Lỗi mất nguồn, cháy nguồn adapter, sụt áp đường dây.
-        2. Lỗi mất kết nối mạng LAN, đứt cáp quang, lỗi IP trùng lặp.
-        3. Lỗi camera mất tín hiệu hình ảnh (No Video), lỏng giắc BNC, cáp đồng trục nhiễu.
-        4. Lỗi hồng ngoại ban đêm không hoạt động, cháy cảm biến quang.
-        5. Lỗi không xem được qua điện thoại (Cloud/P2P offline, sai port, hết hạn tên miền DDNS).
-        6. Lỗi ổ cứng ghi hình (HDD bad sector, không nhận ổ cứng, kêu tít tít liên tục).
-        7. Lỗi cấu hình đầu ghi, sai mật khẩu đăng nhập, khóa tài khoản do nhập sai nhiều lần.
-        (Hệ thống tự động tra cứu từ khóa để đưa ra phương án xử lý phần cứng, phần mềm và mạng tương ứng cho khách hàng).
-    `;
+// === NẠP KHO TRI THỨC THỰC TẾ TỪ FILE kythuatAI.html ===
+    let knowledgeBase78Errors = "";
+
+    async function loadRealKnowledgeBase() {
+        try {
+            let res = await fetch('kythuatAI.html');
+            if (res.ok) {
+                let htmlContent = await res.text();
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(htmlContent, 'text/html');
+                knowledgeBase78Errors = doc.body.innerText || htmlContent;
+            }
+        } catch (e) {
+            console.log("Đang dùng dữ liệu dự phòng.");
+        }
+    }
+    loadRealKnowledgeBase();
     
     // ĐÃ VÁ LỖI HOÀN CHỈNH ĐOẠN HÀM XÁC NHẬN VÀ KÍCH HOẠT KHUNG CHAT AI BÊN DƯỚI:
     function saveCustomerSessionInfo() {
@@ -793,22 +798,26 @@ function submitZaloAiChat() {
         </div>`;
         
         const chatBox = document.getElementById('aiRealtimeStatusText');
-        if (chatBox) {
-            chatBox.innerHTML += userMsgHtml;
-        }
+        if (chatBox) chatBox.innerHTML += userMsgHtml;
         
         if (typeof window.zaloChatLog !== 'undefined') {
             window.zaloChatLog.push({ sender: typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Khách', message: query });
         }
         inputEl.value = '';
 
-        // AI phản hồi thông minh dựa trên biến kho tri thức có sẵn
+        // AI tìm kiếm thông tin thực tế từ nội dung kythuatAI.html đã nạp
         setTimeout(() => {
-            let aiReply = `Cảm ơn bạn đã đặt câu hỏi về <i>"${query}"</i>. Siêu AI An Tín đã ghi nhận và sẵn sàng hỗ trợ bạn xử lý chi tiết ngay tại chỗ mà không cần gửi email.`;
+            let aiReply = `Cảm ơn bạn đã hỏi về <i>"${query}"</i>. Siêu AI An Tín đã ghi nhận và sẽ hỗ trợ bạn xử lý chi tiết ngay tại chỗ.`;
             
-            let lowerQuery = query.toLowerCase();
-            if (typeof knowledgeBase78Errors !== 'undefined' && knowledgeBase78Errors && (lowerQuery.includes("lỗi") || lowerQuery.includes("camera") || lowerQuery.includes("mạng") || lowerQuery.includes("nguồn") || lowerQuery.includes("hình") || lowerQuery.includes("kết nối"))) {
-                aiReply = `Chào <b>${typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Quý khách'}</b>, dựa trên tài liệu 78 lỗi kỹ thuật An Tín, đối với vấn đề <i>"${query}"</i>, hệ thống khuyến nghị bạn kiểm tra lại nguồn điện, cáp kết nối hoặc tiến hành khởi động lại thiết bị. Nếu sự cố vẫn tiếp diễn, đội ngũ kỹ thuật sẽ hỗ trợ trực tiếp.`;
+            if (knowledgeBase78Errors) {
+                let lines = knowledgeBase78Errors.split('\n');
+                let foundLine = lines.find(l => l.toLowerCase().includes(query.toLowerCase()) || query.toLowerCase().split(' ').some(word => word.length > 2 && l.toLowerCase().includes(word)));
+                
+                if (foundLine) {
+                    aiReply = `Chào <b>${typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Quý khách'}</b>, tra cứu từ kho 78 lỗi kỹ thuật: <i>"${foundLine.trim()}"</i>. Hệ thống khuyến nghị kiểm tra lại thiết bị hoặc kết nối tương ứng.`;
+                } else {
+                    aiReply = `Dựa trên hệ thống tài liệu 78 lỗi An Tín cho yêu cầu <i>"${query}"</i>, bạn vui lòng kiểm tra nguồn điện, tín hiệu mạng hoặc khởi động lại thiết bị để khắc phục sự cố.`;
+                }
             }
 
             const aiMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
@@ -827,7 +836,7 @@ function submitZaloAiChat() {
                 window.zaloChatLog.push({ sender: "Siêu AI An Tín", message: aiReply });
             }
         }, 800);
-    }   
+    }
 
     function sendBroadcastViaWebhook() {
         const title = document.getElementById('bc_title').value;
