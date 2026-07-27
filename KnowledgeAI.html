@@ -3,89 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Knowledge - Tài Sản Tri Thức 25 Năm</title>
+    <title>Knowledge AI - Kho Tri Thức 25 Năm | An Tín Ecosystem</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.8); }
+            0%, 100% { box-shadow: 0 0 25px rgba(124, 58, 237, 0.35); }
+            50% { box-shadow: 0 0 45px rgba(124, 58, 237, 0.7); }
         }
         .ai-glow-box {
             animation: pulseGlow 3s infinite;
         }
+        .message-bubble {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased py-12 px-4">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
 
-    <div class="max-w-4xl mx-auto text-center">
-        <!-- Tiêu đề chính -->
-        <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-purple-900/50 border border-purple-500/30 text-purple-300 text-sm font-semibold tracking-wide uppercase">
-            <i class="fa-solid fa-brain mr-2 animate-bounce"></i> AI Knowledge Platform
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800/80 bg-slate-900/75 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-lg">
+        <div class="flex items-center gap-3">
+            <a href="trangchu" class="flex items-center gap-3 group">
+                <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center text-white text-xl shadow-lg shadow-purple-500/30 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-brain animate-pulse"></i>
+                </div>
+                <span class="text-xl font-black tracking-wider bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+                    AN TÍN KNOWLEDGE AI
+                </span>
+            </a>
         </div>
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
-            Toàn Bộ 25 Năm Kinh Nghiệm
-        </h1>
-        <div class="my-6">
-            <i class="fa-solid fa-arrow-down text-3xl text-purple-400 animate-bounce"></i>
+        <div class="flex items-center gap-4">
+            <a href="trangchu" class="hidden md:inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm font-semibold transition">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại Trung tâm số
+            </a>
+            <a href="https://zalo.me/0914060339" target="_blank" class="relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-600/30 transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-headset animate-bounce text-cyan-200"></i>
+                <span>Hotline: 0914.060.339</span>
+                <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                </span>
+            </a>
         </div>
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-10">
-            Đưa Vào Trí Tuệ Nhân Tạo (AI)
-        </h2>
+    </header>
 
-        <!-- Khối ví dụ dữ liệu đầu vào -->
-        <div class="mb-8">
-            <h3 class="text-lg font-medium text-slate-400 mb-6 uppercase tracking-wider">💡 Ví dụ Dữ Liệu Tích Lũy</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-left">
-                <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl hover:border-purple-500/50 transition duration-300">
-                    <div class="text-purple-400 text-2xl font-bold mb-1">500</div>
-                    <div class="text-slate-300 text-sm">Bài viết chuyên sâu</div>
+    <!-- Main Chat Workspace -->
+    <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow flex flex-col">
+        <!-- Title Section -->
+        <div class="text-center mb-8">
+            <div class="inline-block mb-2 px-4 py-1 rounded-full bg-purple-900/40 border border-purple-500/30 text-purple-300 text-xs font-bold tracking-widest uppercase shadow-sm">
+                <i class="fa-solid fa-vault mr-1 text-cyan-400"></i> Trợ Lý Kho Tri Thức Chuyên Sâu 25 Năm
+            </div>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-white via-slate-200 to-purple-300 bg-clip-text text-transparent">
+                Tra Cứu Dữ Liệu & Giải Pháp Kỹ Thuật AI
+            </h1>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl shadow-2xl flex flex-col flex-grow overflow-hidden ai-glow-box">
+            
+            <!-- Chat Box Header -->
+            <div class="bg-slate-900/95 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-3 h-3 bg-emerald-500 rounded-full animate-ping absolute"></div>
+                        <div class="w-3 h-3 bg-emerald-500 rounded-full relative"></div>
+                    </div>
+                    <span class="text-sm font-bold text-slate-200">Knowledge AI Core đang hoạt động (Online)</span>
                 </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl hover:border-purple-500/50 transition duration-300">
-                    <div class="text-indigo-400 text-2xl font-bold mb-1">100</div>
-                    <div class="text-slate-300 text-sm">Ebook giá trị</div>
-                </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl hover:border-purple-500/50 transition duration-300">
-                    <div class="text-cyan-400 text-2xl font-bold mb-1">500</div>
-                    <div class="text-slate-300 text-sm">Video thực chiến</div>
-                </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl hover:border-purple-500/50 transition duration-300">
-                    <div class="text-amber-400 text-2xl font-bold mb-1">2.000</div>
-                    <div class="text-slate-300 text-sm">Lỗi kỹ thuật chuẩn bệnh</div>
-                </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl hover:border-purple-500/50 transition duration-300">
-                    <div class="text-emerald-400 text-2xl font-bold mb-1">500</div>
-                    <div class="text-slate-300 text-sm">Mẫu báo giá tối ưu</div>
-                </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl hover:border-purple-500/50 transition duration-300">
-                    <div class="text-rose-400 text-2xl font-bold mb-1">1.000</div>
-                    <div class="text-slate-300 text-sm">Công trình thực tế</div>
+                <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-purple-400 transition flex items-center gap-1 font-semibold bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <i class="fa-solid fa-rotate-right"></i> Làm mới hội thoại
+                </button>
+            </div>
+
+            <!-- Messages Display Area -->
+            <div id="chatMessages" class="p-6 overflow-y-auto flex-grow space-y-4 max-h-[500px] min-h-[350px]">
+                <!-- Welcome Message from AI -->
+                <div class="flex items-start gap-3 message-bubble">
+                    <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner">
+                        <p class="font-bold text-purple-300 mb-1">Xin chào bạn! Tôi là trợ lý Knowledge AI của An Tín.</p>
+                        <p>Tôi đã được nạp toàn bộ <strong>kho tri thức chuyên sâu 25 năm</strong> trong lĩnh vực kỹ thuật, giải pháp và vận hành. Bạn cần tra cứu vấn đề gì hôm nay? Hãy nhập câu hỏi hoặc chọn các từ khóa gợi ý bên dưới.</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="my-8">
-            <i class="fa-solid fa-microchip text-4xl text-indigo-400 animate-pulse"></i>
-            <p class="text-slate-400 mt-2 font-medium">Hệ thống AI tự động học tập, phân tích và chuyền tải chuyên môn 24/7</p>
-        </div>
-
-        <!-- Khối kết luận tài sản -->
-        <div class="ai-glow-box bg-gradient-to-r from-purple-900/40 via-indigo-900/40 to-slate-900 border border-purple-500/50 rounded-2xl p-8 text-center">
-            <div class="text-purple-400 text-3xl mb-2"><i class="fa-solid fa-vault"></i></div>
-            <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-2">
-                ĐÂY CHÍNH LÀ TÀI SẢN VÔ GIÁ
-            </h3>
-            <p class="text-slate-300 max-w-xl mx-auto text-sm md:text-base">
-                Biến kinh nghiệm thực chiến thành cỗ máy tự động hóa phục vụ khách hàng, chốt sale và xử lý kỹ thuật đỉnh cao.
-            </p>
-            <div class="mt-6">
-                <a href="https://zalo.me/0914060339" target="_blank" class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-bold px-6 py-3 rounded-xl transition duration-300 shadow-lg shadow-purple-600/30">
-                    <i class="fa-solid fa-rocket"></i> Khám Phá Sức Mạnh AI Ngay
-                </a>
+            <!-- Quick Suggestions Chips -->
+            <div class="px-6 py-3 bg-slate-950/60 border-t border-slate-800/60 flex flex-wrap gap-2 items-center">
+                <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i> Gợi ý nhanh:</span>
+                <button onclick="sendQuickPrompt('Lỗi hệ thống thường gặp và cách xử lý nhanh')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">⚡ Xử lý lỗi nhanh</button>
+                <button onclick="sendQuickPrompt('Quy trình bảo trì định kỳ chuẩn An Tín')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">🛠️ Quy trình bảo trì</button>
+                <button onclick="sendQuickPrompt('Tư vấn giải pháp công nghệ toàn diện 25 năm')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">📈 Giải pháp tổng thể</button>
             </div>
+
+            <!-- Chat Input Form -->
+            <div class="p-4 bg-slate-950 border-t border-slate-800">
+                <form id="chatForm" onsubmit="handleChatSubmit(event)" class="flex gap-3">
+                    <input type="text" id="userInput" placeholder="Nhập câu hỏi, triệu chứng kỹ thuật hoặc vấn đề bạn cần tra cứu..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition shadow-inner">
+                    <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-3 rounded-xl font-bold text-sm transition shadow-lg shadow-purple-600/30 flex items-center gap-2 cursor-pointer">
+                        <span>Gửi câu hỏi</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+
         </div>
+    </main>
 
-    </div>
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/50 text-center py-6 text-slate-400 text-sm mt-8">
+        <p>&copy; 2026 An Tín Digital Ecosystem AI. All rights reserved.</p>
+        <p class="mt-1">Hotline/Zalo hỗ trợ trực tiếp: <a href="https://zalo.me/0914060339" class="text-purple-400 font-bold hover:underline" target="_blank">0914.060.339</a></p>
+    </footer>
 
+    <!-- Interactive JS Logic -->
+    <script>
+        // Kiểm tra nếu có query truyền từ trang chủ sang
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            if (query) {
+                document.getElementById('userInput').value = decodeURIComponent(query);
+                // Tự động kích hoạt gửi câu hỏi luôn
+                setTimeout(() => {
+                    submitMessage(decodeURIComponent(query));
+                }, 500);
+            }
+        });
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+            submitMessage(text);
+            input.value = '';
+        }
+
+        function sendQuickPrompt(text) {
+            document.getElementById('userInput').value = text;
+            submitMessage(text);
+        }
+
+        function submitMessage(text) {
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Append user bubble
+            const userHTML = `
+                <div class="flex items-start justify-end gap-3 message-bubble">
+                    <div class="bg-purple-600/90 border border-purple-400/50 rounded-2xl p-4 text-sm text-white max-w-2xl shadow-md">
+                        <p>${escapeHtml(text)}</p>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-sm flex-shrink-0 shadow-md">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', userHTML);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Typing Indicator
+            const typingId = 'typing-' + Date.now();
+            const typingHTML = `
+                <div id="${typingId}" class="flex items-start gap-3 message-bubble">
+                    <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
+                        <i class="fa-solid fa-brain animate-spin"></i>
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-300 shadow-inner flex items-center gap-2">
+                        <span class="animate-pulse">✨ AI đang quét kho tri thức 25 năm để tìm giải pháp tối ưu nhất...</span>
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', typingHTML);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Simulate AI response after 1.2s
+            setTimeout(() => {
+                document.getElementById(typingId).remove();
+                
+                let aiResponse = `Cảm ơn bạn đã đặt câu hỏi về "<b>${escapeHtml(text)}</b>". Dựa trên cơ sở dữ liệu tích lũy 25 năm của An Tín, hệ thống ghi nhận đây là vấn đề quan trọng.`;
+                
+                if(text.toLowerCase().includes('lỗi') || text.toLowerCase().includes('xử lý')) {
+                    aiResponse = `⚙️ <b>Phân tích kỹ thuật từ Kho 25 năm:</b><br>
+                    1. Kiểm tra nguyên nhân gốc rễ theo chuẩn chẩn đoán An Tín.<br>
+                    2. Áp dụng quy trình reset và cấu hình lại phần cứng/phần mềm chuyên dụng.<br>
+                    3. Liên hệ ngay kỹ thuật trưởng qua Zalo <a href="https://zalo.me/0914060339" target="_blank" class="text-cyan-400 font-bold underline">0914.060.339</a> nếu cần hỗ trợ can thiệp trực tiếp từ xa.`;
+                } else if(text.toLowerCase().includes('bảo trì')) {
+                    aiResponse = `🛠️ <b>Quy trình bảo trì định kỳ chuẩn 25 năm:</b><br>
+                    - Kiểm tra tổng thể hệ thống vận hành.<br>
+                    - Tối ưu hóa hiệu suất và sao lưu dữ liệu tự động.<br>
+                    - Báo cáo chi tiết tình trạng hoạt động cho doanh nghiệp.`;
+                } else {
+                    aiResponse = `💡 <b>Đề xuất giải pháp chuyên sâu từ An Tín:</b><br>
+                    Hệ thống đã trích xuất các tài liệu kỹ thuật và giải pháp tối ưu cho yêu cầu của bạn. Để nhận tài liệu chi tiết và tư vấn trực tiếp 1-1, vui lòng kết nối ngay với chuyên gia qua Hotline/Zalo: <a href="https://zalo.me/0914060339" target="_blank" class="text-cyan-400 font-bold underline">0914.060.339</a>.`;
+                }
+
+                const aiHTML = `
+                    <div class="flex items-start gap-3 message-bubble">
+                        <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner space-y-2">
+                            <p>${aiResponse}</p>
+                            <div class="pt-2 border-t border-slate-700 flex gap-2">
+                                <a href="https://zalo.me/0914060339" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                    <i class="fa-solid fa-headset"></i> Kết nối chuyên gia ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', aiHTML);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1200);
+        }
+
+        function clearChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="flex items-start gap-3 message-bubble">
+                    <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner">
+                        <p class="font-bold text-purple-300 mb-1">Đã làm mới đoạn hội thoại!</p>
+                        <p>Kho tri thức 25 năm đã sẵn sàng. Hãy nhập câu hỏi mới của bạn.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
 </body>
 </html>
