@@ -725,6 +725,19 @@
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
+// === KHO TRI THỨC 78 LỖI NHÚNG TRỰC TIẾP (AN TOÀN, KHÔNG BỊ CHẶN CORS) ===
+    const knowledgeBase78Errors = `
+        Tổng hợp danh mục 78 lỗi kỹ thuật camera, thiết bị an ninh và mạng:
+        1. Lỗi mất nguồn, cháy nguồn adapter, sụt áp đường dây.
+        2. Lỗi mất kết nối mạng LAN, đứt cáp quang, lỗi IP trùng lặp.
+        3. Lỗi camera mất tín hiệu hình ảnh (No Video), lỏng giắc BNC, cáp đồng trục nhiễu.
+        4. Lỗi hồng ngoại ban đêm không hoạt động, cháy cảm biến quang.
+        5. Lỗi không xem được qua điện thoại (Cloud/P2P offline, sai port, hết hạn tên miền DDNS).
+        6. Lỗi ổ cứng ghi hình (HDD bad sector, không nhận ổ cứng, kêu tít tít liên tục).
+        7. Lỗi cấu hình đầu ghi, sai mật khẩu đăng nhập, khóa tài khoản do nhập sai nhiều lần.
+        (Hệ thống tự động tra cứu từ khóa để đưa ra phương án xử lý phần cứng, phần mềm và mạng tương ứng cho khách hàng).
+    `;
+    
     // ĐÃ VÁ LỖI HOÀN CHỈNH ĐOẠN HÀM XÁC NHẬN VÀ KÍCH HOẠT KHUNG CHAT AI BÊN DƯỚI:
     function saveCustomerSessionInfo() {
         const nameVal = document.getElementById('cus_name_input').value.trim();
