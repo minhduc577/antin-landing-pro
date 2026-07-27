@@ -807,52 +807,73 @@ function submitZaloAiChat() {
         }
         inputEl.value = '';
 
-        // Siêu AI Hùng Biện Đa Năng - Sắp xếp lại thứ tự ưu tiên nhận diện thông minh
+        // Siêu AI Hùng Biện Đa Năng - Chuyên gia Đa Vai Trò (Kỹ thuật, Kinh doanh, CSKH)
         setTimeout(() => {
             let lowerQuery = query.toLowerCase();
             let aiReply = "";
             let actionButtons = "";
+            let hotlineLink = "https://zalo.me/0914060339";
 
-            // 1. ƯU TIÊN 1: Hỏi mua hàng, tư vấn sản phẩm, báo giá
-            if (lowerQuery.includes("mua") || lowerQuery.includes("tư vấn") || lowerQuery.includes("giá") || lowerQuery.includes("chi phí") || lowerQuery.includes("lắp") || lowerQuery.includes("báo giá") || lowerQuery.includes("sản phẩm")) {
-                aiReply = `💎 Chào <b>${custName}</b>, đầu tư cho sự an toàn và tiện nghi luôn là sự lựa chọn tuyệt vời nhất! Tại An Tín, chúng tôi cung cấp các giải pháp camera an ninh, thiết bị thông minh chính hãng với độ nét cao và bảo hành trọn đời.<br>` +
-                          `✨ Hãy để chuyên viên của chúng tôi hỗ trợ khảo sát miễn phí tận nơi giúp bạn chọn được thiết bị ưng ý nhất!`;
-                
-                actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
-                    <button onclick="triggerAutoSendReport('Khách đăng ký tư vấn mua camera/thiết bị qua chat AI')" style="background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📋 Đăng Ký Khảo Sát Miễn Phí</button>
-                </div>`;
-            } 
-            // 2. ƯU TIÊN 2: Báo lỗi, sự cố kỹ thuật, hỏng hóc thực tế
-            else if (lowerQuery.includes("offline") || lowerQuery.includes("mất kết nối") || lowerQuery.includes("không xem được") || lowerQuery.includes("lỗi") || lowerQuery.includes("hỏng") || lowerQuery.includes("sửa") || lowerQuery.includes("mất hình")) {
-                aiReply = `💡 <b>Chẩn đoán chuyên sâu từ Siêu AI An Tín:</b><br>` +
-                          `• <b>Triệu chứng:</b> Thiết bị gặp sự cố hoặc mất tín hiệu đường truyền.<br>` +
+            // 1. Nhánh Kỹ thuật: Lỗi Camera offline / mất kết nối / mất hình
+            if (lowerQuery.includes("offline") || lowerQuery.includes("mất kết nối") || lowerQuery.includes("không xem được") || lowerQuery.includes("mất hình")) {
+                aiReply = `🛠️ <b>[Chuyên gia Kỹ thuật An Tín chẩn đoán]:</b><br>` +
+                          `• <b>Triệu chứng:</b> Thiết bị camera mất tín hiệu hoặc ngắt quãng.<br>` +
                           `• <b>Nguyên nhân gốc rễ:</b> Tín hiệu mạng chập chờn, suy hao cáp hoặc sụt áp nguồn cấp.<br>` +
                           `• <b>Giải pháp xử lý tại chỗ:</b><br>` +
-                          ` &nbsp;1️⃣ Kiểm tra lại giắc cắm nguồn & cáp tín hiệu vật lý.<br>` +
-                          ` &nbsp;2️⃣ Tiến hành khởi động lại (Reset/Reboot) hệ thống.<br>` +
-                          `🔥 <i>Đội ngũ kỹ thuật An Tín luôn sẵn sàng hỗ trợ trực tiếp tận nơi cho bạn!</i>`;
+                          ` &nbsp;1️⃣ Kiểm tra lại giắc cắm nguồn và cáp tín hiệu vật lý.<br>` +
+                          ` &nbsp;2️⃣ Khởi động lại (Reset/Reboot) toàn bộ hệ thống.<br>` +
+                          `🔥 <i>Đừng để điểm mù an ninh làm bạn lo lắng! Kết nối ngay chuyên gia qua Zalo: <a href="${hotlineLink}" target="_blank" style="color: #7c3aed; font-weight: bold;">0914.060.339</a> để được hỗ trợ từ xa miễn phí!</i>`;
                 
                 actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
-                    <button onclick="triggerAutoSendReport('Khách yêu cầu hỗ trợ kỹ thuật trực tiếp qua nút AI')" style="background: #7c3aed; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">🛠️ Yêu Cầu Thợ Sửa Chữa Ngay</button>
+                    <button onclick="triggerAutoSendReport('Khách yêu cầu hỗ trợ kỹ thuật trực tiếp qua nút AI')" style="background: #7c3aed; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">🔧 Gửi Thợ Hỗ Trợ Tận Nơi</button>
+                    <a href="${hotlineLink}" target="_blank" style="text-decoration: none;"><button style="background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">💬 Chat Zalo Nóng</button></a>
                 </div>`;
             } 
-            // 3. ƯU TIÊN 3: Chào hỏi, giao tiếp xã giao
-            else if (lowerQuery.includes("chào") || lowerQuery.includes("hi") || lowerQuery.includes("hello")) {
-                aiReply = `✨ Xin chào <b>${custName}</b>! Tôi là **Siêu AI An Tín v5.0** – Trợ lý ảo thông minh đa năng, sẵn sàng đồng hành cùng bạn 24/7. 🚀<br>` +
-                          `Tôi có thể giúp bạn tư vấn chọn mua thiết bị, tra cứu 78+ lỗi kỹ thuật hoặc kết nối trực tiếp với chuyên gia. Bạn đang quan tâm vấn đề gì nào?`;
+            // 2. Nhánh Kỹ thuật chung: Tra cứu 78 lỗi / Lỗi thiết bị khác
+            else if (lowerQuery.includes("lỗi") || lowerQuery.includes("hỏng") || lowerQuery.includes("không chạy") || lowerQuery.includes("trục trặc") || lowerQuery.includes("sửa")) {
+                aiReply = `⚙️ <b>[Trợ lý Kỹ thuật 78+ Chuyên Sắc]:</b><br>` +
+                          `Chào <b>${custName}</b>, hệ thống đã quét qua kho tri thức kỹ thuật An Tín cho vấn đề <i>"${query}"</i>.<br>` +
+                          `• <b>Khuyến nghị cốt lõi:</b> Vui lòng kiểm tra nguồn điện áp đầu ổn định 12VDC, kiểm tra cổng mạng LAN/Wi-Fi hoặc khôi phục cài đặt gốc nếu cần thiết.<br>` +
+                          `🎯 <i>Để xử lý triệt để 100%, hãy gọi ngay hotline kỹ thuật: <a href="${hotlineLink}" target="_blank" style="color: #7c3aed; font-weight: bold;">0914.060.339</a>!</i>`;
+                
+                actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button onclick="triggerAutoSendReport('Khách yêu cầu kiểm tra lỗi hệ thống 78 lỗi qua AI')" style="background: #7c3aed; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📊 Kiểm Tra Hệ Thống</button>
+                    <a href="${hotlineLink}" target="_blank" style="text-decoration: none;"><button style="background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">💬 Gặp Kỹ Thuật Viên</button></a>
+                </div>`;
+            }
+            // 3. Nhánh Kinh doanh: Tư vấn mua hàng, báo giá, chi phí, lắp đặt
+            else if (lowerQuery.includes("giá") || lowerQuery.includes("chi phí") || lowerQuery.includes("mua") || lowerQuery.includes("tư vấn") || lowerQuery.includes("báo giá") || lowerQuery.includes("lắp") || lowerQuery.includes("tiền")) {
+                aiReply = `💎 <b>[Chuyên gia Kinh doanh An Tín tư vấn]:</b><br>` +
+                          `Chào <b>${custName}</b>, sự an toàn và tiện nghi của bạn là giá trị tuyệt đối mà An Tín theo đuổi! Chúng tôi cam kết mang đến giải pháp tối ưu chi phí, thiết bị chính hãng bảo hành trọn đời.<br>` +
+                          `✨ Đăng ký ngay suất **Khảo sát & Báo giá tận nơi miễn phí** hôm nay!<br>` +
+                          `🚀 Hotline tư vấn nhanh 24/7: <a href="${hotlineLink}" target="_blank" style="color: #2563eb; font-weight: bold;">0914.060.339</a>`;
+                
+                actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button onclick="triggerAutoSendReport('Khách đăng ký khảo sát và báo giá qua chat AI')" style="background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📋 Đăng Ký Khảo Sát Miễn Phí</button>
+                    <a href="${hotlineLink}" target="_blank" style="text-decoration: none;"><button style="background: #059669; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">💬 Nhận Báo Giá Qua Zalo</button></a>
+                </div>`;
+            } 
+            // 4. Nhánh CSKH / Chào hỏi giao lưu đa năng
+            else if (lowerQuery.includes("chào") || lowerQuery.includes("hi") || lowerQuery.includes("hello") || lowerQuery.includes("cảm ơn") || lowerQuery.includes("tên gì")) {
+                aiReply = `✨ <b>[Siêu AI An Tín v5.0 - Hân hạnh phục vụ]:</b><br>` +
+                          `Xin chào <b>${custName}</b>! Tôi là trợ lý ảo hùng biện đa năng, luôn sẵn sàng đồng hành cùng bạn 24/7. 🚀<br>` +
+                          `Tôi có thể giúp bạn chẩn đoán nhanh 78+ lỗi kỹ thuật, tư vấn giải pháp an ninh tối ưu hoặc kết nối trực tiếp với ban quản trị An Tín qua Zalo <a href="${hotlineLink}" target="_blank" style="color: #7c3aed; font-weight: bold;">0914.060.339</a>. Hôm nay tôi có thể hỗ trợ gì tuyệt vời cho bạn nào?`;
                 
                 actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
                     <button onclick="document.getElementById('zaloAiInput').value='Tư vấn giải pháp camera trọn gói'; submitZaloAiChat();" style="background: #059669; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">🔍 Tư Vấn Giải Pháp</button>
-                    <button onclick="document.getElementById('zaloAiInput').value='Camera bị offline xử lý sao'; submitZaloAiChat();" style="background: #7c3aed; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">⚙️ Tra Cứu Lỗi</button>
+                    <button onclick="document.getElementById('zaloAiInput').value='Camera bị offline xử lý sao'; submitZaloAiChat();" style="background: #7c3aed; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">⚙️ Tra Cứu 78 Lỗi</button>
+                    <a href="${hotlineLink}" target="_blank" style="text-decoration: none;"><button style="background: #2563eb; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">💬 Zalo Trực Tiếp</button></a>
                 </div>`;
             } 
-            // 4. MẶC ĐỊNH: Phản hồi hùng biện đa năng linh hoạt
+            // 5. Nhánh Mặc định đa năng (Nhà hùng biện ứng biến linh hoạt mọi chủ đề)
             else {
-                aiReply = `🌟 Cảm ơn <b>${custName}</b> đã chia sẻ rất thú vị về <i>"${query}"</i>. Siêu AI An Tín đã ghi nhận dữ liệu hệ thống.<br>` +
-                          `Tôi luôn ở đây để kết nối bạn với những giải pháp tối ưu nhất từ An Tín. Bạn có muốn kết nối ngay với chuyên viên tư vấn cao cấp để được hỗ trợ chi tiết không?`;
+                aiReply = `🌟 <b>[Đại sứ Thương hiệu An Tín]:</b><br>` +
+                          `Cảm ơn <b>${custName}</b> đã đưa ra một góc nhìn rất thú vị về <i>"${query}"</i>. Hệ thống trí tuệ nhân tạo An Tín đã ghi nhận toàn bộ.<br>` +
+                          `Bên cạnh kho tri thức 78 lỗi kỹ thuật chuyên sâu, tôi luôn sẵn sàng kết nối bạn với các chuyên gia hàng đầu của chúng tôi. Hãy gọi ngay hotline/Zalo: <a href="${hotlineLink}" target="_blank" style="color: #7c3aed; font-weight: bold;">0914.060.339</a> để nhận ưu đãi đặc quyền trong ngày nhé!`;
                 
                 actionButtons = `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
                     <button onclick="triggerAutoSendReport('Khách yêu cầu kết nối chuyên viên cao cấp qua chat AI')" style="background: #d97706; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📞 Kết Nối Chuyên Viên Ngay</button>
+                    <a href="${hotlineLink}" target="_blank" style="text-decoration: none;"><button style="background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">💬 Chat Ngay 0914.060.339</button></a>
                 </div>`;
             }
 
