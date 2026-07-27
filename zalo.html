@@ -805,18 +805,31 @@ function submitZaloAiChat() {
         }
         inputEl.value = '';
 
-        // AI tìm kiếm thông tin thực tế từ nội dung kythuatAI.html đã nạp
+        // Quét thông minh toàn bộ kho tri thức để tìm ý chính xác nhất
         setTimeout(() => {
             let aiReply = `Cảm ơn bạn đã hỏi về <i>"${query}"</i>. Siêu AI An Tín đã ghi nhận và sẽ hỗ trợ bạn xử lý chi tiết ngay tại chỗ.`;
             
             if (knowledgeBase78Errors) {
-                let lines = knowledgeBase78Errors.split('\n');
-                let foundLine = lines.find(l => l.toLowerCase().includes(query.toLowerCase()) || query.toLowerCase().split(' ').some(word => word.length > 2 && l.toLowerCase().includes(word)));
+                let lowerFullText = knowledgeBase78Errors.toLowerCase();
+                let lowerQuery = query.toLowerCase();
+                // Tách từ khóa chính để tìm đoạn văn bản phù hợp nhất trong kho 78 lỗi
+                let keywords = lowerQuery.split(' ').filter(w => w.length > 2);
                 
-                if (foundLine) {
-                    aiReply = `Chào <b>${typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Quý khách'}</b>, tra cứu từ kho 78 lỗi kỹ thuật: <i>"${foundLine.trim()}"</i>. Hệ thống khuyến nghị kiểm tra lại thiết bị hoặc kết nối tương ứng.`;
+                let matchedSnippet = "";
+                // Tìm kiếm đoạn chứa từ khóa khách hỏi trong kho dữ liệu
+                let lines = knowledgeBase78Errors.split('\n');
+                for (let line of lines) {
+                    let lLower = line.toLowerCase();
+                    if (keywords.some(kw => lLower.includes(kw))) {
+                        matchedSnippet = line.trim();
+                        break;
+                    }
+                }
+
+                if (matchedSnippet && matchedSnippet.length > 15) {
+                    aiReply = `Chào <b>${typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Quý khách'}</b>, dựa trên tài liệu kỹ thuật An Tín cho vấn đề <i>"${query}"</i>, hệ thống ghi nhận: <br><span style="color: #2563eb;">"${matchedSnippet}"</span><br>Bạn vui lòng kiểm tra lại kết nối hoặc khởi động lại thiết bị theo hướng dẫn trên.`;
                 } else {
-                    aiReply = `Dựa trên hệ thống tài liệu 78 lỗi An Tín cho yêu cầu <i>"${query}"</i>, bạn vui lòng kiểm tra nguồn điện, tín hiệu mạng hoặc khởi động lại thiết bị để khắc phục sự cố.`;
+                    aiReply = `Chào <b>${typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Quý khách'}</b>, đối với sự cố <i>"${query}"</i>, hệ thống khuyến nghị kiểm tra nguồn điện, đường truyền mạng hoặc liên hệ kỹ thuật viên để được hỗ trợ xử lý trực tiếp.`;
                 }
             }
 
