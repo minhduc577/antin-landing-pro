@@ -35,11 +35,16 @@
                     <i class="fa-solid fa-brain animate-pulse"></i>
                 </div>
                 <span class="text-xl font-black tracking-wider bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
-                    AN TÍN KNOWLEDGE AI
+                    AN TÍN KNOWLEDGE AI & CRM
                 </span>
             </a>
         </div>
         <div class="flex items-center gap-4">
+            <!-- Nút kích hoạt mở Lead Capture Modal -->
+            <button onclick="openLeadModal()" class="relative inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-600/30 cursor-pointer">
+                <i class="fa-solid fa-bolt animate-bounce"></i>
+                <span>Gửi Lead Về Zalo OA</span>
+            </button>
             <a href="trangchu" class="hidden md:inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm font-semibold transition">
                 <i class="fa-solid fa-arrow-left"></i> Quay lại Trung tâm số
             </a>
@@ -57,37 +62,59 @@
     <!-- Main Workspace -->
     <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow grid grid-cols-1 lg:grid-cols-4 gap-6">
         
-        <!-- Cột trái: Bộ lọc Vector Database & Chế độ Multimodal -->
+        <!-- Cột trái: Bộ lọc Vector Database, Multimodal & CRM Automation Hub -->
         <div class="lg:col-span-1 bg-slate-900/80 border border-purple-500/30 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-6">
-            <div>
-                <div class="flex items-center gap-2 mb-4 text-purple-300 font-extrabold text-sm border-b border-slate-800 pb-3">
-                    <i class="fa-solid fa-eye text-cyan-400"></i> Multimodal AI Core
+            <div class="space-y-6">
+                <!-- Phần Multimodal Vision Core -->
+                <div>
+                    <div class="flex items-center gap-2 mb-3 text-purple-300 font-extrabold text-sm border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-eye text-cyan-400"></i> Multimodal AI Core
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4 leading-relaxed">Tải ảnh thiết bị lỗi, sơ đồ mạch hoặc bản vẽ kỹ thuật trực tiếp để AI 25 năm "chuẩn bệnh" bằng thị giác máy tính.</p>
+                    
+                    <!-- Danh mục nguồn dữ liệu -->
+                    <div class="space-y-2">
+                        <button onclick="setDataSource('all', 'Toàn bộ kho tri thức 25 năm')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold transition bg-purple-600/30 text-purple-200 border border-purple-500/50 flex items-center justify-between">
+                            <span><i class="fa-solid fa-globe mr-2"></i> Tất cả tài liệu</span>
+                            <span class="text-[10px] bg-purple-900/80 px-2 py-0.5 rounded text-cyan-300">Active</span>
+                        </button>
+                        <button onclick="setDataSource('pdf', 'Cẩm nang & Tài liệu PDF kỹ thuật')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-between">
+                            <span><i class="fa-solid fa-file-pdf mr-2 text-rose-400"></i> Cẩm nang PDF (25 năm)</span>
+                            <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">PDFs</span>
+                        </button>
+                        <button onclick="setDataSource('service', 'Dữ liệu dịch vụ & giải pháp doanh nghiệp')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-between">
+                            <span><i class="fa-solid fa-screwdriver-wrench mr-2 text-amber-400"></i> Dịch vụ & Giải pháp</span>
+                            <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">Services</span>
+                        </button>
+                    </div>
                 </div>
-                <p class="text-xs text-slate-400 mb-4 leading-relaxed">Tải ảnh thiết bị lỗi, sơ đồ mạch hoặc bản vẽ kỹ thuật trực tiếp để AI 25 năm "chuẩn bệnh" bằng thị giác máy tính.</p>
-                
-                <!-- Danh mục nguồn dữ liệu -->
-                <div class="space-y-2">
-                    <button onclick="setDataSource('all', 'Toàn bộ kho tri thức 25 năm')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold transition bg-purple-600/30 text-purple-200 border border-purple-500/50 flex items-center justify-between">
-                        <span><i class="fa-solid fa-globe mr-2"></i> Tất cả tài liệu</span>
-                        <span class="text-[10px] bg-purple-900/80 px-2 py-0.5 rounded text-cyan-300">Active</span>
-                    </button>
-                    <button onclick="setDataSource('pdf', 'Cẩm nang & Tài liệu PDF kỹ thuật')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-between">
-                        <span><i class="fa-solid fa-file-pdf mr-2 text-rose-400"></i> Cẩm nang PDF (25 năm)</span>
-                        <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">PDFs</span>
-                    </button>
-                    <button onclick="setDataSource('service', 'Dữ liệu dịch vụ & giải pháp doanh nghiệp')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-between">
-                        <span><i class="fa-solid fa-screwdriver-wrench mr-2 text-amber-400"></i> Dịch vụ & Giải pháp</span>
-                        <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">Services</span>
-                    </button>
+
+                <!-- Bổ sung tính năng mới: CRM Automation Hub & Lead Tracking -->
+                <div class="pt-2 border-t border-slate-800">
+                    <div class="flex items-center gap-2 mb-3 text-purple-300 font-extrabold text-sm">
+                        <i class="fa-solid fa-chart-line text-cyan-400"></i> CRM Automation Hub
+                    </div>
+                    <p class="text-xs text-slate-400 mb-3 leading-relaxed">Hệ thống tự động chấm điểm tiềm năng và đồng bộ thời gian thực về Zalo OA chuyên gia.</p>
+                    
+                    <div class="space-y-2">
+                        <div class="bg-slate-950/80 p-2.5 rounded-xl border border-rose-500/30 flex items-center justify-between text-xs">
+                            <span class="text-rose-400 font-bold"><i class="fa-solid fa-fire mr-1"></i> Lead Nóng (Hot)</span>
+                            <span id="hotCount" class="bg-rose-950 text-rose-300 px-2 py-0.5 rounded font-bold">0</span>
+                        </div>
+                        <div class="bg-slate-950/80 p-2.5 rounded-xl border border-amber-500/30 flex items-center justify-between text-xs">
+                            <span class="text-amber-400 font-bold"><i class="fa-solid fa-bolt mr-1"></i> Lead Tiềm Năng</span>
+                            <span id="warmCount" class="bg-amber-950 text-amber-300 px-2 py-0.5 rounded font-bold">0</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Trạng thái Multimodal Vision -->
-            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-purple-500/20 text-xs">
-                <div class="flex items-center gap-2 text-cyan-400 font-bold mb-1">
-                    <i class="fa-solid fa-camera-retro"></i> Vision AI Scanner Ready
+            <!-- Trạng thái Multimodal Vision & Webhook -->
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-purple-500/20 text-xs space-y-2">
+                <div class="flex items-center gap-2 text-cyan-400 font-bold">
+                    <i class="fa-solid fa-camera-retro"></i> Vision AI & Zalo Webhook Ready
                 </div>
-                <p class="text-[11px] text-slate-400">Hỗ trợ nhận diện tự động hình ảnh mạch điện, lỗi phần cứng và bản vẽ kỹ thuật.</p>
+                <p class="text-[11px] text-slate-400">Tự động nhận diện hình ảnh và kích hoạt đẩy lead trực tiếp đến kỹ sư trưởng An Tín.</p>
             </div>
         </div>
 
@@ -102,7 +129,7 @@
                         <div class="w-3 h-3 bg-emerald-500 rounded-full relative"></div>
                     </div>
                     <div>
-                        <span class="text-sm font-bold text-slate-200 block">Multimodal Assistant (Đang chọn: <span id="currentSourceLabel" class="text-purple-400">Toàn bộ kho tri thức 25 năm</span>)</span>
+                        <span class="text-sm font-bold text-slate-200 block">Multimodal Assistant & CRM Sync (Đang chọn: <span id="currentSourceLabel" class="text-purple-400">Toàn bộ kho tri thức 25 năm</span>)</span>
                     </div>
                 </div>
                 <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-purple-400 transition flex items-center gap-1 font-semibold bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700">
@@ -116,9 +143,9 @@
                     <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
                         <i class="fa-solid fa-brain"></i>
                     </div>
-                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner">
-                        <p class="font-bold text-purple-300 mb-1">Xin chào! Hệ thống AI Đa Phương Thức An Tín đã sẵn sàng.</p>
-                        <p>Bạn có thể nhấp vào biểu tượng <strong><i class="fa-solid fa-image text-cyan-400"></i> Tải ảnh lên</strong> dưới khung chat để gửi hình ảnh thiết bị lỗi, sơ đồ mạch hoặc bản vẽ kỹ thuật. AI sẽ tự động phân tích và "chuẩn bệnh" lập tức!</p>
+                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner space-y-2">
+                        <p class="font-bold text-purple-300 mb-1">Xin chào! Hệ thống AI Đa Phương Thức & CRM An Tín đã sẵn sàng.</p>
+                        <p>Bạn có thể nhấp vào biểu tượng <strong><i class="fa-solid fa-image text-cyan-400"></i> Tải ảnh lên</strong> dưới khung chat để gửi hình ảnh thiết bị lỗi. Khi tra cứu thành công hoặc cần tư vấn sâu, hệ thống tự động ghi nhận và đẩy dữ liệu về Zalo OA chuyên gia!</p>
                     </div>
                 </div>
             </div>
@@ -128,6 +155,7 @@
                 <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Gợi ý nhanh:</span>
                 <button onclick="sendQuickPrompt('Gửi mô phỏng lỗi bo mạch điện tử')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">⚡ Lỗi bo mạch</button>
                 <button onclick="sendQuickPrompt('Gửi sơ đồ bản vẽ kết nối thiết bị')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">📐 Sơ đồ kết nối</button>
+                <button onclick="openLeadModal()" class="text-xs bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1.5 rounded-lg transition font-bold shadow-md">🔥 Đăng ký tư vấn chuyên sâu</button>
             </div>
 
             <!-- Input Form tích hợp Upload Ảnh -->
@@ -149,7 +177,7 @@
                     <input type="text" id="userInput" placeholder="Nhập câu hỏi kèm mô tả hình ảnh thiết bị lỗi..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition shadow-inner">
                     
                     <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-3 rounded-xl font-bold text-sm transition shadow-lg shadow-purple-600/30 flex items-center gap-2 cursor-pointer">
-                        <span>Gửi AI</span>
+                        <span>Gửi AI & CRM</span>
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </form>
@@ -158,17 +186,53 @@
         </div>
     </main>
 
+    <!-- Modal Lead Capture Tự Động Đẩy Về Zalo OA / CRM -->
+    <div id="leadModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-purple-500/60 rounded-2xl max-w-md w-full p-6 shadow-2xl ai-glow-box relative">
+            <button onclick="closeLeadModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center mb-5">
+                <div class="inline-flex h-12 w-12 rounded-xl bg-purple-600/30 border border-purple-500 text-purple-300 items-center justify-center text-xl mb-2">
+                    <i class="fa-solid fa-paper-plane animate-bounce"></i>
+                </div>
+                <h3 class="text-xl font-black text-white">Xác Nhận Đẩy Lead Về Zalo OA An Tín</h3>
+                <p class="text-xs text-slate-400 mt-1">Hệ thống phân loại mức độ tự động và kết nối chuyên gia kỹ thuật trưởng.</p>
+            </div>
+            <form onsubmit="submitLeadData(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Họ tên của bạn:</label>
+                    <input type="text" id="leadNameInput" required placeholder="Nhập họ và tên..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Số điện thoại / Zalo liên hệ:</label>
+                    <input type="tel" id="leadPhoneInput" required placeholder="Nhập số điện thoại..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Mức độ tiềm năng hệ thống chấm điểm:</label>
+                    <select id="leadPrioritySelect" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
+                        <option value="HOT">🔥 Lead Nóng (Cần chuyên gia hỗ trợ ngay trong 5 phút)</option>
+                        <option value="WARM">⚡ Lead Tiềm Năng (Nhận cẩm nang kỹ thuật & báo giá)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white py-3 rounded-xl font-bold text-sm transition shadow-lg shadow-purple-600/30 cursor-pointer">
+                    <i class="fa-solid fa-check-circle mr-1"></i> Đẩy Dữ Liệu Về Zalo OA Ngay
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="border-t border-slate-800 bg-slate-900/50 text-center py-6 text-slate-400 text-sm mt-8">
         <p>&copy; 2026 An Tín Digital Ecosystem AI. All rights reserved.</p>
         <p class="mt-1">Hotline/Zalo hỗ trợ trực tiếp: <a href="https://zalo.me/0914060339" class="text-purple-400 font-bold hover:underline" target="_blank">0914.060.339</a></p>
     </footer>
 
-    <!-- Script Logic Multimodal -->
+    <!-- Script Logic Multimodal AI & CRM Automation -->
     <script>
         let currentSourceKey = 'all';
         let currentSourceName = 'Toàn bộ kho tri thức 25 năm';
         let selectedImageFile = null;
+        let hotCount = 0;
+        let warmCount = 0;
 
         function setDataSource(key, name) {
             currentSourceKey = key;
@@ -197,6 +261,51 @@
             selectedImageFile = null;
             document.getElementById('imageInput').value = '';
             document.getElementById('filePreviewContainer').classList.add('hidden');
+        }
+
+        function openLeadModal() {
+            document.getElementById('leadModal').classList.remove('hidden');
+        }
+
+        function closeLeadModal() {
+            document.getElementById('leadModal').classList.add('hidden');
+        }
+
+        function submitLeadData(e) {
+            e.preventDefault();
+            const name = document.getElementById('leadNameInput').value;
+            const phone = document.getElementById('leadPhoneInput').value;
+            const priority = document.getElementById('leadPrioritySelect').value;
+
+            if(priority === 'HOT') hotCount++;
+            else warmCount++;
+
+            document.getElementById('hotCount').innerText = hotCount;
+            document.getElementById('warmCount').innerText = warmCount;
+
+            closeLeadModal();
+
+            const chatMessages = document.getElementById('chatMessages');
+            const crmSuccessHTML = `
+                <div class="flex items-start gap-3 message-bubble">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-600/30 border border-emerald-500 flex items-center justify-center text-emerald-300 text-sm flex-shrink-0 shadow-md">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="bg-slate-800/90 border border-emerald-500/50 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner space-y-2">
+                        <p class="font-bold text-emerald-400">🚀 Đã đẩy Lead thành công về Zalo OA & CRM An Tín!</p>
+                        <p>- Khách hàng: <b>${escapeHtml(name)}</b> (SĐT: <b>${escapeHtml(phone)}</b>)<br>
+                        - Phân loại mức độ: <span class="text-rose-400 font-bold">[${priority}]</span><br>
+                        - Trạng thái: Hệ thống webhook đã truyền dữ liệu tức thì cho đội ngũ chuyên gia kỹ thuật trưởng.</p>
+                        <div class="pt-2 border-t border-slate-700 flex gap-2">
+                            <a href="https://zalo.me/0914060339" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                <i class="fa-solid fa-headset"></i> Mở Zalo OA Trực Tiếp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', crmSuccessHTML);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function handleChatSubmit(e) {
@@ -247,7 +356,7 @@
                         <i class="fa-solid fa-brain animate-spin"></i>
                     </div>
                     <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-300 shadow-inner flex items-center gap-2">
-                        <span class="animate-pulse">👁️ Vision AI đang quét hình ảnh và đối chiếu cơ sở dữ liệu 25 năm...</span>
+                        <span class="animate-pulse">👁️ Vision AI & CRM Automation đang quét tri thức 25 năm và phân tích mức độ tiềm năng...</span>
                     </div>
                 </div>
             `;
@@ -258,14 +367,14 @@
             setTimeout(() => {
                 document.getElementById(typingId).remove();
                 
-                let aiResponse = `🔍 <b>Kết quả Chuẩn Bệnh từ Vision AI Core:</b><br>
-                Hệ thống đã nhận diện thành công hình ảnh và quét qua cẩm nang kỹ thuật 25 năm của An Tín. Phát hiện điểm bất thường và đưa ra phương án xử lý tối ưu.`;
+                let aiResponse = `🔍 <b>Kết quả Chuẩn Bệnh từ Vision AI Core & Tự động ghi nhận CRM:</b><br>
+                Hệ thống đã nhận diện thành công yêu cầu tra cứu và quét qua cẩm nang kỹ thuật 25 năm của An Tín.`;
 
                 if(imageFile) {
                     aiResponse = `🛠️ <b>Chẩn đoán lỗi thiết bị qua hình ảnh trực quan:</b><br>
                     - Nhận diện linh kiện: Bo mạch chủ / Sơ đồ kết nối tiêu chuẩn.<br>
                     - Vị trí lỗi: Phát hiện điểm sụt áp / hở mạch kỹ thuật.<br>
-                    - <b>Giải pháp xử lý khẩn cấp:</b> Thực hiện cách ly vùng lỗi, thay thế linh kiện theo đúng chuẩn mã vạch An Tín và kiểm tra tải trước khi khởi động lại.`;
+                    - <b>Giải pháp xử lý:</b> Hệ thống đã tự động đánh dấu <b>Lead Tiềm Năng</b> để kết nối kỹ sư trưởng.`;
                 }
 
                 const aiHTML = `
@@ -276,10 +385,12 @@
                         <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner space-y-3">
                             <p>${aiResponse}</p>
                             <div class="pt-2 border-t border-slate-700 flex flex-wrap gap-2 items-center">
-                                <a href="https://zalo.me/0914060339" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition shadow-md">
-                                    <i class="fa-solid fa-headset"></i> Gửi ảnh cho chuyên gia kỹ thuật Zalo
+                                <button onclick="openLeadModal()" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition shadow-md cursor-pointer">
+                                    <i class="fa-solid fa-headset"></i> Gửi thông tin về Zalo OA chuyên gia
+                                </button>
+                                <a href="https://zalo.me/0914060339" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition">
+                                    <i class="fa-solid fa-phone"></i> Hotline: 0914.060.339
                                 </a>
-                                <span class="text-[11px] text-slate-400">Hotline: <b class="text-purple-300">0914.060.339</b></span>
                             </div>
                         </div>
                     </div>
@@ -297,8 +408,8 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner">
-                        <p class="font-bold text-purple-300 mb-1">Đã làm mới phiên hội thoại Multimodal!</p>
-                        <p>Bạn có thể tiếp tục tải lên hình ảnh thiết bị mới để AI phân tích.</p>
+                        <p class="font-bold text-purple-300 mb-1">Đã làm mới phiên hội thoại Multimodal & CRM!</p>
+                        <p>Bạn có thể tiếp tục tra cứu hoặc tải lên hình ảnh thiết bị mới.</p>
                     </div>
                 </div>
             `;
