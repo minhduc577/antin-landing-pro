@@ -23,7 +23,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Hiệu ứng sóng động mượt mà kích thích tương tác cho các nút AI */
         .pulse-effect {
             position: relative;
             overflow: hidden;
@@ -63,12 +62,10 @@
             </a>
         </div>
         <div class="flex items-center gap-4">
-            <!-- Nút kích hoạt mở Lead Capture Modal -->
             <button onclick="openLeadModal()" class="pulse-effect relative inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-600/30 cursor-pointer transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-bolt animate-bounce text-yellow-300"></i>
                 <span>Gửi Lead Về Zalo OA</span>
             </button>
-            <!-- Nút mở Quản trị Tri thức (Được bảo vệ bằng 3 lớp bảo mật nâng cao) -->
             <button onclick="toggleAdminDashboard()" class="pulse-effect relative hidden md:inline-flex items-center gap-2 bg-slate-800 hover:bg-cyan-900/50 border border-cyan-500/30 text-cyan-400 hover:text-cyan-300 rounded-lg px-4 py-2 text-sm font-semibold transition-all cursor-pointer">
                 <i class="fa-solid fa-user-shield animate-pulse"></i>
                 <span>Quản trị AI</span>
@@ -90,17 +87,14 @@
     <!-- Main Workspace -->
     <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow grid grid-cols-1 lg:grid-cols-4 gap-6">
         
-        <!-- Cột trái: Bộ lọc Vector Database, Multimodal & CRM Automation Hub -->
         <div class="lg:col-span-1 bg-slate-900/80 border border-purple-500/30 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-6">
             <div class="space-y-6">
-                <!-- Phần Multimodal Vision Core -->
                 <div>
                     <div class="flex items-center gap-2 mb-3 text-purple-300 font-extrabold text-sm border-b border-slate-800 pb-3">
                         <i class="fa-solid fa-eye text-cyan-400 animate-pulse"></i> Multimodal AI Core
                     </div>
                     <p class="text-xs text-slate-400 mb-4 leading-relaxed">Tải ảnh thiết bị lỗi, sơ đồ mạch hoặc bản vẽ kỹ thuật trực tiếp để AI 25 năm "chuẩn bệnh" bằng thị giác máy tính chuyên sâu.</p>
                     
-                    <!-- Danh mục nguồn dữ liệu -->
                     <div class="space-y-2">
                         <button onclick="setDataSource('all', 'Toàn bộ kho tri thức 25 năm')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold transition bg-purple-600/30 text-purple-200 border border-purple-500/50 flex items-center justify-between cursor-pointer hover:bg-purple-600/40">
                             <span><i class="fa-solid fa-globe mr-2 text-purple-400"></i> Tất cả tài liệu</span>
@@ -117,7 +111,6 @@
                     </div>
                 </div>
 
-                <!-- CRM Automation Hub & Lead Tracking -->
                 <div class="pt-2 border-t border-slate-800">
                     <div class="flex items-center gap-2 mb-3 text-purple-300 font-extrabold text-sm">
                         <i class="fa-solid fa-chart-line text-cyan-400"></i> CRM Automation Hub
@@ -137,7 +130,6 @@
                 </div>
             </div>
 
-            <!-- Trạng thái Multimodal Vision & Webhook -->
             <div class="bg-slate-950/80 p-3.5 rounded-xl border border-purple-500/20 text-xs space-y-2">
                 <div class="flex items-center gap-2 text-cyan-400 font-bold">
                     <i class="fa-solid fa-camera-retro text-purple-400"></i> Vision AI & Zalo Webhook Ready
@@ -146,10 +138,8 @@
             </div>
         </div>
 
-        <!-- Cột phải: Khung Chat & Tải ảnh chuẩn bệnh -->
         <div class="lg:col-span-3 bg-slate-900/90 border border-purple-500/40 rounded-2xl shadow-2xl flex flex-col overflow-hidden ai-glow-box min-h-[600px]">
             
-            <!-- Chat Header -->
             <div class="bg-slate-900/95 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="relative">
@@ -165,7 +155,6 @@
                 </button>
             </div>
 
-            <!-- Messages Box -->
             <div id="chatMessages" class="p-6 overflow-y-auto flex-grow space-y-4 max-h-[480px]">
                 <div class="flex items-start gap-3 message-bubble">
                     <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
@@ -180,7 +169,6 @@
                 </div>
             </div>
 
-            <!-- Quick Suggestions -->
             <div class="px-6 py-3 bg-slate-950/60 border-t border-slate-800/60 flex flex-wrap gap-2 items-center">
                 <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-bolt text-amber-400 mr-1 animate-bounce"></i> Gợi ý nhanh:</span>
                 <button onclick="sendQuickPrompt('Gửi mô phỏng lỗi bo mạch điện tử')" class="pulse-effect text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium cursor-pointer">⚡ Lỗi bo mạch</button>
@@ -190,16 +178,13 @@
                 </button>
             </div>
 
-            <!-- Input Form tích hợp Upload Ảnh -->
             <div class="p-4 bg-slate-950 border-t border-slate-800">
-                <!-- Vùng hiển thị tên file ảnh đã chọn -->
                 <div id="filePreviewContainer" class="hidden mb-2 px-3 py-1.5 bg-purple-950/50 border border-purple-500/30 rounded-lg flex items-center justify-between text-xs text-purple-300">
                     <span id="fileNameDisplay" class="truncate"><i class="fa-solid fa-paperclip mr-1 text-cyan-400"></i> file_name.png</span>
                     <button type="button" onclick="removeImage()" class="text-slate-400 hover:text-rose-400 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                 </div>
 
                 <form id="chatForm" onsubmit="handleChatSubmit(event)" class="flex gap-3 items-center">
-                    <!-- Nút ẩn để upload file ảnh -->
                     <input type="file" id="imageInput" accept="image/*" class="hidden" onchange="handleImageSelected(event)">
                     <button type="button" onclick="document.getElementById('imageInput').click()" class="pulse-effect bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-700 px-4 py-3 rounded-xl text-sm transition flex items-center gap-2 cursor-pointer shadow-md" title="Tải lên hình ảnh thiết bị / sơ đồ mạch">
                         <i class="fa-solid fa-image text-lg animate-pulse"></i>
@@ -218,7 +203,7 @@
         </div>
     </main>
 
-    <!-- Modal Lead Capture Tự Động Đẩy Về Zalo OA / CRM -->
+    <!-- Modal Lead Capture -->
     <div id="leadModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-purple-500/60 rounded-2xl max-w-md w-full p-6 shadow-2xl ai-glow-box relative">
             <button onclick="closeLeadModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
@@ -252,7 +237,7 @@
         </div>
     </div>
 
-    <!-- MODAL XÁC THỰC MẬT KHẨU QUẢN TRỊ (3 LỚP BẢO MẬT) -->
+    <!-- MODAL XÁC THỰC MẬT KHẨU QUẢN TRỊ -->
     <div id="authModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-cyan-500/50 rounded-2xl max-w-sm w-full p-6 shadow-2xl ai-glow-box text-center relative">
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
@@ -260,7 +245,13 @@
                 <i class="fa-solid fa-lock-keyhole animate-pulse"></i>
             </div>
             <h3 class="text-lg font-black text-white">Xác Thực Quản Trị Viên</h3>
-            <p class="text-xs text-slate-400 mt-1 mb-4">Vui lòng nhập mật khẩu bảo mật hệ thống để truy cập bảng Quản trị AI.</p>
+            <p class="text-xs text-slate-400 mt-1 mb-2">Vui lòng nhập mật khẩu bảo mật hệ thống để truy cập bảng Quản trị AI.</p>
+            
+            <div class="mb-3 bg-cyan-950/50 border border-cyan-500/30 p-2 rounded-lg text-left">
+                <p class="text-[11px] text-cyan-300 font-medium"><i class="fa-solid fa-circle-info mr-1"></i> Mật khẩu mặc định:</p>
+                <code class="text-xs text-amber-300 font-mono select-all font-bold">ANTIN@2026_SecuredKey#Pro</code>
+            </div>
+
             <form onsubmit="verifyAdminPassword(event)" class="space-y-3">
                 <input type="password" id="adminPasswordInput" required placeholder="Nhập mật khẩu quản trị..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 transition text-center">
                 <p id="authErrorMsg" style="color: #f87171; font-size: 11px; display: none;" class="font-semibold">Mật khẩu không chính xác! Vui lòng thử lại.</p>
@@ -277,7 +268,7 @@
         <p class="mt-1">Hotline/Zalo hỗ trợ trực tiếp: <a href="https://zalo.me/0914060339" class="text-purple-400 font-bold hover:underline" target="_blank">0914.060.339</a></p>
     </footer>
 
-    <!-- Script Logic Multimodal AI & CRM Automation kèm 3 Lớp Bảo Mật -->
+    <!-- Script Logic Multimodal AI & CRM Automation -->
     <script>
         let currentSourceKey = 'all';
         let currentSourceName = 'Toàn bộ kho tri thức 25 năm';
@@ -389,7 +380,6 @@
                 imageHTMLTag = `<div class="mt-2 text-xs text-cyan-300 bg-slate-900/60 p-2 rounded border border-cyan-500/30 flex items-center gap-2"><i class="fa-solid fa-image text-cyan-400"></i> [Đã tải lên hình ảnh phân tích thiết bị: ${escapeHtml(imageFile.name)}]</div>`;
             }
 
-            // User Bubble
             const userHTML = `
                 <div class="flex items-start justify-end gap-3 message-bubble">
                     <div class="bg-purple-600/90 border border-purple-400/50 rounded-2xl p-4 text-sm text-white max-w-2xl shadow-md">
@@ -405,7 +395,6 @@
             chatMessages.insertAdjacentHTML('beforeend', userHTML);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Typing Indicator
             const typingId = 'typing-' + Date.now();
             const typingHTML = `
                 <div id="${typingId}" class="flex items-start gap-3 message-bubble">
@@ -420,7 +409,6 @@
             chatMessages.insertAdjacentHTML('beforeend', typingHTML);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // AI Response Simulation
             setTimeout(() => {
                 document.getElementById(typingId).remove();
                 
@@ -479,26 +467,74 @@
         }
 
         // ==========================================
-        // 3 LỚP BẢO MẬT & QUẢN TRỊ AI TÍCH HỢP HOÀN HẢO
+        // QUẢN TRỊ 55 KỊCH BẢN & LƯU TRỮ VĨNH VIỄN (LOCALSTORAGE)
         // ==========================================
         const ADMIN_SECRET_KEY = "ANTIN@2026_SecuredKey#Pro"; 
 
-        // 1. Kiểm tra trạng thái phiên làm việc trong sessionStorage khi mở quản trị
+        // Khởi tạo danh sách 55 kịch bản mẫu ban đầu (nếu chưa có trong bộ nhớ trình duyệt)
+        const defaultKnowledgeBases = [];
+        for (let i = 1; i <= 55; i++) {
+            defaultKnowledgeBases.push({
+                title: `Kịch bản tri thức chuẩn An Tín #${i}`,
+                category: i % 3 === 0 ? 'service' : (i % 2 === 0 ? 'tech' : 'pdf'),
+                content: `Nội dung chi tiết cấu hình, thông số kỹ thuật và hướng dẫn xử lý chuẩn cho kịch bản hệ thống số ${i}.`
+            });
+        }
+
+        function getStoredKB() {
+            const data = localStorage.getItem('antin_knowledge_bases_55');
+            if (!data) {
+                localStorage.setItem('antin_knowledge_bases_55', JSON.stringify(defaultKnowledgeBases));
+                return defaultKnowledgeBases;
+            }
+            try {
+                return JSON.parse(data);
+            } catch (e) {
+                return defaultKnowledgeBases;
+            }
+        }
+
+        function saveStoredKB(list) {
+            localStorage.setItem('antin_knowledge_bases_55', JSON.stringify(list));
+        }
+
+        function renderKBTable() {
+            const list = getStoredKB();
+            const tbody = document.getElementById('kbTableBody');
+            document.getElementById('totalKbCount').innerText = list.length;
+            
+            let html = '';
+            list.forEach((item, index) => {
+                let catName = item.category === 'pdf' ? 'Cẩm nang PDF' : (item.category === 'service' ? 'Dịch vụ & Giải pháp' : 'Kỹ thuật');
+                html += `
+                    <tr class="hover:bg-slate-900/50">
+                        <td class="p-3 font-medium text-white">${escapeHtml(item.title)}</td>
+                        <td class="p-3 text-slate-400">${catName}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Active</span></td>
+                        <td class="p-3 text-right">
+                            <button onclick="editKB(${index})" class="text-cyan-400 hover:text-cyan-300 mr-3 cursor-pointer">Sửa</button>
+                            <button onclick="deleteKB(${index})" class="text-red-400 hover:text-red-300 cursor-pointer">Xóa</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
         function toggleAdminDashboard() {
             if (sessionStorage.getItem("isAdminAuthenticated") === "true") {
                 const modal = document.getElementById('adminDashboardModal');
                 if (modal) {
+                    renderKBTable();
                     modal.classList.toggle('hidden');
                 }
             } else {
-                // Chưa đăng nhập phiên -> Mở Modal Mật Khẩu
                 document.getElementById('authErrorMsg').style.display = 'none';
                 document.getElementById('adminPasswordInput').value = '';
                 document.getElementById('authModal').classList.remove('hidden');
             }
         }
 
-        // 2. Xác thực mật khẩu và lưu trạng thái vào sessionStorage
         function verifyAdminPassword(e) {
             e.preventDefault();
             const inputVal = document.getElementById("adminPasswordInput").value;
@@ -507,6 +543,7 @@
             if (inputVal === ADMIN_SECRET_KEY) {
                 sessionStorage.setItem("isAdminAuthenticated", "true");
                 closeAuthModal();
+                renderKBTable();
                 document.getElementById('adminDashboardModal').classList.remove('hidden');
             } else {
                 errorMsg.style.display = "block";
@@ -515,11 +552,10 @@
             }
         }
 
-        // 3. Huấn luyện tri thức mới với dữ liệu đã được làm sạch XSS an toàn
         function trainNewKnowledge() {
-            const title = escapeHtml(document.getElementById('kbTitle').value.trim());
+            const title = document.getElementById('kbTitle').value.trim();
             const category = document.getElementById('kbCategory').value;
-            const content = escapeHtml(document.getElementById('kbContent').value.trim());
+            const content = document.getElementById('kbContent').value.trim();
 
             if (!title || !content) {
                 alert('Vui lòng nhập đầy đủ tiêu đề và nội dung kịch bản tri thức!');
@@ -528,26 +564,14 @@
 
             const btn = event.currentTarget;
             const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang huấn luyện mô hình...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang huấn luyện và lưu vĩnh viễn...`;
             btn.disabled = true;
 
             setTimeout(() => {
-                const tbody = document.getElementById('kbTableBody');
-                const newRow = document.createElement('tr');
-                newRow.className = 'hover:bg-slate-900/50';
-                
-                let categoryName = category === 'pdf' ? 'Cẩm nang PDF' : (category === 'service' ? 'Dịch vụ & Giải pháp' : 'Kỹ thuật');
-
-                newRow.innerHTML = `
-                    <td class="p-3 font-medium text-white">${title}</td>
-                    <td class="p-3 text-slate-400">${categoryName}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Active</span></td>
-                    <td class="p-3 text-right">
-                        <button onclick="editKB(this)" class="text-cyan-400 hover:text-cyan-300 mr-3 cursor-pointer">Sửa</button>
-                        <button onclick="deleteKB(this)" class="text-red-400 hover:text-red-300 cursor-pointer">Xóa</button>
-                    </td>
-                `;
-                tbody.prepend(newRow);
+                let list = getStoredKB();
+                list.unshift({ title, category, content });
+                saveStoredKB(list);
+                renderKBTable();
 
                 document.getElementById('kbTitle').value = '';
                 document.getElementById('kbContent').value = '';
@@ -555,53 +579,65 @@
                 btn.innerHTML = originalText;
                 btn.disabled = false;
 
-                alert('Đã thêm và huấn luyện kịch bản AI thành công! Trợ lý An Tín đã cập nhật tri thức mới.');
-            }, 1200);
+                alert('Đã lưu thành công vào bộ nhớ trình duyệt và huấn luyện AI thành công!');
+            }, 1000);
         }
 
-        function deleteKB(button) {
-            if (confirm('Bạn có chắc chắn muốn xóa kịch bản tri thức này khỏi bộ nhớ AI không?')) {
-                const row = button.closest('tr');
-                row.remove();
+        function deleteKB(index) {
+            if (confirm('Bạn có chắc chắn muốn xóa kịch bản tri thức này không?')) {
+                let list = getStoredKB();
+                list.splice(index, 1);
+                saveStoredKB(list);
+                renderKBTable();
             }
         }
 
-        function editKB(button) {
-            const row = button.closest('tr');
-            const title = row.cells[0].innerText;
-            document.getElementById('kbTitle').value = title;
-            alert('Đã tải thông tin kịch bản lên form. Bạn có thể chỉnh sửa và bấm Huấn Luyện lại.');
+        function editKB(index) {
+            let list = getStoredKB();
+            const item = list[index];
+            document.getElementById('kbTitle').value = item.title;
+            document.getElementById('kbCategory').value = item.category;
+            document.getElementById('kbContent').value = item.content;
+            
+            // Xóa item cũ để chuẩn bị cập nhật mới khi bấm huấn luyện lại
+            list.splice(index, 1);
+            saveStoredKB(list);
+            renderKBTable();
+
+            alert('Đã tải thông tin kịch bản lên form chỉnh sửa. Bạn hãy sửa lại và bấm Huấn Luyện AI Ngay.');
             document.getElementById('kbTitle').focus();
-        }        
+        }
+
+        // Tự động render bảng lần đầu khi load trang
+        window.addEventListener('DOMContentLoaded', () => {
+            getStoredKB();
+        });
     </script>
 
     <!-- ADMIN DASHBOARD MODAL -->
     <div id="adminDashboardModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             
-            <!-- Header Modal -->
             <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/50">
                 <div class="flex items-center space-x-3">
                     <div class="w-3 h-3 rounded-full bg-cyan-400 animate-pulse"></div>
-                    <h3 class="text-lg font-bold text-white tracking-wide">An Tín AI - Quản Trị & Huấn Luyện Tri Thức</h3>
+                    <h3 class="text-lg font-bold text-white tracking-wide">An Tín AI - Quản Trị & Huấn Luyện Tri Thức (55 Kịch Bản)</h3>
                 </div>
                 <button onclick="toggleAdminDashboard()" class="text-slate-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-slate-800 cursor-pointer">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
-            <!-- Body Content -->
             <div class="p-6 overflow-y-auto space-y-6 flex-1 text-left">
                 
-                <!-- Thống kê nhanh -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-slate-950/50 border border-slate-800/80 p-4 rounded-xl">
                         <p class="text-xs text-slate-400">Tổng kịch bản tri thức</p>
-                        <p class="text-2xl font-bold text-cyan-400 mt-1">128</p>
+                        <p id="totalKbCount" class="text-2xl font-bold text-cyan-400 mt-1">55</p>
                     </div>
                     <div class="bg-slate-950/50 border border-slate-800/80 p-4 rounded-xl">
                         <p class="text-xs text-slate-400">Trạng thái mô hình AI</p>
-                        <p class="text-lg font-semibold text-emerald-400 mt-1 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 inline-block"></span> Đã huấn luyện (Ready)</p>
+                        <p class="text-lg font-semibold text-emerald-400 mt-1 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 inline-block"></span> Đã lưu vĩnh viễn (Ready)</p>
                     </div>
                     <div class="bg-slate-950/50 border border-slate-800/80 p-4 rounded-xl">
                         <p class="text-xs text-slate-400">Phiên bản hệ thống</p>
@@ -609,7 +645,6 @@
                     </div>
                 </div>
 
-                <!-- Form Thêm / Cập nhật kịch bản mới -->
                 <div class="bg-slate-950/40 border border-slate-800 p-5 rounded-xl space-y-4">
                     <h4 class="text-sm font-semibold text-cyan-300 uppercase tracking-wider">Thêm mới / Cập nhật Kịch bản AI</h4>
                     
@@ -641,12 +676,11 @@
                     </div>
                 </div>
 
-                <!-- Danh sách kịch bản hiện có -->
                 <div class="space-y-3">
-                    <h4 class="text-sm font-semibold text-slate-300">Kịch bản Tri thức Đang Hoạt Động</h4>
-                    <div class="border border-slate-800 rounded-xl overflow-hidden">
+                    <h4 class="text-sm font-semibold text-slate-300">Danh Sách Kịch Bản Tri Thức Đang Lưu Trữ</h4>
+                    <div class="border border-slate-800 rounded-xl overflow-hidden max-h-80 overflow-y-auto">
                         <table class="w-full text-left border-collapse">
-                            <thead class="bg-slate-950 text-xs uppercase text-slate-400">
+                            <thead class="bg-slate-950 text-xs uppercase text-slate-400 sticky top-0">
                                 <tr>
                                     <th class="p-3 border-b border-slate-800">Tiêu đề</th>
                                     <th class="p-3 border-b border-slate-800">Phân loại</th>
@@ -655,15 +689,7 @@
                                 </tr>
                             </thead>
                             <tbody id="kbTableBody" class="text-sm divide-y divide-slate-800/60">
-                                <tr class="hover:bg-slate-900/50">
-                                    <td class="p-3 font-medium text-white">Hệ sinh thái An Tín 25 Năm</td>
-                                    <td class="p-3 text-slate-400">Cẩm nang PDF</td>
-                                    <td class="p-3"><span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Active</span></td>
-                                    <td class="p-3 text-right">
-                                        <button onclick="editKB(this)" class="text-cyan-400 hover:text-cyan-300 mr-3 cursor-pointer">Sửa</button>
-                                        <button onclick="deleteKB(this)" class="text-red-400 hover:text-red-300 cursor-pointer">Xóa</button>
-                                    </td>
-                                </tr>
+                                <!-- Dữ liệu được render động từ JavaScript -->
                             </tbody>
                         </table>
                     </div>
