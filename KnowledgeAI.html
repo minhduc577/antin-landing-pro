@@ -456,9 +456,15 @@
 
 // Hàm bật/tắt hiển thị bảng Quản trị Tri thức (Admin Dashboard)
 function toggleAdminDashboard() {
-    const modal = document.getElementById('adminDashboardModal');
-    if (modal) {
-        modal.classList.toggle('hidden');
+    const adminPass = prompt("Nhập mã PIN bảo mật quản trị An Tín:");
+    // Đổi 'ANTIN2026' thành mật khẩu riêng của đội ngũ bạn
+    if (adminPass === "ANTIN2026") { 
+        const modal = document.getElementById('adminDashboardModal');
+        if (modal) {
+            modal.classList.toggle('hidden');
+        }
+    } else if (adminPass !== null) {
+        alert("Mã PIN bảo mật không chính xác!");
     }
 }
 
