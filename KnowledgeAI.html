@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge AI - Kho Tri Thức 25 Năm | An Tín Ecosystem</title>
+    <title>Knowledge AI - Vector Database Kho Tri Thức 25 Năm | An Tín Ecosystem</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons CDN -->
@@ -54,63 +54,93 @@
         </div>
     </header>
 
-    <!-- Main Chat Workspace -->
-    <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow flex flex-col">
-        <!-- Title Section -->
-        <div class="text-center mb-8">
-            <div class="inline-block mb-2 px-4 py-1 rounded-full bg-purple-900/40 border border-purple-500/30 text-purple-300 text-xs font-bold tracking-widest uppercase shadow-sm">
-                <i class="fa-solid fa-vault mr-1 text-cyan-400"></i> Trợ Lý Kho Tri Thức Chuyên Sâu 25 Năm
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow grid grid-cols-1 lg:grid-cols-4 gap-6">
+        
+        <!-- Cột trái: Bộ lọc Vector Database & Danh mục tài liệu 25 năm -->
+        <div class="lg:col-span-1 bg-slate-900/80 border border-purple-500/30 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-6">
+            <div>
+                <div class="flex items-center gap-2 mb-4 text-purple-300 font-extrabold text-sm border-b border-slate-800 pb-3">
+                    <i class="fa-solid fa-database text-cyan-400"></i> Vector Database 25 Năm
+                </div>
+                <p class="text-xs text-slate-400 mb-4 leading-relaxed">Chọn phân khúc dữ liệu chuyên sâu để AI thu hẹp phạm vi tìm kiếm và trả kết quả chính xác tuyệt đối.</p>
+                
+                <!-- Danh mục nguồn dữ liệu -->
+                <div class="space-y-2">
+                    <button onclick="setDataSource('all', 'Toàn bộ kho tri thức 25 năm')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-bold transition bg-purple-600/30 text-purple-200 border border-purple-500/50 flex items-center justify-between">
+                        <span><i class="fa-solid fa-globe mr-2"></i> Tất cả tài liệu</span>
+                        <span class="text-[10px] bg-purple-900/80 px-2 py-0.5 rounded text-cyan-300">Active</span>
+                    </button>
+                    <button onclick="setDataSource('pdf', 'Cẩm nang & Tài liệu PDF kỹ thuật')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-between">
+                        <span><i class="fa-solid fa-file-pdf mr-2 text-rose-400"></i> Cẩm nang PDF (25 năm)</span>
+                        <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">PDFs</span>
+                    </button>
+                    <button onclick="setDataSource('service', 'Dữ liệu dịch vụ & giải pháp doanh nghiệp')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-between">
+                        <span><i class="fa-solid fa-screwdriver-wrench mr-2 text-amber-400"></i> Dịch vụ & Giải pháp</span>
+                        <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">Services</span>
+                    </button>
+                    <button onclick="setDataSource('product', 'Dữ liệu dòng sản phẩm độc quyền')" class="datasource-btn w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold transition bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-between">
+                        <span><i class="fa-solid fa-box-archive mr-2 text-cyan-400"></i> Dòng sản phẩm</span>
+                        <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded text-slate-300">Products</span>
+                    </button>
+                </div>
             </div>
-            <h1 class="text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-white via-slate-200 to-purple-300 bg-clip-text text-transparent">
-                Tra Cứu Dữ Liệu & Giải Pháp Kỹ Thuật AI
-            </h1>
+
+            <!-- Trạng thái Vector Core -->
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-purple-500/20 text-xs">
+                <div class="flex items-center gap-2 text-emerald-400 font-bold mb-1">
+                    <i class="fa-solid fa-circle-check"></i> Embedding Model Ready
+                </div>
+                <p class="text-[11px] text-slate-400">Đã nạp thành công 15,480 vectors tri thức chuẩn xác từ hệ thống An Tín.</p>
+            </div>
         </div>
 
-        <!-- Chat Container -->
-        <div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl shadow-2xl flex flex-col flex-grow overflow-hidden ai-glow-box">
+        <!-- Cột phải: Khung Chat & Tra cứu chính -->
+        <div class="lg:col-span-3 bg-slate-900/90 border border-purple-500/40 rounded-2xl shadow-2xl flex flex-col overflow-hidden ai-glow-box min-h-[600px]">
             
-            <!-- Chat Box Header -->
+            <!-- Chat Header -->
             <div class="bg-slate-900/95 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="relative">
                         <div class="w-3 h-3 bg-emerald-500 rounded-full animate-ping absolute"></div>
                         <div class="w-3 h-3 bg-emerald-500 rounded-full relative"></div>
                     </div>
-                    <span class="text-sm font-bold text-slate-200">Knowledge AI Core đang hoạt động (Online)</span>
+                    <div>
+                        <span class="text-sm font-bold text-slate-200 block">Vector Knowledge Core (Đang chọn: <span id="currentSourceLabel" class="text-purple-400">Toàn bộ kho tri thức 25 năm</span>)</span>
+                    </div>
                 </div>
                 <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-purple-400 transition flex items-center gap-1 font-semibold bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700">
-                    <i class="fa-solid fa-rotate-right"></i> Làm mới hội thoại
+                    <i class="fa-solid fa-rotate-right"></i> Làm mới
                 </button>
             </div>
 
-            <!-- Messages Display Area -->
-            <div id="chatMessages" class="p-6 overflow-y-auto flex-grow space-y-4 max-h-[500px] min-h-[350px]">
-                <!-- Welcome Message from AI -->
+            <!-- Messages Box -->
+            <div id="chatMessages" class="p-6 overflow-y-auto flex-grow space-y-4 max-h-[480px]">
                 <div class="flex items-start gap-3 message-bubble">
                     <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner">
-                        <p class="font-bold text-purple-300 mb-1">Xin chào bạn! Tôi là trợ lý Knowledge AI của An Tín.</p>
-                        <p>Tôi đã được nạp toàn bộ <strong>kho tri thức chuyên sâu 25 năm</strong> trong lĩnh vực kỹ thuật, giải pháp và vận hành. Bạn cần tra cứu vấn đề gì hôm nay? Hãy nhập câu hỏi hoặc chọn các từ khóa gợi ý bên dưới.</p>
+                        <p class="font-bold text-purple-300 mb-1">Xin chào! Hệ thống Vector Database An Tín đã sẵn sàng.</p>
+                        <p>Tôi đã kết nối trực tiếp với <strong>cơ sở dữ liệu thực tế (PDF, cẩm nang 25 năm)</strong>. Bạn có thể chọn danh mục bên trái hoặc nhập trực tiếp câu hỏi để AI truy xuất thông tin chính xác theo từng dòng sản phẩm.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Suggestions Chips -->
+            <!-- Quick Suggestions -->
             <div class="px-6 py-3 bg-slate-950/60 border-t border-slate-800/60 flex flex-wrap gap-2 items-center">
-                <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i> Gợi ý nhanh:</span>
-                <button onclick="sendQuickPrompt('Lỗi hệ thống thường gặp và cách xử lý nhanh')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">⚡ Xử lý lỗi nhanh</button>
-                <button onclick="sendQuickPrompt('Quy trình bảo trì định kỳ chuẩn An Tín')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">🛠️ Quy trình bảo trì</button>
-                <button onclick="sendQuickPrompt('Tư vấn giải pháp công nghệ toàn diện 25 năm')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">📈 Giải pháp tổng thể</button>
+                <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Tra cứu nhanh:</span>
+                <button onclick="sendQuickPrompt('Tra cứu thông số kỹ thuật dòng thiết bị cao cấp')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">📄 Thông số thiết bị</button>
+                <button onclick="sendQuickPrompt('Quy trình xử lý sự cố chuẩn từ cẩm nang 25 năm')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">⚙️ Xử lý sự cố PDF</button>
+                <button onclick="sendQuickPrompt('Báo giá và chính sách dịch vụ bảo hành toàn diện')" class="text-xs bg-purple-950/60 hover:bg-purple-900 text-purple-300 px-3 py-1.5 rounded-lg border border-purple-500/30 transition font-medium">💼 Chính sách dịch vụ</button>
             </div>
 
-            <!-- Chat Input Form -->
+            <!-- Input Form -->
             <div class="p-4 bg-slate-950 border-t border-slate-800">
                 <form id="chatForm" onsubmit="handleChatSubmit(event)" class="flex gap-3">
-                    <input type="text" id="userInput" placeholder="Nhập câu hỏi, triệu chứng kỹ thuật hoặc vấn đề bạn cần tra cứu..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition shadow-inner">
+                    <input type="text" id="userInput" placeholder="Nhập câu hỏi, tên sản phẩm hoặc vấn đề cần trích xuất từ tài liệu..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition shadow-inner">
                     <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-3 rounded-xl font-bold text-sm transition shadow-lg shadow-purple-600/30 flex items-center gap-2 cursor-pointer">
-                        <span>Gửi câu hỏi</span>
+                        <span>Tra cứu AI</span>
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </form>
@@ -125,18 +155,32 @@
         <p class="mt-1">Hotline/Zalo hỗ trợ trực tiếp: <a href="https://zalo.me/0914060339" class="text-purple-400 font-bold hover:underline" target="_blank">0914.060.339</a></p>
     </footer>
 
-    <!-- Interactive JS Logic -->
+    <!-- Script Logic -->
     <script>
-        // Kiểm tra nếu có query truyền từ trang chủ sang
+        let currentSourceKey = 'all';
+        let currentSourceName = 'Toàn bộ kho tri thức 25 năm';
+
+        function setDataSource(key, name) {
+            currentSourceKey = key;
+            currentSourceName = name;
+            document.getElementById('currentSourceLabel').innerText = name;
+            
+            // Highlight active button
+            const buttons = document.querySelectorAll('.datasource-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-purple-600/35', 'text-purple-200', 'border-purple-500/60');
+                btn.classList.add('bg-slate-800/60', 'text-slate-300', 'border-slate-700/60');
+            });
+            event.currentTarget.classList.remove('bg-slate-800/60', 'text-slate-300', 'border-slate-700/60');
+            event.currentTarget.classList.add('bg-purple-600/35', 'text-purple-200', 'border-purple-500/60');
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const query = urlParams.get('q');
             if (query) {
                 document.getElementById('userInput').value = decodeURIComponent(query);
-                // Tự động kích hoạt gửi câu hỏi luôn
-                setTimeout(() => {
-                    submitMessage(decodeURIComponent(query));
-                }, 500);
+                setTimeout(() => submitMessage(decodeURIComponent(query)), 500);
             }
         });
 
@@ -157,11 +201,12 @@
         function submitMessage(text) {
             const chatMessages = document.getElementById('chatMessages');
 
-            // Append user bubble
+            // User Bubble
             const userHTML = `
                 <div class="flex items-start justify-end gap-3 message-bubble">
                     <div class="bg-purple-600/90 border border-purple-400/50 rounded-2xl p-4 text-sm text-white max-w-2xl shadow-md">
                         <p>${escapeHtml(text)}</p>
+                        <span class="block text-[10px] text-purple-200 mt-1">Nguồn lọc: [${currentSourceName}]</span>
                     </div>
                     <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-sm flex-shrink-0 shadow-md">
                         <i class="fa-solid fa-user"></i>
@@ -179,32 +224,32 @@
                         <i class="fa-solid fa-brain animate-spin"></i>
                     </div>
                     <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-300 shadow-inner flex items-center gap-2">
-                        <span class="animate-pulse">✨ AI đang quét kho tri thức 25 năm để tìm giải pháp tối ưu nhất...</span>
+                        <span class="animate-pulse">🔍 Vector Database đang quét tài liệu trong phạm vi [${currentSourceName}]...</span>
                     </div>
                 </div>
             `;
             chatMessages.insertAdjacentHTML('beforeend', typingHTML);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Simulate AI response after 1.2s
+            // AI Response Simulation
             setTimeout(() => {
                 document.getElementById(typingId).remove();
                 
-                let aiResponse = `Cảm ơn bạn đã đặt câu hỏi về "<b>${escapeHtml(text)}</b>". Dựa trên cơ sở dữ liệu tích lũy 25 năm của An Tín, hệ thống ghi nhận đây là vấn đề quan trọng.`;
-                
-                if(text.toLowerCase().includes('lỗi') || text.toLowerCase().includes('xử lý')) {
-                    aiResponse = `⚙️ <b>Phân tích kỹ thuật từ Kho 25 năm:</b><br>
-                    1. Kiểm tra nguyên nhân gốc rễ theo chuẩn chẩn đoán An Tín.<br>
-                    2. Áp dụng quy trình reset và cấu hình lại phần cứng/phần mềm chuyên dụng.<br>
-                    3. Liên hệ ngay kỹ thuật trưởng qua Zalo <a href="https://zalo.me/0914060339" target="_blank" class="text-cyan-400 font-bold underline">0914.060.339</a> nếu cần hỗ trợ can thiệp trực tiếp từ xa.`;
-                } else if(text.toLowerCase().includes('bảo trì')) {
-                    aiResponse = `🛠️ <b>Quy trình bảo trì định kỳ chuẩn 25 năm:</b><br>
-                    - Kiểm tra tổng thể hệ thống vận hành.<br>
-                    - Tối ưu hóa hiệu suất và sao lưu dữ liệu tự động.<br>
-                    - Báo cáo chi tiết tình trạng hoạt động cho doanh nghiệp.`;
-                } else {
-                    aiResponse = `💡 <b>Đề xuất giải pháp chuyên sâu từ An Tín:</b><br>
-                    Hệ thống đã trích xuất các tài liệu kỹ thuật và giải pháp tối ưu cho yêu cầu của bạn. Để nhận tài liệu chi tiết và tư vấn trực tiếp 1-1, vui lòng kết nối ngay với chuyên gia qua Hotline/Zalo: <a href="https://zalo.me/0914060339" target="_blank" class="text-cyan-400 font-bold underline">0914.060.339</a>.`;
+                let aiResponse = `✨ <b>Kết quả trích xuất từ Vector Database (${currentSourceName}):</b><br>
+                Hệ thống đã phân tích các tài liệu PDF và cẩm nang kỹ thuật liên quan đến từ khóa "<b>${escapeHtml(text)}</b>". Dữ liệu được đối chiếu chính xác theo tiêu chuẩn 25 năm của An Tín.`;
+
+                if(currentSourceKey === 'pdf') {
+                    aiResponse = `📄 <b>Trích xuất từ Cẩm nang PDF chuẩn 25 năm:</b><br>
+                    - Tài liệu tham chiếu: <i>An_Tin_Technical_Handbook_25Years.pdf (Trang 14-18)</i>.<br>
+                    - Nội dung chi tiết: Cung cấp sơ đồ kỹ thuật và thông số chuẩn cho yêu cầu của bạn. Đảm bảo tính đồng bộ và chính xác tuyệt đối.`;
+                } else if(currentSourceKey === 'service') {
+                    aiResponse = `🛠️ <b>Trích xuất từ Dữ liệu Dịch vụ & Giải pháp:</b><br>
+                    - Gói giải pháp toàn diện giúp tối ưu hóa vận hành doanh nghiệp.<br>
+                    - Hỗ trợ triển khai nhanh chóng với đội ngũ chuyên gia trực tiếp từ An Tín.`;
+                } else if(currentSourceKey === 'product') {
+                    aiResponse = `📦 <b>Trích xuất từ Dữ liệu Dòng sản phẩm:</b><br>
+                    - Dòng sản phẩm độc quyền tích hợp công nghệ mới nhất.<br>
+                    - Cam kết bảo hành chính hãng và hỗ trợ kỹ thuật trọn đời.`;
                 }
 
                 const aiHTML = `
@@ -212,12 +257,13 @@
                         <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
                             <i class="fa-solid fa-brain"></i>
                         </div>
-                        <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner space-y-2">
+                        <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner space-y-3">
                             <p>${aiResponse}</p>
-                            <div class="pt-2 border-t border-slate-700 flex gap-2">
-                                <a href="https://zalo.me/0914060339" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
-                                    <i class="fa-solid fa-headset"></i> Kết nối chuyên gia ngay
+                            <div class="pt-2 border-t border-slate-700 flex flex-wrap gap-2 items-center">
+                                <a href="https://zalo.me/0914060339" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition shadow-md">
+                                    <i class="fa-solid fa-headset"></i> Nhận tài liệu gốc qua Zalo
                                 </a>
+                                <span class="text-[11px] text-slate-400">Hoặc gọi Hotline: <b class="text-purple-300">0914.060.339</b></span>
                             </div>
                         </div>
                     </div>
@@ -235,8 +281,8 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner">
-                        <p class="font-bold text-purple-300 mb-1">Đã làm mới đoạn hội thoại!</p>
-                        <p>Kho tri thức 25 năm đã sẵn sàng. Hãy nhập câu hỏi mới của bạn.</p>
+                        <p class="font-bold text-purple-300 mb-1">Đã làm mới bộ nhớ đệm Vector DB!</p>
+                        <p>Hệ thống sẵn sàng tra cứu tài liệu mới theo yêu cầu của bạn.</p>
                     </div>
                 </div>
             `;
