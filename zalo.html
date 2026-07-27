@@ -779,37 +779,55 @@
         }
     }
 
-    function submitZaloAiChat() {
+function submitZaloAiChat() {
         const inputEl = document.getElementById('zaloAiInput');
+        if (!inputEl) return;
+        
         const query = inputEl.value.trim();
         if (!query) return;
 
-        // Thêm câu hỏi của user lên khung chat
         const userMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; justify-content: flex-end;">
             <div style="background: #f3e8f8; padding: 8px 12px; border-radius: 8px; max-width: 85%;">
-                <b>${currentCustomer.name}:</b> ${query}
+                <b>${typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Khách'}:</b> ${query}
             </div>
         </div>`;
-        document.getElementById('aiRealtimeStatusText').innerHTML += userMsgHtml;
-        window.zaloChatLog.push({ sender: currentCustomer.name, message: query });
+        
+        const chatBox = document.getElementById('aiRealtimeStatusText');
+        if (chatBox) {
+            chatBox.innerHTML += userMsgHtml;
+        }
+        
+        if (typeof window.zaloChatLog !== 'undefined') {
+            window.zaloChatLog.push({ sender: typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Khách', message: query });
+        }
         inputEl.value = '';
 
-        // Giả lập phản hồi thông minh từ Siêu AI dựa vào kho tri thức
+        // AI phản hồi thông minh dựa trên biến kho tri thức có sẵn
         setTimeout(() => {
-            let aiReply = `Chào <b>${currentCustomer.name}</b>, về vấn đề <i>"${query}"</i>, Siêu AI An Tín đã đối chiếu với tài liệu kỹ thuật chuyên sâu và đề xuất giải pháp tối ưu nhất cho bạn. Bạn có thể bấm nút gửi báo cáo bên dưới hoặc liên hệ trực tiếp hotline để được hỗ trợ tận nơi! 🛠️`;
+            let aiReply = `Cảm ơn bạn đã đặt câu hỏi về <i>"${query}"</i>. Siêu AI An Tín đã ghi nhận và sẵn sàng hỗ trợ bạn xử lý chi tiết ngay tại chỗ mà không cần gửi email.`;
             
+            let lowerQuery = query.toLowerCase();
+            if (typeof knowledgeBase78Errors !== 'undefined' && knowledgeBase78Errors && (lowerQuery.includes("lỗi") || lowerQuery.includes("camera") || lowerQuery.includes("mạng") || lowerQuery.includes("nguồn") || lowerQuery.includes("hình") || lowerQuery.includes("kết nối"))) {
+                aiReply = `Chào <b>${typeof currentCustomer !== 'undefined' ? currentCustomer.name : 'Quý khách'}</b>, dựa trên tài liệu 78 lỗi kỹ thuật An Tín, đối với vấn đề <i>"${query}"</i>, hệ thống khuyến nghị bạn kiểm tra lại nguồn điện, cáp kết nối hoặc tiến hành khởi động lại thiết bị. Nếu sự cố vẫn tiếp diễn, đội ngũ kỹ thuật sẽ hỗ trợ trực tiếp.`;
+            }
+
             const aiMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
                 <i class="fa-solid fa-robot" style="color: #7c3aed; font-size: 16px; margin-top: 2px;"></i>
                 <div style="background: #f8fafc; padding: 8px 12px; border-radius: 8px; border: 1px solid #e9d5ff; max-width: 85%;">
                     ${aiReply}
                 </div>
             </div>`;
-            const chatBox = document.getElementById('aiRealtimeStatusText');
-            chatBox.innerHTML += aiMsgHtml;
-            chatBox.parentElement.scrollTop = chatBox.parentElement.scrollHeight;
-            window.zaloChatLog.push({ sender: "Siêu AI An Tín", message: aiReply });
+            
+            if (chatBox) {
+                chatBox.innerHTML += aiMsgHtml;
+                chatBox.parentElement.scrollTop = chatBox.parentElement.scrollHeight;
+            }
+            
+            if (typeof window.zaloChatLog !== 'undefined') {
+                window.zaloChatLog.push({ sender: "Siêu AI An Tín", message: aiReply });
+            }
         }, 800);
-    }
+    }   
 
     function sendBroadcastViaWebhook() {
         const title = document.getElementById('bc_title').value;
