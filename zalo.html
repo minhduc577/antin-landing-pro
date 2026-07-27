@@ -725,6 +725,27 @@
         document.getElementById('previewBoxContent').innerHTML = `<b>${title}</b><br><br>${content}`;
     }
 
+// === TÍCH HỢP KHO TRI THỨC 78 LỖI TỪ kythuatAI.html CHO SIÊU AI ZALO ===
+    let knowledgeBase78Errors = "";
+
+    async function loadKnowledgeBaseForZaloAI() {
+        try {
+            let response = await fetch('kythuatAI.html');
+            if (response.ok) {
+                let htmlText = await response.text();
+                let tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlText;
+                knowledgeBase78Errors = tempDiv.innerText;
+            }
+        } catch (err) {
+            console.log("Không thể nạp ngầm kho tri thức kỹ thuật.");
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadKnowledgeBaseForZaloAI();
+    });
+    
     // ĐÃ VÁ LỖI HOÀN CHỈNH ĐOẠN HÀM XÁC NHẬN VÀ KÍCH HOẠT KHUNG CHAT AI BÊN DƯỚI:
     function saveCustomerSessionInfo() {
         const nameVal = document.getElementById('cus_name_input').value.trim();
