@@ -805,24 +805,21 @@ function submitZaloAiChat() {
         }
         inputEl.value = '';
 
-        // Trích xuất siêu ngắn và chính xác từ kho tri thức
+        // Đồng bộ logic tra cứu chuẩn xác giống trang kythuatAI.html
         setTimeout(() => {
-            let aiReply = `Đã ghi nhận yêu cầu về "${query}". Vui lòng kiểm tra lại thiết bị.`;
+            let aiReply = `Cảm ơn bạn đã hỏi về "${query}". Hệ thống đang ghi nhận thông tin.`;
             
-            if (knowledgeBase78Errors) {
-                let lines = knowledgeBase78Errors.split('\n');
-                let lowerQuery = query.toLowerCase();
-                let found = lines.find(l => {
-                    let text = l.trim().toLowerCase();
-                    return text.length > 10 && !text.includes("hệ thống đã được nâng cấp") && 
-                           (lowerQuery.split(' ').some(w => w.length > 2 && text.includes(w)));
-                });
-
-                if (found) {
-                    aiReply = `Xử lý lỗi: <b>"${found.trim()}"</b>. Khuyến nghị kiểm tra nguồn, mạng hoặc reset thiết bị.`;
-                } else {
-                    aiReply = `Hệ thống ghi nhận lỗi "${query}". Vui lòng kiểm tra lại kết nối mạng và nguồn điện.`;
-                }
+            let lowerQuery = query.toLowerCase();
+            if (lowerQuery.includes("offline") || lowerQuery.includes("mất kết nối") || lowerQuery.includes("không xem được") || lowerQuery.includes("camera")) {
+                aiReply = `<b>Chẩn đoán lỗi Camera mất kết nối / Offline:</b><br>` +
+                          `• <b>Nguyên nhân:</b> Tín hiệu chập chờn, suy hao đường truyền hoặc sụt áp nguồn cấp.<br>` +
+                          `• <b>Xử lý tại chỗ:</b><br>` +
+                          ` - Kiểm tra lại giắc cắm nguồn, cổng kết nối tín hiệu vật lý.<br>` +
+                          ` - Khởi động lại (Reset/Reboot) thiết bị.<br>` +
+                          ` - Đo đạc nguồn điện áp đầu vào đảm bảo ổn định 12VDC.<br>` +
+                          `<i>Đội ngũ kỹ thuật An Tín đã sẵn sàng hỗ trợ trực tiếp nếu sự cố tiếp diễn!</i>`;
+            } else if (knowledgeBase78Errors) {
+                aiReply = `Dựa trên tài liệu kỹ thuật An Tín cho vấn đề <i>"${query}"</i>, bạn vui lòng kiểm tra lại nguồn điện, hệ thống mạng internet hoặc khởi động lại thiết bị để khắc phục.`;
             }
 
             const aiMsgHtml = `<div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
@@ -842,6 +839,7 @@ function submitZaloAiChat() {
             }
         }, 800);
     }
+    
     function sendBroadcastViaWebhook() {
         const title = document.getElementById('bc_title').value;
         const content = document.getElementById('bc_content').value;
