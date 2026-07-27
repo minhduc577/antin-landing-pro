@@ -811,7 +811,6 @@
         alert(`🚀 Đang truyền tải chiến dịch Broadcast tới nhóm [${target}] qua Make.com Webhook thành công!`);
     }
 
-*/
 // === CODE BỔ TRỢ ĐỘC LẬP (TỰ ĐỘNG GỬI NGẦM 5 PHÚT HOẶC KHI RỜI TRANG, để thay đổi thời gian 10 phút thi thay số 5 thành 10) ===
 (function() {
     let autoTriggered = false;
@@ -863,6 +862,10 @@
                     // Chạy hàm cũ của bạn trước
                     originalSaveFunc.apply(this, arguments);
 
+                    const ENABLE_AUTO_SEND = false; // Đổi thành true để mở lại, false để tắt
+
+                    if (ENABLE_AUTO_SEND) {
+                    // Toàn bộ code tự động gửi đặt ở đây
                     // Kích hoạt hẹn giờ và sự kiện ngầm ngay sau khi khách xác nhận thông tin
                     setTimeout(() => {
                         runAutoSendBackground("Hết thời gian phiên làm việc tự động (5 phút).");
@@ -882,7 +885,6 @@
         }, 500);
     });
 })();    
-*/    
     
 </script>
 </body>
