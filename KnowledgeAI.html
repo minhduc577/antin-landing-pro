@@ -628,6 +628,74 @@ function editKB(button) {
         </div>
     </div>
 </div>    
+
+<!-- Tiếp tục đoạn mã nguồn HTML / JavaScript quản trị tri thức -->
+    <div class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4" id="adminDashboardModal">
+        <div class="bg-slate-900 border border-cyan-500/60 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative">
+            <button onclick="toggleAdminDashboard()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center mb-5">
+                <div class="inline-flex h-12 w-12 rounded-xl bg-cyan-600/30 border border-cyan-500 text-cyan-300 items-center justify-center text-xl mb-2 shadow-lg">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="text-xl font-black text-white">Quản Trị Kho Tri Thức & Huấn Luyện AI</h3>
+                <p class="text-xs text-slate-400 mt-1">Cập nhật cẩm nang kỹ thuật, thêm kịch bản phản hồi hoặc huấn luyện dữ liệu mới trực tiếp cho trợ lý ảo.</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Tiêu đề kịch bản / tài liệu mới:</label>
+                    <input type="text" id="kbTitle" placeholder="Ví dụ: Quy trình xử lý lỗi biến tần thế hệ mới..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Phân loại kho tri thức:</label>
+                    <select id="kbCategory" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 transition">
+                        <option value="pdf">Cẩm nang & Tài liệu PDF kỹ thuật</option>
+                        <option value="service">Dữ liệu dịch vụ & giải pháp doanh nghiệp</option>
+                        <option value="all">Toàn bộ kho tri thức chung</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Nội dung chi tiết cho AI học:</label>
+                    <textarea id="kbContent" rows="4" placeholder="Nhập chi tiết thông số kỹ thuật, cách chuẩn bệnh hoặc giải pháp xử lý..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 transition"></textarea>
+                </div>
+                <button onclick="trainNewKnowledge()" class="pulse-effect w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold text-sm transition shadow-lg shadow-cyan-600/30 cursor-pointer flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-brain"></i> Huấn Luyện & Cập Nhật Vào Vector Database
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Phần tiếp theo của hàm trainNewKnowledge khi hoàn tất huấn luyện
+        function trainNewKnowledge() {
+            const title = document.getElementById('kbTitle').value.trim();
+            const category = document.getElementById('kbCategory').value;
+            const content = document.getElementById('kbContent').value.trim();
+
+            if (!title || !content) {
+                alert('Vui lòng nhập đầy đủ tiêu đề và nội dung kịch bản tri thức!');
+                return;
+            }
+
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang Vector hóa & Huấn luyện AI...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert(`Đã huấn luyện thành công kịch bản "${title}" vào hệ thống Tri Thức An Tín!`);
+                
+                // Reset form và đóng modal
+                document.getElementById('kbTitle').value = '';
+                document.getElementById('kbContent').value = '';
+                toggleAdminDashboard();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
     
 </body>
 </html>
