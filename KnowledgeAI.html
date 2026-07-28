@@ -386,16 +386,17 @@
         }
 
 function submitMessage(text, imageFile) {
-    // === TỰ ĐỘNG ĐÍNH KÈM KỊCH BẢN TRI THỨC VÀO TIN NHẮN ===
+    const chatMessages = document.getElementById('chatMessages');
+
+    // === TỰ ĐỘNG ĐÍNH KÈM KỊCH BẢN TRI THỨC VÀO HIỂN THỊ ===
     const knowledgeBase = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]')
         .map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
     
+    let processedText = text;
     if (knowledgeBase) {
-        text = `Dựa vào kho tri thức sau đây:\n${knowledgeBase}\n\nCâu hỏi/Yêu cầu của khách hàng: ${text}`;
+        processedText = `Dựa vào kho tri thức sau đây:\n${knowledgeBase}\n\nCâu hỏi/Yêu cầu của khách hàng: ${text}`;
     }
     // ====================================================
-
-    const chatMessages = document.getElementById('chatMessages');
 
     let imageHTMLTag = '';
     if (imageFile) {
@@ -430,6 +431,12 @@ function submitMessage(text, imageFile) {
     `;
     chatMessages.insertAdjacentHTML('beforeend', typingHTML);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // GỌI API GỬI TIN NHẮN THỰC TẾ (Sử dụng biến processedText chứa đầy đủ kịch bản gửi cho AI)
+    // Nếu hàm gọi API của bạn tên khác, hãy truyền `processedText` vào thay cho `text` gốc
+    if (typeof callRealAIAPI === 'function') {
+        callRealAIAPI(processedText, imageFile, typingId);
+    }
 }
 
             // AI Response Simulation
