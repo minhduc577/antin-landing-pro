@@ -386,23 +386,24 @@
         }
 
 function submitMessage(text, imageFile) {
-    // === TỰ ĐỘNG ĐÍNH KÈM KỊCH BẢN TRI THỨC VÀO TIN NHẮN ===
+    const chatMessages = document.getElementById('chatMessages');
+
+    // === NẠP TRI THỨC NGẦM CHO AI (KHÔNG HIỂN LÊN GIAO DIỆN) ===
     const knowledgeBase = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]')
         .map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
     
+    let aiPrompt = text;
     if (knowledgeBase) {
-        text = `Dựa vào kho tri thức sau đây:\n${knowledgeBase}\n\nCâu hỏi/Yêu cầu của khách hàng: ${text}`;
+        aiPrompt = `Dựa vào kho tri thức sau đây:\n${knowledgeBase}\n\nCâu hỏi/Yêu cầu của khách hàng: ${text}`;
     }
-    // ====================================================
-
-    const chatMessages = document.getElementById('chatMessages');
+    // ==========================================================
 
     let imageHTMLTag = '';
     if (imageFile) {
         imageHTMLTag = `<div class="mt-2 text-xs text-cyan-300 bg-slate-900/60 p-2 rounded border border-cyan-500/30 flex items-center gap-2"><i class="fa-solid fa-image"></i><span>Đính kèm hình ảnh mô tả thiết bị lỗi</span></div>`;
     }
 
-    // User Bubble
+    // User Bubble (Hiển thị đúng câu hỏi gốc `text` của người dùng, không bị tạp nham)
     const userHTML = `
         <div class="flex items-start justify-end gap-3 message-bubble">
             <div class="bg-purple-600/90 border border-purple-400/50 p-4 rounded-2xl text-sm text-white max-w-2xl shadow-md">
@@ -430,6 +431,9 @@ function submitMessage(text, imageFile) {
     `;
     chatMessages.insertAdjacentHTML('beforeend', typingHTML);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // (Tuỳ chọn) Nếu bạn có hàm gửi API thực tế, hãy truyền biến `aiPrompt` chứa đầy đủ kịch bản ngầm vào đây thay vì truyền `text`
+}
     
             // AI Response Simulation
             setTimeout(() => {
