@@ -823,6 +823,84 @@ function filterKnowledgeBase() {
         }
     }
 }
+
+// 1. Chức năng nhận diện giọng nói (Speech-to-Text) cho kỹ sư hiện trường
+let recognition;
+function toggleSpeechRecognition() {
+    const inputField = document.getElementById('userInput'); // Thay thế bằng ID ô input chat thực tế của bạn nếu khác
+    const micIcon = document.getElementById('micIcon');
+
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("⚠️ Trình duyệt của bạn không hỗ trợ tính năng nhận diện giọng nói. Vui lòng dùng Chrome hoặc Edge!");
+        return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = 'vi-VN'; // Thiết lập ngôn ngữ tiếng Việt chuẩn
+    recognition.interimResults = false;
+
+    recognition.onstart = function() {
+        micIcon.classList.remove('text-cyan-400');
+        micIcon.classList.add('text-red-500', 'animate-pulse');
+        console.log("🎙️ Đang nghe giọng nói...");
+    };
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        if (inputField) {
+            inputField.value = transcript;
+        } else {
+            console.log("Nội dung nhận diện:", transcript);
+        }
+    };
+
+    recognition.onerror = function(event) {
+        console.error("Lỗi nhận diện giọng nói:", event.error);
+        resetMicUI();
+    };
+
+    recognition.onend = function() {
+        resetMicUI();
+    };
+
+    recognition.start();
+}
+
+function resetMicUI() {
+    const micIcon = document.getElementById('micIcon');
+    if (micIcon) {
+        micIcon.classList.remove('text-red-500', 'animate-pulse');
+        micIcon.classList.add('text-cyan-400');
+    }
+}
+
+// 2. Chức năng đọc văn bản hướng dẫn (Text-to-Speech) cho AI
+function speakLastAIResponse() {
+    if (!('speechSynthesis' in window)) {
+        alert("⚠️ Trình duyệt của bạn không hỗ trợ tính năng đọc văn bản.");
+        return;
+    }
+
+    // Lấy nội dung câu trả lời mới nhất của AI trên giao diện
+    const chatMessages = document.querySelectorAll('.ai-response-text'); // Đảm bảo class này khớp với thẻ hiển thị chữ AI của bạn
+    if (chatMessages.length === 0) {
+        alert("ℹ️ Chưa có nội dung phản hồi nào từ AI để đọc.");
+        return;
+    }
+
+    const lastMessage = chatMessages[chatMessages.length - 1].innerText;
+    
+    // Hủy các tiến trình đọc đang chạy dở
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(lastMessage);
+    utterance.lang = 'vi-VN';
+    utterance.rate = 1.0; // Tốc độ đọc chuẩn
+    utterance.pitch = 1.0; // Cao độ
+
+    window.speechSynthesis.speak(utterance);
+}
         
 </script>
 </body>
