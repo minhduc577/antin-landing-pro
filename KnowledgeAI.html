@@ -223,10 +223,44 @@
 </div>
 
 <!-- Nút Tải cẩm nang PDF -->
-    <button type="button" onclick="downloadIncidentPDF()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-all text-sm flex items-center space-x-1.5" title="Tải biên bản / Cẩm nang xử lý sự cố ra PDF">
-        <i class="fa-solid fa-file-pdf text-rose-400"></i>
-        <span class="text-xs">Tải cẩm nang PDF</span>
-    </button>                    
+<button type="button" onclick="(function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.text('AN TIN DIGITAL ECOSYSTEM - TECHNICAL RAG', 15, 20);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text('Technical Support and Inverter Incident Report', 15, 27);
+    doc.setLineWidth(0.4);
+    doc.line(15, 32, 195, 32);
+    
+    let lines = [
+        'INCIDENT DIAGNOSIS REPORT - AN TIN',
+        '-------------------------------------------------------------------',
+        '',
+        'Device: An Tin Inverter / Industrial Control Panel',
+        'Status: Incident recorded and automated diagnosis completed.',
+        'Technical Solutions:',
+        '- Check input power supply and cooling system performance.',
+        '- Reset system errors and update standard configuration parameters.',
+        '- Contact direct technical experts if warning persists.',
+        '',
+        '-------------------------------------------------------------------',
+        'Direct Technical Hotline: 0914.060.339',
+        'Website: https://ebook.antinco.com'
+    ];
+    
+    let y = 40;
+    lines.forEach(l => {
+        doc.text(l, 15, y);
+        y += 6;
+    });
+    doc.save('AnTin_Report_Final.pdf');
+})" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-all text-sm flex items-center space-x-2">
+    <i class="fa-solid fa-file-pdf text-rose-400"></i>
+    <span class="text-xs">Tải cẩm nang PDF</span>
+</button>                 
                     
                     <input type="text" id="userInput" placeholder="Nhập câu hỏi kèm mô tả hình ảnh thiết bị lỗi..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition shadow-inner">
                     
