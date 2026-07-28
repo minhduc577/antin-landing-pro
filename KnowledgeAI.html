@@ -628,10 +628,20 @@ function trainNewKnowledge() {
     const scrsForChat = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
     window.AI_KNOWLEDGE_CONTEXT = scrsForChat.map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
     
-    // Cập nhật danh sách gợi ý cho ô nhập chat
+// Cập nhật danh sách gợi ý cho ô nhập chat (bao gồm toàn bộ cẩm nang 25 năm và kịch bản)
     const chatInputList = document.getElementById('chatSuggestions') || document.querySelector('datalist');
     if (chatInputList && scrsForChat.length > 0) {
         chatInputList.innerHTML = scrsForChat.map(item => `<option value="${item.title}">`).join('');
+    }
+
+    // Tự động cập nhật các nút gợi ý nhanh ngang qua khung chat
+    const quickContainer = document.querySelector('.flex.flex-wrap.gap-2') || document.getElementById('quickSuggestionsContainer');
+    if (quickContainer && scrsForChat.length > 0) {
+        quickContainer.innerHTML = scrsForChat.slice(0, 5).map(item => `
+            <button onclick="document.querySelector('input[type=text], textarea').value='${item.title}'; submitMessage('${item.title}');" class="px-3 py-1 bg-purple-900/60 hover:bg-purple-700 text-xs rounded-lg text-purple-200 border border-purple-500/40 transition">
+                📌 ${item.title}
+            </button>
+        `).join('');
     }
 </script>
 
