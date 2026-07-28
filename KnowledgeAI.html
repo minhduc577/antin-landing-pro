@@ -714,6 +714,60 @@ function editKB(button) {
                 toggleAdminDashboard();
             }, 1500);
         }
+
+async function callGeminiAPI(userPrompt, base64Image = null) {
+    // Thay thế 'YOUR_GEMINI_API_KEY' bằng khóa API thực tế của bạn
+    const apiKey = "YOUR_GEMINI_API_KEY"; 
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+    // Kho tri thức ngữ cảnh của An Tín (RAG Context)
+    const companyContext = "Bạn là trợ lý kỹ thuật AI của hệ sinh thái An Tín (25 năm kinh nghiệm). " +
+                           "Hãy sử dụng kho tri thức chuyên ngành biến tần, thiết bị điện và giải pháp tự động hóa " +
+                           "để chuẩn đoán và đưa ra giải pháp chính xác, chuyên nghiệp cho kỹ sư.";
+
+    let contents = [
+        {
+            role: "user",
+            parts: [
+                { text: `${companyContext}\n\nCâu hỏi/Yêu cầu từ kỹ thuật viên: ${userPrompt}` }
+            ]
+        }
+    ];
+
+    // Nếu người dùng có tải lên hình ảnh (Multimodal)
+    if (base64Image) {
+        // Tách chuỗi base64 thuần túy từ data URL
+        const base64Data = base64Image.split(',')[1];
+        contents[0].parts.push({
+            inline_data: {
+                mime_type: "image/jpeg",
+                data: base64Data
+            }
+        });
+    }
+
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ contents: contents })
+        });
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0].content) {
+            return data.candidates[0].content.parts[0].text;
+        } else {
+            return "❌ Không thể nhận phản hồi từ hệ thống AI Cloud. Vui lòng thử lại.";
+        }
+    } catch (error) {
+        console.error("Lỗi kết nối API:", error);
+        return "❌ Đã xảy ra lỗi kết nối mạng tới máy chủ Gemini AI.";
+    }
+}
+        
     </script>
 </body>
 </html>
