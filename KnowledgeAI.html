@@ -624,8 +624,15 @@ function trainNewKnowledge() {
         }, 400);
     });
         // NẠP TỰ ĐỘNG KỊCH BẢN VÀO KHUNG CHAT AI
+        
     const scrsForChat = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
     window.AI_KNOWLEDGE_CONTEXT = scrsForChat.map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
+    
+    // Cập nhật danh sách gợi ý cho ô nhập chat
+    const chatInputList = document.getElementById('chatSuggestions') || document.querySelector('datalist');
+    if (chatInputList && scrsForChat.length > 0) {
+        chatInputList.innerHTML = scrsForChat.map(item => `<option value="${item.title}">`).join('');
+    }
 </script>
 
 <!-- ADMIN DASHBOARD MODAL -->
