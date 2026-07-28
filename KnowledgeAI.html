@@ -1614,6 +1614,37 @@ window.addEventListener('DOMContentLoaded', function() {
         console.error("Lỗi nạp dữ liệu:", e);
     }
 });
+
+// HÀM XỬ LÝ SỬA VÀ XÓA KỊCH BẢN THỰC TẾ
+function editScenario(index) {
+    const scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
+    const item = scrs[index];
+    if (!item) return;
+
+    // Đưa dữ liệu lên form nhập liệu phía trên để chỉnh sửa
+    const titleInput = document.querySelector('input[placeholder*="Chính sách"], input[type="text"]');
+    const categorySelect = document.querySelector('select');
+    const contentTextarea = document.querySelector('textarea');
+
+    if (titleInput) titleInput.value = item.title || '';
+    if (categorySelect) categorySelect.value = item.category || '';
+    if (contentTextarea) contentTextarea.value = item.content || '';
+
+    // Lưu lại index đang sửa để khi bấm lưu sẽ cập nhật đè
+    window.editingIndex = index;
+    alert("Đã tải kịch bản lên form. Bạn hãy chỉnh sửa nội dung rồi bấm lưu!");
+}
+
+function deleteScenario(index) {
+    if (confirm("Bạn có chắc chắn muốn xóa kịch bản này không?")) {
+        let scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
+        scrs.splice(index, 1); // Xóa phần tử tại vị trí index
+        localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(scrs));
+        
+        // Tải lại trang hoặc làm mới bảng
+        location.reload();
+    }
+}
         
 </script>
 </body>
