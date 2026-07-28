@@ -738,24 +738,24 @@ function downloadCleanPDFReport() {
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Technical Support and Inverter Incident Report", 15, 27);
+    doc.text("Bien Ban Ho Tro Ky Thuat Va Chuan Doan Su Co", 15, 27);
     
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
     let contentLines = [
-        "INCIDENT DIAGNOSIS REPORT - AN TIN",
+        "BAO CAO CHUAN DOAN SU CO - AN TIN",
         "-------------------------------------------------------------------",
         "",
-        "Device: An Tin Inverter / Industrial Control Panel",
-        "Status: Incident recorded and automated diagnosis completed.",
-        "Technical Solutions:",
-        "- Check input power supply and cooling system performance.",
-        "- Reset system errors and update standard configuration parameters.",
-        "- Contact direct technical experts if warning persists.",
+        "Thiet bi: An Tin Inverter / Tu Dieu Khi Cong Nghiep",
+        "Trang thai: Da ghi nhan su co va hoan tat chuan doan tu dong.",
+        "Giai phap ky thuat xu ly:",
+        "- Kiem tra lai nguon dien dau vao va hieu suat he thống lam mat.",
+        "- Tien hanh reset ma loi va cap nhat lai thong so cau hinh chuan.",
+        "- Lien he truc tiep voi chuyen gia ky thuat neu canh bao van tiep dien.",
         "",
         "-------------------------------------------------------------------",
-        "Direct Technical Hotline: 0914.060.339",
+        "Hotline Ho Tro Ky Thuat: 0914.060.339",
         "Website: https://ebook.antinco.com"
     ];
 
@@ -774,9 +774,10 @@ function downloadCleanPDFReport() {
         });
     });
 
-    const fileName = `AnTin_Incident_Report_${Date.now()}.pdf`;
+    const fileName = `AnTin_BaoCao_SuCo_${Date.now()}.pdf`;
     doc.save(fileName);
 }
+        
         // Phần tiếp theo của hàm trainNewKnowledge khi hoàn tất huấn luyện
         function trainNewKnowledge() {
             const title = document.getElementById('kbTitle').value.trim();
