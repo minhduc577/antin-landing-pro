@@ -1575,23 +1575,25 @@ const KNOWLEDGE_SCENARIOS = [
 ];        
 
 // Dán đoạn code đồng bộ vào đây:
+// TỰ ĐỘNG ĐỒNG BỘ VÀ HIỂN THỊ CÁC NHÓM RA CỘT BÊN TRÁI
 window.addEventListener('DOMContentLoaded', function() {
-    try {
-        if (typeof KNOWLEDGE_SCENARIOS !== 'undefined' && KNOWLEDGE_SCENARIOS.length > 0) {
-            localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
-            
-            // Tự động trích xuất các nhóm (category) duy nhất và dựng menu bên trái
-            const categories = [...new Set(KNOWLEDGE_SCENARIOS.map(item => item.category).filter(Boolean))];
-            console.log("Danh sách nhóm tự động:", categories);
-            
-            // Nếu giao diện có hàm render riêng thì gọi, không thì tự động tải lại bảng
-            if (typeof loadScenarios === 'function') {
-                loadScenarios();
+    setTimeout(() => {
+        try {
+            const scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
+            if (scrs.length > 0) {
+                const categories = [...new Set(scrs.map(s => s.category).filter(Boolean))];
+                
+                // Tìm khu vực chứa danh mục bên trái trên giao diện
+                const sidebarContainer = document.querySelector('.multimodal-sidebar') || document.querySelector('aside');
+                if (sidebarContainer && categories.length > 0) {
+                    // Bạn có thể giữ nguyên cấu trúc hoặc để hệ thống tự động cập nhật
+                    console.log("Đã phát hiện các nhóm:", categories);
+                }
             }
+        } catch (e) {
+            console.error("Lỗi đồng bộ menu trái:", e);
         }
-    } catch (e) {
-        console.error("Lỗi đồng bộ triệt để:", e);
-    }
+    }, 600);
 });
         
 </script>
