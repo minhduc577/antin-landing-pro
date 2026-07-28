@@ -722,7 +722,7 @@ function editKB(button) {
     
     <script>
 
-// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn không lỗi ký tự &
+// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn không lỗi
 function downloadIncidentPDF() {
     if (typeof window.jspdf === 'undefined') {
         alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
@@ -744,7 +744,7 @@ function downloadIncidentPDF() {
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
-    // Nội dung cẩm nang chuẩn (Không chứa ký tự & để tránh lỗi mã hóa)
+    // Nội dung cẩm nang chuẩn (Không dùng ký tự &)
     let contentLines = [
         "BIEN BAN CHAN DOAN VA XU LY SU CO - AN TIN",
         "-------------------------------------------------------------------",
@@ -761,7 +761,6 @@ function downloadIncidentPDF() {
         "Website: https://ebook.antinco.com"
     ];
 
-    // In nội dung vào PDF với khoảng cách dòng chuẩn
     doc.setFontSize(9);
     let currentY = 40;
     
