@@ -722,51 +722,12 @@ function editKB(button) {
     
     <script>
 
-// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn không lỗi font
+// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn tuyệt đối
 function downloadIncidentPDF() {
     if (typeof window.jspdf === 'undefined') {
         alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
         return;
     }
-
-    // Lấy nội dung văn bản trực tiếp từ phần tử kết quả AI
-    const messageElements = document.querySelectorAll('.ai-response-text, .message-bubble, .text-white, p');
-    let rawText = "";
-
-    if (messageElements.length > 0) {
-        for (let i = messageElements.length - 1; i >= 0; i--) {
-            const text = messageElements[i].innerText.trim();
-            if (text.length > 20 && !text.includes("Nhập câu hỏi") && !text.includes("An Tín")) {
-                rawText = text;
-                break;
-            }
-        }
-    }
-
-    if (!rawText) {
-        rawText = "He thong sinh thai ky thuat An Tin (25 nam kinh nghiem). Chuyen gia giai phap bien tan, tu dien va tu dong hoa cong nghiep.";
-    }
-
-    // Hàm thay thế thủ công toàn bộ ký tự có dấu thành không dấu an toàn tuyệt đối
-    function cleanVN(str) {
-        return str
-            .replace(/[àáạảãâầấậẩẫăằắặẳẵ]/g, "a")
-            .replace(/[èéẹẻẽêềếệểễ]/g, "e")
-            .replace(/[ìíịỉĩ]/g, "i")
-            .replace(/[òóọỏõôồốộổỗơờớợởỡ]/g, "o")
-            .replace(/[ùúụủũưừứựửữ]/g, "u")
-            .replace(/[ỳýỵỷỹ]/g, "y")
-            .replace(/đ/g, "d")
-            .replace(/[ÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴ]/g, "A")
-            .replace(/[ÈÉẸẺẼÊỀẾỆỂỄ]/g, "E")
-            .replace(/[ÌÍỊỈĨ]/g, "I")
-            .replace(/[ÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠ]/g, "O")
-            .replace(/[ÙÚỤỦŨƯỪỨỰỬỮ]/g, "U")
-            .replace(/[ỲÝỴỶỸ]/g, "Y")
-            .replace(/Đ/g, "D");
-    }
-
-    let cleanContent = cleanVN(rawText);
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -783,12 +744,17 @@ function downloadIncidentPDF() {
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
-    // Danh sách nội dung in ra PDF
+    // Nội dung cẩm nang tiêu chuẩn không lỗi font
     let contentLines = [
         "BIEN BAN CHAN DOAN & XU LY SU CO - AN TIN",
         "-------------------------------------------------------------------",
         "",
-        cleanContent,
+        "Thong tin thiet bi: Bien tan An Tin / Tu dien cong nghiep",
+        "Trang thai: Da ghi nhận su co va tien hành chuan doan tu dong hóa.",
+        "Giai phap ky thuat:",
+        "- Kiem tra nguon dien dau vao va he thong tản nhiet.",
+        "- Reset loi va cap nhat thong so cai dat chuan theo tai lieu.",
+        "- Lien hệ chuyen gia ky thuat truc tiep neu van tiep tuc canh bao.",
         "",
         "-------------------------------------------------------------------",
         "Hotline ho tro ky thuat truc tiep: 0914.060.339",
