@@ -779,10 +779,36 @@ async function callGeminiAPI(userPrompt, base64Image = null) {
         return "❌ Đã xảy ra lỗi kết nối mạng tới máy chủ Gemini AI.";
     }
 }
+
+// Hàm tìm kiếm thông minh Smart RAG Search cho Kho Tri Thức
+function filterKnowledgeBase() {
+    const input = document.getElementById('kbSearchInput');
+    const filter = input.value.toLowerCase().trim();
+    const tableBody = document.getElementById('kbTableBody');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    // Duyệt qua tất cả các hàng trong bảng tri thức
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const textContent = row.textContent.toLowerCase();
+
+        // Nếu từ khóa xuất hiện trong dòng, hiển thị dòng đó, ngược lại ẩn đi
+        if (textContent.includes(filter)) {
+            row.style.display = "";
+            
+            // Hiệu ứng làm nổi bật nhẹ (Highlight) trực quan
+            if (filter !== "") {
+                row.classList.add('bg-purple-900/20');
+            } else {
+                row.classList.remove('bg-purple-900/20');
+            }
+        } else {
+            row.style.display = "none";
+            row.classList.remove('bg-purple-900/20');
+        }
+    }
+}
         
-    </script>
-</body>
-</html>
-    
+</script>
 </body>
 </html>
