@@ -965,6 +965,46 @@ function speakLastAIResponse() {
 
     window.speechSynthesis.speak(utterance);
 }
+
+function submitLeadAndSyncWebhook(name, phone, address, issue, historyText) {
+    const webhookUrl = "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc";
+    
+    // Lấy thời gian hiện tại định dạng tiếng Việt / quốc tế rõ ràng
+    const currentTime = new Date().toLocaleString('vi-VN', { 
+        timeZone: 'Asia/Ho_Chi_Minh',
+        hour12: false 
+    });
+
+    const leadPayload = {
+        name: name || "Khách hàng An Tín",
+        phone: phone || "Chưa cập nhật",
+        address: address || "Hệ thống / Trạm kỹ thuật",
+        issue: issue || "Chẩn đoán sự cố Inverter / Thiết bị công nghiệp",
+        interaction_history: historyText || "Tương tác tự động qua hệ thống RAG AI An Tín.",
+        time: currentTime
+    };
+
+    // Hiệu ứng loading cuốn hút kích thích hành động
+    console.log("🚀 Đang đẩy dữ liệu Lead về CRM An Tín qua Make Webhook...");
+
+    fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(leadPayload)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("🔥 Đăng ký thành công! Hệ thống đã tự động đồng bộ Lead, gửi Email & Zalo OA chuyên gia kỹ thuật An Tín trong vòng 3 giây.");
+        } else {
+            alert("⚠️ Có lỗi khi đồng bộ dữ liệu, vui lòng thử lại!");
+        }
+    })
+    .catch(error => {
+        console.error("Lỗi kết nối Webhook:", error);
+    });
+}
         
 </script>
 </body>
