@@ -1582,14 +1582,31 @@ const KNOWLEDGE_SCENARIOS = [
 window.addEventListener('DOMContentLoaded', function() {
     try {
         if (typeof KNOWLEDGE_SCENARIOS !== 'undefined' && KNOWLEDGE_SCENARIOS.length > 0) {
-            // Ép ghi đè toàn bộ dữ liệu mới nhất từ mã nguồn vào bộ nhớ trình duyệt
             localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
             console.log("Đã nạp thành công " + KNOWLEDGE_SCENARIOS.length + " kịch bản!");
             
-            // Tự động gọi lại hàm load giao diện nếu hệ thống có sẵn
             if (typeof loadScenarios === 'function') {
                 loadScenarios();
             }
+            
+            // THÊM ĐOẠN NÀY ĐỂ TỰ ĐỘNG VẼ BẢNG QUẢN TRỊ
+            setTimeout(() => {
+                const tbody = document.querySelector('tbody') || document.querySelector('.table-body');
+                if (tbody) {
+                    tbody.innerHTML = KNOWLEDGE_SCENARIOS.map((item, index) => `
+                        <tr class="border-b border-slate-800 hover:bg-slate-900/50">
+                            <td class="py-3 px-4 text-white font-medium">${item.title || 'Không có tiêu đề'}</td>
+                            <td class="py-3 px-4 text-slate-300">${item.category || 'Chưa phân loại'}</td>
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-emerald-900/50 text-emerald-400 rounded text-xs">Active</span></td>
+                            <td class="py-3 px-4 text-right">
+                                <button onclick="editScenario(${index})" class="text-cyan-400 hover:underline mr-2">Sửa</button>
+                                <button onclick="deleteScenario(${index})" class="text-rose-400 hover:underline">Xóa</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            }, 300);
+            
         } else {
             console.warn("Chưa tìm thấy mảng KNOWLEDGE_SCENARIOS trong mã nguồn!");
         }
