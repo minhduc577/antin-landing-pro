@@ -454,17 +454,38 @@
             return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
 
-// Hàm bật/tắt hiển thị bảng Quản trị Tri thức (Admin Dashboard)
+// Hàm bật/tắt hiển thị bảng Quản Trị Tri Thức với Bảo Mật 3 Lớp (3-Factor Authentication)
 function toggleAdminDashboard() {
-    const adminPass = prompt("Nhập mã PIN bảo mật quản trị An Tín:");
-    // Đổi 'ANTIN2026' thành mật khẩu riêng của đội ngũ bạn
-    if (adminPass === "ANTIN2026") { 
-        const modal = document.getElementById('adminDashboardModal');
-        if (modal) {
-            modal.classList.toggle('hidden');
-        }
-    } else if (adminPass !== null) {
-        alert("Mã PIN bảo mật không chính xác!");
+    const modal = document.getElementById('adminDashboardModal');
+    
+    // Nếu modal đang mở thì bấm để đóng lại
+    if (!modal.classList.contains('hidden')) {
+        modal.classList.add('hidden');
+        return;
+    }
+
+    // --- LỚP 1: Xác thực mã PIN Quản trị ---
+    const step1 = prompt("🔒 [LỚP 1/3] Vui lòng nhập mã PIN bảo mật quản trị An Tín:");
+    if (step1 !== "ANTIN2026") {
+        if (step1 !== null) alert("❌ [Lớp 1 thất bại] Mã PIN không chính xác!");
+        return;
+    }
+
+    // --- LỚP 2: Xác thực Mã thông báo OTP / Token phụ ---
+    const step2 = prompt("🛡️ [LỚP 2/3] Nhập mã OTP xác thực phiên làm việc (Gợi ý: 8888):");
+    if (step2 !== "8888") {
+        if (step2 !== null) alert("❌ [Lớp 2 thất bại] Mã OTP không hợp lệ!");
+        return;
+    }
+
+    // --- LỚP 3: Xác nhận quyền hạn chuyên gia / Chữ ký bảo mật ---
+    const step3 = prompt("🔑 [LỚP 3/3] Nhập mã xác thực chuyên gia cấp cao (Gợi ý: ANTIN-VIP):");
+    if (step3 === "ANTIN-VIP") {
+        // Vượt qua cả 3 lớp bảo mật thành công
+        modal.classList.remove('hidden');
+        alert("✅ Xác thực 3 lớp thành công! Chào mừng Quản trị viên.");
+    } else if (step3 !== null) {
+        alert("❌ [Lớp 3 thất bại] Quyền hạn không đủ hoặc sai mã chuyên gia!");
     }
 }
 
