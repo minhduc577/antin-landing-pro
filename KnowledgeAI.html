@@ -1573,6 +1573,21 @@ const KNOWLEDGE_SCENARIOS = [
 - Định hướng giao tiếp: Khi khách hàng gặp sự cố khẩn cấp ngoài giờ hành chính, hãy trấn an khách hàng, hướng dẫn gửi thông tin/hình ảnh qua khung chat để kích hoạt Vision AI và kết nối ngay lập tức với đường dây nóng kỹ thuật Zalo OA (Hotline: 0914.060.339).`
   }
 ];        
+
+id: 57,
+          title: "Cam kết Chất lượng Dịch vụ & Hỗ trợ Khẩn cấp 24/7",
+          category: "Cẩm nang PDF 25 năm",
+          content: `[TRI THỨC CỐT LÕI - CAM KẾT DỊCH VỤ 24/7]
+          - Tiêu chuẩn phục vụ 24/7...
+          `
+     }
+];
+
+// Dán đoạn code đồng bộ vào đây:
+if (!localStorage.getItem('ant_scenarios_loaded')) {
+    localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
+    localStorage.setItem('ant_scenarios_loaded', 'true');
+}
         
 </script>
 </body>
