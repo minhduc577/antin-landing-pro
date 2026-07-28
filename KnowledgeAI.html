@@ -1578,26 +1578,24 @@ const KNOWLEDGE_SCENARIOS = [
   }
 ];        
 
-// Dán đoạn code đồng bộ vào đây:
-// TỰ ĐỘNG ĐỒNG BỘ VÀ HIỂN THỊ CÁC NHÓM RA CỘT BÊN TRÁI
+// PHA QUYẾT ĐỊNH: TỰ ĐỘNG NẠP TOÀN BỘ 57 KỊCH BẢN VÀO HỆ THỐNG VĨNH VIỄN
 window.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        try {
-            const scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
-            if (scrs.length > 0) {
-                const categories = [...new Set(scrs.map(s => s.category).filter(Boolean))];
-                
-                // Tìm khu vực chứa danh mục bên trái trên giao diện
-                const sidebarContainer = document.querySelector('.multimodal-sidebar') || document.querySelector('aside');
-                if (sidebarContainer && categories.length > 0) {
-                    // Bạn có thể giữ nguyên cấu trúc hoặc để hệ thống tự động cập nhật
-                    console.log("Đã phát hiện các nhóm:", categories);
-                }
+    try {
+        if (typeof KNOWLEDGE_SCENARIOS !== 'undefined' && KNOWLEDGE_SCENARIOS.length > 0) {
+            // Ép ghi đè toàn bộ dữ liệu mới nhất từ mã nguồn vào bộ nhớ trình duyệt
+            localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
+            console.log("Đã nạp thành công " + KNOWLEDGE_SCENARIOS.length + " kịch bản!");
+            
+            // Tự động gọi lại hàm load giao diện nếu hệ thống có sẵn
+            if (typeof loadScenarios === 'function') {
+                loadScenarios();
             }
-        } catch (e) {
-            console.error("Lỗi đồng bộ menu trái:", e);
+        } else {
+            console.warn("Chưa tìm thấy mảng KNOWLEDGE_SCENARIOS trong mã nguồn!");
         }
-    }, 600);
+    } catch (e) {
+        console.error("Lỗi nạp dữ liệu:", e);
+    }
 });
         
 </script>
