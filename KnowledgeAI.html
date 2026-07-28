@@ -618,6 +618,18 @@ function editKB(button) {
                 </div>
             </div>
 
+<!-- Ô tìm kiếm nhanh Smart RAG Search -->
+<div class="mb-4">
+    <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+        <input type="text" id="kbSearchInput" onkeyup="filterKnowledgeBase()" 
+               placeholder="🔍 Nhập từ khóa Vector Search (Ví dụ: lỗi biến tần, sơ đồ mạch, 25 năm...)" 
+               class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 transition-all text-sm">
+    </div>
+</div>
+            
             <!-- Danh sách kịch bản hiện có -->
             <div class="space-y-3">
                 <h4 class="text-sm font-semibold text-slate-300">Kịch bản Tri thức Đang Hoạt Động</h4>
