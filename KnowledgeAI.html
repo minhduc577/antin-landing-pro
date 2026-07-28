@@ -1691,7 +1691,23 @@ function deleteScenario(index) {
         location.reload();
     }
 }
+ // TỰ ĐỘNG NẠP DỮ LIỆU TỪ MẢNG GỐC VÀO LOCALSTORAGE NẾU BỊ TRỐNG
+window.addEventListener('DOMContentLoaded', function() {
+    try {
+        let scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
+        if (scrs.length === 0 && typeof KNOWLEDGE_SCENARIOS !== 'undefined' && KNOWLEDGE_SCENARIOS.length > 0) {
+            localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
+            scrs = KNOWLEDGE_SCENARIOS;
+            console.log("Đã nạp thành công " + scrs.length + " kịch bản gốc vào localStorage!");
+        }
         
+        // Cập nhật số lượng kịch bản lên giao diện
+        const countEl = document.getElementById('totalScenariosCount');
+        if (countEl) countEl.innerText = scrs.length;
+    } catch (e) {
+        console.error("Lỗi nạp dữ liệu:", e);
+    }
+});       
 </script>
 </body>
 </html>
