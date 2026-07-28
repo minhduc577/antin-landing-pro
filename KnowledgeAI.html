@@ -560,24 +560,67 @@ function trainNewKnowledge() {
     }, 1200);
 }
 
-// Xóa kịch bản
-function deleteKB(button) {
-    if (confirm('Bạn có chắc chắn muốn xóa kịch bản tri thức này khỏi bộ nhớ AI không?')) {
-        const row = button.closest('tr');
-        row.remove();
+// Xóa kịch bản tri thức cập nhật localStorage
+    function deleteKB(button) {
+        if (confirm('Bạn có chắc chắn muốn xóa kịch bản tri thức này khỏi bộ nhớ AI không?')) {
+            const row = button.closest('tr');
+            const title = row.cells[0].innerText.trim();
+            
+            let scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
+            scrs = scrs.filter(item => item.title !== title);
+            localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(scrs));
+            
+            row.remove();
+            alert('Đã xóa thành công!');
+        }
     }
-}
 
-// Sửa kịch bản
-function editKB(button) {
-    const row = button.closest('tr');
-    const title = row.cells[0].innerText;
-    document.getElementById('kbTitle').value = title;
-    alert('Đã tải thông tin kịch bản lên form. Bạn có thể chỉnh sửa và bấm Huấn Luyện lại.');
-    document.getElementById('kbTitle').focus();
-}        
+    // Sửa kịch bản tri thức nạp đầy đủ lên form
+    function editKB(button) {
+        const row = button.closest('tr');
+        const title = row.cells[0].innerText.trim();
         
-    </script>
+        let scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
+        const item = scrs.find(s => s.title === title);
+        
+        if (item) {
+            const titleInput = document.getElementById('kbTitle') || document.querySelector('input[type="text"]');
+            const categorySelect = document.querySelector('select');
+            const contentTextarea = document.querySelector('textarea');
+
+            if (titleInput) titleInput.value = item.title || '';
+            if (categorySelect) categorySelect.value = item.category || '';
+            if (contentTextarea) contentTextarea.value = item.content || '';
+
+            alert('Đã tải thông tin kịch bản lên form. Bạn có thể chỉnh sửa và bấm Huấn Luyện lại.');
+            if (titleInput) titleInput.focus();
+        } else {
+            alert('Không tìm thấy dữ liệu kịch bản trong bộ nhớ!');
+        }
+    }
+
+    // Tự động render bảng danh sách 57 kịch bản
+    window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+            const tbody = document.querySelector('tbody');
+            const scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
+            
+            if (tbody && scrs.length > 0) {
+                tbody.innerHTML = scrs.map((item) => `
+                    <tr class="border-b border-slate-800 hover:bg-slate-900/50">
+                        <td class="py-3 px-4 text-white font-medium">${item.title || 'Không có tiêu đề'}</td>
+                        <td class="py-3 px-4 text-slate-300">${item.category || 'Chưa phân loại'}</td>
+                        <td class="py-3 px-4"><span class="px-2 py-1 bg-emerald-900/50 text-emerald-400 rounded text-xs">Active</span></td>
+                        <td class="py-3 px-4 text-right">
+                            <button type="button" onclick="editKB(this)" class="text-cyan-400 hover:underline mr-3 font-semibold cursor-pointer">Sửa</button>
+                            <button type="button" onclick="deleteKB(this)" class="text-rose-400 hover:underline font-semibold cursor-pointer">Xóa</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }, 400);
+    });
+</script>
 
 <!-- ADMIN DASHBOARD MODAL -->
 <div id="adminDashboardModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
