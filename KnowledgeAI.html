@@ -722,7 +722,7 @@ function editKB(button) {
     
     <script>
 
-// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn không lỗi
+// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn tuyệt đối không lỗi font
 function downloadIncidentPDF() {
     if (typeof window.jspdf === 'undefined') {
         alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
@@ -739,25 +739,25 @@ function downloadIncidentPDF() {
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Cam nang xu ly su co thiet bi va bien tan hien truong", 15, 27);
+    doc.text("Technical Support & Inverter Incident Report", 15, 27);
     
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
-    // Nội dung cẩm nang chuẩn (Không dùng ký tự &)
+    // Nội dung chuẩn hoàn toàn bằng tiếng Anh / không dấu để chống lỗi font 100%
     let contentLines = [
-        "BIEN BAN CHAN DOAN VA XU LY SU CO - AN TIN",
+        "INCIDENT DIAGNOSIS & RESOLUTION REPORT - AN TIN",
         "-------------------------------------------------------------------",
         "",
-        "Thong tin thiet bi: Bien tan An Tin / Tu dien cong nghiep",
-        "Trang thai: Da ghi nhan su co va tien hanh chuan doan tu dong hoa.",
-        "Giai phap ky thuat:",
-        "- Kiem tra nguon dien dau vao va he thong tan nhiet.",
-        "- Reset loi va cap nhat thong so cai dat chuan theo tai lieu.",
-        "- Lien he chuyen gia ky thuat truc tiep neu van tiep tuc canh bao.",
+        "Device Information: An Tin Inverter / Industrial Control Panel",
+        "Status: Incident recorded and automated diagnosis completed.",
+        "Technical Solutions:",
+        "- Check input power supply and cooling system performance.",
+        "- Reset system errors and update standard configuration parameters.",
+        "- Contact direct technical experts if warning persists.",
         "",
         "-------------------------------------------------------------------",
-        "Hotline ho tro ky thuat truc tiep: 0914.060.339",
+        "Direct Technical Hotline: 0914.060.339",
         "Website: https://ebook.antinco.com"
     ];
 
@@ -776,7 +776,7 @@ function downloadIncidentPDF() {
         });
     });
 
-    const fileName = `Bien_Ban_Su_Co_AnTin_${new Date().toISOString().slice(0,10)}.pdf`;
+    const fileName = `Incident_Report_AnTin_${new Date().toISOString().slice(0,10)}.pdf`;
     doc.save(fileName);
 }
         
