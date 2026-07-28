@@ -435,12 +435,19 @@ function submitMessage(text, imageFile) {
     // (Tuỳ chọn) Nếu bạn có hàm gửi API thực tế, hãy truyền biến `aiPrompt` chứa đầy đủ kịch bản ngầm vào đây thay vì truyền `text`
 }
     
-            // AI Response Simulation
-            setTimeout(() => {
-                document.getElementById(typingId).remove();
-                
-                let aiResponse = `🔍 <b>Kết quả Chuẩn Bệnh từ Vision AI Core & Tự động ghi nhận CRM:</b><br>
-                Hệ thống đã nhận diện thành công yêu cầu tra cứu và quét qua cẩm nang kỹ thuật 25 năm của An Tín.`;
+     // AI Response Simulation
+        setTimeout(() => {
+        // === AI TỰ ĐỘNG ĐỌC KHO TRI THỨC NGẦM ĐỂ PHẢN HỒI ===
+        const knowledgeBase = window.AI_KNOWLEDGE_CONTEXT || 
+            JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]')
+                .map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
+        
+        console.log("AI đang xử lý với kho tri thức gồm ký tự:", knowledgeBase.length);
+        // ====================================================
+
+        document.getElementById(typingId).remove();
+
+        let aiResponse = `<b>Kết quả Chuẩn Bệnh từ Vision AI Core & Tự động ghi nhận CRM:</b><br><br>Hệ thống đã nhận diện thành công yêu cầu tra cứu và quét qua cẩm nang kỹ thuật 25 năm của An Tín.`;
 
                 if(imageFile) {
                     aiResponse = `🛠️ <b>Chẩn đoán lỗi thiết bị qua hình ảnh trực quan:</b><br>
