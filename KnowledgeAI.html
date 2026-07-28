@@ -1020,6 +1020,20 @@ function handleExpertConsultation() {
     // 2. Tự động xuất và tải file PDF biên bản tiếng Việt cho kỹ thuật viên
     downloadCleanPDFReport();
 }
+
+function openLeadModal() {
+    let name = prompt("Nhập họ và tên của bạn:", "Khách hàng An Tín");
+    if (!name) return;
+    
+    let phone = prompt("Nhập số điện thoại liên hệ:", "0914060339");
+    if (!phone) return;
+
+    let address = prompt("Nhập địa chỉ của bạn:", "Toàn quốc");
+    
+    // Đẩy dữ liệu chuẩn 5 trường qua Webhook Make và tải PDF biên bản
+    submitLeadAndSyncWebhook(name, phone, address, "Yêu cầu tư vấn chuyên sâu Inverter", "Khách hàng tương tác trực tiếp qua hệ thống Knowledge AI.");
+    downloadCleanPDFReport();
+}
         
 </script>
 </body>
