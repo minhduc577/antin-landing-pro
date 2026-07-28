@@ -908,6 +908,64 @@ function speakLastAIResponse() {
 
     window.speechSynthesis.speak(utterance);
 }
+
+// Chức năng xuất biên bản / cẩm nang sự cố ra file PDF chuyên nghiệp
+function downloadIncidentPDF() {
+    // Kiểm tra xem thư viện jsPDF đã sẵn sàng chưa
+    if (typeof window.jspdf === 'undefined') {
+        alert("⚠️ Thư viện tạo PDF đang được tải, vui lòng thử lại sau vài giây!");
+        return;
+    }
+
+    // Lấy nội dung câu trả lời chuẩn đoán mới nhất của AI
+    const messageElements = document.querySelectorAll('.ai-response-text, .message-bubble, .text-white, p');
+    let incidentContent = "BIÊN BẢN CHẨN ĐOÁN & XỬ LÝ SỰ CỐ - AN TÍN\n";
+    incidentContent += "---------------------------------------------------\n\n";
+
+    if (messageElements.length > 0) {
+        for (let i = messageElements.length - 1; i >= 0; i--) {
+            const text = messageElements[i].innerText.trim();
+            if (text.length > 20 && !text.includes("Nhập câu hỏi") && !text.includes("An Tín")) {
+                incidentContent += text + "\n\n";
+                break;
+            }
+        }
+    }
+
+    if (incidentContent.length < 60) {
+        incidentContent += "Hệ thống sinh thái kỹ thuật An Tín (25 năm kinh nghiệm).\nGiải pháp tự động hóa, biến tần và thiết bị điện công nghiệp.";
+    }
+
+    incidentContent += "\n---------------------------------------------------\n";
+    incidentContent += "Hotline hỗ trợ kỹ thuật trực tiếp: 0914.060.339\n";
+    incidentContent += "Website: https://ebook.antinco.com";
+
+    // Khởi tạo tệp PDF bằng jsPDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Cấu hình font và bố cục trang PDF
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text("AN TIN DIGITAL ECOSYSTEM - TECHNICAL RAG", 15, 20);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.text("Cam nang xu ly su co thiet bi & bien tan", 15, 28);
+    
+    // Đường kẻ ngang phân cách
+    doc.setLineWidth(0.5);
+    doc.line(15, 33, 195, 33);
+
+    // Đưa nội dung chẩn đoán vào PDF (tự động xuống dòng)
+    doc.setFontSize(10);
+    const splitText = doc.splitTextToSize(incidentContent, 180);
+    doc.text(splitText, 15, 42);
+
+    // Tự động tải xuống tệp PDF với tên định danh
+    const fileName = `Bien_Ban_Su_Co_AnTin_${new Date().toISOString().slice(0,10)}.pdf`;
+    doc.save(fileName);
+}
         
 </script>
 </body>
