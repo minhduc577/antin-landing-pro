@@ -223,7 +223,10 @@
 </div>
 
 <!-- Nút Tải cẩm nang PDF -->
-<button type="button" onclick="(function() {
+<button type="button" onclick="downloadCleanPDFReport()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-all text-sm flex items-center space-x-2">
+    <i class="fa-solid fa-file-pdf text-rose-400"></i>
+    <span class="text-xs">Tải cẩm nang PDF</span>
+</button> {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     doc.setFont('helvetica', 'bold');
