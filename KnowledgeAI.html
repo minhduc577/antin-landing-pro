@@ -722,7 +722,7 @@ function editKB(button) {
     
     <script>
 
-// Hàm xuất biên bản / cẩm nang sự cố ra file PDF chuẩn tiếng Việt không lỗi font
+// Hàm xuất biên bản / cẩm nang sự cố ra file PDF chuẩn không lỗi font (Sử dụng chuẩn Unicode NFD)
 function downloadIncidentPDF() {
     if (typeof window.jspdf === 'undefined') {
         alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
@@ -747,30 +747,22 @@ function downloadIncidentPDF() {
         rawText = "He thong sinh thai ky thuat An Tin (25 nam kinh nghiem). Chuyen gia giai phap bien tan, tu dien va tu dong hoa cong nghiep.";
     }
 
-    // Hàm chuyển đổi tiếng Việt có dấu sang không dấu an toàn tuyệt đối cho PDF
+    // Chuẩn hóa Unicode NFD để lột bỏ hoàn toàn dấu tiếng Việt một cách chính xác tuyệt đối
     function removeVietnameseTones(str) {
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-        str = str.replace(/Đ/g, "D");
-        return str;
+        return str
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd')
+            .replace(/Đ/g, 'D');
     }
+
+    let cleanText = removeVietnameseTones(rawText);
 
     let contentLines = [
         "BIEN BAN CHAN DOAN & XU LY SU CO - AN TIN",
         "-------------------------------------------------------------------",
         "",
-        removeVietnameseTones(rawText),
+        cleanText,
         "",
         "-------------------------------------------------------------------",
         "Hotline ho tro ky thuat truc tiep: 0914.060.339",
@@ -787,7 +779,7 @@ function downloadIncidentPDF() {
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Bien ban xu ly su co thiet bi & bien tan hien truong", 15, 27);
+    doc.text("Cam nang xu ly su co thiet bi & bien tan hien truong", 15, 27);
     
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
