@@ -723,6 +723,7 @@ function editKB(button) {
     <script>
 
 // Hàm xuất biên bản / cẩm nang sự cố ra file PDF hỗ trợ chuẩn Unicode tiếng Việt
+// Hàm xuất biên bản / cẩm nang sự cố ra file PDF chuẩn tiếng Việt không lỗi font
 function downloadIncidentPDF() {
     if (typeof window.jspdf === 'undefined') {
         alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
@@ -731,38 +732,56 @@ function downloadIncidentPDF() {
 
     // Lấy nội dung phản hồi mới nhất của AI
     const messageElements = document.querySelectorAll('.ai-response-text, .message-bubble, .text-white, p');
-    let contentLines = [];
-    
-    contentLines.push("BIEN BAN CHAN DOAN & XU LY SU CO - AN TIN");
-    contentLines.push("-------------------------------------------------------------------");
-    contentLines.push("");
+    let rawText = "";
 
-    let foundContent = false;
     if (messageElements.length > 0) {
         for (let i = messageElements.length - 1; i >= 0; i--) {
             const text = messageElements[i].innerText.trim();
             if (text.length > 20 && !text.includes("Nhập câu hỏi") && !text.includes("An Tín")) {
-                contentLines.push(text);
-                foundContent = true;
+                rawText = text;
                 break;
             }
         }
     }
 
-    if (!foundContent) {
-        contentLines.push("He thong sinh thai ky thuat An Tin (25 nam kinh nghiem).");
-        contentLines.push("Chuyen gia giai phap bien tan, tu dien va tu dong hoa cong nghiep.");
+    if (!rawText) {
+        rawText = "He thong sinh thai ky thuat An Tin (25 nam kinh nghiem). Chuyen gia giai phap bien tan, tu dien va tu dong hoa cong nghiep.";
     }
 
-    contentLines.push("");
-    contentLines.push("-------------------------------------------------------------------");
-    contentLines.push("Hotline ho tro ky thuat truc tiep: 0914.060.339");
-    contentLines.push("Website: https://ebook.antinco.com");
+    // Hàm chuyển đổi tiếng Việt có dấu sang không dấu an toàn tuyệt đối cho PDF
+    function removeVietnameseTones(str) {
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+        str = str.replace(/đ/g, "d");
+        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+        str = str.replace(/Đ/g, "D");
+        return str;
+    }
+
+    let contentLines = [
+        "BIEN BAN CHAN DOAN & XU LY SU CO - AN TIN",
+        "-------------------------------------------------------------------",
+        "",
+        removeVietnameseTones(rawText),
+        "",
+        "-------------------------------------------------------------------",
+        "Hotline ho tro ky thuat truc tiep: 0914.060.339",
+        "Website: https://ebook.antinco.com"
+    ];
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Cấu hình tiêu đề biên bản
+    // Tiêu đề báo cáo
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.text("AN TIN DIGITAL ECOSYSTEM - TECHNICAL RAG", 15, 20);
@@ -774,14 +793,14 @@ function downloadIncidentPDF() {
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
-    // Xử lý đưa nội dung vào tệp PDF
+    // In nội dung vào PDF
     doc.setFontSize(9);
     let currentY = 40;
     
     contentLines.forEach(line => {
         const splitText = doc.splitTextToSize(line, 180);
         splitText.forEach(subLine => {
-            if (currentY > 280) { // Tự động sang trang nếu vượt quá giới hạn trang A4
+            if (currentY > 280) {
                 doc.addPage();
                 currentY = 20;
             }
@@ -790,7 +809,6 @@ function downloadIncidentPDF() {
         });
     });
 
-    // Lưu tệp PDF
     const fileName = `Bien_Ban_Su_Co_AnTin_${new Date().toISOString().slice(0,10)}.pdf`;
     doc.save(fileName);
 }
