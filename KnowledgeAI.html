@@ -386,6 +386,15 @@
         }
 
 function submitMessage(text, imageFile) {
+    // === TỰ ĐỘNG ĐÍNH KÈM KỊCH BẢN TRI THỨC VÀO TIN NHẮN ===
+    const knowledgeBase = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]')
+        .map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
+    
+    if (knowledgeBase) {
+        text = `Dựa vào kho tri thức sau đây:\n${knowledgeBase}\n\nCâu hỏi/Yêu cầu của khách hàng: ${text}`;
+    }
+    // ====================================================
+
     const chatMessages = document.getElementById('chatMessages');
 
     let imageHTMLTag = '';
