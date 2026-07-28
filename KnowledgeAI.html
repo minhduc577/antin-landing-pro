@@ -385,44 +385,52 @@
             submitMessage(text, null);
         }
 
-        function submitMessage(text, imageFile) {
-            const chatMessages = document.getElementById('chatMessages');
+function submitMessage(text, imageFile) {
+    // === TỰ ĐỘNG ĐÍNH KÈM KỊCH BẢN TRI THỨC VÀO TIN NHẮN ===
+    const knowledgeBase = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]')
+        .map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
+    
+    if (knowledgeBase) {
+        text = `Dựa vào kho tri thức sau đây:\n${knowledgeBase}\n\nCâu hỏi/Yêu cầu của khách hàng: ${text}`;
+    }
+    // ====================================================
 
-            let imageHTMLTag = '';
-            if (imageFile) {
-                imageHTMLTag = `<div class="mt-2 text-xs text-cyan-300 bg-slate-900/60 p-2 rounded border border-cyan-500/30 flex items-center gap-2"><i class="fa-solid fa-image text-cyan-400"></i> [Đã tải lên hình ảnh phân tích thiết bị: ${escapeHtml(imageFile.name)}]</div>`;
-            }
+    const chatMessages = document.getElementById('chatMessages');
 
-            // User Bubble
-            const userHTML = `
-                <div class="flex items-start justify-end gap-3 message-bubble">
-                    <div class="bg-purple-600/90 border border-purple-400/50 rounded-2xl p-4 text-sm text-white max-w-2xl shadow-md">
-                        <p>${escapeHtml(text || 'Phân tích hình ảnh thiết bị lỗi hệ thống')}</p>
-                        ${imageHTMLTag}
-                        <span class="block text-[10px] text-purple-200 mt-1">Nguồn lọc: [${currentSourceName}]</span>
-                    </div>
-                    <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-sm flex-shrink-0 shadow-md">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                </div>
-            `;
-            chatMessages.insertAdjacentHTML('beforeend', userHTML);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+    let imageHTMLTag = '';
+    if (imageFile) {
+        imageHTMLTag = `<div class="mt-2 text-xs text-cyan-300 bg-slate-900/60 p-2 rounded border border-cyan-500/30 flex items-center gap-2"><i class="fa-solid fa-image"></i><span>Đính kèm hình ảnh mô tả thiết bị lỗi</span></div>`;
+    }
 
-            // Typing Indicator
-            const typingId = 'typing-' + Date.now();
-            const typingHTML = `
-                <div id="${typingId}" class="flex items-start gap-3 message-bubble">
-                    <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
-                        <i class="fa-solid fa-brain animate-spin"></i>
-                    </div>
-                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-300 shadow-inner flex items-center gap-2">
-                        <span class="animate-pulse">👁️ Vision AI & CRM Automation đang quét tri thức 25 năm và phân tích mức độ tiềm năng...</span>
-                    </div>
-                </div>
-            `;
-            chatMessages.insertAdjacentHTML('beforeend', typingHTML);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+    // User Bubble
+    const userHTML = `
+        <div class="flex items-start justify-end gap-3 message-bubble">
+            <div class="bg-purple-600/90 border border-purple-400/50 p-4 rounded-2xl text-sm text-white max-w-2xl shadow-md">
+                <p>${escapeHtml(text || 'Phân tích hình ảnh thiết bị lỗi hệ thống')}</p>
+                ${imageHTMLTag}
+                <span class="block text-[10px] text-purple-200 mt-1">Nguồn lọc: [${currentSourceName}]</span>
+            </div>
+            <div class="w-9 h-9 rounded-full bg-cyan-400 animate-pulse flex items-center justify-center"><i class="fa-solid fa-user text-slate-700"></i></div>
+        </div>
+    `;
+    chatMessages.insertAdjacentHTML('beforeend', userHTML);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Typing Indicator
+    const typingId = 'typing-' + Date.now();
+    const typingHTML = `
+        <div id="${typingId}" class="flex items-start gap-3 message-bubble">
+            <div class="w-9 h-9 rounded-full bg-purple-600/70 border border-purple-500 text-purple-300 text-sm flex items-center justify-center flex-shrink-0 shadow-inner">
+                <i class="fa-solid fa-brain animate-pulse"></i>
+            </div>
+            <div class="bg-slate-800/90 border border-slate-700/80 p-4 rounded-2xl text-sm text-white max-w-2xl shadow-inner flex items-center gap-2">
+                <span class="animate-pulse">👁️ Vision AI & CRM Automation đang quét tri thức 25 năm và phân tích mức độ tiềm năng...</span>
+            </div>
+        </div>
+    `;
+    chatMessages.insertAdjacentHTML('beforeend', typingHTML);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
             // AI Response Simulation
             setTimeout(() => {
