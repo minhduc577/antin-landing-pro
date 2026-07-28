@@ -1575,17 +1575,22 @@ const KNOWLEDGE_SCENARIOS = [
 ];        
 
 // Dán đoạn code đồng bộ vào đây:
-// TỰ ĐỘNG NẠP TOÀN BỘ KỊCH BẢN VĨNH VIỄN CHO MỌI MÁY
 window.addEventListener('DOMContentLoaded', function() {
     try {
         if (typeof KNOWLEDGE_SCENARIOS !== 'undefined' && KNOWLEDGE_SCENARIOS.length > 0) {
             localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
+            
+            // Tự động trích xuất các nhóm (category) duy nhất và dựng menu bên trái
+            const categories = [...new Set(KNOWLEDGE_SCENARIOS.map(item => item.category).filter(Boolean))];
+            console.log("Danh sách nhóm tự động:", categories);
+            
+            // Nếu giao diện có hàm render riêng thì gọi, không thì tự động tải lại bảng
             if (typeof loadScenarios === 'function') {
                 loadScenarios();
             }
         }
     } catch (e) {
-        console.error("Lỗi tự động nạp kịch bản:", e);
+        console.error("Lỗi đồng bộ triệt để:", e);
     }
 });
         
