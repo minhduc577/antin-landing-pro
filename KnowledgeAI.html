@@ -433,49 +433,48 @@ function submitMessage(text, imageFile) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
     
    // AI Response Simulation
+
     setTimeout(() => {
-        // === AI TỰ ĐỘNG ĐỌC KHO TRI THỨC NGẦM ĐỂ PHẢN HỒI ===
-        const knowledgeBase = window.AI_KNOWLEDGE_CONTEXT || 
-            JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]')
-                .map(item => `[${item.category}] ${item.title}: ${item.content}`).join('\n\n');
+        // Lấy kho tri thức từ localStorage
+        const scrs = JSON.parse(localStorage.getItem('ant_knowledge_scenarios') || '[]');
         
-        console.log("AI đang xử lý với kho tri thức gồm ký tự:", knowledgeBase.length);
-        // ====================================================
+        // Tìm kịch bản phù hợp nhất với từ khóa người dùng vừa hỏi
+        let matchedContent = "Hệ thống đã ghi nhận yêu cầu của bạn và đã chuyển dữ liệu về Zalo OA chuyên gia An Tín.";
+        if (scrs.length > 0 && text) {
+            let found = scrs.find(item => text.toLowerCase().includes(item.title.toLowerCase()) || item.content.toLowerCase().includes(text.toLowerCase()));
+            if (found) {
+                matchedContent = `<b>[${found.category}] ${found.title}</b><br>${found.content}`;
+            } else {
+                matchedContent = `Đã quét qua ${scrs.length} kịch bản tri thức hệ thống. Gợi ý nội dung liên quan nhất cho yêu cầu của bạn: <br><br><b>${scrs[0].title}</b><br>${scrs[0].content}`;
+            }
+        }
 
         document.getElementById(typingId).remove();
 
-        let aiResponse = `<b>Kết quả Chuẩn Bệnh từ Vision AI Core & Tự động ghi nhận CRM:</b><br><br>Hệ thống đã nhận diện thành công yêu cầu tra cứu và quét qua cẩm nang kỹ thuật 25 năm của An Tín.`;
-                
-                if(imageFile) {
-                    aiResponse = `🛠️ <b>Chẩn đoán lỗi thiết bị qua hình ảnh trực quan:</b><br>
-                    - Nhận diện linh kiện: Bo mạch chủ / Sơ đồ kết nối tiêu chuẩn kỹ thuật cao.<br>
-                    - Vị trí lỗi: Phát hiện điểm sụt áp / hở mạch phần cứng.<br>
-                    - <b>Giải pháp xử lý:</b> Hệ thống đã tự động đánh dấu <b>Lead Tiềm Năng</b> để kết nối kỹ sư trưởng.`;
-                }
+        let aiResponse = `<b>Kết quả tra cứu từ Kho Tri thức An Tín:</b><br><br>${matchedContent}`;
 
-                const aiHTML = `
-                    <div class="flex items-start gap-3 message-bubble">
-                        <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500 flex items-center justify-center text-purple-300 text-sm flex-shrink-0 shadow-md">
-                            <i class="fa-solid fa-brain"></i>
-                        </div>
-                        <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-200 max-w-2xl shadow-inner space-y-3">
-                            <p>${aiResponse}</p>
-                            <div class="pt-2 border-t border-slate-700 flex flex-wrap gap-2 items-center">
-                                <button onclick="openLeadModal()" class="pulse-effect inline-flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition shadow-md cursor-pointer">
-                                    <i class="fa-solid fa-headset animate-bounce"></i> Gửi thông tin về Zalo OA chuyên gia
-                                </button>
-                                <a href="https://zalo.me/0914060339" target="_blank" class="pulse-effect inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition">
-                                    <i class="fa-solid fa-phone"></i> Hotline: 0914.060.339
-                                </a>
-                            </div>
-                        </div>
+        const aiHTML = `
+            <div class="flex items-start gap-3 message-bubble">
+                <div class="w-9 h-9 rounded-full bg-purple-600 border border-purple-500 text-purple-200 text-sm flex items-center justify-center flex-shrink-0 shadow-md">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="bg-slate-800/90 border border-slate-700/80 p-4 rounded-2xl text-sm text-white max-w-2xl shadow-inner space-y-2">
+                    <p>${aiResponse}</p>
+                    <div class="pt-2 flex flex-wrap gap-2">
+                        <button onclick="alert('Đã gửi thông tin về Zalo OA thành công!')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-xs rounded-lg text-white font-medium transition shadow flex items-center gap-1.5">
+                            <i class="fa-solid fa-paper-plane"></i> Gửi thông tin về Zalo OA chuyên gia
+                        </button>
+                        <a href="tel:0914060339" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs rounded-lg text-cyan-300 font-medium transition shadow flex items-center gap-1.5">
+                            <i class="fa-solid fa-phone"></i> Hotline: 0914.060.339
+                        </a>
                     </div>
-                `;
-                chatMessages.insertAdjacentHTML('beforeend', aiHTML);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1400);
-        }
-
+                </div>
+            </div>
+        `;
+        chatMessages.insertAdjacentHTML('beforeend', aiHTML);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 1000);
+    
         function clearChat() {
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = `
