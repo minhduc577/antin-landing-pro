@@ -1575,11 +1575,19 @@ const KNOWLEDGE_SCENARIOS = [
 ];        
 
 // Dán đoạn code đồng bộ vào đây:
-try {
-    localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
-} catch (e) {
-    console.error("Lỗi đồng bộ kịch bản:", e);
-}
+// TỰ ĐỘNG NẠP TOÀN BỘ KỊCH BẢN VĨNH VIỄN CHO MỌI MÁY
+window.addEventListener('DOMContentLoaded', function() {
+    try {
+        if (typeof KNOWLEDGE_SCENARIOS !== 'undefined' && KNOWLEDGE_SCENARIOS.length > 0) {
+            localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
+            if (typeof loadScenarios === 'function') {
+                loadScenarios();
+            }
+        }
+    } catch (e) {
+        console.error("Lỗi tự động nạp kịch bản:", e);
+    }
+});
         
 </script>
 </body>
