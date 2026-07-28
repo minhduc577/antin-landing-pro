@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowledge AI - Multimodal AI Kho Tri Thức 25 Năm | An Tín Ecosystem</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons CDN -->
@@ -221,49 +220,6 @@
         <span class="text-xs">Đọc hướng dẫn</span>
     </button>
 </div>
-
-<!-- Nút Tải cẩm nang PDF -->
-<button type="button" onclick="downloadCleanPDFReport()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-all text-sm flex items-center space-x-2">
-    <i class="fa-solid fa-file-pdf text-rose-400"></i>
-    <span class="text-xs">Tải cẩm nang PDF</span>
-</button> {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(14);
-    doc.text('AN TIN DIGITAL ECOSYSTEM - TECHNICAL RAG', 15, 20);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.text('Technical Support and Inverter Incident Report', 15, 27);
-    doc.setLineWidth(0.4);
-    doc.line(15, 32, 195, 32);
-    
-    let lines = [
-        'INCIDENT DIAGNOSIS REPORT - AN TIN',
-        '-------------------------------------------------------------------',
-        '',
-        'Device: An Tin Inverter / Industrial Control Panel',
-        'Status: Incident recorded and automated diagnosis completed.',
-        'Technical Solutions:',
-        '- Check input power supply and cooling system performance.',
-        '- Reset system errors and update standard configuration parameters.',
-        '- Contact direct technical experts if warning persists.',
-        '',
-        '-------------------------------------------------------------------',
-        'Direct Technical Hotline: 0914.060.339',
-        'Website: https://ebook.antinco.com'
-    ];
-    
-    let y = 40;
-    lines.forEach(l => {
-        doc.text(l, 15, y);
-        y += 6;
-    });
-    doc.save('AnTin_Report_Final.pdf');
-})" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-all text-sm flex items-center space-x-2">
-    <i class="fa-solid fa-file-pdf text-rose-400"></i>
-    <span class="text-xs">Tải cẩm nang PDF</span>
-</button>                 
                     
                     <input type="text" id="userInput" placeholder="Nhập câu hỏi kèm mô tả hình ảnh thiết bị lỗi..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition shadow-inner">
                     
@@ -758,63 +714,6 @@ function editKB(button) {
     </div>
     
     <script>
-
-// Hàm xuất PDF hoàn toàn mới, đổi tên để ép trình duyệt nhận diện và bỏ qua cache cũ
-function downloadPDFReportFinal() {
-    if (typeof window.jspdf === 'undefined') {
-        alert("Thu vien PDF dang tai, vui long thu lai sau 2 giay!");
-        return;
-    }
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text("AN TIN DIGITAL ECOSYSTEM - TECHNICAL RAG", 15, 20);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    doc.text("Technical Support and Inverter Incident Report", 15, 27);
-    
-    doc.setLineWidth(0.4);
-    doc.line(15, 32, 195, 32);
-
-    let contentLines = [
-        "INCIDENT DIAGNOSIS REPORT - AN TIN",
-        "-------------------------------------------------------------------",
-        "",
-        "Device: An Tin Inverter / Industrial Control Panel",
-        "Status: Incident recorded and automated diagnosis completed.",
-        "Technical Solutions:",
-        "- Check input power supply and cooling system performance.",
-        "- Reset system errors and update standard configuration parameters.",
-        "- Contact direct technical experts if warning persists.",
-        "",
-        "-------------------------------------------------------------------",
-        "Direct Technical Hotline: 0914.060.339",
-        "Website: https://ebook.antinco.com"
-    ];
-
-    doc.setFontSize(9);
-    let currentY = 40;
-    
-    contentLines.forEach(line => {
-        const splitText = doc.splitTextToSize(line, 180);
-        splitText.forEach(subLine => {
-            if (currentY > 280) {
-                doc.addPage();
-                currentY = 20;
-            }
-            doc.text(subLine, 15, currentY);
-            currentY += 6;
-        });
-    });
-
-    const fileName = `AnTin_Report_${Date.now()}.pdf`;
-    doc.save(fileName);
-}
-        
         // Phần tiếp theo của hàm trainNewKnowledge khi hoàn tất huấn luyện
         function trainNewKnowledge() {
             const title = document.getElementById('kbTitle').value.trim();
@@ -1001,64 +900,6 @@ function speakLastAIResponse() {
     utterance.pitch = 1.0; // Cao độ
 
     window.speechSynthesis.speak(utterance);
-}
-
-// Chức năng xuất biên bản / cẩm nang sự cố ra file PDF chuyên nghiệp
-function downloadIncidentPDF() {
-    // Kiểm tra xem thư viện jsPDF đã sẵn sàng chưa
-    if (typeof window.jspdf === 'undefined') {
-        alert("⚠️ Thư viện tạo PDF đang được tải, vui lòng thử lại sau vài giây!");
-        return;
-    }
-
-    // Lấy nội dung câu trả lời chuẩn đoán mới nhất của AI
-    const messageElements = document.querySelectorAll('.ai-response-text, .message-bubble, .text-white, p');
-    let incidentContent = "BIÊN BẢN CHẨN ĐOÁN & XỬ LÝ SỰ CỐ - AN TÍN\n";
-    incidentContent += "---------------------------------------------------\n\n";
-
-    if (messageElements.length > 0) {
-        for (let i = messageElements.length - 1; i >= 0; i--) {
-            const text = messageElements[i].innerText.trim();
-            if (text.length > 20 && !text.includes("Nhập câu hỏi") && !text.includes("An Tín")) {
-                incidentContent += text + "\n\n";
-                break;
-            }
-        }
-    }
-
-    if (incidentContent.length < 60) {
-        incidentContent += "Hệ thống sinh thái kỹ thuật An Tín (25 năm kinh nghiệm).\nGiải pháp tự động hóa, biến tần và thiết bị điện công nghiệp.";
-    }
-
-    incidentContent += "\n---------------------------------------------------\n";
-    incidentContent += "Hotline hỗ trợ kỹ thuật trực tiếp: 0914.060.339\n";
-    incidentContent += "Website: https://ebook.antinco.com";
-
-    // Khởi tạo tệp PDF bằng jsPDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    // Cấu hình font và bố cục trang PDF
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(16);
-    doc.text("AN TIN DIGITAL ECOSYSTEM - TECHNICAL RAG", 15, 20);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(11);
-    doc.text("Cam nang xu ly su co thiet bi & bien tan", 15, 28);
-    
-    // Đường kẻ ngang phân cách
-    doc.setLineWidth(0.5);
-    doc.line(15, 33, 195, 33);
-
-    // Đưa nội dung chẩn đoán vào PDF (tự động xuống dòng)
-    doc.setFontSize(10);
-    const splitText = doc.splitTextToSize(incidentContent, 180);
-    doc.text(splitText, 15, 42);
-
-    // Tự động tải xuống tệp PDF với tên định danh
-    const fileName = `Bien_Ban_Su_Co_AnTin_${new Date().toISOString().slice(0,10)}.pdf`;
-    doc.save(fileName);
 }
         
 </script>
