@@ -1575,9 +1575,10 @@ const KNOWLEDGE_SCENARIOS = [
 ];        
 
 // Dán đoạn code đồng bộ vào đây:
-if (!localStorage.getItem('ant_scenarios_loaded')) {
+try {
     localStorage.setItem('ant_knowledge_scenarios', JSON.stringify(KNOWLEDGE_SCENARIOS));
-    localStorage.setItem('ant_scenarios_loaded', 'true');
+} catch (e) {
+    console.error("Lỗi đồng bộ kịch bản:", e);
 }
         
 </script>
