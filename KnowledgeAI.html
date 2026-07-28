@@ -722,7 +722,7 @@ function editKB(button) {
     
     <script>
 
-// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn tuyệt đối
+// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn không lỗi ký tự &
 function downloadIncidentPDF() {
     if (typeof window.jspdf === 'undefined') {
         alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
@@ -739,14 +739,14 @@ function downloadIncidentPDF() {
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Cam nang xu ly su co thiet bi & bien tan hien truong", 15, 27);
+    doc.text("Cam nang xu ly su co thiet bi va bien tan hien truong", 15, 27);
     
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
-    // Nội dung cẩm nang tiêu chuẩn không lỗi font
+    // Nội dung cẩm nang chuẩn (Không chứa ký tự & để tránh lỗi mã hóa)
     let contentLines = [
-        "BIEN BAN CHAN DOAN & XU LY SU CO - AN TIN",
+        "BIEN BAN CHAN DOAN VA XU LY SU CO - AN TIN",
         "-------------------------------------------------------------------",
         "",
         "Thong tin thiet bi: Bien tan An Tin / Tu dien cong nghiep",
