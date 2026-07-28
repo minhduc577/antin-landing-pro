@@ -722,14 +722,14 @@ function editKB(button) {
     
     <script>
 
-// Hàm xuất biên bản / cẩm nang sự cố ra file PDF chuẩn không lỗi font (Sử dụng chuẩn Unicode NFD)
+// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn không lỗi font
 function downloadIncidentPDF() {
     if (typeof window.jspdf === 'undefined') {
         alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
         return;
     }
 
-    // Lấy nội dung phản hồi mới nhất của AI
+    // Lấy nội dung văn bản trực tiếp từ phần tử kết quả AI
     const messageElements = document.querySelectorAll('.ai-response-text, .message-bubble, .text-white, p');
     let rawText = "";
 
@@ -747,27 +747,26 @@ function downloadIncidentPDF() {
         rawText = "He thong sinh thai ky thuat An Tin (25 nam kinh nghiem). Chuyen gia giai phap bien tan, tu dien va tu dong hoa cong nghiep.";
     }
 
-    // Chuẩn hóa Unicode NFD để lột bỏ hoàn toàn dấu tiếng Việt một cách chính xác tuyệt đối
-    function removeVietnameseTones(str) {
+    // Hàm thay thế thủ công toàn bộ ký tự có dấu thành không dấu an toàn tuyệt đối
+    function cleanVN(str) {
         return str
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/đ/g, 'd')
-            .replace(/Đ/g, 'D');
+            .replace(/[àáạảãâầấậẩẫăằắặẳẵ]/g, "a")
+            .replace(/[èéẹẻẽêềếệểễ]/g, "e")
+            .replace(/[ìíịỉĩ]/g, "i")
+            .replace(/[òóọỏõôồốộổỗơờớợởỡ]/g, "o")
+            .replace(/[ùúụủũưừứựửữ]/g, "u")
+            .replace(/[ỳýỵỷỹ]/g, "y")
+            .replace(/đ/g, "d")
+            .replace(/[ÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴ]/g, "A")
+            .replace(/[ÈÉẸẺẼÊỀẾỆỂỄ]/g, "E")
+            .replace(/[ÌÍỊỈĨ]/g, "I")
+            .replace(/[ÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠ]/g, "O")
+            .replace(/[ÙÚỤỦŨƯỪỨỰỬỮ]/g, "U")
+            .replace(/[ỲÝỴỶỸ]/g, "Y")
+            .replace(/Đ/g, "D");
     }
 
-    let cleanText = removeVietnameseTones(rawText);
-
-    let contentLines = [
-        "BIEN BAN CHAN DOAN & XU LY SU CO - AN TIN",
-        "-------------------------------------------------------------------",
-        "",
-        cleanText,
-        "",
-        "-------------------------------------------------------------------",
-        "Hotline ho tro ky thuat truc tiep: 0914.060.339",
-        "Website: https://ebook.antinco.com"
-    ];
+    let cleanContent = cleanVN(rawText);
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -784,7 +783,19 @@ function downloadIncidentPDF() {
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
-    // In nội dung vào PDF
+    // Danh sách nội dung in ra PDF
+    let contentLines = [
+        "BIEN BAN CHAN DOAN & XU LY SU CO - AN TIN",
+        "-------------------------------------------------------------------",
+        "",
+        cleanContent,
+        "",
+        "-------------------------------------------------------------------",
+        "Hotline ho tro ky thuat truc tiep: 0914.060.339",
+        "Website: https://ebook.antinco.com"
+    ];
+
+    // In nội dung vào PDF với khoảng cách dòng chuẩn
     doc.setFontSize(9);
     let currentY = 40;
     
