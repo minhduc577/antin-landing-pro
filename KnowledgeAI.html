@@ -1005,6 +1005,21 @@ function submitLeadAndSyncWebhook(name, phone, address, issue, historyText) {
         console.error("Lỗi kết nối Webhook:", error);
     });
 }
+
+function handleExpertConsultation() {
+    // Lấy thông tin từ giao diện hoặc đặt giá trị mặc định cho các trường dữ liệu
+    const customerName = document.getElementById('leadName') ? document.getElementById('leadName').value : "Khách hàng An Tín";
+    const customerPhone = document.getElementById('leadPhone') ? document.getElementById('leadPhone').value : "0914060339";
+    const customerAddress = document.getElementById('leadAddress') ? document.getElementById('leadAddress').value : "Hệ thống / Trạm kỹ thuật";
+    const technicalIssue = "Lỗi biến tần / Hệ thống điều khiển tự động Inverter";
+    const chatLog = "Khách hàng yêu cầu chuyên gia hỗ trợ xử lý sự cố thiết bị trực tuyến qua hệ thống RAG AI.";
+
+    // 1. Đẩy dữ liệu qua Webhook Make.com (`https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc`)
+    submitLeadAndSyncWebhook(customerName, customerPhone, customerAddress, technicalIssue, chatLog);
+
+    // 2. Tự động xuất và tải file PDF biên bản tiếng Việt cho kỹ thuật viên
+    downloadCleanPDFReport();
+}
         
 </script>
 </body>
