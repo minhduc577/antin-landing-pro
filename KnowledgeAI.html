@@ -421,7 +421,7 @@ function submitMessage(text, imageFile) {
     `;
     chatMessages.insertAdjacentHTML('beforeend', typingHTML);
     chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+    
             // AI Response Simulation
             setTimeout(() => {
                 document.getElementById(typingId).remove();
