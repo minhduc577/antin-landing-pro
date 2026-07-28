@@ -722,34 +722,32 @@ function editKB(button) {
     
     <script>
 
-// Hàm xuất biên bản / cẩm nang sự cố ra file PDF sạch chuẩn tuyệt đối không lỗi font
-function downloadIncidentPDF() {
+// Hàm xuất PDF hoàn toàn mới, đổi tên để ép trình duyệt nhận diện và bỏ qua cache cũ
+function downloadPDFReportFinal() {
     if (typeof window.jspdf === 'undefined') {
-        alert("⚠️ Thư viện tạo PDF đang tải, vui lòng thử lại sau 2 giây!");
+        alert("Thu vien PDF dang tai, vui long thu lai sau 2 giay!");
         return;
     }
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Tiêu đề báo cáo
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.text("AN TIN DIGITAL ECOSYSTEM - TECHNICAL RAG", 15, 20);
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Technical Support & Inverter Incident Report", 15, 27);
+    doc.text("Technical Support and Inverter Incident Report", 15, 27);
     
     doc.setLineWidth(0.4);
     doc.line(15, 32, 195, 32);
 
-    // Nội dung chuẩn hoàn toàn bằng tiếng Anh / không dấu để chống lỗi font 100%
     let contentLines = [
-        "INCIDENT DIAGNOSIS & RESOLUTION REPORT - AN TIN",
+        "INCIDENT DIAGNOSIS REPORT - AN TIN",
         "-------------------------------------------------------------------",
         "",
-        "Device Information: An Tin Inverter / Industrial Control Panel",
+        "Device: An Tin Inverter / Industrial Control Panel",
         "Status: Incident recorded and automated diagnosis completed.",
         "Technical Solutions:",
         "- Check input power supply and cooling system performance.",
@@ -776,7 +774,7 @@ function downloadIncidentPDF() {
         });
     });
 
-    const fileName = `Incident_Report_AnTin_${new Date().toISOString().slice(0,10)}.pdf`;
+    const fileName = `AnTin_Report_${Date.now()}.pdf`;
     doc.save(fileName);
 }
         
