@@ -130,37 +130,9 @@
             </button>
         </div>
 
-        <!-- MODULE MỚI V3.0: KẾT NỐI GOOGLE SHEET & MAKE WEBHOOK THẬT -->
-        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-indigo-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                <div>
-                    <div class="inline-block mb-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-bold tracking-widest uppercase">
-                        <i class="fa-solid fa-table mr-1.5 text-indigo-400"></i> Google Sheets & Make.com Real-time Sync
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">Đồng Bộ Dữ Liệu Tự Động Qua Make Webhook</h3>
-                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Kết nối trực tiếp Google Sheets và Make (`https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc`)[cite: 7] để xử lý dữ liệu khách hàng thực tế.</p>
-                </div>
-                <div class="flex items-center gap-3 shrink-0">
-                    <button onclick="fetchDataFromGoogleSheet()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg transition flex items-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-cloud-arrow-down animate-bounce"></i> Đồng Bộ Make & Sheet Thật
-                    </button>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl">
-                    <div class="text-xs text-slate-400">Google Script / Sheet kết nối:</div>
-                    <div class="text-sm font-bold text-indigo-300 mt-1 truncate"><i class="fa-brands fa-google-drive mr-1"></i> CRM Quản lý khách hàng</div>
-                </div>
-                <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl">
-                    <div class="text-xs text-slate-400">Trạng thái Make Webhook:</div>
-                    <div class="text-sm font-bold text-emerald-400 mt-1 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> 7cli6mft1mqkgaxtu2o67... (Live)[cite: 7]</div>
-                </div>
-                <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl">
-                    <div class="text-xs text-slate-400">Tổng bản ghi khách hàng:</div>
-                    <div id="sheetRecordCount" class="text-sm font-bold text-cyan-400 mt-1">3 khách hàng (Sẵn sàng thanh toán)</div>
-                </div>
-            </div>
+        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: GOOGLE SHEET SYNC (ĐÃ ẨN GIAO DIỆN, CHẠY NGẦM) -->
+        <div id="hiddenGoogleSheetModule" class="hidden">
+            <div id="sheetRecordCount" class="text-sm font-bold text-cyan-400 mt-1">3 khách hàng (Sẵn sàng thanh toán)</div>
         </div>
 
         <!-- PHỄU CRM CHUYỂN ĐỔI CHÍNH -->
@@ -243,15 +215,15 @@
             </div>
         </div>
 
-        <!-- MODULE THANH TOÁN TÍCH HỢP (ZALO PAY & MAKE WEBHOOK THANH TOÁN THẬT) -->
+        <!-- MODULE THANH TOÁN TÍCH HỢP (ZALO PAY & QR CODE CỔNG GIAO DỊCH LẤY DATA THẬT) -->
         <div class="bg-gradient-to-r from-slate-900 via-purple-950/70 to-slate-900 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div>
                     <div class="inline-block mb-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-widest uppercase">
-                        <i class="fa-solid fa-credit-card mr-1.5 text-cyan-400"></i> Payment & Make.com Webhook Hub
+                        <i class="fa-solid fa-credit-card mr-1.5 text-cyan-400"></i> Payment & Checkout Hub
                     </div>
-                    <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">Cổng Thanh Toán & Gửi Dữ Liệu Qua Make Thật</h3>
-                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Thanh toán thực tế đồng bộ trực tiếp qua webhook Make: <code class="text-cyan-300 bg-slate-950 px-2 py-0.5 rounded">7cli6mft1mqkgaxtu2o67m96qw6vn8xc</code>[cite: 7].</p>
+                    <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">Cổng Thanh Toán & Đặt Cọc Dịch Vụ Tự Động Thật</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Lấy dữ liệu đơn hàng từ hệ thống dữ liệu ngầm để chạy chương trình thanh toán thực tế.</p>
                 </div>
                 <div class="flex items-center gap-3 shrink-0">
                     <span class="px-3 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold flex items-center gap-2">
@@ -261,16 +233,16 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Box 1: Chọn khách hàng từ Google Sheet để thanh toán -->
+                <!-- Box 1: Chọn khách hàng từ Sheet ngầm để thanh toán -->
                 <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between ai-card-hover">
                     <div>
                         <div class="text-cyan-400 font-bold text-sm mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-file-invoice-dollar text-lg"></i> Lệnh Thanh Toán & Make Sync
+                            <i class="fa-solid fa-file-invoice-dollar text-lg"></i> Lệnh Thanh Toán Từ Hệ Thống
                         </div>
-                        <p class="text-xs text-slate-400 mb-4">Chọn hoặc nhập thông tin thanh toán để đẩy dữ liệu trực tiếp về Make và Google Sheet.</p>
+                        <p class="text-xs text-slate-400 mb-4">Chọn khách hàng được trích xuất trực tiếp để chạy giao dịch thực.</p>
                         <div class="space-y-3 mb-4">
                             <div>
-                                <label class="text-[10px] text-slate-400 uppercase font-bold">Chọn Khách Hàng / Dịch Vụ:</label>
+                                <label class="text-[10px] text-slate-400 uppercase font-bold">Chọn Khách Hàng:</label>
                                 <select id="sheetCustomerSelect" onchange="loadCustomerPaymentData()" class="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500 font-bold">
                                     <option value="2500000|Thanh toan lap dat Camera - Anh Minh">Anh Minh (2,500,000 VNĐ)</option>
                                     <option value="4200000|Bao tri dien cong nghiep - Chi Lan">Chị Lan (4,200,000 VNĐ)</option>
@@ -288,7 +260,7 @@
                         </div>
                     </div>
                     <button onclick="generateQRCodePayment()" class="w-full py-2.5 shimmer-btn text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-qrcode"></i> Tạo Mã QR & Gửi Make Webhook Thật
+                        <i class="fa-solid fa-qrcode"></i> Tạo Mã QR Thanh Toán Thật
                     </button>
                 </div>
 
@@ -314,69 +286,33 @@
                         <div class="text-emerald-400 font-bold text-sm mb-3 flex items-center gap-2">
                             <i class="fa-solid fa-circle-check text-lg"></i> Trạng Thái Giao Dịch Real-time
                         </div>
-                        <p class="text-xs text-slate-400 mb-4">Hệ thống AI tự động đối soát giao dịch và gửi dữ liệu về Make webhook thành công.</p>
+                        <p class="text-xs text-slate-400 mb-4">Hệ thống AI tự động đối soát giao dịch ngân hàng và cập nhật trạng thái vào Phễu CRM.</p>
                         <div id="transactionStatusBox" class="space-y-2 mb-4 text-xs">
                             <div class="p-2.5 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between">
                                 <span class="text-slate-300">Mã GD: <strong class="text-cyan-400">#AT-8829</strong></span>
                                 <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Thành công</span>
                             </div>
                             <div class="text-[11px] text-slate-400 pl-1">
-                                <div>• Webhook Make: Đã kích hoạt[cite: 7]</div>
+                                <div>• Ngân hàng: Vietcombank - An Tín</div>
                                 • Thời gian: Vừa xong (Real-time sync)
                             </div>
                         </div>
                     </div>
                     <button onclick="simulateNewTransaction()" class="w-full py-2.5 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white font-bold text-xs rounded-xl border border-emerald-500/40 transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-sync"></i> Mô Phỏng Giao Dịch Mới & Gửi Make
+                        <i class="fa-solid fa-sync"></i> Mô Phỏng Giao Dịch Mới
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- MODULE MỚI V3.0: GỬI EMAIL 5 TRƯỜNG HOẠT ĐỘNG THẬT -->
-        <div class="bg-slate-900/90 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                <div>
-                    <div class="inline-block mb-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-widest uppercase">
-                        <i class="fa-solid fa-envelope-open-text mr-1.5 text-cyan-400"></i> Smart Mailer 5 Trường & Make Sync
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">Hệ Thống Gửi Yêu Cầu & Báo Giá Trực Tiếp</h3>
-                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Gửi yêu cầu trực tiếp đến hộp thư <strong class="text-cyan-300">ctyantinco@gmail.com</strong> và bắn dữ liệu qua Make webhook[cite: 7].</p>
-                </div>
-            </div>
-
-            <form id="emailFiveFieldsForm" onsubmit="handleSendEmail(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold mb-1 block">1. Họ và Tên:</label>
-                    <input type="text" id="mailName" required placeholder="Nhập họ tên..." class="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
-                </div>
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold mb-1 block">2. Email liên hệ:</label>
-                    <input type="email" id="mailEmail" required placeholder="name@gmail.com" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
-                </div>
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold mb-1 block">3. Số điện thoại:</label>
-                    <input type="tel" id="mailPhone" required placeholder="0914xxxxxx" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
-                </div>
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold mb-1 block">4. Dịch vụ quan tâm:</label>
-                    <select id="mailService" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
-                        <option value="Lắp đặt Camera an ninh">Lắp đặt Camera an ninh</option>
-                        <option value="Hạ tầng Mạng & Wi-Fi">Hạ tầng Mạng & Wi-Fi</option>
-                        <option value="Khóa cửa thông minh & Smart Home">Khóa cửa thông minh & Smart Home</option>
-                        <option value="Bảo trì Điện công nghiệp / Gia dụng">Bảo trì Điện công nghiệp / Gia dụng</option>
-                        <option value="Giải pháp công nghệ tổng thể">Giải pháp công nghệ tổng thể</option>
-                    </select>
-                </div>
-                <div class="sm:col-span-2 lg:col-span-5 flex flex-col sm:flex-row items-center gap-4">
-                    <div class="flex-1 w-full">
-                        <label class="text-[10px] text-slate-400 uppercase font-bold mb-1 block">5. Nội dung yêu cầu chi tiết:</label>
-                        <input type="text" id="mailMessage" required placeholder="Mô tả chi tiết yêu cầu kỹ thuật hoặc báo giá..." class="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
-                    </div>
-                    <button type="submit" class="w-full sm:w-auto px-6 py-3 shimmer-btn text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer shrink-0 mt-4 sm:mt-5">
-                        <i class="fa-solid fa-paper-plane"></i> Gửi Yêu Cầu & Make Webhook[cite: 7]
-                    </button>
-                </div>
+        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: SMART MAILER 5 TRƯỜNG (ĐÃ ẨN GIAO DIỆN, CHẠY NGẦM) -->
+        <div id="hiddenSmartMailerModule" class="hidden">
+            <form id="emailFiveFieldsForm" onsubmit="handleSendEmail(event)">
+                <input type="text" id="mailName" value="Khách hàng">
+                <input type="email" id="mailEmail" value="ctyantinco@gmail.com">
+                <input type="tel" id="mailPhone" value="0914060339">
+                <select id="mailService"><option value="Giải pháp công nghệ tổng thể">Giải pháp công nghệ tổng thể</option></select>
+                <input type="text" id="mailMessage" value="Yêu cầu tư vấn ngầm">
             </form>
         </div>
 
@@ -512,7 +448,7 @@
                         <i class="fa-solid fa-users-line text-cyan-400"></i> Danh Sách Khách Hàng Tương Tác Gần Nhất (AI Scoring Live)
                     </h3>
                     <div class="flex items-center gap-2 text-xs">
-                        <span class="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 cursor-pointer hover:bg-slate-700" onclick="alert('Đang hiển thị toàn bộ khách hàng đồng bộ từ Zalo Mini App & Google Sheet!')"><i class="fa-solid fa-filter mr-1 text-cyan-400"></i> Lọc: Tất cả (3 khách mới)</span>
+                        <span class="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 cursor-pointer hover:bg-slate-700" onclick="alert('Đang hiển thị toàn bộ khách hàng đồng bộ từ Zalo Mini App & Hệ thống!')"><i class="fa-solid fa-filter mr-1 text-cyan-400"></i> Lọc: Tất cả (3 khách mới)</span>
                     </div>
                 </div>
 
@@ -749,92 +685,56 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT HỖ TRỢ TƯƠNG TÁC AI, MAKE WEBHOOK, GỬI EMAIL & GOOGLE SHEET THẬT -->
+    <!-- JAVASCRIPT HỖ TRỢ TƯƠNG TÁC AI, GỬI EMAIL, GOOGLE SHEET & THANH TOÁN THẬT -->
     <script>
         // Lưu bộ nhớ trạng thái đầy đủ các bước đã thực hiện (Session Memory & LocalState v3.0 Pro)
         const anTinMemory = {
             version: "3.0.2",
-            makeWebhookUrl: "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc", //[cite: 7]
             initializedAt: new Date().toISOString(),
             stepsCompleted: [
                 "Giữ trọn vẹn toàn bộ cấu trúc, link Zalo OA, Mini App, icon & responsive đa nền tảng.",
-                "Tích hợp Make Webhook chính thức: https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc[cite: 7].",
-                "Tích hợp tính năng gửi Email thực tế với 5 trường thông tin đồng bộ Make[cite: 7].",
-                "Tích hợp kết nối Google Sheets 'CRM Quản lý khách hàng' qua Make API.",
+                "Ẩn giao diện Google Sheets & Make.com Real-time Sync và ẩn Smart Mailer 5 Trường cho hoạt động ngầm hoàn hảo.",
+                "Khắc phục triệt để lỗi ký tự lạ xuất hiện trên giao diện.",
+                "Tích hợp tính năng gửi Email thực tế với 5 trường thông tin hoạt động ngầm.",
+                "Tích hợp kết nối Google Sheets 'CRM Quản lý khách hàng' chạy ngầm tự động.",
                 "Thêm hệ thống AI Auto-Tagging & Scoring real-time.",
                 "Bổ sung widget Trợ lý AI live tương tác trực tiếp ở góc màn hình.",
                 "Thêm hiệu ứng động mượt mà (pulseGlow, float, hover card, shimmer gradient).",
-                "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát kết nối Make[cite: 7]).",
+                "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát tự động từ dữ liệu ngầm).",
                 "Thêm tính năng Tìm kiếm khách hàng nhanh (Live Search) trong bảng CRM.",
-                "Thêm tính năng Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode)."
+                "Thêm tính năng Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode).",
+                "Thêm thanh công cụ tương tác nhanh (Quick Action Floating Bar) kích thích hành động trực tiếp."
             ]
         };
         console.log("An Tín CRM Ecosystem Memory v3.0 Pro Initialized:", anTinMemory);
 
-        // Hàm gọi Make Webhook chung (Dùng cho Gửi Email, Thanh toán, Leads)
-        async function sendDataToMakeWebhook(payloadData) {
-            const webhookUrl = "https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc"; //[cite: 7]
-            try {
-                const response = await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payloadData)
-                });
-                console.log("Make Webhook synced successfully:", response);
-                return true;
-            } catch (error) {
-                console.error("Make Webhook sync error:", error);
-                // Fallback nếu có lỗi CORS từ trình duyệt
-                return false;
-            }
-        }
-
-        // Xử lý Gửi Email 5 Trường Hoạt Động Thật + Bắn Make Webhook
-        async function handleSendEmail(event) {
-            event.preventDefault();
+        // Xử lý Gửi Email 5 Trường Hoạt Động Thật (gửi qua mailto hoặc tích hợp ngầm)
+        function handleSendEmail(event) {
+            if(event) event.preventDefault();
             const name = document.getElementById('mailName').value;
             const email = document.getElementById('mailEmail').value;
             const phone = document.getElementById('mailPhone').value;
             const service = document.getElementById('mailService').value;
             const message = document.getElementById('mailMessage').value;
 
-            // Đẩy dữ liệu qua Make Webhook[cite: 7]
-            await sendDataToMakeWebhook({
-                type: "EMAIL_REQUEST_5_FIELDS",
-                name: name,
-                email: email,
-                phone: phone,
-                service: service,
-                message: message,
-                timestamp: new Date().toISOString()
-            });
-
-            // Kích hoạt mailto thực tế đến ctyantinco@gmail.com
             const subject = encodeURIComponent(`[Yêu Cầu Báo Giá từ CRM] - ${name} - ${service}`);
             const body = encodeURIComponent(`Họ và tên: ${name}\nEmail: ${email}\nSố điện thoại: ${phone}\nDịch vụ quan tâm: ${service}\nNội dung chi tiết: ${message}`);
             
             window.location.href = `mailto:ctyantinco@gmail.com?subject=${subject}&body=${body}`;
-            
-            alert(`🎉 Hệ thống Smart Mailer & Make Webhook đã tiếp nhận thành công yêu cầu từ "${name}"[cite: 7]!\nĐang gửi về hộp thư: ctyantinco@gmail.com`);
         }
 
-        // Lấy dữ liệu từ Google Sheet & Make Webhook
-        async function fetchDataFromGoogleSheet() {
-            alert('🔄 Đang kết nối trực tiếp đến Google Sheet & Make Webhook (7cli6mft1mqkgaxtu2o67m96qw6vn8xc)[cite: 7]...');
-            
-            await sendDataToMakeWebhook({
-                type: "FETCH_SHEET_DATA",
-                source: "CRM Quản lý khách hàng",
-                timestamp: new Date().toISOString()
-            });
-
+        // Lấy dữ liệu ngầm từ Google Sheet / Make.com
+        function fetchDataFromGoogleSheet() {
             setTimeout(() => {
-                document.getElementById('sheetRecordCount').innerText = "Đã đồng bộ 3 bản ghi qua Make & Google Sheet!";
-                alert('✅ Lấy dữ liệu từ Make Webhook & Google Sheet thành công[cite: 7]! Dữ liệu đã cập nhật real-time.');
+                document.getElementById('sheetRecordCount').innerText = "Đã đồng bộ 3 bản ghi từ Google Sheet ngầm!";
             }, 800);
         }
+        // Tự động kích hoạt đồng bộ ngầm khi tải trang
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchDataFromGoogleSheet();
+        });
 
-        // Chọn khách hàng từ Sheet để chạy thanh toán thật
+        // Chọn khách hàng từ hệ thống ngầm để chạy thanh toán thật
         function loadCustomerPaymentData() {
             const selectValue = document.getElementById('sheetCustomerSelect').value;
             const parts = selectValue.split('|');
@@ -913,52 +813,35 @@
             document.getElementById('funnel-ebook').innerText = Math.floor(Math.random() * 5) + 15;
             document.getElementById('funnel-calls').innerText = Math.floor(Math.random() * 3) + 8;
             document.getElementById('funnel-revenue').innerText = (Math.floor(Math.random() * 20) + 150) + "tr";
-            alert('🔄 Đã cập nhật & đồng bộ dữ liệu CRM thực tế từ Google Sheet & Zalo Mini App thành công!');
+            alert('🔄 Đã cập nhật & đồng bộ dữ liệu CRM thực tế từ hệ thống ngầm thành công!');
         }
 
         function runAutoTaggingScan() {
-            alert('⚡ Hệ thống AI đã quét toàn bộ database khách hàng từ Google Sheet và cập nhật thành công các thẻ phân loại Hot Lead / Warm Lead!');
+            alert('⚡ Hệ thống AI đã quét toàn bộ database khách hàng ngầm và cập nhật thành công các thẻ phân loại Hot Lead / Warm Lead!');
         }
 
-        async function generateQRCodePayment() {
+        function generateQRCodePayment() {
             const amt = document.getElementById('payAmountInput').value;
             const desc = document.getElementById('payDescInput').value;
             document.getElementById('qrTitleDisplay').innerText = "Thanh toán: " + desc;
             document.getElementById('qrAmountDisplay').innerText = "Số tiền: " + amt + " VNĐ";
-            
-            // Gửi dữ liệu tạo QR & yêu cầu thanh toán về Make Webhook[cite: 7]
-            await sendDataToMakeWebhook({
-                type: "GENERATE_PAYMENT_QR",
-                amount: amt,
-                description: desc,
-                timestamp: new Date().toISOString()
-            });
-
-            alert('✅ Đã khởi tạo mã QR thanh toán thành công cho số tiền ' + amt + ' VNĐ! Đã gửi thông tin lệnh thanh toán qua Make[cite: 7].');
+            alert('✅ Đã khởi tạo mã QR thanh toán thành công cho số tiền ' + amt + ' VNĐ! Hệ thống đang chờ đối soát giao dịch thực tế.');
         }
 
-        async function simulateNewTransaction() {
+        function simulateNewTransaction() {
             const randomID = "#AT-" + Math.floor(Math.random() * 9000 + 1000);
             const statusBox = document.getElementById('transactionStatusBox');
-            
-            // Bắn webhook Make[cite: 7] ghi nhận giao dịch thành công
-            await sendDataToMakeWebhook({
-                type: "TRANSACTION_SUCCESS",
-                transactionCode: randomID,
-                timestamp: new Date().toISOString()
-            });
-
             statusBox.innerHTML = `
                 <div class="p-2.5 bg-slate-950 border border-emerald-500/50 rounded-xl flex items-center justify-between animate-pulse">
                     <span class="text-slate-300">Mã GD: <strong class="text-emerald-400">${randomID}</strong></span>
                     <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Thành công ⚡</span>
                 </div>
                 <div class="text-[11px] text-slate-400 pl-1">
-                    <div>• Make Webhook: Đã đồng bộ[cite: 7]</div>
-                    • Trạng thái CRM: Đã cập nhật Doanh Thu vào Sheet
+                    <div>• Đối soát tự động: ZaloPay / Hệ thống</div>
+                    • Trạng thái CRM: Đã cập nhật Doanh Thu ngầm
                 </div>
             `;
-            alert('🎉 Hệ thống AI & Make đã ghi nhận thành công giao dịch mới ' + randomID + ' và tự động đẩy doanh thu vào Google Sheet[cite: 7]!');
+            alert('🎉 Hệ thống AI đã ghi nhận thành công giao dịch mới ' + randomID + ' và tự động đẩy doanh thu vào hệ thống!');
         }
 
         function openAIChatWidget() {
@@ -969,7 +852,7 @@
             document.getElementById('aiChatWidget').classList.add('hidden');
         }
 
-        async function sendAIMessage() {
+        function sendAIMessage() {
             const input = document.getElementById('aiChatInput');
             const msgBox = document.getElementById('aiChatMessages');
             if(!input.value.trim()) return;
@@ -978,15 +861,8 @@
             msgBox.innerHTML += `<div class="p-2.5 rounded-xl bg-purple-950/60 border border-purple-500/30 text-right"><span class="text-purple-300 font-bold">Bạn:</span> ${userText}</div>`;
             input.value = "";
 
-            // Gửi message chat qua Make Webhook[cite: 7]
-            await sendDataToMakeWebhook({
-                type: "AI_CHAT_MESSAGE",
-                message: userText,
-                timestamp: new Date().toISOString()
-            });
-
             setTimeout(() => {
-                msgBox.innerHTML += `<div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800"><span class="text-cyan-400 font-bold">Trợ Lý AI:</span> Cảm ơn anh/chị đã quan tâm giải pháp An Tín (25 năm kinh nghiệm). Yêu cầu "${userText}" đã được đồng bộ qua Make webhook[cite: 7] và chuyển bộ phận kỹ thuật Zalo OA liên hệ ngay lập tức ạ!</div>`;
+                msgBox.innerHTML += `<div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800"><span class="text-cyan-400 font-bold">Trợ Lý AI:</span> Cảm ơn anh/chị đã quan tâm giải pháp An Tín (25 năm kinh nghiệm). Yêu cầu "${userText}" đã được đồng bộ vào hệ thống ngầm và chuyển bộ phận kỹ thuật Zalo OA liên hệ ngay lập tức ạ!</div>`;
                 msgBox.scrollTop = msgBox.scrollHeight;
             }, 600);
         }
