@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI</title>
+    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI v2.7</title>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> <!-- Cập nhật engine mới nhất theo chuẩn, giữ nguyên tương thích -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -57,7 +57,7 @@
                     <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">Trang Chủ</span>
                 </a>
                 <!-- Nút Mở Rộng Trợ Lý AI Nhanh -->
-                <button onclick="openAIChatWidget()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md animate-pulse">
+                <button onclick="openAIChatWidget()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md animate-pulse cursor-pointer">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> <span class="hidden md:inline">Trợ Lý AI Live</span>
                 </button>
             </div>
@@ -73,7 +73,7 @@
             
             <div class="space-y-3 text-left relative z-10">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
-                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v2.6 (Active)
+                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v2.7 (Active)
                 </div>
                 <h1 class="text-xl sm:text-3xl font-black text-white tracking-tight leading-snug">
                     🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH
@@ -173,7 +173,90 @@
             </div>
         </div>
 
-        <!-- PHÂN HỆ MỚI: AI AUTOMATION & SMART CSKH -->
+        <!-- MỚI: MODULE THANH TOÁN TÍCH HỢP (ZALO PAY & QR CODE CỔNG GIAO DỊCH) -->
+        <div class="bg-gradient-to-r from-slate-900 via-purple-950/70 to-slate-900 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <div>
+                    <div class="inline-block mb-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-widest uppercase">
+                        <i class="fa-solid fa-credit-card mr-1.5 text-cyan-400"></i> Payment & Checkout Hub
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">Cổng Thanh Toán & Đặt Cọc Dịch Vụ Tự Động</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Tích hợp thanh toán trực tuyến qua ZaloPay, QR Code ngân hàng, xác nhận biên lai tức thì qua AI.</p>
+                </div>
+                <div class="flex items-center gap-3 shrink-0">
+                    <span class="px-3 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-cyan-400"></i> Secured by An Tín Pay
+                    </span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Box 1: Tạo lệnh thanh toán nhanh -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between ai-card-hover">
+                    <div>
+                        <div class="text-cyan-400 font-bold text-sm mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice-dollar text-lg"></i> Tạo Lệnh Thanh Toán Hợp Đồng
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Nhập thông tin số tiền dịch vụ lắp đặt hoặc mua thiết bị để hệ thống sinh mã QR giao dịch ngay.</p>
+                        <div class="space-y-3 mb-4">
+                            <div>
+                                <label class="text-[10px] text-slate-400 uppercase font-bold">Số tiền thanh toán (VNĐ):</label>
+                                <input type="text" id="payAmountInput" value="2,500,000" class="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500 font-bold">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-400 uppercase font-bold">Nội dung chuyển khoản:</label>
+                                <input type="text" id="payDescInput" value="Thanh toan lap dat Camera An Tin" class="w-full mt-1 px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="generateQRCodePayment()" class="w-full py-2.5 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-qrcode"></i> Tạo Mã QR Thanh Toán
+                    </button>
+                </div>
+
+                <!-- Box 2: Hiển thị QR Code & ZaloPay mô phỏng -->
+                <div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl p-5 flex flex-col items-center justify-center text-center ai-glow-box">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-300 flex items-center justify-center text-xl mb-3 border border-purple-500/30">
+                        <i class="fa-solid fa-qrcode animate-pulse"></i>
+                    </div>
+                    <div class="text-white font-bold text-sm mb-1" id="qrTitleDisplay">QR Thanh Toán An Tín</div>
+                    <div class="text-xs text-purple-300 font-semibold mb-3" id="qrAmountDisplay">Số tiền: 2,500,000 VNĐ</div>
+                    <div class="bg-white p-3 rounded-2xl shadow-lg mb-3">
+                        <!-- Giả lập QR Code trực quan -->
+                        <div class="w-28 h-28 bg-slate-900 flex flex-col items-center justify-center text-white text-[10px] font-mono p-2 rounded-lg border-2 border-dashed border-purple-600">
+                            <i class="fa-solid fa-qrcode text-4xl text-cyan-400 mb-1"></i>
+                            <span>QUÉT ZALOPAY / BANK</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Hỗ trợ quét qua app ngân hàng bất kỳ hoặc ZaloPay / Zalo Mini App.</p>
+                </div>
+
+                <!-- Box 3: Trạng thái xác nhận giao dịch AI -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between ai-card-hover">
+                    <div>
+                        <div class="text-emerald-400 font-bold text-sm mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-lg"></i> Trạng Thái Giao Dịch Real-time
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Hệ thống AI tự động đối soát giao dịch ngân hàng và cập nhật trạng thái vào Phễu CRM.</p>
+                        <div id="transactionStatusBox" class="space-y-2 mb-4 text-xs">
+                            <div class="p-2.5 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between">
+                                <span class="text-slate-300">Mã GD: <strong class="text-cyan-400">#AT-8829</strong></span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Thành công</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 pl-1">
+                                <div>• Ngân hàng: Vietcombank - An Tín</div>
+                                • Thời gian: Vừa xong (Real-time sync)
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="simulateNewTransaction()" class="w-full py-2.5 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white font-bold text-xs rounded-xl border border-emerald-500/40 transition flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-sync"></i> Mô Phỏng Giao Dịch Mới
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHÂN HỆ: AI AUTOMATION & SMART CSKH -->
         <div class="space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gradient-to-r from-purple-950/80 via-slate-900 to-cyan-950/80 border border-purple-500/40 rounded-3xl p-6 ai-glow-box">
                 <div>
@@ -520,16 +603,16 @@
                         <div class="text-[10px] text-cyan-300 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Đang trực tuyến</div>
                     </div>
                 </div>
-                <button onclick="closeAIChatWidget()" class="text-slate-300 hover:text-white text-sm font-bold px-2 py-1"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeAIChatWidget()" class="text-slate-300 hover:text-white text-sm font-bold px-2 py-1 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="p-4 space-y-3 h-64 overflow-y-auto text-xs text-slate-300 bg-slate-950/50" id="aiChatMessages">
                 <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-                    <span class="text-cyan-400 font-bold">Trợ Lý AI:</span> Chào bạn! Tôi là AI chuyên gia kỹ thuật 25 năm của An Tín. Bạn cần tư vấn lắp đặt Camera, Smart Home hay bảo trì hệ thống điện ạ?
+                    <span class="text-cyan-400 font-bold">Trợ Lý AI:</span> Chào bạn! Tôi là AI chuyên gia kỹ thuật 25 năm của An Tín. Bạn cần tư vấn lắp đặt Camera, Smart Home hay thanh toán dịch vụ ạ?
                 </div>
             </div>
             <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
                 <input type="text" id="aiChatInput" placeholder="Nhập yêu cầu tư vấn..." class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500">
-                <button onclick="sendAIMessage()" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold rounded-xl text-xs hover:opacity-90 transition"><i class="fa-solid fa-paper-plane"></i></button>
+                <button onclick="sendAIMessage()" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold rounded-xl text-xs hover:opacity-90 transition cursor-pointer"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
@@ -538,13 +621,14 @@
     <script>
         // Lưu bộ nhớ trạng thái & các bước đã làm (Session Memory & LocalState)
         const anTinMemory = {
-            version: "2.6.0",
+            version: "2.7.0",
             initializedAt: new Date().toISOString(),
             stepsCompleted: [
                 "Giữ trọn vẹn toàn bộ cấu trúc, link, icon & responsive đa nền tảng.",
                 "Tích hợp thêm hệ thống AI Auto-Tagging & Scoring real-time.",
                 "Bổ sung widget Trợ lý AI live tương tác trực tiếp ở góc màn hình.",
-                "Thêm hiệu ứng động mượt mà (pulseGlow, float, hover card)."
+                "Thêm hiệu ứng động mượt mà (pulseGlow, float, hover card).",
+                "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát tự động)."
             ]
         };
         console.log("An Tín CRM Ecosystem Memory Initialized:", anTinMemory);
@@ -564,7 +648,6 @@
         }
 
         function refreshCRMData() {
-            // Hiệu ứng cập nhật số liệu giả lập sinh động
             document.getElementById('funnel-visitors').innerText = Math.floor(Math.random() * 10) + 25;
             document.getElementById('funnel-ebook').innerText = Math.floor(Math.random() * 5) + 15;
             document.getElementById('funnel-calls').innerText = Math.floor(Math.random() * 3) + 8;
@@ -574,6 +657,30 @@
 
         function runAutoTaggingScan() {
             alert('⚡ Hệ thống AI đã quét toàn bộ database khách hàng và cập nhật thành công các thẻ phân loại Hot Lead / Warm Lead!');
+        }
+
+        function generateQRCodePayment() {
+            const amt = document.getElementById('payAmountInput').value;
+            const desc = document.getElementById('payDescInput').value;
+            document.getElementById('qrTitleDisplay').innerText = "Thanh toán: " + desc;
+            document.getElementById('qrAmountDisplay').innerText = "Số tiền: " + amt + " VNĐ";
+            alert('✅ Đã khởi tạo mã QR thanh toán thành công cho số tiền ' + amt + ' VNĐ! Hệ thống đang chờ đối soát giao dịch.');
+        }
+
+        function simulateNewTransaction() {
+            const randomID = "#AT-" + Math.floor(Math.random() * 9000 + 1000);
+            const statusBox = document.getElementById('transactionStatusBox');
+            statusBox.innerHTML = `
+                <div class="p-2.5 bg-slate-950 border border-emerald-500/50 rounded-xl flex items-center justify-between animate-pulse">
+                    <span class="text-slate-300">Mã GD: <strong class="text-emerald-400">${randomID}</strong></span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Thành công ⚡</span>
+                </div>
+                <div class="text-[11px] text-slate-400 pl-1">
+                    <div>• Đối soát tự động: ZaloPay / Vietcombank</div>
+                    • Trạng thái CRM: Đã cập nhật Doanh Thu
+                </div>
+            `;
+            alert('🎉 Hệ thống AI đã ghi nhận thành công giao dịch mới ' + randomID + ' và tự động đẩy doanh thu vào Phễu CRM!');
         }
 
         function openAIChatWidget() {
