@@ -21,22 +21,29 @@
             animation: pulseGlow 2.5s infinite;
             border-color: rgba(168, 85, 247, 0.6);
         }
+        .ai-glow-box {
+            animation: pulseGlow 3s infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
 
     <!-- Header / Navbar tích hợp Logo.png và hiệu ứng AI -->
-    <header class="border-b border-slate-800/80 bg-slate-900/75 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-lg">
+    <header class="border-b border-slate-800/80 bg-slate-900/75 backdrop-blur-md sticky top-0 z-50 px-4 sm:px-6 py-4 flex justify-between items-center shadow-lg">
         <div class="flex items-center gap-3">
-            <a href="#" class="flex items-center gap-3 group">
+            <a href="trangchu.html" class="flex items-center gap-3 group">
                 <img src="logo.png" alt="An Tín Logo" class="h-10 w-auto object-contain rounded-xl shadow-md transition transform group-hover:scale-105" onerror="this.style.display='none'">
-                <span class="text-xl font-black tracking-wider bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+                <span class="text-base sm:text-xl font-black tracking-wider bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
                     AN TÍN ECOSYSTEM AI
                 </span>
             </a>
         </div>
-        <div class="flex items-center gap-4">
-            <a href="https://zalo.me/0914060339" target="_blank" class="relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-600/30 transform hover:-translate-y-0.5">
+        <div class="flex items-center gap-2 sm:gap-4">
+            <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg shadow-blue-600/30">
+                <i class="fa-solid fa-mobile-screen-button text-cyan-200"></i>
+                <span>Zalo Mini App</span>
+            </a>
+            <a href="https://zalo.me/0914060339" target="_blank" class="relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg shadow-blue-600/30 transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-headset animate-bounce text-cyan-200"></i>
                 <span>Hotline: 0914.060.339</span>
                 <span class="absolute -top-1 -right-1 flex h-3 w-3">
@@ -48,19 +55,32 @@
     </header>
 
     <!-- Main Content Grid -->
-    <main class="max-w-7xl mx-auto px-6 py-12 w-full flex-grow">
-        <div class="text-center mb-14">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-12 w-full flex-grow space-y-12">
+        
+        <!-- BANNER & GIỚI THIỆU CHÍNH -->
+        <div class="text-center mb-8">
             <div class="inline-block mb-3 px-4 py-1 rounded-full bg-purple-900/40 border border-purple-500/30 text-purple-300 text-xs font-bold tracking-widest uppercase shadow-sm">
                 <i class="fa-solid fa-brain mr-2 animate-pulse text-cyan-400"></i> Trung Tâm Điều Hành Số 25 Năm Kinh Nghiệm
             </div>
-            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight bg-gradient-to-r from-white via-slate-200 to-purple-300 bg-clip-text text-transparent">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black mb-4 tracking-tight bg-gradient-to-r from-white via-slate-200 to-purple-300 bg-clip-text text-transparent">
                 Hệ Sinh Thái Kỷ Nguyên Số 25 Năm
             </h1>
-            <p class="text-slate-400 max-w-2xl mx-auto text-base md:text-lg font-medium">
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base md:text-lg font-medium mb-6">
                 Hợp nhất Marketing, Quản Trị Doanh Nghiệp & Trí Tuệ Nhân Tạo vào một nền tảng vận hành tự động toàn diện.
             </p>
+
+            <!-- Banner Slogan Nhấn Mạnh -->
+            <div class="max-w-4xl mx-auto bg-gradient-to-r from-purple-950/80 via-slate-900 to-cyan-950/80 border border-purple-500/40 rounded-3xl p-6 ai-glow-box text-left sm:text-center space-y-2">
+                <div class="text-white font-black text-base sm:text-xl flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-cyan-400"></i> AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH.
+                </div>
+                <div class="text-cyan-300 text-xs sm:text-sm font-semibold">
+                    💎 AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM. (25 Năm Kinh Nghiệm)
+                </div>
+            </div>
         </div>
 
+        <!-- 3 KHỐI PHÂN NHÁNH CHÍNH -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             <!-- Phân nhánh 1: AI Platform -->
@@ -102,6 +122,10 @@
                         <span><i class="fa-solid fa-paper-plane mr-2 text-blue-400 group-hover:text-white"></i> Vận Hành Zalo OA</span>
                         <i class="fa-solid fa-arrow-right text-xs transition transform group-hover:translate-x-1"></i>
                     </a>
+                    <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="flex items-center justify-between w-full bg-cyan-600/20 hover:bg-cyan-600 text-cyan-300 hover:text-white px-4 py-3 rounded-xl font-bold text-sm transition border border-cyan-500/30 group shadow-sm">
+                        <span><i class="fa-solid fa-mobile-screen-button mr-2 text-cyan-400 group-hover:text-white"></i> Zalo Mini App</span>
+                        <i class="fa-solid fa-arrow-right text-xs transition transform group-hover:translate-x-1"></i>
+                    </a>
                 </div>
             </div>
 
@@ -115,20 +139,150 @@
                     <p class="text-slate-400 text-sm mb-6 leading-relaxed">Quản trị CRM, ERP Lite, tự động hóa báo giá, kiểm soát dự án và bảo hành.</p>
                 </div>
                 <div class="space-y-3">
-               <a href="CRM Dashboard.html" class="flex items-center justify-between w-full bg-gradient-to-r from-purple-900/80 to-slate-800 hover:from-purple-800 hover:to-slate-700 text-purple-200 px-4 py-3 rounded-xl font-bold text-sm border border-purple-500/50 shadow-lg shadow-purple-900/30 transition-all group">
-            <span class="flex items-center gap-2">
-                <i class="fa-solid fa-chart-line text-cyan-400 group-hover:scale-110 transition-transform"></i> Mở CRM Dashboard
-            </span>
-                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-cyan-400"></i>
-               </a>
+                    <a href="CRM Dashboard.html" class="flex items-center justify-between w-full bg-gradient-to-r from-purple-900/80 to-slate-800 hover:from-purple-800 hover:to-slate-700 text-purple-200 px-4 py-3 rounded-xl font-bold text-sm border border-purple-500/50 shadow-lg shadow-purple-900/30 transition-all group">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-cyan-400 group-hover:scale-110 transition-transform"></i> Mở CRM Dashboard
+                        </span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-cyan-400"></i>
+                    </a>
                 </div>
             </div>
 
         </div>
+
+        <!-- DANH MỤC GIẢI PHÁP & DỊCH VỤ TOÀN DIỆN -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-list-check text-cyan-400"></i> Danh Mục Giải Pháp & Dịch Vụ Kỹ Thuật Toàn Diện
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-video text-cyan-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Camera an ninh – Giám sát 24/7</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-network-wired text-purple-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Mạng Wi-Fi – Máy tính – Hạ tầng CNTT</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-shield-keyhole text-amber-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Chống đột nhập – Khóa cửa thông minh</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-fingerprint text-emerald-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Chấm công vân tay – Kiểm soát ra vào</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-fire-extinguisher text-red-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Báo cháy tự động – An toàn tài sản</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-globe text-blue-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Thiết kế Website chuyên nghiệp</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-cloud text-sky-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Tên miền – Hosting – Cloud Server</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-house-signal text-yellow-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Nhà thông minh – Smart Home</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-bolt-lightning text-amber-500 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Điện dân dụng – Điện công nghiệp</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-screwdriver-wrench text-teal-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Sửa chữa & bảo trì thiết bị điện gia đình</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-mug-hot text-orange-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Ấm điện – Bếp điện – Nồi điện – Quạt điện...</span>
+                </div>
+                <div class="p-3.5 bg-slate-800/50 rounded-xl border border-slate-700/50 flex items-center gap-3 hover:border-cyan-500/50 transition">
+                    <i class="fa-solid fa-robot text-purple-400 text-lg w-6 text-center"></i>
+                    <span class="text-slate-200 font-medium">Tự động hóa thiết bị điện thông minh</span>
+                </div>
+            </div>
+
+            <!-- Cam kết hành động -->
+            <div class="mt-6 p-4 rounded-2xl bg-gradient-to-r from-purple-950/60 to-cyan-950/60 border border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                <div class="space-y-1">
+                    <div class="text-white font-bold text-sm">🎯 Một đối tác – Trọn gói giải pháp | Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật!</div>
+                    <div class="text-xs text-cyan-300">AN TÍN – Nhanh chóng • Tận tâm • Uy tín • Hiệu quả</div>
+                </div>
+                <a href="https://zalo.me/0914060339" target="_blank" class="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center gap-2 shrink-0">
+                    <i class="fa-solid fa-phone"></i> Gọi Zalo Ngay
+                </a>
+            </div>
+        </div>
+
+        <!-- THÔNG TIN LIÊN HỆ & KÊU GỌI HÀNH ĐỘNG ZALO -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                            <i class="fa-solid fa-building text-lg"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white">CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</h3>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-300 mb-6">
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-location-dot text-cyan-400 mt-1"></i>
+                            <span>85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-phone text-emerald-400"></i>
+                            <span>(028) 3849 3575 * Zalo: 0914 060 339</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-globe text-purple-400"></i>
+                            <a href="https://khuyenmaicamera.blogspot.com" target="_blank" class="underline text-cyan-300 hover:text-cyan-200">khuyenmaicamera.blogspot.com</a>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-envelope text-amber-400"></i>
+                            <a href="mailto:ctyantinco@gmail.com" class="underline text-slate-200">ctyantinco@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                    <span>Hỗ trợ kỹ thuật: 24/7</span>
+                    <span class="text-cyan-400 font-bold">Hotline: 0914.060.339</span>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-950 to-slate-900 border border-purple-500/50 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between ai-glow-box">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                            <i class="fa-solid fa-wand-magic-sparkles text-lg animate-spin"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white">Kết Nối Hệ Sinh Thái An Tín</h3>
+                    </div>
+                    <p class="text-sm text-purple-200 leading-relaxed mb-6">
+                        Trải nghiệm đầy đủ hệ thống chăm sóc khách hàng và các ứng dụng thông minh qua hệ thống Zalo tích hợp:
+                    </p>
+                </div>
+                <div class="space-y-3">
+                    <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold text-sm rounded-2xl shadow-lg shadow-purple-900/40 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-mobile-screen-button"></i> Zalo Mini App
+                    </a>
+                    <a href="https://zalo.me/3260030944980440169" target="_blank" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-purple-300 font-bold text-sm rounded-2xl border border-purple-500/40 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-comment-medical"></i> Zalo OA (Official Account)
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-900/50 text-center py-6 text-slate-400 text-sm mt-12">
+    <footer class="border-t border-slate-800 bg-slate-900/50 text-center py-6 text-slate-400 text-sm mt-12 space-y-1">
         <p>&copy; 2026 An Tín Digital Ecosystem AI. All rights reserved.</p>
         <p class="mt-1">Hotline/Zalo hỗ trợ trực tiếp: <a href="https://zalo.me/0914060339" class="text-purple-400 font-bold hover:underline" target="_blank">0914.060.339</a></p>
     </footer>
