@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI v2.7</title>
+    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI v2.8</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -50,6 +50,10 @@
             </div>
             
             <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- BỔ SUNG MỚI: Nút Chuyển Đổi Giao Diện Sáng / Tối (Dark/Light Mode Toggle) -->
+                <button onclick="toggleThemeMode()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-medium transition flex items-center gap-2 border border-slate-700 shadow-sm text-cyan-300 cursor-pointer" title="Chuyển đổi giao diện Sáng / Tối">
+                    <i class="fa-solid fa-circle-half-stroke" id="themeIcon"></i> <span class="hidden sm:inline" id="themeText">Giao Diện</span>
+                </button>
                 <a href="KnowledgeAI.html" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-medium transition flex items-center gap-2 border border-slate-700 shadow-sm">
                     <i class="fa-solid fa-arrow-left text-cyan-400"></i> <span class="hidden sm:inline">Kho Tri Thức</span>
                 </a>
@@ -73,7 +77,7 @@
             
             <div class="space-y-3 text-left relative z-10">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
-                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v2.7 (Active)
+                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v2.8 (Active)
                 </div>
                 <h1 class="text-xl sm:text-3xl font-black text-white tracking-tight leading-snug">
                     🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH
@@ -173,7 +177,7 @@
             </div>
         </div>
 
-        <!-- MỚI: MODULE THANH TOÁN TÍCH HỢP (ZALO PAY & QR CODE CỔNG GIAO DỊCH) -->
+        <!-- MODULE THANH TOÁN TÍCH HỢP (ZALO PAY & QR CODE CỔNG GIAO DỊCH) -->
         <div class="bg-gradient-to-r from-slate-900 via-purple-950/70 to-slate-900 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div>
@@ -392,8 +396,16 @@
                     </div>
                 </div>
 
+                <!-- BỔ SUNG MỚI: Thanh Tìm Kiếm Khách Hàng Real-time (Live Search Filter) -->
+                <div class="mb-4">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400"></i>
+                        <input type="text" id="customerSearchInput" onkeyup="filterCustomerTable()" placeholder="Nhập tên hoặc số điện thoại khách hàng để tìm kiếm nhanh..." class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
+                    </div>
+                </div>
+
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <table class="w-full text-left border-collapse text-xs sm:text-sm" id="customerTable">
                         <thead>
                             <tr class="border-b border-slate-800 text-slate-400 uppercase font-bold text-xs">
                                 <th class="py-3 px-4">Khách Hàng / Zalo ID</th>
@@ -404,7 +416,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-800/60 text-slate-300">
-                            <tr class="hover:bg-slate-800/40 transition cursor-pointer" onclick="alert('Đã mở hồ sơ KH: Anh Minh - Zalo Mini App. Trợ lý AI đang sẵn sàng kịch bản tư vấn!')">
+                            <tr class="hover:bg-slate-800/40 transition cursor-pointer customer-row" onclick="alert('Đã mở hồ sơ KH: Anh Minh - Zalo Mini App. Trợ lý AI đang sẵn sàng kịch bản tư vấn!')" data-name="Anh Minh" data-phone="0903789">
                                 <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                                     <div class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold">AM</div>
                                     <div>Anh Minh <div class="text-xs text-slate-400 font-normal">Zalo: 0903***789</div></div>
@@ -418,7 +430,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-slate-800/40 transition cursor-pointer" onclick="alert('Đã mở hồ sơ KH: Chị Lan - Khách bảo trì hệ thống điện công nghiệp!')">
+                            <tr class="hover:bg-slate-800/40 transition cursor-pointer customer-row" onclick="alert('Đã mở hồ sơ KH: Chị Lan - Khách bảo trì hệ thống điện công nghiệp!')" data-name="Chi Lan" data-phone="0918456">
                                 <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                                     <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center font-bold">CL</div>
                                     <div>Chị Lan <div class="text-xs text-slate-400 font-normal">Zalo: 0918***456</div></div>
@@ -432,7 +444,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-slate-800/40 transition cursor-pointer" onclick="alert('Đã mở hồ sơ KH: Anh Tuấn - Khách hàng mua lẻ thiết bị quạt/bếp điện!')">
+                            <tr class="hover:bg-slate-800/40 transition cursor-pointer customer-row" onclick="alert('Đã mở hồ sơ KH: Anh Tuấn - Khách hàng mua lẻ thiết bị quạt/bếp điện!')" data-name="Anh Tuan" data-phone="0988123">
                                 <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                                     <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold">AT</div>
                                     <div>Anh Tuấn <div class="text-xs text-slate-400 font-normal">Zalo: 0988***123</div></div>
@@ -621,17 +633,54 @@
     <script>
         // Lưu bộ nhớ trạng thái & các bước đã làm (Session Memory & LocalState)
         const anTinMemory = {
-            version: "2.7.0",
+            version: "2.8.0",
             initializedAt: new Date().toISOString(),
             stepsCompleted: [
                 "Giữ trọn vẹn toàn bộ cấu trúc, link, icon & responsive đa nền tảng.",
                 "Tích hợp thêm hệ thống AI Auto-Tagging & Scoring real-time.",
                 "Bổ sung widget Trợ lý AI live tương tác trực tiếp ở góc màn hình.",
                 "Thêm hiệu ứng động mượt mà (pulseGlow, float, hover card).",
-                "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát tự động)."
+                "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát tự động).",
+                "MỚI: Thêm tính năng Tìm kiếm khách hàng nhanh (Live Search) trong bảng CRM.",
+                "MỚI: Thêm tính năng Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode)."
             ]
         };
         console.log("An Tín CRM Ecosystem Memory Initialized:", anTinMemory);
+
+        // BỔ SUNG MỚI: Hàm tìm kiếm khách hàng real-time trong bảng
+        function filterCustomerTable() {
+            const input = document.getElementById('customerSearchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('.customer-row');
+            
+            rows.forEach(row => {
+                const name = row.getAttribute('data-name').toLowerCase();
+                const phone = row.getAttribute('data-phone').toLowerCase();
+                if (name.includes(input) || phone.includes(input)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        // BỔ SUNG MỚI: Hàm chuyển đổi giao diện Sáng / Tối (Dark/Light Mode)
+        let isDarkMode = true;
+        function toggleThemeMode() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+
+            if (isDarkMode) {
+                body.className = "bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white";
+                themeIcon.className = "fa-solid fa-moon text-cyan-400";
+                themeText.innerText = "Tối";
+            } else {
+                body.className = "bg-slate-100 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white";
+                themeIcon.className = "fa-solid fa-sun text-amber-500";
+                themeText.innerText = "Sáng";
+            }
+        }
 
         function generateNewScripts() {
             const scripts = [
