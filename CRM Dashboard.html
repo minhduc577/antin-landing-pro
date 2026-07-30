@@ -59,15 +59,17 @@
             </div>
             
             <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Nút Chuyển Đổi Giao Diện Sáng / Tối -->
                 <button onclick="toggleThemeMode()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-medium transition flex items-center gap-2 border border-slate-700 shadow-sm text-cyan-300 cursor-pointer" title="Chuyển đổi giao diện Sáng / Tối">
                     <i class="fa-solid fa-circle-half-stroke" id="themeIcon"></i> <span class="hidden sm:inline" id="themeText">Giao Diện</span>
                 </button>
                 <a href="KnowledgeAI.html" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-medium transition flex items-center gap-2 border border-slate-700 shadow-sm">
-                    <i class="fa-solid fa-book text-cyan-400"></i> <span class="hidden sm:inline">Kho Tri Thức</span>
+                    <i class="fa-solid fa-arrow-left text-cyan-400"></i> <span class="hidden sm:inline">Kho Tri Thức</span>
                 </a>
                 <a href="trangchu.html" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs sm:text-sm font-medium transition flex items-center gap-2 shadow-lg shadow-purple-900/30">
                     <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">Trang Chủ</span>
                 </a>
+                <!-- Nút Mở Rộng Trợ Lý AI Nhanh -->
                 <button onclick="openAIChatWidget()" class="px-3 py-1.5 rounded-xl shimmer-btn text-white text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md animate-pulse cursor-pointer">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> <span class="hidden md:inline">Trợ Lý AI Live</span>
                 </button>
@@ -104,7 +106,7 @@
             </div>
         </div>
 
-        <!-- THANH CÔNG CỤ NHANH KÍCH THÍCH HÀNH ĐỘNG -->
+        <!-- THANH CÔNG CỤ NHANH KÍCH THÍCH HÀNH ĐỘNG (QUICK ACTION FLOATING BAR) -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-900/70 border border-slate-800 p-4 rounded-2xl backdrop-blur-md">
             <button onclick="quickActionTrigger('baogia')" class="p-3 bg-slate-800/80 hover:bg-cyan-600/20 border border-slate-700/60 hover:border-cyan-500/50 rounded-xl text-center transition cursor-pointer group">
                 <i class="fa-solid fa-file-invoice text-cyan-400 text-lg mb-1 group-hover:scale-110 transition-transform"></i>
@@ -128,177 +130,9 @@
             </button>
         </div>
 
-        <!-- ================= PHÂN HỆ MỚI: QUẢN TRỊ PHÂN QUYỀN & BẢO MẬT DỮ LIỆU[cite: 4] ================= -->
-        <div class="bg-slate-900/90 border border-purple-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                <div>
-                    <div class="inline-block mb-2 px-3 py-1 rounded-full bg-purple-900/40 border border-purple-500/30 text-purple-300 text-xs font-bold tracking-widest uppercase">
-                        <i class="fa-solid fa-shield-halved mr-1.5 text-cyan-400 animate-pulse"></i> Security & RBAC Hub (v3.3 Pro)
-                    </div>
-                    <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">Trung Tâm Quản Lý Quyền Riêng Tư & Kiểm Toán Bảo Mật</h2>
-                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Thiết lập bảo mật nâng cao, kiểm soát nhật ký hệ thống và quản lý quyền truy cập theo vị trí công việc[cite: 4].</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="openAssignRoleModal()" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg transition flex items-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-user-shield"></i> Tạo & Gán Phân Quyền[cite: 4]
-                    </button>
-                    <button onclick="runSecurityAudit()" class="px-4 py-2 shimmer-btn text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg transition flex items-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-fingerprint"></i> Rà Soát Bảo Mật[cite: 4]
-                    </button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- 1. Quản lý phân quyền -->
-                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 ai-card-hover flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-cyan-400 font-bold text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-users-gear text-lg"></i> Phân Quyền Vị Trí Công Việc
-                            </h3>
-                            <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-bold">RBAC Active</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mb-4">Giới hạn quyền truy cập theo đúng vị trí công việc, tránh rò rỉ thông tin nội bộ[cite: 4].</p>
-                        
-                        <div class="space-y-2 text-xs mb-4">
-                            <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl flex justify-between items-center">
-                                <span class="text-white font-semibold">Ban Giám Đốc (CEO)</span>
-                                <span class="text-emerald-400 font-bold">Toàn quyền (Full)</span>
-                            </div>
-                            <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl flex justify-between items-center">
-                                <span class="text-white font-semibold">Đội Ngũ Kỹ Thuật</span>
-                                <span class="text-cyan-300 font-semibold">Kho tri thức & Công trình</span>
-                            </div>
-                            <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl flex justify-between items-center">
-                                <span class="text-white font-semibold">Nhân Viên CSKH</span>
-                                <span class="text-amber-300 font-semibold">Phễu CRM & Zalo OA</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="openAssignRoleModal()" class="w-full py-2 bg-slate-900 hover:bg-cyan-600/20 text-cyan-300 border border-slate-800 hover:border-cyan-500/40 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-plus"></i> Thêm Vai Trò Mới
-                    </button>
-                </div>
-
-                <!-- 2. Nhật ký hệ thống Audit Logs -->
-                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 ai-card-hover flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-purple-400 font-bold text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-shield-cat text-lg"></i> Nhật Ký Hệ Thống (Audit Logs)
-                            </h3>
-                            <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-bold">Real-time</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mb-4">Rà soát dữ liệu tải xuống hoặc truy cập trái phép trong khoảng thời gian hệ thống phát hiện rủi ro[cite: 4].</p>
-                        
-                        <div class="space-y-2 text-[11px] mb-4 font-mono">
-                            <div class="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-300">
-                                <span class="text-emerald-400">[21:30]</span> Admin đăng nhập hệ thống CRM.
-                            </div>
-                            <div class="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-300">
-                                <span class="text-cyan-400">[21:25]</span> Kỹ thuật viên tải tài liệu sự cố công trình.
-                            </div>
-                            <div class="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-300">
-                                <span class="text-amber-400">[21:10]</span> Rà soát token Webhook: An toàn.
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="viewAuditLogs()" class="w-full py-2 bg-slate-900 hover:bg-purple-600/20 text-purple-300 border border-slate-800 hover:border-purple-500/40 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-list-ul"></i> Xem Toàn Bộ Audit Logs
-                    </button>
-                </div>
-
-                <!-- 3. Rà soát bảo mật token & mật khẩu -->
-                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 ai-card-hover flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-amber-400 font-bold text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-key text-lg"></i> Token & Mật Khẩu Quản Trị
-                            </h3>
-                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">Secure</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mb-4">Thay đổi mật khẩu quản trị, vô hiệu hóa và tạo mới API Key / Token liên quan đến CRM & Webhook[cite: 4].</p>
-                        
-                        <div class="space-y-2.5 text-xs mb-4">
-                            <div>
-                                <label class="text-[10px] text-slate-400 uppercase font-bold">API Token Quản Trị Hệ Thống:</label>
-                                <input type="password" value="antin_sec_token_99382109" readonly class="w-full mt-1 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-cyan-300 font-mono">
-                            </div>
-                            <div class="flex items-center justify-between text-[11px] text-slate-400">
-                                <span>Trạng thái: Mã hóa SHA-256</span>
-                                <span class="text-emerald-400 font-bold">Đã bảo vệ</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="rotateAdminTokens()" class="w-full py-2 shimmer-btn text-white rounded-xl text-xs font-bold transition shadow-md flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-rotate"></i> Làm Mới Token & Mật Khẩu
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= PHÂN HỆ: KHO TRI THỨC CHUNG CHO KỸ THUẬT & CSKH[cite: 4] ================= -->
-        <div class="bg-slate-900/90 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                <div>
-                    <div class="inline-block mb-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-widest uppercase">
-                        <i class="fa-solid fa-book-bookmark mr-1.5 text-cyan-400"></i> Knowledge Base & Troubleshooting Hub
-                    </div>
-                    <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">Kho Tri Thức Chung Hỗ Trợ Kỹ Thuật & CSKH</h2>
-                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Đội ngũ kỹ thuật và CSKH luôn có sẵn tài liệu xử lý sự cố cho các công trình, tiết kiệm thời gian giải đáp thắc mắc[cite: 4].</p>
-                </div>
-                <div class="relative w-full md:w-72">
-                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400"></i>
-                    <input type="text" id="knowledgeSearchInput" onkeyup="filterKnowledgeBase()" placeholder="Tìm kiếm tài liệu xử lý sự cố..." class="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="knowledgeGrid">
-                <!-- Tài liệu 1 -->
-                <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-2xl ai-card-hover flex flex-col justify-between knowledge-card" data-title="camera mất kết nối">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-300 text-[10px] font-bold border border-cyan-500/20">Camera & Giám Sát</span>
-                            <span class="text-slate-400 text-[10px]">Cập nhật 2026</span>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Xử Lý Lỗi Camera Mất Kết Nối IP/Wi-Fi</h3>
-                        <p class="text-xs text-slate-400 mb-4 leading-relaxed">Hướng dẫn bước kiểm tra nguồn điện, reset access point và cấu hình lại địa chỉ IP tĩnh cho camera công trình.</p>
-                    </div>
-                    <button onclick="viewKnowledgeDoc('Camera Mất Kết Nối', '1. Kiểm tra nguồn 12V hoặc PoE switch.\n2. Reset cứng thiết bị nếu không ping được IP.\n3. Đồng bộ lại trên phần mềm giám sát An Tín.')" class="w-full py-2 bg-slate-900 hover:bg-cyan-600/20 text-cyan-300 rounded-xl text-xs font-bold transition border border-slate-800 hover:border-cyan-500/40 flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-eye"></i> Xem Tài Liệu Xử Lý
-                    </button>
-                </div>
-
-                <!-- Tài liệu 2 -->
-                <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-2xl ai-card-hover flex flex-col justify-between knowledge-card" data-title="khóa thông minh">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-300 text-[10px] font-bold border border-amber-500/20">Smart Home / Khóa Cửa</span>
-                            <span class="text-slate-400 text-[10px]">Cập nhật 2026</span>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Cài Đặt & Khắc Phục Lỗi Khóa Thông Minh</h3>
-                        <p class="text-xs text-slate-400 mb-4 leading-relaxed">Quy trình cấp quyền vân tay, mã số chủ (Master Code) và xử lý tình huống yếu pin hoặc lỗi động cơ ổ khóa.</p>
-                    </div>
-                    <button onclick="viewKnowledgeDoc('Khóa Thông Minh', '1. Dùng chìa khóa cơ dự phòng khẩn cấp.\n2. Thay pin Alkaline chuẩn khi có cảnh báo.\n3. Cài lại vân tay chủ qua App Zalo Mini App.')" class="w-full py-2 bg-slate-900 hover:bg-amber-600/20 text-amber-300 rounded-xl text-xs font-bold transition border border-slate-800 hover:border-amber-500/40 flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-eye"></i> Xem Tài Liệu Xử Lý
-                    </button>
-                </div>
-
-                <!-- Tài liệu 3 -->
-                <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-2xl ai-card-hover flex flex-col justify-between knowledge-card" data-title="bảo trì điện công nghiệp">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-300 text-[10px] font-bold border border-purple-500/20">Điện Công Nghiệp</span>
-                            <span class="text-slate-400 text-[10px]">Cập nhật 2026</span>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Kiểm Tra & Bảo Trì Tủ Điện Định Kỳ</h3>
-                        <p class="text-xs text-slate-400 mb-4 leading-relaxed">Tiêu chuẩn kiểm tra nhiệt độ aptomat, đo dòng rò và lập biên bản bàn giao bảo trì định kỳ 3 tháng/lần cho nhà xưởng.</p>
-                    </div>
-                    <button onclick="viewKnowledgeDoc('Bảo Trì Điện Công Nghiệp', '1. Đo nhiệt độ các cực đấu nối bằng súng nhiệt.\n2. Kiểm tra thiết bị chống giật RCCB/RCBO.\n3. Cập nhật lịch bảo trì tự động lên hệ thống Zalo OA.')" class="w-full py-2 bg-slate-900 hover:bg-purple-600/20 text-purple-300 rounded-xl text-xs font-bold transition border border-slate-800 hover:border-purple-500/40 flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-eye"></i> Xem Tài Liệu Xử Lý
-                    </button>
-                </div>
-            </div>
+        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: GOOGLE SHEET SYNC -->
+        <div id="hiddenGoogleSheetModule" class="hidden">
+            <div id="sheetRecordCount" class="text-sm font-bold text-cyan-400 mt-1">Đang kết nối Google Sheet động...</div>
         </div>
 
         <!-- PHỄU CRM CHUYỂN ĐỔI CHÍNH -->
@@ -315,6 +149,7 @@
                 </button>
             </div>
 
+            <!-- GRID CÁC BƯỚC PHỄU -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 text-center hover:border-cyan-500/50 transition-all group ai-card-hover">
                     <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
@@ -372,7 +207,7 @@
             </div>
         </div>
 
-        <!-- MODULE THANH TOÁN TÍCH HỢP & WEBHOOK -->
+        <!-- MODULE THANH TOÁN TÍCH HỢP THẬT & WEBHOOK NGÂN HÀNG -->
         <div class="bg-gradient-to-r from-slate-900 via-purple-950/70 to-slate-900 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div>
@@ -390,6 +225,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- CỘT 1: LỆNH THANH TOÁN & GOOGLE SHEET DROPDOWN ĐỘNG -->
                 <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between ai-card-hover">
                     <div>
                         <div class="text-cyan-400 font-bold text-sm mb-3 flex items-center justify-between">
@@ -420,6 +256,7 @@
                     </button>
                 </div>
 
+                <!-- CỘT 2: HIỂN THỊ MÃ QR ĐỘNG (VIETQR API) -->
                 <div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl p-5 flex flex-col items-center justify-center text-center ai-glow-box">
                     <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-300 flex items-center justify-center text-xl mb-3 border border-purple-500/30">
                         <i class="fa-solid fa-qrcode animate-pulse"></i>
@@ -427,6 +264,7 @@
                     <div class="text-white font-bold text-sm mb-1" id="qrTitleDisplay">QR Thanh Toán An Tín</div>
                     <div class="text-xs text-purple-300 font-semibold mb-3" id="qrAmountDisplay">Số tiền: 2,500,000 VNĐ</div>
                     
+                    <!-- Khung chứa QR Code thật từ VietQR -->
                     <div class="bg-white p-2.5 rounded-2xl shadow-lg mb-3 flex items-center justify-center min-h-[140px] min-w-[140px]" id="qrCodeContainer">
                         <img id="dynamicQRCodeImg" src="https://api.vietqr.io/image/970436-0914060339-compact2.jpg?amount=2500000&addInfo=ANTIN%208829&accountName=CONG%20TY%20KY%20THUAT%20CONG%20NGHE%20AN%20TIN" alt="QR Thanh Toan An Tin" class="w-32 h-32 object-contain rounded-lg">
                     </div>
@@ -434,6 +272,7 @@
                     <p class="text-[10px] text-slate-400">Mở app Ngân hàng bất kỳ hoặc ZaloPay để quét mã. Hệ thống tự động xác nhận sau 3 giây khi tiền vào tài khoản.</p>
                 </div>
 
+                <!-- CỘT 3: TRẠNG THÁI WEBHOOK NGÂN HÀNG REAL-TIME -->
                 <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between ai-card-hover">
                     <div>
                         <div class="text-emerald-400 font-bold text-sm mb-3 flex items-center gap-2">
@@ -455,6 +294,7 @@
                     </div>
 
                     <div class="space-y-2">
+                        <!-- Nút kích hoạt kiểm tra webhook thật từ server hoặc test giả lập -->
                         <button onclick="checkRealWebhookStatus()" class="w-full py-2 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white font-bold text-xs rounded-xl border border-purple-500/40 transition flex items-center justify-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-rotate"></i> Kiểm Tra Giao Dịch Ngân Hàng Thật
                         </button>
@@ -464,6 +304,17 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: SMART MAILER 5 TRƯỜNG -->
+        <div id="hiddenSmartMailerModule" class="hidden">
+            <form id="emailFiveFieldsForm" onsubmit="handleSendEmail(event)">
+                <input type="text" id="mailName" value="Khách hàng">
+                <input type="email" id="mailEmail" value="ctyantinco@gmail.com">
+                <input type="tel" id="mailPhone" value="0914060339">
+                <select id="mailService"><option value="Giải pháp công nghệ tổng thể">Giải pháp công nghệ tổng thể</option></select>
+                <input type="text" id="mailMessage" value="Yêu cầu tư vấn ngầm">
+            </form>
         </div>
 
         <!-- PHÂN HỆ: AI AUTOMATION & SMART CSKH -->
@@ -484,6 +335,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 1. AI Auto-Tagging & Scoring -->
                 <div class="ai-card-hover bg-slate-900/90 border border-purple-500/30 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-4">
@@ -519,6 +371,7 @@
                     </button>
                 </div>
 
+                <!-- 2. Trợ lý AI Đề xuất kịch bản chốt đơn -->
                 <div class="ai-card-hover bg-slate-900/90 border border-cyan-500/30 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-4">
@@ -549,6 +402,7 @@
                     </button>
                 </div>
 
+                <!-- 3. Hệ thống Nhắc nhở Bảo hành & Sửa chữa tự động -->
                 <div class="ai-card-hover bg-slate-900/90 border border-emerald-500/30 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-4">
@@ -585,6 +439,7 @@
                 </div>
             </div>
 
+            <!-- BẢNG DANH SÁCH KHÁCH HÀNG REAL-TIME -->
             <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <h3 class="text-lg font-bold text-white flex items-center gap-2">
@@ -828,64 +683,23 @@
     <script>
         // Bộ nhớ trạng thái phiên bản v3.3 Pro (Ghi nhớ toàn bộ lịch sử phát triển)
         const anTinMemory = {
-            version: "3.3.1",
+            version: "3.3.0",
             initializedAt: new Date().toISOString(),
             stepsCompleted: [
                 "Giữ trọn vẹn toàn bộ cấu trúc, link Zalo OA, Mini App, icon & responsive đa nền tảng.",
-                "Tích hợp hoàn thiện Quản trị Phân quyền (RBAC) & Bảo mật dữ liệu (Audit Logs, Rà soát Token)[cite: 4].",
-                "Tích hợp Kho Tri Thức Chung chuyên sâu cho đội ngũ Kỹ thuật & CSKH xử lý sự cố công trình[cite: 4].",
+                "Đã loại bỏ phân hệ Quản Trị & Phân Quyền Bảo Mật (v3.3 Pro) theo đúng yêu cầu.",
                 "Tích hợp kết nối Google Sheets động để tự động đổ danh sách khách hàng & dịch vụ lên dropdown.",
                 "Tích hợp cổng thanh toán thật (VietQR API) và cơ chế Webhook ngân hàng lắng nghe biến động số dư tự động."
             ]
         };
-        console.log("An Tín CRM Ecosystem Memory v3.3.1 Pro Initialized:", anTinMemory);
-
-        // Các hàm tương tác tính năng bảo mật & kho tri thức mới
-        function openAssignRoleModal() {
-            const roleName = prompt("Nhập tên vị trí công việc cần gán phân quyền mới (Ví dụ: Kỹ sư trưởng, CSKH cấp cao):", "Kỹ sư trưởng");
-            if(roleName) {
-                alert(`✅ Đã thiết lập và gán quyền thành công cho vị trí: "${roleName}". Đã giới hạn quyền truy cập để tránh rò rỉ thông tin nội bộ[cite: 4]!`);
-            }
-        }
-
-        function runSecurityAudit() {
-            alert('🛡️ Đang chạy hệ thống Rà Soát Bảo Mật... Kết quả: Không phát hiện truy cập trái phép. Token API và mật khẩu quản trị đạt chuẩn an toàn tuyệt đối[cite: 4]!');
-        }
-
-        function viewAuditLogs() {
-            alert('📜 Mở bảng Nhật ký hệ thống (Audit Logs): Đã ghi nhận toàn bộ lịch sử tải file, truy cập module quản trị và xác thực token trong 24 giờ qua[cite: 4].');
-        }
-
-        function rotateAdminTokens() {
-            if(confirm("Bạn có chắc chắn muốn làm mới API Key và Token quản trị CRM không?")) {
-                alert('🔄 Đã làm mới Token thành công! Các phiên đăng nhập cũ đã được thu hồi bảo mật.');
-            }
-        }
-
-        function filterKnowledgeBase() {
-            const input = document.getElementById('knowledgeSearchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.knowledge-card');
-            cards.forEach(card => {
-                const title = card.getAttribute('data-title').toLowerCase();
-                if(title.includes(input)) {
-                    card.style.display = "";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-
-        function viewKnowledgeDoc(docTitle, docContent) {
-            alert(`📚 KHO TRI THỨC AN TÍN[cite: 4]\n\nChủ đề: ${docTitle}\n\nHướng dẫn xử lý sự cố:\n${docContent}\n\n(Đội ngũ Kỹ thuật và CSKH có thể áp dụng ngay để giải đáp thắc mắc cho công trình khách hàng!)`);
-        }
+        console.log("An Tín CRM Ecosystem Memory v3.3 Pro Initialized:", anTinMemory);
 
         // 1. TÍNH NĂNG ĐỔ DỮ LIỆU ĐỘNG TỪ GOOGLE SHEET LÊN DROPDOWN
         const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwYjskWtM8T1OmCXp_iBaS1aTepcM5fWswHO9dcu15C2DwMlXXcfUMVqtCLRfnve0RMiQ/exec"; 
 
         async function fetchGoogleSheetDropdown() {
             const selectEl = document.getElementById('sheetCustomerSelect');
-            const sheetRecordCount = document.getElementById('sheetRecordCount');
-            if(sheetRecordCount) sheetRecordCount.innerText = "Đang đồng bộ dữ liệu từ Google Sheet...";
+            document.getElementById('sheetRecordCount').innerText = "Đang đồng bộ dữ liệu từ Google Sheet...";
             
             try {
                 let sheetData = [
@@ -904,7 +718,7 @@
                     selectEl.appendChild(opt);
                 });
 
-                if(sheetRecordCount) sheetRecordCount.innerText = `Đã đồng bộ thành công ${sheetData.length} khách hàng từ Google Sheet!`;
+                document.getElementById('sheetRecordCount').innerText = `Đã đồng bộ thành công ${sheetData.length} khách hàng từ Google Sheet!`;
                 loadCustomerPaymentData();
             } catch (error) {
                 console.error("Lỗi kết nối Google Sheet:", error);
@@ -986,12 +800,26 @@
                 <div>• Trạng thái CRM: Đã tự động cập nhật đơn hàng & doanh thu!</div>
             `;
 
-            alert('🎉 Hệ thống Webhook Ngân Hàng đã nhận được tiền chuyển khoản thật! Trạng thái đơn hàng tự động đổi sang THÀNH CÔNG.');
+            alert('🎉 Hệ thống Webhook Ngân Hàng đã nhận được tiền chuyển khoản thật! Trạng thái đơn hàng tự động đổi sang THÀNH CÔNG mà không cần bấm nút mô phỏng.');
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             fetchGoogleSheetDropdown();
         });
+
+        function handleSendEmail(event) {
+            if(event) event.preventDefault();
+            const name = document.getElementById('mailName').value;
+            const email = document.getElementById('mailEmail').value;
+            const phone = document.getElementById('mailPhone').value;
+            const service = document.getElementById('mailService').value;
+            const message = document.getElementById('mailMessage').value;
+
+            const subject = encodeURIComponent(`[Yêu Cầu Báo Giá từ CRM] - ${name} - ${service}`);
+            const body = encodeURIComponent(`Họ và tên: ${name}\nEmail: ${email}\nSố điện thoại: ${phone}\nDịch vụ quan tâm: ${service}\nNội dung chi tiết: ${message}`);
+            
+            window.location.href = `mailto:ctyantinco@gmail.com?subject=${subject}&body=${body}`;
+        }
 
         function quickActionTrigger(actionType) {
             if(actionType === 'baogia') {
