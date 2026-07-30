@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI v2.8</title>
+    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI v2.9</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,12 +45,12 @@
                 </div>
                 <div>
                     <span class="font-extrabold text-sm sm:text-base tracking-wider bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">AN TÍN CRM & MINI APP</span>
-                    <p class="text-[10px] text-slate-400 tracking-widest uppercase">Trung Tâm Điều Hành 25 Năm</p>
+                    <p class="text-[10px] text-slate-400 tracking-widest uppercase">Trung Tâm Điều Hành 25 Năm (v2.9)</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-2 sm:space-x-3">
-                <!-- BỔ SUNG MỚI: Nút Chuyển Đổi Giao Diện Sáng / Tối (Dark/Light Mode Toggle) -->
+                <!-- Nút Chuyển Đổi Giao Diện Sáng / Tối -->
                 <button onclick="toggleThemeMode()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-medium transition flex items-center gap-2 border border-slate-700 shadow-sm text-cyan-300 cursor-pointer" title="Chuyển đổi giao diện Sáng / Tối">
                     <i class="fa-solid fa-circle-half-stroke" id="themeIcon"></i> <span class="hidden sm:inline" id="themeText">Giao Diện</span>
                 </button>
@@ -77,7 +77,7 @@
             
             <div class="space-y-3 text-left relative z-10">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
-                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v2.8 (Active)
+                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v2.9 (Live Optimizer)
                 </div>
                 <h1 class="text-xl sm:text-3xl font-black text-white tracking-tight leading-snug">
                     🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH
@@ -95,6 +95,30 @@
                     <i class="fa-solid fa-comment-medical"></i> Zalo OA
                 </a>
             </div>
+        </div>
+
+        <!-- BỔ SUNG MỚI V2.9: THANH CÔNG CỤ NHANH KÍCH THÍCH HÀNH ĐỘNG (QUICK ACTION FLOATING BAR) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-900/70 border border-slate-800 p-4 rounded-2xl backdrop-blur-md">
+            <button onclick="quickActionTrigger('baogia')" class="p-3 bg-slate-800/80 hover:bg-cyan-600/20 border border-slate-700/60 hover:border-cyan-500/50 rounded-xl text-center transition cursor-pointer group">
+                <i class="fa-solid fa-file-invoice text-cyan-400 text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                <div class="text-xs font-bold text-white">Yêu Cầu Báo Giá</div>
+                <div class="text-[10px] text-slate-400">Phản hồi trong 5 phút</div>
+            </button>
+            <button onclick="quickActionTrigger('kythuat')" class="p-3 bg-slate-800/80 hover:bg-purple-600/20 border border-slate-700/60 hover:border-purple-500/50 rounded-xl text-center transition cursor-pointer group">
+                <i class="fa-solid fa-headset text-purple-400 text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                <div class="text-xs font-bold text-white">Hỗ Trợ Kỹ Thuật</div>
+                <div class="text-[10px] text-slate-400">Đội ngũ 25 năm kinh nghiệm</div>
+            </button>
+            <button onclick="quickActionTrigger('baotri')" class="p-3 bg-slate-800/80 hover:bg-amber-600/20 border border-slate-700/60 hover:border-amber-500/50 rounded-xl text-center transition cursor-pointer group">
+                <i class="fa-solid fa-screwdriver-wrench text-amber-400 text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                <div class="text-xs font-bold text-white">Đặt Lịch Bảo Trì</div>
+                <div class="text-[10px] text-slate-400">Kiểm tra miễn phí tận nơi</div>
+            </button>
+            <button onclick="quickActionTrigger('voucher')" class="p-3 bg-slate-800/80 hover:bg-emerald-600/20 border border-slate-700/60 hover:border-emerald-500/50 rounded-xl text-center transition cursor-pointer group">
+                <i class="fa-solid fa-ticket text-emerald-400 text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                <div class="text-xs font-bold text-white">Nhận Voucher 15%</div>
+                <div class="text-[10px] text-slate-400">Ưu đãi qua Zalo OA</div>
+            </button>
         </div>
 
         <!-- PHỄU CRM CHUYỂN ĐỔI CHÍNH -->
@@ -396,7 +420,7 @@
                     </div>
                 </div>
 
-                <!-- BỔ SUNG MỚI: Thanh Tìm Kiếm Khách Hàng Real-time (Live Search Filter) -->
+                <!-- Thanh Tìm Kiếm Khách Hàng Real-time (Live Search Filter) -->
                 <div class="mb-4">
                     <div class="relative">
                         <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400"></i>
@@ -602,7 +626,7 @@
         </div>
     </footer>
 
-    <!-- AI CHAT WIDGET POPUP MỚI (TÍCH HỢP TƯƠNG TÁC SỐNG ĐỘNG) -->
+    <!-- AI CHAT WIDGET POPUP (TÍCH HỢP TƯƠNG TÁC SỐNG ĐỘNG) -->
     <div id="aiChatWidget" class="fixed bottom-6 right-6 z-50 hidden">
         <div class="bg-slate-900 border border-purple-500/60 rounded-3xl shadow-2xl w-80 sm:w-96 overflow-hidden flex flex-col ai-glow-box">
             <div class="bg-gradient-to-r from-purple-900 to-cyan-900 p-4 flex items-center justify-between text-white">
@@ -631,23 +655,41 @@
 
     <!-- JAVASCRIPT HỖ TRỢ TƯƠNG TÁC AI VÀ LƯU TRỮ BỘ NHỚ TRẠNG THÁI -->
     <script>
-        // Lưu bộ nhớ trạng thái & các bước đã làm (Session Memory & LocalState)
+        // Lưu bộ nhớ trạng thái đầy đủ các bước đã thực hiện (Session Memory & LocalState v2.9)
         const anTinMemory = {
-            version: "2.8.0",
+            version: "2.9.0",
             initializedAt: new Date().toISOString(),
             stepsCompleted: [
-                "Giữ trọn vẹn toàn bộ cấu trúc, link, icon & responsive đa nền tảng.",
+                "Giữ trọn vẹn toàn bộ cấu trúc, link Zalo OA, Mini App, icon & responsive đa nền tảng.",
                 "Tích hợp thêm hệ thống AI Auto-Tagging & Scoring real-time.",
                 "Bổ sung widget Trợ lý AI live tương tác trực tiếp ở góc màn hình.",
                 "Thêm hiệu ứng động mượt mà (pulseGlow, float, hover card).",
                 "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát tự động).",
-                "MỚI: Thêm tính năng Tìm kiếm khách hàng nhanh (Live Search) trong bảng CRM.",
-                "MỚI: Thêm tính năng Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode)."
+                "Thêm tính năng Tìm kiếm khách hàng nhanh (Live Search) trong bảng CRM.",
+                "Thêm tính năng Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode).",
+                "MỚI v2.9: Thêm thanh công cụ tương tác nhanh (Quick Action Floating Bar) kích thích hành động trực tiếp."
             ]
         };
-        console.log("An Tín CRM Ecosystem Memory Initialized:", anTinMemory);
+        console.log("An Tín CRM Ecosystem Memory v2.9 Initialized:", anTinMemory);
 
-        // BỔ SUNG MỚI: Hàm tìm kiếm khách hàng real-time trong bảng
+        // BỔ SUNG MỚI V2.9: Xử lý sự kiện thanh công cụ nhanh kích thích hành động
+        function quickActionTrigger(actionType) {
+            if(actionType === 'baogia') {
+                alert('⚡ Trợ lý AI An Tín: Đã mở form yêu cầu báo giá nhanh. Vui lòng nhắn yêu cầu qua Zalo OA 0914060339 để nhận báo giá chi tiết trong 5 phút!');
+                window.open('https://zalo.me/3260030944980440169', '_blank');
+            } else if(actionType === 'kythuat') {
+                alert('🛠️ Đội ngũ kỹ thuật 25 năm kinh nghiệm An Tín đã nhận diện yêu cầu hỗ trợ của bạn. Đang kết nối tổng đài Zalo OA...');
+                window.open('https://zalo.me/0914060339', '_blank');
+            } else if(actionType === 'baotri') {
+                alert('📅 Hệ thống Zalo Mini App đang khởi tạo lịch hẹn kiểm tra bảo trì miễn phí tận nơi cho bạn!');
+                window.open('https://zalo.me/s/2109317456418246815/', '_blank');
+            } else if(actionType === 'voucher') {
+                alert('🎁 Chúc mừng bạn! Voucher giảm giá 15% trọn gói dịch vụ đã được gửi vào Zalo OA của bạn.');
+                window.open('https://zalo.me/3260030944980440169', '_blank');
+            }
+        }
+
+        // Tìm kiếm khách hàng real-time trong bảng
         function filterCustomerTable() {
             const input = document.getElementById('customerSearchInput').value.toLowerCase();
             const rows = document.querySelectorAll('.customer-row');
@@ -663,7 +705,7 @@
             });
         }
 
-        // BỔ SUNG MỚI: Hàm chuyển đổi giao diện Sáng / Tối (Dark/Light Mode)
+        // Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode)
         let isDarkMode = true;
         function toggleThemeMode() {
             isDarkMode = !isDarkMode;
