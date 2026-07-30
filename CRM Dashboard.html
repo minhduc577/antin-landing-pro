@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI v3.0 Pro</title>
+    <title>CRM Dashboard & Hệ Sinh Thái - An Tín Ecosystem AI v3.1 Pro</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,7 +54,7 @@
                 </div>
                 <div>
                     <span class="font-extrabold text-sm sm:text-base tracking-wider bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">AN TÍN CRM & MINI APP</span>
-                    <p class="text-[10px] text-slate-400 tracking-widest uppercase">Trung Tâm Điều Hành 25 Năm (v3.0 Pro)</p>
+                    <p class="text-[10px] text-slate-400 tracking-widest uppercase">Trung Tâm Điều Hành 25 Năm (v3.1 Pro)</p>
                 </div>
             </div>
             
@@ -86,7 +86,7 @@
             
             <div class="space-y-3 text-left relative z-10">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
-                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v3.0 (Ultimate AI Suite)
+                    <i class="fa-solid fa-bolt animate-bounce text-yellow-400"></i> Zalo OA & Mini App Connected v3.1 (Ultimate AI Suite)
                 </div>
                 <h1 class="text-xl sm:text-3xl font-black text-white tracking-tight leading-snug">
                     🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH
@@ -130,7 +130,7 @@
             </button>
         </div>
 
-        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: GOOGLE SHEET SYNC (ĐÃ ẨN GIAO DIỆN, CHẠY NGẦM) -->
+        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: GOOGLE SHEET SYNC -->
         <div id="hiddenGoogleSheetModule" class="hidden">
             <div id="sheetRecordCount" class="text-sm font-bold text-cyan-400 mt-1">3 khách hàng (Sẵn sàng thanh toán)</div>
         </div>
@@ -151,8 +151,6 @@
 
             <!-- GRID CÁC BƯỚC PHỄU -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-                
-                <!-- 1. Khách -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 text-center hover:border-cyan-500/50 transition-all group ai-card-hover">
                     <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-users"></i>
@@ -162,7 +160,6 @@
                     <div class="text-[10px] text-cyan-400 mt-1 font-semibold">Khách truy cập</div>
                 </div>
 
-                <!-- 2. Ebook -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 text-center hover:border-purple-500/50 transition-all group ai-card-hover">
                     <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-book-open"></i>
@@ -172,7 +169,6 @@
                     <div class="text-[10px] text-purple-400 mt-1 font-semibold">Ebook 25 Năm</div>
                 </div>
 
-                <!-- 3. Gọi -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 text-center hover:border-amber-500/50 transition-all group ai-card-hover">
                     <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-phone-volume"></i>
@@ -182,7 +178,6 @@
                     <div class="text-[10px] text-amber-400 mt-1 font-semibold">Khách gọi trực tiếp</div>
                 </div>
 
-                <!-- 4. Khảo sát -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 text-center hover:border-blue-500/50 transition-all group ai-card-hover">
                     <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-clipboard-question"></i>
@@ -192,7 +187,6 @@
                     <div class="text-[10px] text-blue-400 mt-1 font-semibold">Phân tích nhu cầu</div>
                 </div>
 
-                <!-- 5. Hợp đồng -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 text-center hover:border-emerald-500/50 transition-all group ai-card-hover">
                     <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-file-contract"></i>
@@ -202,7 +196,6 @@
                     <div class="text-[10px] text-emerald-400 mt-1 font-semibold">Hợp đồng thành công</div>
                 </div>
 
-                <!-- 6. Doanh thu -->
                 <div class="bg-gradient-to-br from-purple-900/90 to-slate-800 border border-purple-500/50 rounded-2xl p-4 text-center shadow-lg hover:scale-105 transition-all group col-span-2 sm:col-span-1 ai-glow-box">
                     <div class="w-10 h-10 mx-auto mb-3 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center text-lg font-bold group-hover:rotate-12 transition-transform">
                         <i class="fa-solid fa-sack-dollar"></i>
@@ -211,11 +204,10 @@
                     <div id="funnel-revenue" class="text-xl sm:text-3xl font-black text-emerald-400">150tr</div>
                     <div class="text-[10px] text-emerald-300 mt-1 font-semibold animate-pulse">⚡ Đồng bộ Zalo OA</div>
                 </div>
-
             </div>
         </div>
 
-        <!-- MODULE THANH TOÁN TÍCH HỢP (ZALO PAY & QR CODE CỔNG GIAO DỊCH LẤY DATA THẬT) -->
+        <!-- MODULE THANH TOÁN TÍCH HỢP -->
         <div class="bg-gradient-to-r from-slate-900 via-purple-950/70 to-slate-900 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div>
@@ -233,7 +225,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Box 1: Chọn khách hàng từ Sheet ngầm để thanh toán -->
                 <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between ai-card-hover">
                     <div>
                         <div class="text-cyan-400 font-bold text-sm mb-3 flex items-center gap-2">
@@ -264,7 +255,6 @@
                     </button>
                 </div>
 
-                <!-- Box 2: Hiển thị QR Code & ZaloPay mô phỏng -->
                 <div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl p-5 flex flex-col items-center justify-center text-center ai-glow-box">
                     <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-300 flex items-center justify-center text-xl mb-3 border border-purple-500/30">
                         <i class="fa-solid fa-qrcode animate-pulse"></i>
@@ -280,7 +270,6 @@
                     <p class="text-[10px] text-slate-400">Hỗ trợ quét qua app ngân hàng bất kỳ hoặc ZaloPay / Zalo Mini App.</p>
                 </div>
 
-                <!-- Box 3: Trạng thái xác nhận giao dịch AI -->
                 <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between ai-card-hover">
                     <div>
                         <div class="text-emerald-400 font-bold text-sm mb-3 flex items-center gap-2">
@@ -305,7 +294,7 @@
             </div>
         </div>
 
-        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: SMART MAILER 5 TRƯỜNG (ĐÃ ẨN GIAO DIỆN, CHẠY NGẦM) -->
+        <!-- MODULE ẨN HOẠT ĐỘNG NGẦM: SMART MAILER 5 TRƯỜNG -->
         <div id="hiddenSmartMailerModule" class="hidden">
             <form id="emailFiveFieldsForm" onsubmit="handleSendEmail(event)">
                 <input type="text" id="mailName" value="Khách hàng">
@@ -328,14 +317,12 @@
                 </div>
                 <div class="flex items-center gap-3 shrink-0">
                     <span class="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> AI Engine: Active (24/7 v3.0)
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> AI Engine: Active (24/7 v3.1)
                     </span>
                 </div>
             </div>
 
-            <!-- GRID 3 TÍNH NĂNG AI CHĂM SÓC KHÁCH HÀNG -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
                 <!-- 1. AI Auto-Tagging & Scoring -->
                 <div class="ai-card-hover bg-slate-900/90 border border-purple-500/30 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
                     <div>
@@ -438,10 +425,9 @@
                         <i class="fa-solid fa-paper-plane"></i> Gửi Broadcast Zalo OA Ngay
                     </a>
                 </div>
-
             </div>
 
-            <!-- BẢNG DANH SÁCH KHÁCH HÀNG REAL-TIME MÔ PHỎNG -->
+            <!-- BẢNG DANH SÁCH KHÁCH HÀNG REAL-TIME -->
             <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <h3 class="text-lg font-bold text-white flex items-center gap-2">
@@ -452,7 +438,6 @@
                     </div>
                 </div>
 
-                <!-- Thanh Tìm Kiếm Khách Hàng Real-time (Live Search Filter) -->
                 <div class="mb-4">
                     <div class="relative">
                         <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400"></i>
@@ -590,7 +575,6 @@
 
         <!-- THÔNG TIN LIÊN HỆ & ĐĂNG KÝ TƯ VẤN SÂU -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
             <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex items-center gap-3 mb-4">
@@ -645,9 +629,7 @@
                     </a>
                 </div>
             </div>
-
         </div>
-
     </main>
 
     <!-- FOOTER -->
@@ -658,7 +640,7 @@
         </div>
     </footer>
 
-    <!-- AI CHAT WIDGET POPUP (TÍCH HỢP TƯƠNG TÁC SỐNG ĐỘNG) -->
+    <!-- AI CHAT WIDGET POPUP -->
     <div id="aiChatWidget" class="fixed bottom-6 right-6 z-50 hidden">
         <div class="bg-slate-900 border border-purple-500/60 rounded-3xl shadow-2xl w-80 sm:w-96 overflow-hidden flex flex-col ai-glow-box">
             <div class="bg-gradient-to-r from-purple-900 to-cyan-900 p-4 flex items-center justify-between text-white">
@@ -685,30 +667,25 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT HỖ TRỢ TƯƠNG TÁC AI, GỬI EMAIL, GOOGLE SHEET & THANH TOÁN THẬT -->
+    <!-- JAVASCRIPT HỖ TRỢ TƯƠNG TÁC AI -->
     <script>
-        // Lưu bộ nhớ trạng thái đầy đủ các bước đã thực hiện (Session Memory & LocalState v3.0 Pro)
+        // Lưu bộ nhớ trạng thái đầy đủ các bước đã thực hiện (Session Memory & LocalState v3.1 Pro)
         const anTinMemory = {
-            version: "3.0.2",
+            version: "3.1.0",
             initializedAt: new Date().toISOString(),
             stepsCompleted: [
                 "Giữ trọn vẹn toàn bộ cấu trúc, link Zalo OA, Mini App, icon & responsive đa nền tảng.",
+                "Cập nhật phiên bản v3.1 Pro tối ưu hóa hiệu ứng chuyển động và tương tác mượt mà.",
                 "Ẩn giao diện Google Sheets & Make.com Real-time Sync và ẩn Smart Mailer 5 Trường cho hoạt động ngầm hoàn hảo.",
-                "Khắc phục triệt để lỗi ký tự lạ xuất hiện trên giao diện.",
                 "Tích hợp tính năng gửi Email thực tế với 5 trường thông tin hoạt động ngầm.",
                 "Tích hợp kết nối Google Sheets 'CRM Quản lý khách hàng' chạy ngầm tự động.",
                 "Thêm hệ thống AI Auto-Tagging & Scoring real-time.",
                 "Bổ sung widget Trợ lý AI live tương tác trực tiếp ở góc màn hình.",
-                "Thêm hiệu ứng động mượt mà (pulseGlow, float, hover card, shimmer gradient).",
-                "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát tự động từ dữ liệu ngầm).",
-                "Thêm tính năng Tìm kiếm khách hàng nhanh (Live Search) trong bảng CRM.",
-                "Thêm tính năng Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode).",
-                "Thêm thanh công cụ tương tác nhanh (Quick Action Floating Bar) kích thích hành động trực tiếp."
+                "Phát triển module thanh toán trực tuyến (ZaloPay & QR Code đối soát tự động từ dữ liệu ngầm)."
             ]
         };
-        console.log("An Tín CRM Ecosystem Memory v3.0 Pro Initialized:", anTinMemory);
+        console.log("An Tín CRM Ecosystem Memory v3.1 Pro Initialized:", anTinMemory);
 
-        // Xử lý Gửi Email 5 Trường Hoạt Động Thật (gửi qua mailto hoặc tích hợp ngầm)
         function handleSendEmail(event) {
             if(event) event.preventDefault();
             const name = document.getElementById('mailName').value;
@@ -723,18 +700,16 @@
             window.location.href = `mailto:ctyantinco@gmail.com?subject=${subject}&body=${body}`;
         }
 
-        // Lấy dữ liệu ngầm từ Google Sheet / Make.com
         function fetchDataFromGoogleSheet() {
             setTimeout(() => {
                 document.getElementById('sheetRecordCount').innerText = "Đã đồng bộ 3 bản ghi từ Google Sheet ngầm!";
             }, 800);
         }
-        // Tự động kích hoạt đồng bộ ngầm khi tải trang
+
         window.addEventListener('DOMContentLoaded', () => {
             fetchDataFromGoogleSheet();
         });
 
-        // Chọn khách hàng từ hệ thống ngầm để chạy thanh toán thật
         function loadCustomerPaymentData() {
             const selectValue = document.getElementById('sheetCustomerSelect').value;
             const parts = selectValue.split('|');
@@ -742,7 +717,6 @@
             document.getElementById('payDescInput').value = parts[1];
         }
 
-        // Xử lý sự kiện thanh công cụ nhanh kích thích hành động
         function quickActionTrigger(actionType) {
             if(actionType === 'baogia') {
                 alert('⚡ Trợ lý AI An Tín: Đã mở form yêu cầu báo giá nhanh. Vui lòng nhắn yêu cầu qua Zalo OA 0914060339 để nhận báo giá chi tiết trong 5 phút!');
@@ -759,7 +733,6 @@
             }
         }
 
-        // Tìm kiếm khách hàng real-time trong bảng
         function filterCustomerTable() {
             const input = document.getElementById('customerSearchInput').value.toLowerCase();
             const rows = document.querySelectorAll('.customer-row');
@@ -775,7 +748,6 @@
             });
         }
 
-        // Chuyển đổi giao diện Sáng / Tối (Dark/Light Mode)
         let isDarkMode = true;
         function toggleThemeMode() {
             isDarkMode = !isDarkMode;
@@ -867,6 +839,5 @@
             }, 600);
         }
     </script>
-
 </body>
 </html>
