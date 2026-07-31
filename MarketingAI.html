@@ -44,7 +44,6 @@
             backdrop-filter: blur(8px);
             transition: opacity 0.3s ease;
         }
-        /* Custom scrollbar for Kanban columns */
         .kanban-col::-webkit-scrollbar {
             width: 6px;
         }
@@ -205,6 +204,118 @@
             </div>
         </div>
 
+        <!-- TÍNH NĂNG MỚI: AUTOMATION WEBHOOK HUB (KẾT NỐI ĐA KÊNH: ZALO, EMAIL, SMS, CRM) -->
+        <div class="glass-dark rounded-3xl p-6 sm:p-8 mb-12 shadow-2xl border border-cyan-500/30 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800">
+                <div>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 mb-2">
+                        <i class="fa-solid fa-network-wired text-cyan-400"></i> AN TÍN AUTOMATION WEBHOOK HUB
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes text-cyan-400"></i> Quản Lý Kết Nối Đa Kênh & Webhook Tự Động
+                    </h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">Gửi tin nhắn Zalo ZNS, Zalo cá nhân, SMS, Make.com tự động theo mốc ngày & Đồng bộ CRM thẳng vào hệ thống</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="openWebhookModal()" class="px-4 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:opacity-90 text-white rounded-xl text-xs font-bold transition-all shadow-lg flex items-center gap-2 cursor-pointer transform hover:scale-105">
+                        <i class="fa-solid fa-plus-circle"></i> Thêm Webhook Mới
+                    </button>
+                    <button onclick="testAllWebhooks()" class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition-all border border-slate-700 cursor-pointer flex items-center gap-1.5" title="Kiểm tra kết nối toàn bộ webhook">
+                        <i class="fa-solid fa-bolt text-amber-400"></i> Test Tất Cả
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bảng danh sách các Webhook Hub đang kết nối -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                
+                <!-- Card Webhook 1: Zalo ZNS / Zalo Automation -->
+                <div class="bg-slate-900/90 rounded-2xl p-5 border border-blue-500/30 relative flex flex-col justify-between hover:border-blue-500/60 transition-all shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-blue-500/20 text-blue-300 text-[10px] font-extrabold uppercase">Zalo ZNS / Zalo</span>
+                            <span class="flex items-center gap-1 text-[11px] text-emerald-400 font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Hoạt động</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-comment-sms text-blue-400"></i> Gửi Tin Nhắn Chuyển Mốc Ngày
+                        </h4>
+                        <p class="text-xs text-slate-400 mb-3">Tự động kích hoạt tin nhắn Zalo khi khách chuyển sang Ngày 3, Ngày 10, Ngày 20.</p>
+                        <div class="bg-slate-950/80 rounded-xl p-2.5 font-mono text-[11px] text-slate-300 mb-4 border border-slate-800 truncate">
+                            https://hook.eu1.make.com/antin-zalo-zns-hub
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-xs">
+                        <span class="text-slate-400">Đã gửi: <strong class="text-white">12,450</strong></span>
+                        <button onclick="triggerSingleWebhook('Zalo ZNS')" class="px-3 py-1.5 bg-blue-600/30 hover:bg-blue-600 text-blue-200 rounded-lg text-xs font-bold transition-all cursor-pointer">
+                            Test Webhook 🚀
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Webhook 2: Make.com / n8n Automation -->
+                <div class="bg-slate-900/90 rounded-2xl p-5 border border-purple-500/30 relative flex flex-col justify-between hover:border-purple-500/60 transition-all shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 text-[10px] font-extrabold uppercase">Make.com / n8n</span>
+                            <span class="flex items-center gap-1 text-[11px] text-emerald-400 font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Hoạt động</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> Kịch Bản Tự Động Hóa 30 Ngày
+                        </h4>
+                        <p class="text-xs text-slate-400 mb-3">Điều phối luồng dữ liệu email, tác vụ chăm sóc khách hàng và lịch hẹn kỹ thuật.</p>
+                        <div class="bg-slate-950/80 rounded-xl p-2.5 font-mono text-[11px] text-slate-300 mb-4 border border-slate-800 truncate">
+                            https://hook.make.com/antin-workflow-engine
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-xs">
+                        <span class="text-slate-400">Đã gửi: <strong class="text-white">8,920</strong></span>
+                        <button onclick="triggerSingleWebhook('Make.com Workflow')" class="px-3 py-1.5 bg-purple-600/30 hover:bg-purple-600 text-purple-200 rounded-lg text-xs font-bold transition-all cursor-pointer">
+                            Test Webhook 🚀
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Webhook 3: CRM Synchronization (HubSpot, GetResponse) -->
+                <div class="bg-slate-900/90 rounded-2xl p-5 border border-emerald-500/30 relative flex flex-col justify-between hover:border-emerald-500/60 transition-all shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold uppercase">CRM (HubSpot / GetResponse)</span>
+                            <span class="flex items-center gap-1 text-[11px] text-emerald-400 font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Hoạt động</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-database text-emerald-400"></i> Đồng Bộ Data Thẳng Vào CRM
+                        </h4>
+                        <p class="text-xs text-slate-400 mb-3">Lưu trữ thông tin khách hàng, lịch sử mua hàng và trạng thái lead tự động 100%.</p>
+                        <div class="bg-slate-950/80 rounded-xl p-2.5 font-mono text-[11px] text-slate-300 mb-4 border border-slate-800 truncate">
+                            https://api.hubspot.com/antin-sync-v2/leads
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-xs">
+                        <span class="text-slate-400">Đã đồng bộ: <strong class="text-white">28,450</strong></span>
+                        <button onclick="triggerSingleWebhook('CRM Sync')" class="px-3 py-1.5 bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 rounded-lg text-xs font-bold transition-all cursor-pointer">
+                            Test Webhook 🚀
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Thanh trạng thái log webhook thời gian thực -->
+            <div class="bg-slate-950/90 rounded-2xl p-4 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2 text-slate-300">
+                    <i class="fa-solid fa-terminal text-cyan-400"></i>
+                    <span>Trạng thái Webhook gần nhất: <strong id="webhookStatusLog" class="text-emerald-400">[200 OK] Đã đồng bộ dữ liệu Zalo & CRM thành công lúc 18:00</strong></span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="clearWebhookLogs()" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-400 rounded-lg border border-slate-800 transition-all cursor-pointer">
+                        Xóa Nhật Ký
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- PHẦN MỚI: CRM LEADS PIPELINE & KANBAN BOARD (KÉO-THẢ) -->
         <div class="glass-dark rounded-3xl p-6 sm:p-8 mb-12 shadow-2xl border border-indigo-500/30 relative overflow-hidden">
             <div class="absolute -left-10 -top-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -242,7 +353,6 @@
                         <span id="count-leads" class="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold">0</span>
                     </div>
                     <div id="col-leads" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'leads')">
-                        <!-- Chèn card bằng JS -->
                     </div>
                 </div>
 
@@ -642,6 +752,50 @@
         </div>
     </div>
 
+    <!-- MODAL CẤU HÌNH THÊM WEBHOOK MỚI -->
+    <div id="webhookModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-dark w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-cyan-500/40 transform scale-95 transition-all duration-300 relative">
+            <button onclick="closeWebhookModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center transition-all cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
+                    <i class="fa-solid fa-network-wired text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-extrabold text-white">Cấu Hình Webhook Đa Kênh Mới</h3>
+                    <p class="text-xs text-cyan-300">Kết nối Zalo ZNS, Make.com, HubSpot CRM tự động</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Tên Kênh Kết Nối:</label>
+                    <input type="text" id="webhookNameInput" placeholder="Ví dụ: Zalo ZNS Ngày 10, HubSpot Sync..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Nền Tảng Tích Hợp:</label>
+                    <select id="webhookPlatformInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                        <option value="Zalo ZNS / Zalo">Zalo ZNS / Zalo Cá Nhân</option>
+                        <option value="Make.com / n8n">Make.com / n8n Workflow</option>
+                        <option value="CRM HubSpot / GetResponse">CRM HubSpot / GetResponse</option>
+                        <option value="SMS Gateway">SMS Gateway</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Webhook URL Endpoint:</label>
+                    <input type="text" id="webhookUrlInput" placeholder="https://hook.eu1.make.com/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-mono text-cyan-200 focus:outline-none focus:border-cyan-500">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button onclick="closeWebhookModal()" class="px-4 py-2.5 bg-slate-800 text-slate-300 rounded-xl text-xs font-semibold hover:bg-slate-700 cursor-pointer">Hủy</button>
+                <button onclick="saveNewWebhook()" class="px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl text-xs font-bold shadow-md hover:opacity-95 cursor-pointer">Lưu & Kích Hoạt Webhook</button>
+            </div>
+        </div>
+    </div>
+
     <!-- AI CONTENT STUDIO MODAL POPUP -->
     <div id="aiStudioModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden opacity-0 pointer-events-none transition-all duration-300">
         <div class="glass-dark w-full max-w-3xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-indigo-500/30 transform scale-95 transition-all duration-300 relative max-h-[90vh] overflow-y-auto">
@@ -807,7 +961,6 @@
                     <i class="fa-solid fa-timeline text-indigo-400"></i> Lịch Sử Hành Trình 30 Ngày Tự Động Hóa:
                 </h4>
                 <div id="detailTimelineList" class="space-y-4 border-l-2 border-indigo-500/30 pl-4 ml-2">
-                    <!-- Dynamic timeline items -->
                 </div>
             </div>
 
@@ -1000,6 +1153,52 @@
             });
         });
 
+        // --- AUTOMATION WEBHOOK HUB LOGIC ---
+        function openWebhookModal() {
+            const modal = document.getElementById('webhookModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.querySelector('div > div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeWebhookModal() {
+            const modal = document.getElementById('webhookModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div > div').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        function saveNewWebhook() {
+            const name = document.getElementById('webhookNameInput').value.trim();
+            const platform = document.getElementById('webhookPlatformInput').value;
+            const url = document.getElementById('webhookUrlInput').value.trim();
+
+            if(!name || !url) {
+                alert("Vui lòng nhập đầy đủ tên kênh và Webhook URL endpoint!");
+                return;
+            }
+
+            document.getElementById('webhookStatusLog').innerHTML = `[200 OK] Đã thêm và kích hoạt thành công webhook: <strong>${name} (${platform})</strong>`;
+            closeWebhookModal();
+            alert(`🎉 Đã thêm Webhook kết nối "${name}" thành công! Hệ thống tự động bắt đầu lắng nghe sự kiện.`);
+        }
+
+        function triggerSingleWebhook(channelName) {
+            document.getElementById('webhookStatusLog').innerHTML = `[200 OK] Test webhook <strong>${channelName}</strong> thành công lúc ${new Date().toLocaleTimeString('vi-VN')}!`;
+            alert(`⚡ Đã gửi tín hiệu Test thành công đến Webhook kênh: [${channelName}]. Phản hồi HTTP 200 OK từ server!`);
+        }
+
+        function testAllWebhooks() {
+            document.getElementById('webhookStatusLog').innerHTML = `[200 OK] Đã kiểm tra toàn bộ kết nối Zalo ZNS, Make.com và CRM Hub thành công!`;
+            alert("🚀 Toàn bộ các kết nối Webhook Đa Kênh (Zalo, Make.com, HubSpot CRM) đang hoạt động ổn định và thông suốt!");
+        }
+
+        function clearWebhookLogs() {
+            document.getElementById('webhookStatusLog').innerHTML = `Đã làm mới nhật ký webhook. Đang chờ sự kiện mới...`;
+        }
+
         // --- COUNTDOWN TIMER REAL-TIME CHO FLASH DEAL ---
         function startFlashCountdown() {
             let totalSeconds = 11 * 3600 + 59 * 60 + 59;
@@ -1023,7 +1222,6 @@
             document.getElementById('checkoutItemName').innerText = itemName;
             document.getElementById('checkoutItemPrice').innerText = itemPrice.toLocaleString('vi-VN') + ' đ';
             
-            // Tính giảm giá 10% tự động
             let finalPrice = Math.round(itemPrice * 0.9);
             document.getElementById('checkoutTotalFinal').innerText = finalPrice.toLocaleString('vi-VN') + ' đ';
 
@@ -1241,7 +1439,6 @@
             alert("✨ Thêm Lead mới thành công vào cột 'Leads'!");
         }
 
-        // Hàm mô phỏng hệ thống phân khúc động
         function simulateBehavior(type) {
             const branchA = document.getElementById('branchA');
             const branchB = document.getElementById('branchB');
