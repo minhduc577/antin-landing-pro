@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>An Tín - Hệ Thống Tự Động Hóa, Công Nghệ & AI Content Studio</title>
+    <title>An Tín - Hệ Thống Tự Động Hóa, Phân Khúc Động & AI Content Studio</title>
     <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,8 +21,14 @@
             0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
             50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.8); }
         }
+        @keyframes wavePulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
         .animate-float { animation: float 4s ease-in-out infinite; }
         .animate-glow { animation: pulseGlow 3s infinite; }
+        .animate-wave { animation: wavePulse 2.5s infinite ease-in-out; }
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
@@ -181,6 +187,91 @@
                 <a href="https://khuyenmaicamera.blogspot.com" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold transition-all flex items-center gap-2 border border-slate-700">
                     <i class="fa-solid fa-rss"></i> Blog Khuyến Mãi
                 </a>
+            </div>
+        </div>
+
+        <!-- PHẦN MỚI: HỆ THỐNG PHÂN KHÚC KHÁCH HÀNG THÔNG MINH (DYNAMIC SEGMENTATION) -->
+        <div class="glass-dark rounded-3xl p-6 sm:p-8 mb-12 shadow-2xl border border-purple-500/30 relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-800">
+                <div>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-2">
+                        <i class="fa-solid fa-brain-circuit text-pink-400"></i> AI BEHAVIORAL TRIGGER ENGINE
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-code-branch text-purple-400"></i> Hệ Thống Phân Khúc Khách Hàng Động (Dynamic Segmentation)
+                    </h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">Tách nhánh hành trình tự động dựa trên tương tác thực tế của khách hàng tại mốc Ngày 10</p>
+                </div>
+                <div class="flex items-center gap-2 bg-purple-500/10 text-purple-300 px-3 py-1.5 rounded-xl text-xs font-semibold border border-purple-500/20">
+                    <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span> AI Đang Theo Dõi Real-time
+                </div>
+            </div>
+
+            <!-- Trình giả lập mô phỏng hành vi khách hàng -->
+            <div class="bg-slate-900/90 rounded-2xl p-5 sm:p-6 border border-slate-800 mb-6">
+                <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-indigo-400"></i> Bảng Điều Khiển Giả Lập Trạng Thái Hành Vi Khách Hàng (Test Trigger):
+                </h3>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="simulateBehavior('hot')" class="px-4 py-3 bg-gradient-to-r from-rose-600 to-red-600 hover:opacity-90 text-white rounded-xl text-xs font-bold transition-all shadow-lg flex items-center gap-2 cursor-pointer transform hover:scale-105">
+                        <i class="fa-solid fa-fire text-amber-300"></i> Mô phỏng: Đã click bảng giá ngày 10 (Nhánh A)
+                    </button>
+                    <button onclick="simulateBehavior('cold')" class="px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white rounded-xl text-xs font-bold transition-all shadow-lg flex items-center gap-2 cursor-pointer transform hover:scale-105">
+                        <i class="fa-regular fa-snowflake"></i> Mô phỏng: Chưa mở email ngày đầu (Nhánh B)
+                    </button>
+                    <button onclick="simulateBehavior('reset')" class="px-3 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition-all border border-slate-700 cursor-pointer">
+                        <i class="fa-solid fa-rotate-right"></i> Đặt lại
+                    </button>
+                </div>
+            </div>
+
+            <!-- Khu vực hiển thị 2 Nhánh tách biệt -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- NHÁNH A -->
+                <div id="branchA" class="bg-slate-900/90 rounded-2xl p-6 border-2 border-rose-500/40 relative transition-all duration-500 shadow-xl">
+                    <div class="absolute -top-3 left-6 px-3 py-1 bg-rose-600 text-white rounded-full text-xs font-extrabold uppercase tracking-wider shadow-md">
+                        🔥 Nhánh A: Khách Hàng Nóng
+                    </div>
+                    <div class="mt-3 mb-4">
+                        <h4 class="text-base font-bold text-white mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt-lightning text-amber-400"></i> Click Bảng Giá ở Ngày 10
+                        </h4>
+                        <p class="text-xs text-slate-400">Hành vi kích hoạt: Khách hàng có sự quan tâm cao về chi phí và giải pháp kỹ thuật.</p>
+                    </div>
+                    <div class="bg-slate-950/80 rounded-xl p-4 border border-rose-500/20 mb-4">
+                        <div class="text-xs font-bold text-rose-300 mb-1">⚡ Hành động tự động của hệ thống:</div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Lập tức chuyển hướng khách hàng sang <strong class="text-white">chuỗi chốt sale rút ngắn</strong>, gửi voucher ưu đãi lắp đặt trực tiếp qua Zalo/Email và kích hoạt đội ngũ sales kỹ thuật gọi tư vấn trong vòng 15 phút.
+                        </p>
+                    </div>
+                    <div id="statusA" class="text-xs font-semibold text-slate-500 flex items-center gap-2">
+                        <i class="fa-regular fa-circle"></i> Trạng thái: Đang chờ sự kiện kích hoạt...
+                    </div>
+                </div>
+
+                <!-- NHÁNH B -->
+                <div id="branchB" class="bg-slate-900/90 rounded-2xl p-6 border-2 border-cyan-500/40 relative transition-all duration-500 shadow-xl">
+                    <div class="absolute -top-3 left-6 px-3 py-1 bg-cyan-600 text-white rounded-full text-xs font-extrabold uppercase tracking-wider shadow-md">
+                        ❄️ Nhánh B: Khách Hàng Lạnh
+                    </div>
+                    <div class="mt-3 mb-4">
+                        <h4 class="text-base font-bold text-white mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-envelope-circle-xmark text-cyan-400"></i> Chưa Mở Email Ở Ngày Đầu
+                        </h4>
+                        <p class="text-xs text-slate-400">Hành vi kích hoạt: Khách hàng chưa tiếp cận được thông điệp ban đầu.</p>
+                    </div>
+                    <div class="bg-slate-950/80 rounded-xl p-4 border border-cyan-500/20 mb-4">
+                        <div class="text-xs font-bold text-cyan-300 mb-1">🔄 Hành động tự động của hệ thống:</div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Tự động <strong class="text-white">đổi tiêu đề email</strong> sang dạng tò mò/lợi ích cao hơn và <strong class="text-white">gửi lại tự động sau 48 giờ</strong> để tối đa hóa tỷ lệ mở và tiếp cận dịch vụ.
+                        </p>
+                    </div>
+                    <div id="statusB" class="text-xs font-semibold text-slate-500 flex items-center gap-2">
+                        <i class="fa-regular fa-circle"></i> Trạng thái: Đang chờ sự kiện kích hoạt...
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -564,6 +655,35 @@
                 }
             });
         });
+
+        // Hàm mô phỏng hệ thống phân khúc động
+        function simulateBehavior(type) {
+            const branchA = document.getElementById('branchA');
+            const branchB = document.getElementById('branchB');
+            const statusA = document.getElementById('statusA');
+            const statusB = document.getElementById('statusB');
+
+            if(type === 'hot') {
+                branchA.classList.add('ring-4', 'ring-rose-500', 'scale-[1.02]');
+                branchB.classList.remove('ring-4', 'ring-cyan-500', 'scale-[1.02]', 'opacity-50');
+                branchB.classList.add('opacity-40');
+                statusA.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i> Trạng thái: <strong class="text-white">ĐÃ KÍCH HOẠT!</strong> Đã đẩy sang chuỗi chốt sale rút ngắn lập tức!';
+                statusB.innerHTML = '<i class="fa-regular fa-circle text-slate-500"></i> Trạng thái: Bỏ qua (Không khớp nhánh)';
+                alert("🔥 [Nhánh A - Khách Hàng Nóng]: Hệ thống ghi nhận khách đã click bảng giá Ngày 10 -> Đang tự động chuyển sang chuỗi chốt sale rút ngắn!");
+            } else if(type === 'cold') {
+                branchB.classList.add('ring-4', 'ring-cyan-500', 'scale-[1.02]');
+                branchA.classList.remove('ring-4', 'ring-rose-500', 'scale-[1.02]', 'opacity-50');
+                branchA.classList.add('opacity-40');
+                statusB.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i> Trạng thái: <strong class="text-white">ĐÃ KÍCH HOẠT!</strong> Đã đổi tiêu đề & lên lịch gửi lại sau 48 giờ!';
+                statusA.innerHTML = '<i class="fa-regular fa-circle text-slate-500"></i> Trạng thái: Bỏ qua (Không khớp nhánh)';
+                alert("❄️ [Nhánh B - Khách Hàng Lạnh]: Hệ thống ghi nhận chưa mở email ngày đầu -> Đã tự động đổi tiêu đề và lên lịch gửi lại sau 48 giờ!");
+            } else {
+                branchA.classList.remove('ring-4', 'ring-rose-500', 'scale-[1.02]', 'opacity-40');
+                branchB.classList.remove('ring-4', 'ring-cyan-500', 'scale-[1.02]', 'opacity-40');
+                statusA.innerHTML = '<i class="fa-regular fa-circle text-slate-500"></i> Trạng thái: Đang chờ sự kiện kích hoạt...';
+                statusB.innerHTML = '<i class="fa-regular fa-circle text-slate-500"></i> Trạng thái: Đang chờ sự kiện kích hoạt...';
+            }
+        }
 
         function refreshChartData() {
             if(window.myFunnelChart) {
