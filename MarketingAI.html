@@ -44,10 +44,21 @@
             backdrop-filter: blur(8px);
             transition: opacity 0.3s ease;
         }
-        .kanban-col::-webkit-scrollbar { width: 6px; height: 6px; }
-        .kanban-col::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); border-radius: 8px; }
-        .kanban-col::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 8px; }
-        .kanban-col::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.7); }
+        /* Custom scrollbar for Kanban columns */
+        .kanban-col::-webkit-scrollbar {
+            width: 6px;
+        }
+        .kanban-col::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+        }
+        .kanban-col::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 8px;
+        }
+        .kanban-col::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.7);
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-slate-100 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
@@ -194,87 +205,103 @@
             </div>
         </div>
 
-        <!-- TÍNH NĂNG MỚI: CRM LEADS PIPELINE & KANBAN BOARD -->
-        <div class="glass-dark rounded-3xl p-6 sm:p-8 mb-12 shadow-2xl border border-indigo-500/30">
+        <!-- PHẦN MỚI: CRM LEADS PIPELINE & KANBAN BOARD (KÉO-THẢ) -->
+        <div class="glass-dark rounded-3xl p-6 sm:p-8 mb-12 shadow-2xl border border-indigo-500/30 relative overflow-hidden">
+            <div class="absolute -left-10 -top-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800">
                 <div>
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-2">
-                        <i class="fa-solid fa-columns text-indigo-400"></i> CRM LEADS PIPELINE
+                        <i class="fa-solid fa-people-arrows text-cyan-400"></i> AN TÍN CRM PIPELINE & KANBAN BOARD
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-kanban text-indigo-400"></i> Quản Lý Hành Trình Khách Hàng (Kanban Board)
+                        <i class="fa-solid fa-columns text-indigo-400"></i> Quản Lý Khách Hàng Theo Dạng Bảng Kanban
                     </h2>
-                    <p class="text-slate-400 text-xs sm:text-sm">Kéo thả lead qua các cột hoặc bấm nút chuyển bước phễu[cite: 8]</p>
+                    <p class="text-slate-400 text-xs sm:text-sm">Kéo thả lead qua các cột hoặc bấm "Chuyển bước" để xem lịch sử hành trình 30 ngày tự động hóa</p>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex flex-wrap items-center gap-2">
                     <button onclick="openAddLeadModal()" class="px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 text-white rounded-xl text-xs font-bold transition-all shadow-lg flex items-center gap-2 cursor-pointer">
                         <i class="fa-solid fa-user-plus"></i> Thêm Lead Mới
+                    </button>
+                    <button onclick="resetKanbanBoard()" class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition-all border border-slate-700 cursor-pointer" title="Làm mới bảng">
+                        <i class="fa-solid fa-rotate"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Kanban Columns Container -->
+            <!-- Kanban Board Grid (5 Cột chính) -->
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 overflow-x-auto pb-4">
                 
-                <!-- Col 1: Leads -->
+                <!-- Cột 1: Leads -->
                 <div class="bg-slate-900/90 rounded-2xl p-4 border border-blue-500/30 flex flex-col h-[520px]">
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
-                        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 1. Leads
-                        </h3>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></span>
+                            <h3 class="text-sm font-bold text-white">1. Leads</h3>
+                        </div>
                         <span id="count-leads" class="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold">0</span>
                     </div>
-                    <div id="col-leads" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'leads')"></div>
+                    <div id="col-leads" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'leads')">
+                        <!-- Chèn card bằng JS -->
+                    </div>
                 </div>
 
-                <!-- Col 2: Ebook Downloaded -->
+                <!-- Cột 2: Ebook Downloaded -->
                 <div class="bg-slate-900/90 rounded-2xl p-4 border border-purple-500/30 flex flex-col h-[520px]">
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
-                        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> 2. Ebook Downloaded
-                        </h3>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                            <h3 class="text-sm font-bold text-white">2. Ebook Downloaded</h3>
+                        </div>
                         <span id="count-ebook" class="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold">0</span>
                     </div>
-                    <div id="col-ebook" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'ebook')"></div>
+                    <div id="col-ebook" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'ebook')">
+                    </div>
                 </div>
 
-                <!-- Col 3: Video Watched -->
+                <!-- Cột 3: Video Watched -->
                 <div class="bg-slate-900/90 rounded-2xl p-4 border border-amber-500/30 flex flex-col h-[520px]">
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
-                        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 3. Video Watched
-                        </h3>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <h3 class="text-sm font-bold text-white">3. Video Watched</h3>
+                        </div>
                         <span id="count-video" class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold">0</span>
                     </div>
-                    <div id="col-video" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'video')"></div>
+                    <div id="col-video" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'video')">
+                    </div>
                 </div>
 
-                <!-- Col 4: Price Checked -->
+                <!-- Cột 4: Price Checked -->
                 <div class="bg-slate-900/90 rounded-2xl p-4 border border-emerald-500/30 flex flex-col h-[520px]">
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
-                        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 4. Price Checked
-                        </h3>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            <h3 class="text-sm font-bold text-white">4. Price Checked</h3>
+                        </div>
                         <span id="count-price" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">0</span>
                     </div>
-                    <div id="col-price" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'price')"></div>
+                    <div id="col-price" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'price')">
+                    </div>
                 </div>
 
-                <!-- Col 5: Deal Closed -->
+                <!-- Cột 5: Deal Closed -->
                 <div class="bg-slate-900/90 rounded-2xl p-4 border border-rose-500/30 flex flex-col h-[520px]">
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
-                        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 5. Deal Closed
-                        </h3>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                            <h3 class="text-sm font-bold text-white">5. Deal Closed</h3>
+                        </div>
                         <span id="count-closed" class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold">0</span>
                     </div>
-                    <div id="col-closed" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'closed')"></div>
+                    <div id="col-closed" class="kanban-col flex-1 overflow-y-auto space-y-3 pr-1" ondragover="allowDrop(event)" ondrop="drop(event, 'closed')">
+                    </div>
                 </div>
 
             </div>
         </div>
 
-        <!-- HỆ THỐNG PHÂN KHÚC KHÁCH HÀNG THÔNG MINH (DYNAMIC SEGMENTATION) -->
+        <!-- PHẦN MỚI: HỆ THỐNG PHÂN KHÚC KHÁCH HÀNG THÔNG MINH (DYNAMIC SEGMENTATION) -->
         <div class="glass-dark rounded-3xl p-6 sm:p-8 mb-12 shadow-2xl border border-purple-500/30 relative overflow-hidden">
             <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
             
@@ -608,67 +635,6 @@
         </div>
     </div>
 
-    <!-- MODAL THÊM LEAD MỚI VÀO KANBAN -->
-    <div id="addLeadModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden opacity-0 pointer-events-none transition-all duration-300">
-        <div class="glass-dark w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-indigo-500/30 transform scale-95 transition-all duration-300">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus text-indigo-400"></i> Thêm Khách Hàng Vào Pipeline
-                </h3>
-                <button onclick="closeAddLeadModal()" class="text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center transition-all cursor-pointer">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="space-y-4 mb-6">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Họ và Tên Khách Hàng:</label>
-                    <input type="text" id="newLeadName" placeholder="Ví dụ: Anh Hoàng Văn Nam..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Số Điện Thoại Zalo / Liên Hệ:</label>
-                    <input type="text" id="newLeadPhone" placeholder="0903xxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Dịch Vụ Quan Tâm:</label>
-                    <input type="text" id="newLeadService" placeholder="Camera, Wi-Fi, Smart Home..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
-                </div>
-            </div>
-            <div class="flex justify-end gap-3">
-                <button onclick="closeAddLeadModal()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold cursor-pointer transition-all">Hủy</button>
-                <button onclick="saveNewLead()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold cursor-pointer transition-all shadow-md">Thêm Lead</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL XEM CHI TIẾT LỊCH SỬ TƯƠNG TÁC 30 NGÀY CỦA LEAD -->
-    <div id="leadDetailModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden opacity-0 pointer-events-none transition-all duration-300">
-        <div class="glass-dark w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-indigo-500/30 transform scale-95 transition-all duration-300">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-                <div>
-                    <h3 id="detailLeadName" class="text-lg font-bold text-white flex items-center gap-2">Chi Tiết Hành Trình Lead</h3>
-                    <p id="detailLeadMeta" class="text-xs text-indigo-300 mt-0.5">SĐT & Dịch vụ quan tâm</p>
-                </div>
-                <button onclick="closeLeadDetailModal()" class="text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center transition-all cursor-pointer">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            
-            <div class="mb-4">
-                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">📜 Lịch sử tương tác qua 30 ngày tự động hóa[cite: 8]:</h4>
-                <div id="detailTimelineList" class="space-y-2.5 max-h-[300px] overflow-y-auto pr-2">
-                    <!-- Được render bằng JS -->
-                </div>
-            </div>
-
-            <div class="flex items-center justify-between pt-4 border-t border-slate-800">
-                <div class="text-xs text-emerald-400 flex items-center gap-1.5">
-                    <i class="fa-solid fa-robot"></i> AI Automation đang đồng hành chăm sóc
-                </div>
-                <button onclick="closeLeadDetailModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all cursor-pointer">Đóng</button>
-            </div>
-        </div>
-    </div>
-
     <!-- AI CONTENT STUDIO MODAL POPUP -->
     <div id="aiStudioModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden opacity-0 pointer-events-none transition-all duration-300">
         <div class="glass-dark w-full max-w-3xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-indigo-500/30 transform scale-95 transition-all duration-300 relative max-h-[90vh] overflow-y-auto">
@@ -731,28 +697,148 @@
         </div>
     </div>
 
+    <!-- MODAL XEM CHI TIẾT HÀNH TRÌNH 30 NGÀY CỦA LEAD -->
+    <div id="leadDetailModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-dark w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-indigo-500/30 transform scale-95 transition-all duration-300 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeLeadModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center transition-all cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg">
+                    <i class="fa-solid fa-user-gear text-xl"></i>
+                </div>
+                <div>
+                    <h3 id="detailLeadName" class="text-xl font-bold text-white">Tên Khách Hàng</h3>
+                    <p id="detailLeadMeta" class="text-xs text-indigo-300">Dịch vụ quan tâm • SĐT / Email</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 mb-6">
+                <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-timeline text-indigo-400"></i> Lịch Sử Hành Trình 30 Ngày Tự Động Hóa:
+                </h4>
+                <div id="detailTimelineList" class="space-y-4 border-l-2 border-indigo-500/30 pl-4 ml-2">
+                    <!-- Dynamic timeline items -->
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+                <span id="detailLeadStatus" class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-bold">Trạng thái hiện tại</span>
+                <button onclick="closeLeadModal()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold transition-all cursor-pointer">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL THÊM LEAD MỚI -->
+    <div id="addLeadModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-dark w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-indigo-500/30 transform scale-95 transition-all duration-300 relative">
+            <button onclick="closeAddLeadModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center transition-all cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-user-plus text-indigo-400"></i> Thêm Khách Hàng (Lead) Mới
+            </h3>
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Tên Khách Hàng / Doanh Nghiệp:</label>
+                    <input type="text" id="newLeadNameInput" placeholder="Ví dụ: Công ty ABC, Anh Nam..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Dịch Vụ Kỹ Thuật Quan Tâm:</label>
+                    <select id="newLeadServiceInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        <option value="Camera An Ninh">Camera An Ninh</option>
+                        <option value="Mạng Wi-Fi & CNTT">Mạng Wi-Fi & CNTT</option>
+                        <option value="Nhà Thông Minh Smart Home">Nhà Thông Minh Smart Home</option>
+                        <option value="Điện Dân Dụng & Công Nghiệp">Điện Dân Dụng & Công Nghiệp</option>
+                        <option value="Báo Cháy & Kiểm Soát">Báo Cháy & Kiểm Soát</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Số Điện Thoại / Zalo:</label>
+                    <input type="text" id="newLeadPhoneInput" placeholder="0912xxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+                </div>
+            </div>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeAddLeadModal()" class="px-4 py-2.5 bg-slate-800 text-slate-300 rounded-xl text-xs font-semibold hover:bg-slate-700 cursor-pointer">Hủy</button>
+                <button onclick="saveNewLead()" class="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl text-xs font-bold shadow-md hover:opacity-95 cursor-pointer">Thêm Lead Ngay</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Script Xử Lý -->
     <script>
-        // Dữ liệu mẫu danh sách Leads cho Kanban Pipeline
+        // --- QUẢN LÝ DỮ LIỆU KANBAN CRM ---
         let crmLeads = [
-            { id: 'lead-1', name: 'Anh Hoàng Văn Nam', phone: '0903123456', service: 'Camera An Ninh', status: 'leads', history: [
-                { day: 'Ngày Đầu (T+0)', desc: 'Tải thành công cẩm nang bảo trì thiết bị kỹ thuật' },
-                { day: 'Ngày 3', desc: 'Đã mở video thực tế thi công Smart Home' }
-            ]},
-            { id: 'lead-2', name: 'Công ty CP Đầu Tư TEC', phone: '0918999888', service: 'Mạng Wi-Fi & CNTT', status: 'ebook', history: [
-                { day: 'Ngày Đầu (T+0)', desc: 'Đăng ký thông tin và tải Ebook hạ tầng mạng doanh nghiệp' }
-            ]},
-            { id: 'lead-3', name: 'Chị Mai Thu Hường', phone: '0988776655', service: 'Nhà Thông Minh', status: 'video', history: [
-                { day: 'Ngày Đầu (T+0)', desc: 'Tiếp cận tài liệu giải pháp' },
-                { day: 'Ngày 3', desc: 'Đã xem trọn vẹn video trải nghiệm hệ thống điện thông minh' }
-            ]},
-            { id: 'lead-4', name: 'Anh Trần Minh Trí', phone: '0912333444', service: 'Khóa Cửa Thông Minh', status: 'price', history: [
-                { day: 'Ngày Đầu đến Ngày 7', desc: 'Đã theo dõi toàn bộ chuỗi thông điệp tự động hóa' },
-                { day: 'Ngày 10', desc: 'Click xem bảng giá trọn gói thiết bị khóa cửa vân tay' }
-            ]},
-            { id: 'lead-5', name: 'Nhà Hàng Phố Xưa', phone: '0909555666', service: 'Báo Cháy & Điện Dân Dụng', status: 'closed', history: [
-                { day: 'Toàn bộ hành trình 30 ngày', desc: 'Hoàn thành các mốc tương tác, chốt hợp đồng thi công hệ thống báo cháy' }
-            ]}
+            {
+                id: 'lead-1',
+                name: 'Anh Hoàng Văn Nam',
+                service: 'Camera An Ninh',
+                phone: '0903123456',
+                status: 'leads',
+                date: '31/07/2026',
+                history: [
+                    { day: 'Ngày Đầu', title: 'Đăng ký nhận cẩm nang camera', time: '31/07/2026 08:30', status: 'completed' },
+                    { day: 'Ngày 3', title: 'Chờ gửi Video thi công thực tế', time: 'Dự kiến 03/08/2026', status: 'pending' },
+                    { day: 'Ngày 7', title: 'Chờ gửi Case Study dự án', time: 'Dự kiến 07/08/2026', status: 'pending' },
+                    { day: 'Ngày 10', title: 'Chờ gửi Bảng giá thiết bị', time: 'Dự kiến 10/08/2026', status: 'pending' }
+                ]
+            },
+            {
+                id: 'lead-2',
+                name: 'Công ty CP Đầu Tư TEC',
+                service: 'Mạng Wi-Fi & CNTT',
+                phone: '0918999888',
+                status: 'ebook',
+                date: '28/07/2026',
+                history: [
+                    { day: 'Ngày Đầu', title: 'Đã tải thành công Cẩm Nang Hạ Tầng CNTT', time: '28/07/2026 14:15', status: 'completed' },
+                    { day: 'Ngày 3', title: 'Đã mở xem Video hệ thống mạng doanh nghiệp', time: '30/07/2026 09:20', status: 'completed' },
+                    { day: 'Ngày 7', title: 'Chờ gửi Case Study tối ưu mạng', time: 'Dự kiến 04/08/2026', status: 'pending' }
+                ]
+            },
+            {
+                id: 'lead-3',
+                name: 'Chị Mai Thu Hường',
+                service: 'Nhà Thông Minh Smart Home',
+                phone: '0988776655',
+                status: 'video',
+                date: '25/07/2026',
+                history: [
+                    { day: 'Ngày Đầu', title: 'Đã nhận tài liệu Smart Home', time: '25/07/2026 10:00', status: 'completed' },
+                    { day: 'Ngày 3', title: 'Đã xem Video trải nghiệm nhà thông minh', time: '27/07/2026 16:40', status: 'completed' },
+                    { day: 'Ngày 7', title: 'Đã đọc Case Study biệt thự thông minh', time: '01/08/2026 11:10', status: 'completed' }
+                ]
+            },
+            {
+                id: 'lead-4',
+                name: 'Xưởng Cơ Khí Tân Tạo',
+                service: 'Điện Dân Dụng & Công Nghiệp',
+                phone: '0283849357',
+                status: 'price',
+                date: '20/07/2026',
+                history: [
+                    { day: 'Ngày Đầu', title: 'Đã tải cẩm nang bảo trì điện công nghiệp', time: '20/07/2026 09:00', status: 'completed' },
+                    { day: 'Ngày 3', title: 'Đã xem Video thi công trạm điện', time: '23/07/2026 14:00', status: 'completed' },
+                    { day: 'Ngày 7', title: 'Đã xem báo cáo bảo trì xưởng mẫu', time: '27/07/2026 10:30', status: 'completed' },
+                    { day: 'Ngày 10', title: 'Đã nhận & mở xem Bảng Giá Thiết Bị', time: '30/07/2026 15:20', status: 'completed' }
+                ]
+            },
+            {
+                id: 'lead-5',
+                name: 'Nhà Hàng Phố Xưa',
+                service: 'Báo Cháy & Kiểm Soát',
+                phone: '0909555444',
+                status: 'closed',
+                date: '15/07/2026',
+                history: [
+                    { day: 'Ngày Đầu', title: 'Đã gửi tài liệu PCCC nhà hàng', time: '15/07/2026 08:00', status: 'completed' },
+                    { day: 'Ngày 10', title: 'Đã duyệt báo giá hệ thống', time: '25/07/2026 11:00', status: 'completed' },
+                    { day: 'Ngày 20', title: 'Ký hợp đồng & thi công hoàn tất', time: '30/07/2026 17:00', status: 'completed' }
+                ]
+            }
         ];
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -825,9 +911,10 @@
             });
         });
 
-        // ================= HÀM XỬ LÝ KANBAN BOARD =================
+        // --- RENDER KANBAN BOARD ---
         function renderKanbanBoard() {
             const statuses = ['leads', 'ebook', 'video', 'price', 'closed'];
+            
             statuses.forEach(statusKey => {
                 const container = document.getElementById(`col-${statusKey}`);
                 const badge = document.getElementById(`count-${statusKey}`);
@@ -837,32 +924,31 @@
                 container.innerHTML = '';
 
                 if(filteredLeads.length === 0) {
-                    container.innerHTML = `<div class="text-center py-10 text-slate-500 text-xs italic">Chưa có khách hàng</div>`;
+                    container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs italic">Chưa có khách hàng</div>`;
                     return;
                 }
 
                 filteredLeads.forEach(lead => {
                     const card = document.createElement('div');
-                    card.className = "bg-slate-950/90 rounded-xl p-3.5 border border-slate-800 hover:border-indigo-500/50 shadow-md transition-all cursor-grab";
+                    card.className = "bg-slate-950/90 rounded-xl p-3.5 border border-slate-800 hover:border-indigo-500/50 transition-all cursor-grab active:cursor-grabbing shadow-md group relative";
                     card.draggable = true;
                     card.ondragstart = (e) => drag(e, lead.id);
 
                     card.innerHTML = `
-                        <div class="flex items-start justify-between gap-2 mb-1.5">
-                            <h4 class="text-xs font-bold text-white">${lead.name}</h4>
-                            <button onclick="openLeadDetail('${lead.id}')" class="text-indigo-400 hover:text-indigo-300 text-[11px] font-semibold flex items-center gap-1 cursor-pointer bg-indigo-500/10 px-2 py-0.5 rounded-md border border-indigo-500/20">
-                                <i class="fa-solid fa-clock-rotate-left"></i> Hành trình
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                            <h4 class="text-xs font-bold text-white group-hover:text-indigo-300 transition-colors">${lead.name}</h4>
+                            <button onclick="openLeadDetail('${lead.id}')" class="text-slate-400 hover:text-white text-xs px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 transition-all" title="Xem lịch sử 30 ngày">
+                                <i class="fa-solid fa-clock-rotate-left text-indigo-400"></i>
                             </button>
                         </div>
-                        <div class="text-[11px] text-slate-400 mb-2">
-                            <div>📞 ${lead.phone}</div>
-                            <div>🔧 <span class="text-indigo-300 font-medium">${lead.service}</span></div>
+                        <div class="text-[11px] text-indigo-400 font-medium mb-2 flex items-center gap-1">
+                            <i class="fa-solid fa-screwdriver-wrench text-[10px]"></i> ${lead.service}
                         </div>
-                        <div class="flex items-center justify-between pt-2 border-t border-slate-900 text-[10px] text-slate-500">
-                            <span>Kéo thả chuyển bước</span>
-                            <div class="flex gap-1">
-                                ${statusKey !== 'leads' ? `<button onclick="moveLead('${lead.id}', 'prev')" class="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded"><i class="fa-solid fa-chevron-left"></i></button>` : ''}
-                                ${statusKey !== 'closed' ? `<button onclick="moveLead('${lead.id}', 'next')" class="px-1.5 py-0.5 bg-indigo-600/50 hover:bg-indigo-600 text-white rounded"><i class="fa-solid fa-chevron-right"></i></button>` : ''}
+                        <div class="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-slate-900">
+                            <span><i class="fa-solid fa-phone text-emerald-400 mr-0.5"></i> ${lead.phone}</span>
+                            <div class="flex items-center gap-1">
+                                <button onclick="moveLead('${lead.id}', -1)" class="hover:text-white bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800" title="Lùi bước"><i class="fa-solid fa-chevron-left"></i></button>
+                                <button onclick="moveLead('${lead.id}', 1)" class="hover:text-white bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800" title="Tiến bước"><i class="fa-solid fa-chevron-right"></i></button>
                             </div>
                         </div>
                     `;
@@ -871,15 +957,28 @@
             });
         }
 
-        function allowDrop(ev) { ev.preventDefault(); }
-        function drag(ev, leadId) { ev.dataTransfer.setData("text/plain", leadId); }
+        // --- DRAG & DROP HANDLERS ---
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev, leadId) {
+            ev.dataTransfer.setData("text/plain", leadId);
+        }
+
         function drop(ev, targetStatus) {
             ev.preventDefault();
             const leadId = ev.dataTransfer.getData("text/plain");
             const lead = crmLeads.find(l => l.id === leadId);
-            if(lead) {
+            if(lead && lead.status !== targetStatus) {
                 lead.status = targetStatus;
-                lead.history.push({ day: 'Cập nhật thủ công', desc: `Đã chuyển sang giai đoạn: ${targetStatus.toUpperCase()}` });
+                // Thêm lịch sử tương tác khi đổi trạng thái
+                lead.history.push({
+                    day: 'Cập nhật Kanban',
+                    title: `Đã chuyển sang trạng thái: ${targetStatus.toUpperCase()}`,
+                    time: new Date().toLocaleString('vi-VN'),
+                    status: 'completed'
+                });
                 renderKanbanBoard();
             }
         }
@@ -888,16 +987,66 @@
             const stages = ['leads', 'ebook', 'video', 'price', 'closed'];
             const lead = crmLeads.find(l => l.id === leadId);
             if(!lead) return;
+
             const currentIndex = stages.indexOf(lead.status);
-            if(direction === 'next' && currentIndex < stages.length - 1) {
-                lead.status = stages[currentIndex + 1];
-            } else if(direction === 'prev' && currentIndex > 0) {
-                lead.status = stages[currentIndex - 1];
+            const newIndex = currentIndex + direction;
+
+            if(newIndex >= 0 && newIndex < stages.length) {
+                lead.status = stages[newIndex];
+                lead.history.push({
+                    day: 'Hành trình 30 ngày',
+                    title: `Chuyển bước phễu sang: ${lead.status.toUpperCase()}`,
+                    time: new Date().toLocaleString('vi-VN'),
+                    status: 'completed'
+                });
+                renderKanbanBoard();
             }
-            lead.history.push({ day: 'Cập nhật phễu', desc: `Chuyển bước thành công sang: ${lead.status.toUpperCase()}` });
-            renderKanbanBoard();
         }
 
+        function resetKanbanBoard() {
+            renderKanbanBoard();
+            alert("🔄 Đã làm mới bảng Kanban CRM An Tín thành công!");
+        }
+
+        // --- XEM CHI TIẾT HÀNH TRÌNH 30 NGÀY ---
+        function openLeadDetail(leadId) {
+            const lead = crmLeads.find(l => l.id === leadId);
+            if(!lead) return;
+
+            document.getElementById('detailLeadName').innerText = lead.name;
+            document.getElementById('detailLeadMeta').innerText = `${lead.service} • SĐT: ${lead.phone} • Ngày tạo: ${lead.date}`;
+            document.getElementById('detailLeadStatus').innerText = `Trạng thái: ${lead.status.toUpperCase()}`;
+
+            const timelineList = document.getElementById('detailTimelineList');
+            timelineList.innerHTML = '';
+
+            lead.history.forEach(item => {
+                const tItem = document.createElement('div');
+                tItem.className = "relative pl-4";
+                tItem.innerHTML = `
+                    <div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full ${item.status === 'completed' ? 'bg-emerald-400' : 'bg-slate-600'}"></div>
+                    <div class="text-xs font-bold text-white mb-0.5">${item.day}: ${item.title}</div>
+                    <div class="text-[11px] text-slate-400"><i class="fa-regular fa-clock mr-1"></i> ${item.time}</div>
+                `;
+                timelineList.appendChild(tItem);
+            });
+
+            const modal = document.getElementById('leadDetailModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.querySelector('div > div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeLeadModal() {
+            const modal = document.getElementById('leadDetailModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div > div').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        // --- THÊM LEAD MỚI ---
         function openAddLeadModal() {
             const modal = document.getElementById('addLeadModal');
             modal.classList.remove('hidden');
@@ -911,71 +1060,38 @@
             const modal = document.getElementById('addLeadModal');
             modal.classList.add('opacity-0', 'pointer-events-none');
             modal.querySelector('div > div').classList.add('scale-95');
-            setTimeout(() => modal.classList.add('hidden'), 300);
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
         function saveNewLead() {
-            const name = document.getElementById('newLeadName').value.trim();
-            const phone = document.getElementById('newLeadPhone').value.trim();
-            const service = document.getElementById('newLeadService').value.trim() || 'Giải pháp kỹ thuật An Tín';
+            const name = document.getElementById('newLeadNameInput').value.trim();
+            const service = document.getElementById('newLeadServiceInput').value;
+            const phone = document.getElementById('newLeadPhoneInput').value.trim();
 
             if(!name || !phone) {
-                alert("Vui lòng điền đầy đủ tên và số điện thoại khách hàng!");
+                alert("Vui lòng nhập đầy đủ tên khách hàng và số điện thoại!");
                 return;
             }
 
             const newLead = {
                 id: 'lead-' + Date.now(),
-                name, phone, service,
+                name: name,
+                service: service,
+                phone: phone,
                 status: 'leads',
+                date: new Date().toLocaleDateString('vi-VN'),
                 history: [
-                    { day: 'Ngày Đầu (T+0)', desc: 'Khách hàng mới được thêm vào hệ thống tự động hóa' }
+                    { day: 'Ngày Đầu', title: `Tiếp nhận yêu cầu dịch vụ ${service}`, time: new Date().toLocaleString('vi-VN'), status: 'completed' }
                 ]
             };
 
             crmLeads.push(newLead);
             renderKanbanBoard();
             closeAddLeadModal();
-
-            document.getElementById('newLeadName').value = '';
-            document.getElementById('newLeadPhone').value = '';
-            document.getElementById('newLeadService').value = '';
-            alert("✨ Đã thêm lead mới vào Kanban Pipeline thành công!");
+            alert("✨ Thêm Lead mới thành công vào cột 'Leads'!");
         }
 
-        function openLeadDetail(leadId) {
-            const lead = crmLeads.find(l => l.id === leadId);
-            if(!lead) return;
-
-            document.getElementById('detailLeadName').innerText = lead.name;
-            document.getElementById('detailLeadMeta').innerText = `📞 ${lead.phone} • Dịch vụ: ${lead.service}`;
-
-            const historyList = document.getElementById('detailTimelineList');
-            historyList.innerHTML = '';
-
-            lead.history.forEach(item => {
-                const row = document.createElement('div');
-                row.className = "bg-slate-900/90 rounded-xl p-3 border border-slate-800 text-xs";
-                row.innerHTML = `<span class="font-bold text-indigo-400">${item.day}:</span> <span class="text-slate-300">${item.desc}</span>`;
-                historyList.appendChild(row);
-            });
-
-            const modal = document.getElementById('leadDetailModal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                modal.querySelector('div > div').classList.remove('scale-95');
-            }, 10);
-        }
-
-        function closeLeadDetailModal() {
-            const modal = document.getElementById('leadDetailModal');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modal.querySelector('div > div').classList.add('scale-95');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-
-        // ================= HÀM MÔ PHỎNG PHÂN KHÚC ĐỘNG =================
+        // Hàm mô phỏng hệ thống phân khúc động
         function simulateBehavior(type) {
             const branchA = document.getElementById('branchA');
             const branchB = document.getElementById('branchB');
@@ -984,17 +1100,15 @@
 
             if(type === 'hot') {
                 branchA.classList.add('ring-4', 'ring-rose-500', 'scale-[1.02]');
-                branchB.classList.remove('ring-4', 'ring-cyan-500', 'scale-[1.02]');
+                branchB.classList.remove('ring-4', 'ring-cyan-500', 'scale-[1.02]', 'opacity-50');
                 branchB.classList.add('opacity-40');
-                branchA.classList.remove('opacity-40');
-                statusA.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i> Trạng thái: <strong class="text-white">ĐÃ KÍCH HOẠT!</strong> Đã đẩy sang chuỗi chốt sale rút ngắn!';
+                statusA.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i> Trạng thái: <strong class="text-white">ĐÃ KÍCH HOẠT!</strong> Đã đẩy sang chuỗi chốt sale rút ngắn lập tức!';
                 statusB.innerHTML = '<i class="fa-regular fa-circle text-slate-500"></i> Trạng thái: Bỏ qua (Không khớp nhánh)';
                 alert("🔥 [Nhánh A - Khách Hàng Nóng]: Hệ thống ghi nhận khách đã click bảng giá Ngày 10 -> Đang tự động chuyển sang chuỗi chốt sale rút ngắn!");
             } else if(type === 'cold') {
                 branchB.classList.add('ring-4', 'ring-cyan-500', 'scale-[1.02]');
-                branchA.classList.remove('ring-4', 'ring-rose-500', 'scale-[1.02]');
+                branchA.classList.remove('ring-4', 'ring-rose-500', 'scale-[1.02]', 'opacity-50');
                 branchA.classList.add('opacity-40');
-                branchB.classList.remove('opacity-40');
                 statusB.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i> Trạng thái: <strong class="text-white">ĐÃ KÍCH HOẠT!</strong> Đã đổi tiêu đề & lên lịch gửi lại sau 48 giờ!';
                 statusA.innerHTML = '<i class="fa-regular fa-circle text-slate-500"></i> Trạng thái: Bỏ qua (Không khớp nhánh)';
                 alert("❄️ [Nhánh B - Khách Hàng Lạnh]: Hệ thống ghi nhận chưa mở email ngày đầu -> Đã tự động đổi tiêu đề và lên lịch gửi lại sau 48 giờ!");
