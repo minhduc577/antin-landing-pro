@@ -380,7 +380,7 @@
         <!-- Smart AI Ticker Bar -->
         <div class="ai-ticker">
             <i class="fa-solid fa-bolt-lightning"></i>
-            <span><strong>AI Enterprise Cloud Synced:</strong> Hệ thống đang tự động trích xuất và đồng bộ dữ liệu thời gian thực. Giao diện tối ưu bảo mật và hiển thị chuyên nghiệp.</span>
+            <span><strong>AI Enterprise Cloud Synced:</strong> Hệ thống tự động trích xuất Cột J theo thời gian thực, chuẩn hóa tỷ trọng phần trăm (%) độc lập hoàn hảo cho từng kênh.</span>
         </div>
 
         <!-- Header -->
@@ -389,7 +389,7 @@
             <p>Bảng điều khiển thông minh Frontend — Quản trị toàn diện nguồn khách hàng và vận hành tự động</p>
         </header>
 
-        <!-- Section: AI Analysis - Bảo mật nguồn data, tự động chạy ngầm -->
+        <!-- Section: AI Analysis -->
         <div class="section-title">
             <i class="fa-solid fa-chart-pie"></i>
             <span>AI Phân Tích Hiệu Suất Nguồn Khách Hàng (Real-Time Secure Sync)</span>
@@ -403,19 +403,19 @@
                     <span class="channel-name"><i class="fa-solid fa-globe" style="color: #4285f4;"></i> Google Site</span>
                     <span class="channel-rate" style="color: #34d399;" id="ggSiteRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hệ thống ghi nhận hiệu suất real-time.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);" id="ggSitePercent">Tỷ trọng: 0%</p>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="ggSiteBar" style="width: 0%; background: #34d399;"></div>
                 </div>
             </div>
 
-            <!-- Web Form Card (Tự động cập nhật chuẩn xác real-time) -->
+            <!-- Web Form Card -->
             <div class="card channel-card">
                 <div class="channel-header">
                     <span class="channel-name"><i class="fa-solid fa-wpforms" style="color: #6366f1;"></i> Web Form</span>
                     <span class="channel-rate" style="color: #818cf8;" id="webFormRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hệ thống ghi nhận hiệu suất real-time.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);" id="webFormPercent">Tỷ trọng: 0%</p>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="webFormBar" style="width: 0%; background: #818cf8;"></div>
                 </div>
@@ -427,7 +427,7 @@
                     <span class="channel-name"><i class="fa-solid fa-comments" style="color: #0068ff;"></i> Zalo Portal</span>
                     <span class="channel-rate" style="color: #38bdf8;" id="zaloRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hệ thống ghi nhận hiệu suất real-time.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);" id="zaloPercent">Tỷ trọng: 0%</p>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="zaloBar" style="width: 0%; background: #38bdf8;"></div>
                 </div>
@@ -439,7 +439,7 @@
                     <span class="channel-name"><i class="fa-solid fa-robot" style="color: #ec4899;"></i> SalesAI</span>
                     <span class="channel-rate" style="color: #ec4899;" id="salesAiRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hệ thống ghi nhận hiệu suất real-time.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);" id="salesAiPercent">Tỷ trọng: 0%</p>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="salesAiBar" style="width: 0%; background: #ec4899;"></div>
                 </div>
@@ -451,7 +451,7 @@
                     <span class="channel-name"><i class="fa-solid fa-microchip" style="color: #fbbf24;"></i> KythuatAI</span>
                     <span class="channel-rate" style="color: #fbbf24;" id="kythuatAiRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hệ thống ghi nhận hiệu suất real-time.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);" id="kythuatAiPercent">Tỷ trọng: 0%</p>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="kythuatAiBar" style="width: 0%; background: #fbbf24;"></div>
                 </div>
@@ -463,7 +463,7 @@
                     <span class="channel-name"><i class="fa-solid fa-brain" style="color: #a855f7;"></i> KnowledgeAI</span>
                     <span class="channel-rate" style="color: #a855f7;" id="knowledgeAiRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hệ thống ghi nhận hiệu suất real-time.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);" id="knowledgeAiPercent">Tỷ trọng: 0%</p>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="knowledgeAiBar" style="width: 0%; background: #a855f7;"></div>
                 </div>
@@ -623,10 +623,10 @@
             }, 2000);
         }
 
-        // URL Web App Google Sheet được bảo mật chạy ngầm
+        // URL Web App Google Sheet được bảo mật chạy ngầm[cite: 3]
         const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec";
 
-        // Hàm gọi dữ liệu chuẩn JSONP chạy ngầm bảo mật
+        // Hàm gọi dữ liệu chuẩn JSONP chạy ngầm bảo mật[cite: 3]
         function loadRealTimeData() {
             console.log("Đang đồng bộ dữ liệu ngầm...");
             const oldScript = document.getElementById('jsonp-script');
@@ -638,48 +638,75 @@
             document.body.appendChild(script);
         }
 
-        // Hàm nhận dữ liệu trả về và cập nhật trực tiếp vào các ô dashboard tương ứng một cách mượt mà
+        // Thuật toán chuẩn hóa tỷ trọng độc lập 100% cho từng kênh dựa trên số lượng lead thực tế từ Cột J
         function handleDataResponse(data) {
             console.log("Đã cập nhật dữ liệu real-time thành công.");
             if(data) {
-                let total = (data.googleSiteRate || 0) + (data.webFormRate || 0) + (data.zaloRate || 0) + 
-                            (data.salesAiRate || 0) + (data.kythuatAiRate || 0) + (data.knowledgeAiRate || 0);
-                if(total === 0) total = 1;
+                // Lấy số lượng từ từng kênh (nếu không có mặc định bằng 0)
+                let ggSite = data.googleSiteRate || 0;
+                let webForm = data.webFormRate || 0;
+                let zalo = data.zaloRate || 0;
+                let salesAi = data.salesAiRate || 0;
+                let kythuatAi = data.kythuatAiRate || 0;
+                let knowledgeAi = data.knowledgeAiRate || 0;
 
-                if(data.googleSiteRate !== undefined) {
-                    document.getElementById('ggSiteRate').innerText = data.googleSiteRate;
-                    document.getElementById('ggSiteBar').style.width = Math.min(100, Math.round((data.googleSiteRate / total) * 100)) + "%";
+                // Tổng số lead toàn hệ thống
+                let total = ggSite + webForm + zalo + salesAi + kythuatAi + knowledgeAi;
+                let activeChannelsCount = (ggSite > 0 ? 1 : 0) + (webForm > 0 ? 1 : 0) + (zalo > 0 ? 1 : 0) + 
+                                          (salesAi > 0 ? 1 : 0) + (kythuatAi > 0 ? 1 : 0) + (knowledgeAi > 0 ? 1 : 0);
+
+                // Hàm tính phần trăm tỷ trọng riêng biệt cho từng kênh (Nếu chỉ có 1 kênh duy nhất có data thì hiển thị chuẩn 100%)
+                function getChannelPercent(val) {
+                    if (total === 0) return 0;
+                    if (activeChannelsCount === 1 && val > 0) return 100;
+                    return Math.round((val / total) * 100);
                 }
-                if(data.webFormRate !== undefined) {
-                    document.getElementById('webFormRate').innerText = data.webFormRate;
-                    document.getElementById('webFormBar').style.width = Math.min(100, Math.round((data.webFormRate / total) * 100)) + "%";
-                }
-                if(data.zaloRate !== undefined) {
-                    document.getElementById('zaloRate').innerText = data.zaloRate;
-                    document.getElementById('zaloBar').style.width = Math.min(100, Math.round((data.zaloRate / total) * 100)) + "%";
-                }
-                if(data.salesAiRate !== undefined) {
-                    document.getElementById('salesAiRate').innerText = data.salesAiRate;
-                    document.getElementById('salesAiBar').style.width = Math.min(100, Math.round((data.salesAiRate / total) * 100)) + "%";
-                }
-                if(data.kythuatAiRate !== undefined) {
-                    document.getElementById('kythuatAiRate').innerText = data.kythuatAiRate;
-                    document.getElementById('kythuatAiBar').style.width = Math.min(100, Math.round((data.kythuatAiRate / total) * 100)) + "%";
-                }
-                if(data.knowledgeAiRate !== undefined) {
-                    document.getElementById('knowledgeAiRate').innerText = data.knowledgeAiRate;
-                    document.getElementById('knowledgeAiBar').style.width = Math.min(100, Math.round((data.knowledgeAiRate / total) * 100)) + "%";
-                }
+
+                // Cập nhật Google Site
+                document.getElementById('ggSiteRate').innerText = ggSite;
+                let ggPercent = getChannelPercent(ggSite);
+                document.getElementById('ggSitePercent').innerText = `Tỷ trọng: ${ggPercent}%`;
+                document.getElementById('ggSiteBar').style.width = ggPercent + "%";
+
+                // Cập nhật Web Form (Đảm bảo chuẩn xác 100% khi chỉ có 1 nguồn duy nhất trong Cột J)[cite: 3]
+                document.getElementById('webFormRate').innerText = webForm;
+                let wfPercent = getChannelPercent(webForm);
+                document.getElementById('webFormPercent').innerText = `Tỷ trọng: ${wfPercent}%`;
+                document.getElementById('webFormBar').style.width = wfPercent + "%";
+
+                // Cập nhật Zalo Portal
+                document.getElementById('zaloRate').innerText = zalo;
+                let zaloPercent = getChannelPercent(zalo);
+                document.getElementById('zaloPercent').innerText = `Tỷ trọng: ${zaloPercent}%`;
+                document.getElementById('zaloBar').style.width = zaloPercent + "%";
+
+                // Cập nhật SalesAI
+                document.getElementById('salesAiRate').innerText = salesAi;
+                let salesPercent = getChannelPercent(salesAi);
+                document.getElementById('salesAiPercent').innerText = `Tỷ trọng: ${salesPercent}%`;
+                document.getElementById('salesAiBar').style.width = salesPercent + "%";
+
+                // Cập nhật KythuatAI
+                document.getElementById('kythuatAiRate').innerText = kythuatAi;
+                let kythuatPercent = getChannelPercent(kythuatAi);
+                document.getElementById('kythuatAiPercent').innerText = `Tỷ trọng: ${kythuatPercent}%`;
+                document.getElementById('kythuatAiBar').style.width = kythuatPercent + "%";
+
+                // Cập nhật KnowledgeAI
+                document.getElementById('knowledgeAiRate').innerText = knowledgeAi;
+                let knowledgePercent = getChannelPercent(knowledgeAi);
+                document.getElementById('knowledgeAiPercent').innerText = `Tỷ trọng: ${knowledgePercent}%`;
+                document.getElementById('knowledgeAiBar').style.width = knowledgePercent + "%";
             }
         }
 
-        // Tự động tải dữ liệu ngầm ngay khi vừa mở trang và lặp lại tự động mỗi 15 giây
+        // Tự động tải dữ liệu ngầm ngay khi vừa mở trang và lặp lại tự động mỗi 15 giây[cite: 3]
         window.onload = function() {
             loadRealTimeData();
-            setInterval(loadRealTimeData, 15000); // Auto-refresh real-time ngầm
+            setInterval(loadRealTimeData, 15000);
         };
 
-        // Hàm nút bấm Đồng bộ dữ liệu thủ công
+        // Hàm nút bấm Đồng bộ dữ liệu thủ công[cite: 3]
         function syncHubSpotData(event) {
             const btn = event ? event.currentTarget : document.querySelector('button[onclick*="syncHubSpotData"]');
             const originalHTML = btn ? btn.innerHTML : '';
@@ -697,3 +724,4 @@
     </script>
 </body>
 </html>
+```[cite: 3]
