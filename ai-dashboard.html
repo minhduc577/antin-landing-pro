@@ -380,56 +380,92 @@
         <!-- Smart AI Ticker Bar -->
         <div class="ai-ticker">
             <i class="fa-solid fa-bolt-lightning"></i>
-            <span><strong>HubSpot AI Backend Synced:</strong> Đang lấy dữ liệu real-time từ CRM. Tỷ lệ chuyển đổi Google tăng +2.4% — AI tự động tối ưu phễu thành công[cite: 1].</span>
+            <span><strong>HubSpot AI Backend Synced:</strong> Đang lấy dữ liệu real-time từ CRM. Hệ thống đa nguồn hoạt động ổn định — AI tự động tối ưu phễu thành công.</span>
         </div>
 
         <!-- Header -->
         <header>
             <h1><i class="fa-solid fa-brain"></i> AI Enterprise Command Center</h1>
-            <p>Bảng điều khiển thông minh Frontend — Khai thác trọn vẹn sức mạnh vận hành ngầm từ HubSpot CRM[cite: 1]</p>
+            <p>Bảng điều khiển thông minh Frontend — Quản trị toàn diện nguồn khách hàng và vận hành từ HubSpot CRM</p>
         </header>
 
-        <!-- Section: AI Analysis -->
+        <!-- Section: AI Analysis - Cập nhật đúng các nguồn khách hàng mới -->
         <div class="section-title">
             <i class="fa-solid fa-chart-pie"></i>
-            <span>AI Phân Tích Hiệu Suất Kênh Khách Hàng (HubSpot Data)</span>
+            <span>AI Phân Tích Hiệu Suất Nguồn Khách Hàng (HubSpot Data)</span>
             <div class="live-badge" style="margin-left: auto;"><span class="live-dot"></span> HubSpot API Live</div>
         </div>
 
         <div class="ai-grid">
-            <!-- Facebook Card -->
+            <!-- Google Site Card -->
             <div class="card channel-card">
                 <div class="channel-header">
-                    <span class="channel-name"><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Khách Facebook</span>
-                    <span class="channel-rate" style="color: #f87171;" id="fbRate">18%</span>
+                    <span class="channel-name"><i class="fa-solid fa-globe" style="color: #4285f4;"></i> Google Site</span>
+                    <span class="channel-rate" style="color: #34d399;" id="ggSiteRate">35%</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chốt đơn trung bình mạng xã hội.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chuyển đổi từ mạng lưới Google Site.</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 18%; background: #f87171;"></div>
+                    <div class="progress-bar-fill" style="width: 35%; background: #34d399;"></div>
                 </div>
             </div>
 
-            <!-- Youtube Card -->
+            <!-- Web Form Card -->
             <div class="card channel-card">
                 <div class="channel-header">
-                    <span class="channel-name"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Khách Youtube</span>
-                    <span class="channel-rate" style="color: #fbbf24;" id="ytRate">25%</span>
+                    <span class="channel-name"><i class="fa-solid fa-wpforms" style="color: #6366f1;"></i> Web Form</span>
+                    <span class="channel-rate" style="color: #818cf8;" id="webFormRate">20%</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chuyển đổi từ video review.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chốt đơn từ các biểu mẫu trực tuyến.</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 25%; background: #fbbf24;"></div>
+                    <div class="progress-bar-fill" style="width: 20%; background: #818cf8;"></div>
                 </div>
             </div>
 
-            <!-- Google Card -->
+            <!-- Zalo Portal Card -->
             <div class="card channel-card">
                 <div class="channel-header">
-                    <span class="channel-name"><i class="fa-brands fa-google" style="color: #4285f4;"></i> Khách Google</span>
-                    <span class="channel-rate" style="color: #34d399;" id="ggRate">40%</span>
+                    <span class="channel-name"><i class="fa-solid fa-comments" style="color: #0068ff;"></i> Zalo Portal</span>
+                    <span class="channel-rate" style="color: #38bdf8;" id="zaloRate">15%</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chốt đơn cao nhất từ tìm kiếm.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tương tác và chuyển đổi từ cổng Zalo.</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 40%; background: #34d399;"></div>
+                    <div class="progress-bar-fill" style="width: 15%; background: #38bdf8;"></div>
+                </div>
+            </div>
+
+            <!-- SalesAI Card -->
+            <div class="card channel-card">
+                <div class="channel-header">
+                    <span class="channel-name"><i class="fa-solid fa-robot" style="color: #ec4899;"></i> SalesAI</span>
+                    <span class="channel-rate" style="color: #ec4899;" id="salesAiRate">15%</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Khách hàng chốt thành công qua trợ lý SalesAI.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 15%; background: #ec4899;"></div>
+                </div>
+            </div>
+
+            <!-- KythuatAI Card -->
+            <div class="card channel-card">
+                <div class="channel-header">
+                    <span class="channel-name"><i class="fa-solid fa-microchip" style="color: #fbbf24;"></i> KythuatAI</span>
+                    <span class="channel-rate" style="color: #fbbf24;" id="kythuatAiRate">10%</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Chuyển đổi từ luồng hỗ trợ kỹ thuật chuyên sâu.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 10%; background: #fbbf24;"></div>
+                </div>
+            </div>
+
+            <!-- KnowledgeAI Card -->
+            <div class="card channel-card">
+                <div class="channel-header">
+                    <span class="channel-name"><i class="fa-solid fa-brain" style="color: #a855f7;"></i> KnowledgeAI</span>
+                    <span class="channel-rate" style="color: #a855f7;" id="knowledgeAiRate">5%</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Khách hàng tiếp cận từ kho tri thức thông minh.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 5%; background: #a855f7;"></div>
                 </div>
             </div>
 
@@ -437,8 +473,8 @@
             <div class="ai-recommendation">
                 <div>
                     <div class="ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Action Hub (HubSpot Connected)</div>
-                    <h3>Đề Nghị Tăng Ngân Sách Google Ads</h3>
-                    <p>Dữ liệu HubSpot ghi nhận khách từ Google mang lại biên độ lợi nhuận tối ưu (40%). Hệ thống sẵn sàng phân bổ thêm 30% ngân sách tự động[cite: 1].</p>
+                    <h3>Tối Ưu Hóa Toàn Diện Đa Nguồn Khách Hàng</h3>
+                    <p>Hệ thống ghi nhận hiệu suất mạnh mẽ từ Google Site và Web Form. AI sẵn sàng kích hoạt phân bổ tự động nguồn lực chăm sóc khách hàng cho toàn bộ các kênh.</p>
                 </div>
                 <button class="btn-action" id="executeBtn" onclick="executeAIAction()"><i class="fa-solid fa-play"></i> Thực Thi Ngay AI Action</button>
             </div>
@@ -511,7 +547,7 @@
                     <h4>HubSpot CRM</h4>
                     <p>Backend Lưu trữ</p>
                 </div>
-                <span class="lead-badge-count" style="background: rgba(255,122,89,0.2); color: #ff7a59;">API Connected[cite: 1]</span>
+                <span class="lead-badge-count" style="background: rgba(255,122,89,0.2); color: #ff7a59;">API Connected</span>
             </div>
 
             <div class="flow-step">
@@ -520,7 +556,7 @@
                     <h4>Báo giá</h4>
                     <p>Tự động</p>
                 </div>
-                <span class="lead-badge-count">85 sent[cite: 1]</span>
+                <span class="lead-badge-count">85 sent</span>
             </div>
 
             <div class="flow-step">
@@ -529,7 +565,7 @@
                     <h4>Ký hợp đồng</h4>
                     <p>Xác thực</p>
                 </div>
-                <span class="lead-badge-count">42 signed[cite: 1]</span>
+                <span class="lead-badge-count">42 signed</span>
             </div>
 
             <div class="flow-step">
@@ -538,7 +574,7 @@
                     <h4>Bảo trì</h4>
                     <p>Hậu mãi</p>
                 </div>
-                <span class="lead-badge-count">Active[cite: 1]</span>
+                <span class="lead-badge-count">Active</span>
             </div>
         </div>
 
@@ -558,7 +594,7 @@
             btn.style.background = '#fbbf24';
             
             setTimeout(() => {
-                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã tăng ngân sách Google +30% qua API!`;
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã tối ưu hóa chuyển đổi đa nguồn qua API!`;
                 btn.style.background = '#34d399';
                 btn.style.color = '#0f172a';
                 
@@ -575,7 +611,7 @@
             const btn = event ? event.currentTarget : document.querySelector('button');
             if(!btn) return;
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang phân tích phễu dữ liệu HubSpot...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang phân tích phễu đa nguồn HubSpot...`;
             setTimeout(() => {
                 btn.innerHTML = `<i class="fa-solid fa-check"></i> Đồng bộ AI Command Center hoàn hảo!`;
                 setTimeout(() => {
@@ -603,20 +639,41 @@
         function handleDataResponse(data) {
             console.log("Đã nhận dữ liệu từ Sheet:", data);
             if(data) {
-                const fbElement = document.getElementById('fbRate');
-                if(fbElement) fbElement.innerText = data.facebookRate + "%";
+                // Ánh xạ dữ liệu các kênh mới nếu Google Sheet trả về các trường tương ứng, ngược lại giữ nguyên linh hoạt
+                if(data.googleSiteRate !== undefined) {
+                    const el = document.getElementById('ggSiteRate');
+                    if(el) el.innerText = data.googleSiteRate + "%";
+                }
+                if(data.webFormRate !== undefined) {
+                    const el = document.getElementById('webFormRate');
+                    if(el) el.innerText = data.webFormRate + "%";
+                }
+                if(data.zaloRate !== undefined) {
+                    const el = document.getElementById('zaloRate');
+                    if(el) el.innerText = data.zaloRate + "%";
+                }
+                if(data.salesAiRate !== undefined) {
+                    const el = document.getElementById('salesAiRate');
+                    if(el) el.innerText = data.salesAiRate + "%";
+                }
+                if(data.kythuatAiRate !== undefined) {
+                    const el = document.getElementById('kythuatAiRate');
+                    if(el) el.innerText = data.kythuatAiRate + "%";
+                }
+                if(data.knowledgeAiRate !== undefined) {
+                    const el = document.getElementById('knowledgeAiRate');
+                    if(el) el.innerText = data.knowledgeAiRate + "%";
+                }
 
-                const ytElement = document.getElementById('ytRate');
-                if(ytElement) ytElement.innerText = data.youtubeRate + "%";
-
-                const ggElement = document.getElementById('ggRate');
-                if(ggElement) ggElement.innerText = data.googleRate + "%";
-
+                // Cập nhật progress bar tương ứng nếu có
                 const progressBars = document.querySelectorAll('.progress-bar-fill');
-                if(progressBars.length >= 3) {
-                    progressBars[0].style.width = data.facebookRate + "%";
-                    progressBars[1].style.width = data.youtubeRate + "%";
-                    progressBars[2].style.width = data.googleRate + "%";
+                if(progressBars.length >= 6) {
+                    if(data.googleSiteRate) progressBars[0].style.width = data.googleSiteRate + "%";
+                    if(data.webFormRate) progressBars[1].style.width = data.webFormRate + "%";
+                    if(data.zaloRate) progressBars[2].style.width = data.zaloRate + "%";
+                    if(data.salesAiRate) progressBars[3].style.width = data.salesAiRate + "%";
+                    if(data.kythuatAiRate) progressBars[4].style.width = data.kythuatAiRate + "%";
+                    if(data.knowledgeAiRate) progressBars[5].style.width = data.knowledgeAiRate + "%";
                 }
             }
         }
@@ -636,7 +693,7 @@
             
             setTimeout(() => {
                 if(btn) {
-                    btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã nạp dữ liệu Real-time từ HubSpot thành công!`;
+                    btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã nạp dữ liệu Real-time đa nguồn thành công!`;
                     setTimeout(() => { if(btn) btn.innerHTML = originalHTML; }, 3000);
                 }
             }, 1500);
