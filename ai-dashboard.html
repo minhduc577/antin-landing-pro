@@ -380,7 +380,7 @@
         <!-- Smart AI Ticker Bar -->
         <div class="ai-ticker">
             <i class="fa-solid fa-bolt-lightning"></i>
-            <span><strong>HubSpot & Google Sheets Synced:</strong> Đang lấy dữ liệu real-time chính xác từ Google Sheet CRM. Hệ thống hiển thị đúng số lượng và trạng thái lead.</span>
+            <span><strong>CRM "CRM - QUẢN LÝ KHÁCH HÀNG" Synced:</strong> Đang lấy thống kê real-time từ Cột J (Nguồn) của Google Sheets. Giao diện tối ưu đa nền tảng.</span>
         </div>
 
         <!-- Header -->
@@ -389,10 +389,10 @@
             <p>Bảng điều khiển thông minh Frontend — Quản trị toàn diện nguồn khách hàng và vận hành từ HubSpot CRM & Google Sheets</p>
         </header>
 
-        <!-- Section: AI Analysis - Cập nhật đúng các nguồn khách hàng mới -->
+        <!-- Section: AI Analysis - Lấy số liệu từ cột J (Nguồn) -->
         <div class="section-title">
             <i class="fa-solid fa-chart-pie"></i>
-            <span>AI Phân Tích Hiệu Suất Nguồn Khách Hàng (Google Sheets Live Data)</span>
+            <span>AI Phân Tích Hiệu Suất Nguồn Khách Hàng (Cột J - Google Sheets Live Data)</span>
             <div class="live-badge" style="margin-left: auto;"><span class="live-dot"></span> Sheets API Live</div>
         </div>
 
@@ -401,47 +401,47 @@
             <div class="card channel-card">
                 <div class="channel-header">
                     <span class="channel-name"><i class="fa-solid fa-globe" style="color: #4285f4;"></i> Google Site</span>
-                    <span class="channel-rate" style="color: #34d399;" id="ggSiteRate">35%</span>
+                    <span class="channel-rate" style="color: #34d399;" id="ggSiteRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chuyển đổi từ mạng lưới Google Site.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Số lượng lead từ Google Site (Cột J).</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 35%; background: #34d399;"></div>
+                    <div class="progress-bar-fill" id="ggSiteBar" style="width: 0%; background: #34d399;"></div>
                 </div>
             </div>
 
-            <!-- Web Form Card (Hiển thị số lượng lead thực tế từ sheet) -->
+            <!-- Web Form Card -->
             <div class="card channel-card">
                 <div class="channel-header">
                     <span class="channel-name"><i class="fa-solid fa-wpforms" style="color: #6366f1;"></i> Web Form</span>
-                    <span class="channel-rate" style="color: #818cf8;" id="webFormRate">3 Leads</span>
+                    <span class="channel-rate" style="color: #818cf8;" id="webFormRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Tổng số lead ghi nhận trực tiếp từ Web Form.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Số lượng lead từ Web Form (Cột J).</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 100%; background: #818cf8;"></div>
+                    <div class="progress-bar-fill" id="webFormBar" style="width: 0%; background: #818cf8;"></div>
                 </div>
             </div>
 
-            <!-- Zalo Portal Card -->
+            <!-- Zalo Portal Card (Khoanh đỏ bên phải) -->
             <div class="card channel-card">
                 <div class="channel-header">
                     <span class="channel-name"><i class="fa-solid fa-comments" style="color: #0068ff;"></i> Zalo Portal</span>
-                    <span class="channel-rate" style="color: #38bdf8;" id="zaloRate">15%</span>
+                    <span class="channel-rate" style="color: #38bdf8;" id="zaloRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Tương tác và chuyển đổi từ cổng Zalo.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Số lượng lead từ Zalo Portal (Cột J).</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 15%; background: #38bdf8;"></div>
+                    <div class="progress-bar-fill" id="zaloBar" style="width: 0%; background: #38bdf8;"></div>
                 </div>
             </div>
 
-            <!-- SalesAI Card -->
+            <!-- SalesAI Card (Khoanh đỏ bên phải) -->
             <div class="card channel-card">
                 <div class="channel-header">
                     <span class="channel-name"><i class="fa-solid fa-robot" style="color: #ec4899;"></i> SalesAI</span>
-                    <span class="channel-rate" style="color: #ec4899;" id="salesAiRate">15%</span>
+                    <span class="channel-rate" style="color: #ec4899;" id="salesAiRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Khách hàng chốt thành công qua trợ lý SalesAI.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Số lượng lead từ SalesAI (Cột J).</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 15%; background: #ec4899;"></div>
+                    <div class="progress-bar-fill" id="salesAiBar" style="width: 0%; background: #ec4899;"></div>
                 </div>
             </div>
 
@@ -449,11 +449,11 @@
             <div class="card channel-card">
                 <div class="channel-header">
                     <span class="channel-name"><i class="fa-solid fa-microchip" style="color: #fbbf24;"></i> KythuatAI</span>
-                    <span class="channel-rate" style="color: #fbbf24;" id="kythuatAiRate">10%</span>
+                    <span class="channel-rate" style="color: #fbbf24;" id="kythuatAiRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Chuyển đổi từ luồng hỗ trợ kỹ thuật chuyên sâu.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Số lượng lead từ KythuatAI (Cột J).</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 10%; background: #fbbf24;"></div>
+                    <div class="progress-bar-fill" id="kythuatAiBar" style="width: 0%; background: #fbbf24;"></div>
                 </div>
             </div>
 
@@ -461,20 +461,20 @@
             <div class="card channel-card">
                 <div class="channel-header">
                     <span class="channel-name"><i class="fa-solid fa-brain" style="color: #a855f7;"></i> KnowledgeAI</span>
-                    <span class="channel-rate" style="color: #a855f7;" id="knowledgeAiRate">5%</span>
+                    <span class="channel-rate" style="color: #a855f7;" id="knowledgeAiRate">0</span>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Khách hàng tiếp cận từ kho tri thức thông minh.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Số lượng lead từ KnowledgeAI (Cột J).</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 5%; background: #a855f7;"></div>
+                    <div class="progress-bar-fill" id="knowledgeAiBar" style="width: 0%; background: #a855f7;"></div>
                 </div>
             </div>
 
             <!-- AI Recommendation Box with Interactive Action -->
             <div class="ai-recommendation">
                 <div>
-                    <div class="ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Action Hub (Sheets Connected)</div>
-                    <h3>Đồng Bộ Dữ Liệu Lead Real-Time Từ Google Sheets</h3>
-                    <p>Hệ thống vừa cập nhật các bản ghi mới nhất từ Phan Minh Đức, Nguyễn Văn Test và Nguyễn Văn Test A. Mọi thông tin trạng thái ID (SUCCESS) đã hiển thị chính xác.</p>
+                    <div class="ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Action Hub (Sheet Connected)</div>
+                    <h3>Thống Kê Real-Time Cột J ("CRM - QUẢN LÝ KHÁCH HÀNG")</h3>
+                    <p>Hệ thống trích xuất và phân tích toàn bộ dữ liệu nguồn từ Cột J trên Google Sheets tự động, giúp bạn nắm bắt chính xác hiệu suất chuyển đổi từng kênh.</p>
                 </div>
                 <button class="btn-action" id="executeBtn" onclick="executeAIAction()"><i class="fa-solid fa-play"></i> Thực Thi Ngay AI Action</button>
             </div>
@@ -500,7 +500,7 @@
                 <div class="flow-icon"><i class="fa-solid fa-laptop-code"></i></div>
                 <div>
                     <h4>Web Form</h4>
-                    <p>3 Leads mới</p>
+                    <p>Cột J Tracker</p>
                 </div>
                 <span class="lead-badge-count" style="background: rgba(52,211,153,0.2); color: #34d399;">SUCCESS</span>
             </div>
@@ -556,7 +556,7 @@
                     <h4>Báo giá</h4>
                     <p>Tự động</p>
                 </div>
-                <span class="lead-badge-count">85 sent</span>
+                <span class="lead-badge-count">Active</span>
             </div>
 
             <div class="flow-step">
@@ -565,7 +565,7 @@
                     <h4>Ký hợp đồng</h4>
                     <p>Xác thực</p>
                 </div>
-                <span class="lead-badge-count">42 signed</span>
+                <span class="lead-badge-count">Secure</span>
             </div>
 
             <div class="flow-step">
@@ -590,11 +590,13 @@
         function executeAIAction() {
             const btn = document.getElementById('executeBtn');
             if(!btn) return;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang cập nhật dữ liệu từ Google Sheets...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang phân tích Cột J từ Google Sheets...`;
             btn.style.background = '#fbbf24';
             
+            loadRealTimeData();
+
             setTimeout(() => {
-                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã đồng bộ thành công các lead mới từ Sheet!`;
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã cập nhật thành công dữ liệu Cột J!`;
                 btn.style.background = '#34d399';
                 btn.style.color = '#0f172a';
                 
@@ -611,21 +613,22 @@
             const btn = event ? event.currentTarget : document.querySelector('button');
             if(!btn) return;
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang đọc dữ liệu từ Google Sheets...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang đọc dữ liệu Cột J từ Google Sheets...`;
+            loadRealTimeData();
             setTimeout(() => {
-                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã cập nhật 3 bản ghi (Phan Minh Đức, Nguyễn Văn Test, ...)!`;
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã đồng bộ hoàn tất Cột J ("CRM - QUẢN LÝ KHÁCH HÀNG")!`;
                 setTimeout(() => {
                     btn.innerHTML = originalHTML;
                 }, 3000);
             }, 2000);
         }
 
-        // URL Web App Google Sheet của bạn
-        const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbvrWwJk3RM1jkH-XYDne1yc29KJlPTz2zzsFphhRj65eSawVLJ4kt8ddH40m18Sock6A/exec";
+        // URL Web App Google Sheet được cung cấp
+        const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec";
 
         // Hàm gọi dữ liệu chuẩn JSONP chống lỗi CORS
         function loadRealTimeData() {
-            console.log("Đang đồng bộ dữ liệu từ Google Sheets...");
+            console.log("Đang đồng bộ dữ liệu cột J từ Google Sheets...");
             const oldScript = document.getElementById('jsonp-script');
             if (oldScript) oldScript.remove();
 
@@ -635,33 +638,44 @@
             document.body.appendChild(script);
         }
 
-        // Hàm nhận dữ liệu trả về và cập nhật trực tiếp lên giao diện Dashboard
+        // Hàm nhận dữ liệu trả về và cập nhật trực tiếp vào các ô dashboard tương ứng
         function handleDataResponse(data) {
-            console.log("Đã nhận dữ liệu từ Sheet:", data);
+            console.log("Đã nhận dữ liệu cột J từ Sheet:", data);
             if(data) {
+                // Lấy tổng số lượng để tính thanh phần trăm trực quan
+                let total = (data.googleSiteRate || 0) + (data.webFormRate || 0) + (data.zaloRate || 0) + 
+                            (data.salesAiRate || 0) + (data.kythuatAiRate || 0) + (data.knowledgeAiRate || 0);
+                if(total === 0) total = 1; // Tránh chia cho 0
+
+                // Cập nhật Google Site
                 if(data.googleSiteRate !== undefined) {
-                    const el = document.getElementById('ggSiteRate');
-                    if(el) el.innerText = data.googleSiteRate + "%";
+                    document.getElementById('ggSiteRate').innerText = data.googleSiteRate;
+                    document.getElementById('ggSiteBar').style.width = Math.min(100, Math.round((data.googleSiteRate / total) * 100)) + "%";
                 }
+                // Cập nhật Web Form
                 if(data.webFormRate !== undefined) {
-                    const el = document.getElementById('webFormRate');
-                    if(el) el.innerText = data.webFormRate;
+                    document.getElementById('webFormRate').innerText = data.webFormRate;
+                    document.getElementById('webFormBar').style.width = Math.min(100, Math.round((data.webFormRate / total) * 100)) + "%";
                 }
+                // Cập nhật Zalo Portal (Khoanh đỏ)
                 if(data.zaloRate !== undefined) {
-                    const el = document.getElementById('zaloRate');
-                    if(el) el.innerText = data.zaloRate + "%";
+                    document.getElementById('zaloRate').innerText = data.zaloRate;
+                    document.getElementById('zaloBar').style.width = Math.min(100, Math.round((data.zaloRate / total) * 100)) + "%";
                 }
+                // Cập nhật SalesAI (Khoanh đỏ)
                 if(data.salesAiRate !== undefined) {
-                    const el = document.getElementById('salesAiRate');
-                    if(el) el.innerText = data.salesAiRate + "%";
+                    document.getElementById('salesAiRate').innerText = data.salesAiRate;
+                    document.getElementById('salesAiBar').style.width = Math.min(100, Math.round((data.salesAiRate / total) * 100)) + "%";
                 }
+                // Cập nhật KythuatAI
                 if(data.kythuatAiRate !== undefined) {
-                    const el = document.getElementById('kythuatAiRate');
-                    if(el) el.innerText = data.kythuatAiRate + "%";
+                    document.getElementById('kythuatAiRate').innerText = data.kythuatAiRate;
+                    document.getElementById('kythuatAiBar').style.width = Math.min(100, Math.round((data.kythuatAiRate / total) * 100)) + "%";
                 }
+                // Cập nhật KnowledgeAI
                 if(data.knowledgeAiRate !== undefined) {
-                    const el = document.getElementById('knowledgeAiRate');
-                    if(el) el.innerText = data.knowledgeAiRate + "%";
+                    document.getElementById('knowledgeAiRate').innerText = data.knowledgeAiRate;
+                    document.getElementById('knowledgeAiBar').style.width = Math.min(100, Math.round((data.knowledgeAiRate / total) * 100)) + "%";
                 }
             }
         }
@@ -675,13 +689,13 @@
         function syncHubSpotData(event) {
             const btn = event ? event.currentTarget : document.querySelector('button[onclick*="syncHubSpotData"]');
             const originalHTML = btn ? btn.innerHTML : '';
-            if(btn) btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang kết nối Google Sheets...`;
+            if(btn) btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang kết nối Cột J Google Sheets...`;
             
             loadRealTimeData();
             
             setTimeout(() => {
                 if(btn) {
-                    btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã cập nhật đầy đủ dữ liệu mới nhất!`;
+                    btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã đồng bộ thành công Cột J!`;
                     setTimeout(() => { if(btn) btn.innerHTML = originalHTML; }, 3000);
                 }
             }, 1500);
