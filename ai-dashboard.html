@@ -595,7 +595,6 @@
             }, 2000);
         }
 
-<script>
     // URL Web App Google Sheet của bạn
     const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec";
 
@@ -627,7 +626,7 @@
 
     // Tự động tải dữ liệu khi vừa mở trang
     window.onload = function() {
-        if(GOOGLE_SHEET_API !== "DÁN_URL_WEB_APP_GOOGLE_SHEET_CỦA_BẠN_VÀO_ĐÂY") {
+        if(GOOGLE_SHEET_API !== "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec") {
             loadRealTimeData();
         }
     };
