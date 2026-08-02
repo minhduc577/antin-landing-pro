@@ -594,6 +594,83 @@
                 }, 3000);
             }, 2000);
         }
+
+<script>
+    // URL Web App Google Sheet của bạn
+    const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec";
+
+    // Hàm gọi dữ liệu thật từ Google Sheet & HubSpot
+    async function loadRealTimeData() {
+        try {
+            const response = await fetch(GOOGLE_SHEET_API);
+            const data = await response.json();
+
+            // Cập nhật các con số thật lên màn hình
+            if(data.facebookRate) {
+                document.getElementById('fbRate').innerText = data.facebookRate + "%";
+                document.querySelectorAll('.progress-bar-fill')[0].style.width = data.facebookRate + "%";
+            }
+            if(data.youtubeRate) {
+                document.getElementById('ytRate').innerText = data.youtubeRate + "%";
+                document.querySelectorAll('.progress-bar-fill')[1].style.width = data.youtubeRate + "%";
+            }
+            if(data.googleRate) {
+                document.getElementById('ggRate').innerText = data.googleRate + "%";
+                document.querySelectorAll('.progress-bar-fill')[2].style.width = data.googleRate + "%";
+            }
+            
+            console.log("Đã cập nhật dữ liệu thời gian thực thành công!");
+        } catch (error) {
+            console.error("Lỗi khi kết nối dữ liệu thật:", error);
+        }
+    }
+
+    // Tự động tải dữ liệu khi vừa mở trang
+    window.onload = function() {
+        if(GOOGLE_SHEET_API !== "DÁN_URL_WEB_APP_GOOGLE_SHEET_CỦA_BẠN_VÀO_ĐÂY") {
+            loadRealTimeData();
+        }
+    };
+
+    // Hàm nút bấm Đồng bộ dữ liệu
+    function syncHubSpotData() {
+        const btn = event.currentTarget;
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang tải dữ liệu thực tế...`;
+        
+        loadRealTimeData().then(() => {
+            btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã đồng bộ số liệu mới nhất!`;
+            setTimeout(() => { btn.innerHTML = originalHTML; }, 3000);
+        });
+    }
+
+    // Nút Thực thi AI Action
+    function executeAIAction() {
+        const btn = document.getElementById('executeBtn');
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang gọi API phân bổ lại ngân sách...`;
+        btn.style.background = '#fbbf24';
+        
+        setTimeout(() => {
+            btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã kích hoạt tối ưu ngân sách!`;
+            btn.style.background = '#34d399';
+            btn.style.color = '#0f172a';
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fa-solid fa-play"></i> Thực Thi Ngay AI Action`;
+                btn.style.background = 'white';
+            }, 4000);
+        }, 2000);
+    }
+
+    function triggerAIScan() {
+        const btn = event.currentTarget;
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang phân tích toàn bộ phễu...`;
+        setTimeout(() => {
+            btn.innerHTML = `<i class="fa-solid fa-check"></i> Toàn bộ phễu đang tối ưu!`;
+            setTimeout(() => { btn.innerHTML = originalHTML; }, 3000);
+        }, 2000);
+    }
+        
     </script>
 </body>
 </html>
