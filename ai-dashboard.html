@@ -596,51 +596,54 @@
         }
 
     // URL Web App Google Sheet của bạn
-    const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec";
 
-    // Hàm gọi dữ liệu thật từ Google Sheet & HubSpot
-    async function loadRealTimeData() {
-        try {
-            const response = await fetch(GOOGLE_SHEET_API);
-            const data = await response.json();
+<script>
+    const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbvrWwJk3RM1jkH-XYDne1yc29KJlPTz2zzsFphhRj65eSawVLJ4kt8ddH40m18Sock6A/exec";
 
-            // Cập nhật các con số thật lên màn hình
-            if(data.facebookRate) {
-                document.getElementById('fbRate').innerText = data.facebookRate + "%";
-                document.querySelectorAll('.progress-bar-fill')[0].style.width = data.facebookRate + "%";
-            }
-            if(data.youtubeRate) {
-                document.getElementById('ytRate').innerText = data.youtubeRate + "%";
-                document.querySelectorAll('.progress-bar-fill')[1].style.width = data.youtubeRate + "%";
-            }
-            if(data.googleRate) {
-                document.getElementById('ggRate').innerText = data.googleRate + "%";
-                document.querySelectorAll('.progress-bar-fill')[2].style.width = data.googleRate + "%";
-            }
-            
-            console.log("Đã cập nhật dữ liệu thời gian thực thành công!");
-        } catch (error) {
-            console.error("Lỗi khi kết nối dữ liệu thật:", error);
+    // Hàm gọi dữ liệu chuẩn JSONP chống lỗi CORS
+    function loadRealTimeData() {
+        console.log("Đang đồng bộ dữ liệu từ Google Sheets...");
+        
+        // Tạo thẻ script động để nhận dữ liệu JSONP
+        const script = document.createElement('script');
+        script.src = `${GOOGLE_SHEET_API}?callback=handleDataResponse`;
+        document.body.appendChild(script);
+    }
+
+    // Hàm nhận dữ liệu trả về từ Google Sheet
+    function handleDataResponse(data) {
+        console.log("Đã nhận dữ liệu:", data);
+        if(data) {
+            document.getElementById('fbRate').innerText = data.facebookRate + "%";
+            document.querySelectorAll('.progress-bar-fill')[0].style.width = data.facebookRate + "%";
+
+            document.getElementById('ytRate').innerText = data.youtubeRate + "%";
+            document.querySelectorAll('.progress-bar-fill')[1].style.width = data.youtubeRate + "%";
+
+            document.getElementById('ggRate').innerText = data.googleRate + "%";
+            document.querySelectorAll('.progress-bar-fill')[2].style.width = data.googleRate + "%";
+
+            alert("Đồng bộ thành công dữ liệu thực tế từ Google Sheets / HubSpot!");
         }
     }
 
-    // Tự động tải dữ liệu khi vừa mở trang
+    // Tự động gọi khi tải trang
     window.onload = function() {
-        if(GOOGLE_SHEET_API !== "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec") {
-            loadRealTimeData();
-        }
+        loadRealTimeData();
     };
 
-    // Hàm nút bấm Đồng bộ dữ liệu
+    // Hàm nút bấm Đồng bộ dữ liệu thủ công
     function syncHubSpotData() {
         const btn = event.currentTarget;
         const originalHTML = btn.innerHTML;
         btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang tải dữ liệu thực tế...`;
         
-        loadRealTimeData().then(() => {
+        loadRealTimeData();
+        
+        setTimeout(() => {
             btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã đồng bộ số liệu mới nhất!`;
             setTimeout(() => { btn.innerHTML = originalHTML; }, 3000);
-        });
+        }, 1500);
     }
 
     // Nút Thực thi AI Action
@@ -656,20 +659,15 @@
             setTimeout(() => {
                 btn.innerHTML = `<i class="fa-solid fa-play"></i> Thực Thi Ngay AI Action`;
                 btn.style.background = 'white';
+                btn.style.color = '#0f172a';
             }, 4000);
         }, 2000);
     }
 
     function triggerAIScan() {
-        const btn = event.currentTarget;
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang phân tích toàn bộ phễu...`;
-        setTimeout(() => {
-            btn.innerHTML = `<i class="fa-solid fa-check"></i> Toàn bộ phễu đang tối ưu!`;
-            setTimeout(() => { btn.innerHTML = originalHTML; }, 3000);
-        }, 2000);
-    }
+        alert("AI Command Center đang quét toàn bộ phễu hệ thống thành công!");
+    }        
         
-    </script>
+</script>
 </body>
 </html>
