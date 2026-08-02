@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Enterprise Command Center v2.0</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.75);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Ticker Alert Bar */
+        .ai-ticker {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 10px 16px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .ai-ticker i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* Header Style */
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #f472b6, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        }
+
+        /* Section Title */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 30px 0 20px;
+            color: var(--text-main);
+            border-left: 4px solid var(--primary);
+            padding-left: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Grid Cards */
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px var(--primary-glow);
+        }
+
+        .channel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .channel-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .channel-rate {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .live-badge {
+            font-size: 0.65rem;
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--success);
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        /* Progress Bar */
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1.5s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+
+        /* AI Recommendation Card with Action Button */
+        .ai-recommendation {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            grid-column: span 1;
+        }
+
+        @media(min-width: 900px) {
+            .ai-recommendation { grid-column: span 2; }
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 12px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .ai-recommendation h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .ai-recommendation p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .btn-action {
+            background: white;
+            color: var(--bg-dark);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+        }
+
+        .btn-action:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.03);
+        }
+
+        /* Architecture Flow */
+        .architecture-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            margin-top: 15px;
+        }
+
+        .flow-step {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 18px 14px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            background: rgba(30, 41, 59, 0.95);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2);
+        }
+
+        .flow-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover .flow-icon {
+            background: var(--accent);
+            color: white;
+        }
+
+        .flow-step h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .flow-step p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .lead-badge-count {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        /* Global Control Panel */
+        .action-panel {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-ai {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-ai:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Keyframes */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.2); }
+            50% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.2); }
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Smart AI Ticker Bar -->
+        <div class="ai-ticker">
+            <i class="fa-solid fa-bolt-lightning"></i>
+            <span><strong>AI Real-time Feed:</strong> Tỷ lệ chuyển đổi từ Google tăng +2.4% trong 2 giờ qua. Đã tự động kích hoạt tối ưu hóa phễu CRM.</span>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <h1><i class="fa-solid fa-brain"></i> AI Enterprise Command Center</h1>
+            <p>Hệ thống tự động hóa toàn diện & Điều phối chuyển đổi doanh nghiệp thời gian thực</p>
+        </header>
+
+        <!-- Section: AI Analysis -->
+        <div class="section-title">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>AI Phân Tích Hiệu Suất Kênh Khách Hàng</span>
+            <div class="live-badge" style="margin-left: auto;"><span class="live-dot"></span> Live Data API</div>
+        </div>
+
+        <div class="ai-grid">
+            <!-- Facebook Card -->
+            <div class="card channel-card">
+                <div class="channel-header">
+                    <span class="channel-name"><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Khách Facebook</span>
+                    <span class="channel-rate" style="color: #f87171;">18%</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chốt đơn trung bình mạng xã hội.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 18%; background: #f87171;"></div>
+                </div>
+            </div>
+
+            <!-- Youtube Card -->
+            <div class="card channel-card">
+                <div class="channel-header">
+                    <span class="channel-name"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Khách Youtube</span>
+                    <span class="channel-rate" style="color: #fbbf24;">25%</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chuyển đổi từ video review.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 25%; background: #fbbf24;"></div>
+                </div>
+            </div>
+
+            <!-- Google Card -->
+            <div class="card channel-card">
+                <div class="channel-header">
+                    <span class="channel-name"><i class="fa-brands fa-google" style="color: #4285f4;"></i> Khách Google</span>
+                    <span class="channel-rate" style="color: #34d399;">40%</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Tỷ lệ chốt đơn cao nhất từ tìm kiếm.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 40%; background: #34d399;"></div>
+                </div>
+            </div>
+
+            <!-- AI Recommendation Box with Interactive Action -->
+            <div class="ai-recommendation">
+                <div>
+                    <div class="ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Action Hub</div>
+                    <h3>Đề Nghị Tăng Ngân Sách Google Ads</h3>
+                    <p>Khách hàng từ Google mang lại biên độ lợi nhuận tối ưu (40%). Hệ thống sẵn sàng kết nối API để phân bổ thêm 30% ngân sách tự động.</p>
+                </div>
+                <button class="btn-action" id="executeBtn" onclick="executeAIAction()"><i class="fa-solid fa-play"></i> Thực Thi Ngay AI Action</button>
+            </div>
+        </div>
+
+        <!-- Section: Architecture Flow & Live Pipeline -->
+        <div class="section-title">
+            <i class="fa-solid fa-network-wired"></i>
+            <span>Kiến Trúc Tổng Thể & Trạng Thái Lead Real-time</span>
+        </div>
+
+        <div class="architecture-flow">
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-globe"></i></div>
+                <div>
+                    <h4>Website</h4>
+                    <p>Điểm chạm</p>
+                </div>
+                <span class="lead-badge-count">1,245 visits</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                <div>
+                    <h4>Landing Page</h4>
+                    <p>Chuyển đổi</p>
+                </div>
+                <span class="lead-badge-count">480 leads</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-wpforms"></i></div>
+                <div>
+                    <h4>Google Form</h4>
+                    <p>Thu thập</p>
+                </div>
+                <span class="lead-badge-count">310 entries</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-database"></i></div>
+                <div>
+                    <h4>CRM</h4>
+                    <p>Đồng bộ</p>
+                </div>
+                <span class="lead-badge-count">HubSpot Sync</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-brain"></i></div>
+                <div>
+                    <h4>AI</h4>
+                    <p>Phân tích</p>
+                </div>
+                <span class="lead-badge-count">Optimized</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <div>
+                    <h4>Báo giá</h4>
+                    <p>Tự động</p>
+                </div>
+                <span class="lead-badge-count">85 sent</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-file-signature"></i></div>
+                <div>
+                    <h4>Ký hợp đồng</h4>
+                    <p>Xác thực</p>
+                </div>
+                <span class="lead-badge-count">42 signed</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                <div>
+                    <h4>Bảo trì</h4>
+                    <p>Hậu mãi</p>
+                </div>
+                <span class="lead-badge-count">Active</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div>
+                    <h4>Upsell</h4>
+                    <p>Gia tăng đơn</p>
+                </div>
+                <span class="lead-badge-count">18 packages</span>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fa-solid fa-heart-circle-check"></i></div>
+                <div>
+                    <h4>Khách trung thành</h4>
+                    <p>Giữ chân</p>
+                </div>
+                <span class="lead-badge-count">VIP Tier</span>
+            </div>
+        </div>
+
+        <!-- Global Control Panel -->
+        <div class="action-panel">
+            <button class="btn-ai" onclick="triggerAIScan()"><i class="fa-solid fa-bolt"></i> Chạy AI Tối Ưu Lại Toàn Hệ Thống</button>
+            <button class="btn-ai" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);" onclick="alert('Đã đồng bộ hóa toàn bộ kiến trúc và dữ liệu CRM thành công!')"><i class="fa-solid fa-sync"></i> Đồng Bộ Dữ Liệu CRM</button>
+        </div>
+    </div>
+
+    <script>
+        // Kích hoạt thực thi AI Action tự động hóa
+        function executeAIAction() {
+            const btn = document.getElementById('executeBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang gọi API Google Ads...`;
+            btn.style.background = '#fbbf24';
+            
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã tăng ngân sách Google +30%!`;
+                btn.style.background = '#34d399';
+                btn.style.color = '#0f172a';
+                
+                setTimeout(() => {
+                    btn.innerHTML = `<i class="fa-solid fa-play"></i> Thực Thi Ngay AI Action`;
+                    btn.style.background = 'white';
+                    btn.style.color = '#0f172a';
+                }, 4000);
+            }, 2000);
+        }
+
+        // Kích hoạt quét AI toàn hệ thống
+        function triggerAIScan() {
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang quét toàn bộ phễu chuyển đổi...`;
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Toàn bộ hệ thống hoạt động hoàn hảo!`;
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 3000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
