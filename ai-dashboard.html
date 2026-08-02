@@ -596,59 +596,73 @@
         }
 
     // URL Web App Google Sheet của bạn
-
-<script>
     const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbvrWwJk3RM1jkH-XYDne1yc29KJlPTz2zzsFphhRj65eSawVLJ4kt8ddH40m18Sock6A/exec";
 
-    // Hàm gọi dữ liệu chuẩn JSONP chống lỗi CORS
+    // Hàm gọi dữ liệu chuẩn JSONP
     function loadRealTimeData() {
         console.log("Đang đồng bộ dữ liệu từ Google Sheets...");
-        
-        // Tạo thẻ script động để nhận dữ liệu JSONP
+        // Xóa script cũ nếu có để tránh trùng lặp
+        const oldScript = document.getElementById('jsonp-script');
+        if (oldScript) oldScript.remove();
+
         const script = document.createElement('script');
+        script.id = 'jsonp-script';
         script.src = `${GOOGLE_SHEET_API}?callback=handleDataResponse`;
         document.body.appendChild(script);
     }
 
-    // Hàm nhận dữ liệu trả về từ Google Sheet
+    // Hàm nhận dữ liệu trả về và cập nhật trực tiếp lên giao diện
     function handleDataResponse(data) {
-        console.log("Đã nhận dữ liệu:", data);
+        console.log("Đã nhận dữ liệu từ Sheet:", data);
         if(data) {
-            document.getElementById('fbRate').innerText = data.facebookRate + "%";
-            document.querySelectorAll('.progress-bar-fill')[0].style.width = data.facebookRate + "%";
+            // Cập nhật tỷ lệ Facebook
+            const fbElement = document.getElementById('fbRate');
+            if(fbElement) fbElement.innerText = data.facebookRate + "%";
 
-            document.getElementById('ytRate').innerText = data.youtubeRate + "%";
-            document.querySelectorAll('.progress-bar-fill')[1].style.width = data.youtubeRate + "%";
+            // Cập nhật tỷ lệ Youtube
+            const ytElement = document.getElementById('ytRate');
+            if(ytElement) ytElement.innerText = data.youtubeRate + "%";
 
-            document.getElementById('ggRate').innerText = data.googleRate + "%";
-            document.querySelectorAll('.progress-bar-fill')[2].style.width = data.googleRate + "%";
+            // Cập nhật tỷ lệ Google
+            const ggElement = document.getElementById('ggRate');
+            if(ggElement) ggElement.innerText = data.googleRate + "%";
 
-            alert("Đồng bộ thành công dữ liệu thực tế từ Google Sheets / HubSpot!");
+            // Cập nhật thanh tiến trình (Progress bar) nếu có
+            const progressBars = document.querySelectorAll('.progress-bar-fill');
+            if(progressBars.length >= 3) {
+                progressBars[0].style.width = data.facebookRate + "%";
+                progressBars[1].style.width = data.youtubeRate + "%";
+                progressBars[2].style.width = data.googleRate + "%";
+            }
         }
     }
 
-    // Tự động gọi khi tải trang
+    // Tự động tải dữ liệu khi vừa mở trang
     window.onload = function() {
         loadRealTimeData();
     };
 
     // Hàm nút bấm Đồng bộ dữ liệu thủ công
-    function syncHubSpotData() {
-        const btn = event.currentTarget;
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang tải dữ liệu thực tế...`;
+    function syncHubSpotData(event) {
+        const btn = event ? event.currentTarget : document.querySelector('button[onclick*="syncHubSpotData"]');
+        const originalHTML = btn ? btn.innerHTML : '';
+        if(btn) btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang đồng bộ dữ liệu...`;
         
         loadRealTimeData();
         
         setTimeout(() => {
-            btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã đồng bộ số liệu mới nhất!`;
-            setTimeout(() => { btn.innerHTML = originalHTML; }, 3000);
+            if(btn) {
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã đồng bộ số liệu mới nhất!`;
+                setTimeout(() => { btn.innerHTML = originalHTML; }, 3000);
+            }
         }, 1500);
     }
 
-    // Nút Thực thi AI Action
+    // Hàm nút Thực thi AI Action
     function executeAIAction() {
-        const btn = document.getElementById('executeBtn');
+        const btn = document.getElementById('executeBtn') || document.querySelector('button[onclick*="executeAIAction"]');
+        if(!btn) return;
+        const originalHTML = btn.innerHTML;
         btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang gọi API phân bổ lại ngân sách...`;
         btn.style.background = '#fbbf24';
         
@@ -657,16 +671,17 @@
             btn.style.background = '#34d399';
             btn.style.color = '#0f172a';
             setTimeout(() => {
-                btn.innerHTML = `<i class="fa-solid fa-play"></i> Thực Thi Ngay AI Action`;
-                btn.style.background = 'white';
-                btn.style.color = '#0f172a';
+                btn.innerHTML = originalHTML;
+                btn.style.background = '';
+                btn.style.color = '';
             }, 4000);
         }, 2000);
     }
 
+    // Hàm nút Quét hệ thống
     function triggerAIScan() {
         alert("AI Command Center đang quét toàn bộ phễu hệ thống thành công!");
-    }        
+    }
         
 </script>
 </body>
