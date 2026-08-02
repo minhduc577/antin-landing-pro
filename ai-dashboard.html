@@ -626,7 +626,7 @@
         // URL Web App Google Sheet được bảo mật chạy ngầm[cite: 3]
         const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbyrv0wjK3RMljKh-XYDne1yc29KJlpTz2zzsGphhRj65eSaWvLJ4kt8ddH40m18SoCk6A/exec";
 
-        // Hàm gọi dữ liệu chuẩn JSONP chạy ngầm bảo mật[cite: 3]
+        // Hàm gọi dữ liệu chuẩn JSONP chạy ngầm bảo mật, thêm timestamp để tránh cache trình duyệt[cite: 3]
         function loadRealTimeData() {
             console.log("Đang đồng bộ dữ liệu ngầm...");
             const oldScript = document.getElementById('jsonp-script');
@@ -634,28 +634,28 @@
 
             const script = document.createElement('script');
             script.id = 'jsonp-script';
-            script.src = `${GOOGLE_SHEET_API}?callback=handleDataResponse`;
+            script.src = `${GOOGLE_SHEET_API}?callback=handleDataResponse&_t=${new Date().getTime()}`;
             document.body.appendChild(script);
         }
 
         // Thuật toán chuẩn hóa tỷ trọng độc lập 100% cho từng kênh dựa trên số lượng lead thực tế từ Cột J
         function handleDataResponse(data) {
-            console.log("Đã cập nhật dữ liệu real-time thành công.");
+            console.log("Đã nhận dữ liệu từ Google Sheet:", data);
             if(data) {
-                // Lấy số lượng từ từng kênh (nếu không có mặc định bằng 0)
-                let ggSite = data.googleSiteRate || 0;
-                let webForm = data.webFormRate || 0;
-                let zalo = data.zaloRate || 0;
-                let salesAi = data.salesAiRate || 0;
-                let kythuatAi = data.kythuatAiRate || 0;
-                let knowledgeAi = data.knowledgeAiRate || 0;
+                // Đọc đúng tên thuộc tính trả về từ Apps Script (hỗ trợ cả dạng camelCase và viết thường không dấu)
+                let ggSite = data.googleSiteRate ?? data.googlesiterate ?? 0;
+                let webForm = data.webFormRate ?? data.webformrate ?? 0;
+                let zalo = data.zaloRate ?? data.zalorate ?? 0;
+                let salesAi = data.salesAiRate ?? data.salesairate ?? 0;
+                let kythuatAi = data.kythuatAiRate ?? data.kythuatairate ?? 0;
+                let knowledgeAi = data.knowledgeAiRate ?? data.knowledgeairate ?? 0;
 
                 // Tổng số lead toàn hệ thống
                 let total = ggSite + webForm + zalo + salesAi + kythuatAi + knowledgeAi;
                 let activeChannelsCount = (ggSite > 0 ? 1 : 0) + (webForm > 0 ? 1 : 0) + (zalo > 0 ? 1 : 0) + 
                                           (salesAi > 0 ? 1 : 0) + (kythuatAi > 0 ? 1 : 0) + (knowledgeAi > 0 ? 1 : 0);
 
-                // Hàm tính phần trăm tỷ trọng riêng biệt cho từng kênh (Nếu chỉ có 1 kênh duy nhất có data thì hiển thị chuẩn 100%)
+                // Hàm tính phần trăm tỷ trọng riêng biệt cho từng kênh
                 function getChannelPercent(val) {
                     if (total === 0) return 0;
                     if (activeChannelsCount === 1 && val > 0) return 100;
@@ -668,7 +668,7 @@
                 document.getElementById('ggSitePercent').innerText = `Tỷ trọng: ${ggPercent}%`;
                 document.getElementById('ggSiteBar').style.width = ggPercent + "%";
 
-                // Cập nhật Web Form (Đảm bảo chuẩn xác 100% khi chỉ có 1 nguồn duy nhất trong Cột J)[cite: 3]
+                // Cập nhật Web Form (Đảm bảo bắt và hiển thị chính xác giá trị Web Form từ Cột J)[cite: 3]
                 document.getElementById('webFormRate').innerText = webForm;
                 let wfPercent = getChannelPercent(webForm);
                 document.getElementById('webFormPercent').innerText = `Tỷ trọng: ${wfPercent}%`;
