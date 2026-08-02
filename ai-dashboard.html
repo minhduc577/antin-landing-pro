@@ -323,6 +323,7 @@
             padding: 3px 8px;
             border-radius: 6px;
             font-weight: 700;
+            transition: all 0.3s ease;
         }
 
         /* Global Control Panel */
@@ -493,7 +494,7 @@
                     <h4>Google Site</h4>
                     <p>Nguồn truy cập</p>
                 </div>
-                <span class="lead-badge-count">Live Sync</span>
+                <span class="lead-badge-count" id="statusGoogleSite">Live Sync</span>
             </div>
 
             <div class="flow-step">
@@ -502,7 +503,7 @@
                     <h4>Web Form</h4>
                     <p>Auto Tracker</p>
                 </div>
-                <span class="lead-badge-count" style="background: rgba(52,211,153,0.2); color: #34d399;">SUCCESS</span>
+                <span class="lead-badge-count" id="statusWebForm" style="background: rgba(52,211,153,0.2); color: #34d399;">SUCCESS</span>
             </div>
 
             <div class="flow-step">
@@ -511,7 +512,7 @@
                     <h4>Zalo Portal</h4>
                     <p>Tương tác</p>
                 </div>
-                <span class="lead-badge-count">Connected</span>
+                <span class="lead-badge-count" id="statusZaloPortal">Connected</span>
             </div>
 
             <div class="flow-step">
@@ -520,7 +521,7 @@
                     <h4>SalesAI</h4>
                     <p>Trợ lý chốt đơn</p>
                 </div>
-                <span class="lead-badge-count">Optimized</span>
+                <span class="lead-badge-count" id="statusSalesAi">Optimized</span>
             </div>
 
             <div class="flow-step">
@@ -529,7 +530,7 @@
                     <h4>KythuatAI</h4>
                     <p>Hỗ trợ kỹ thuật</p>
                 </div>
-                <span class="lead-badge-count">Running</span>
+                <span class="lead-badge-count" id="statusKythuatAi">Running</span>
             </div>
 
             <div class="flow-step">
@@ -538,7 +539,7 @@
                     <h4>KnowledgeAI</h4>
                     <p>Kho tri thức</p>
                 </div>
-                <span class="lead-badge-count">Smart Sync</span>
+                <span class="lead-badge-count" id="statusKnowledgeAi">Smart Sync</span>
             </div>
 
             <div class="flow-step">
@@ -547,7 +548,7 @@
                     <h4>Cloud Database</h4>
                     <p>Bảo mật tuyệt đối</p>
                 </div>
-                <span class="lead-badge-count" style="background: rgba(52,211,153,0.2); color: #34d399;">Đã đồng bộ</span>
+                <span class="lead-badge-count" id="statusCloudDb" style="background: rgba(52,211,153,0.2); color: #34d399;">Đã đồng bộ</span>
             </div>
 
             <div class="flow-step">
@@ -556,7 +557,7 @@
                     <h4>Báo giá</h4>
                     <p>Tự động</p>
                 </div>
-                <span class="lead-badge-count">Active</span>
+                <span class="lead-badge-count" id="statusQuotation">Active</span>
             </div>
 
             <div class="flow-step">
@@ -565,7 +566,7 @@
                     <h4>Ký hợp đồng</h4>
                     <p>Xác thực</p>
                 </div>
-                <span class="lead-badge-count">Secure</span>
+                <span class="lead-badge-count" id="statusContract">Secure</span>
             </div>
 
             <div class="flow-step">
@@ -574,14 +575,14 @@
                     <h4>Bảo trì</h4>
                     <p>Hậu mãi</p>
                 </div>
-                <span class="lead-badge-count">Active</span>
+                <span class="lead-badge-count" id="statusMaintenance">Active</span>
             </div>
         </div>
 
         <!-- Global Control Panel -->
         <div class="action-panel">
             <button class="btn-ai" onclick="triggerAIScan()"><i class="fa-solid fa-bolt"></i> Chạy AI Tối Ưu Hệ Thống</button>
-            <button class="btn-ai" style="background: linear-gradient(135deg, #34d399, #3b82f6);" onclick="syncHubSpotData()"><i class="fa-solid fa-sync"></i> Đồng Bộ Dữ Liệu Real-time</button>
+            <button class="btn-ai" style="background: linear-gradient(135deg, #34d399, #3b82f6);" onclick="syncHubSpotData(event)"><i class="fa-solid fa-sync"></i> Đồng Bộ Dữ Liệu Real-time</button>
         </div>
     </div>
 
@@ -697,6 +698,35 @@
                 let knowledgePercent = getChannelPercent(knowledgeAi);
                 document.getElementById('knowledgeAiPercent').innerText = `Tỷ trọng: ${knowledgePercent}%`;
                 document.getElementById('knowledgeAiBar').style.width = knowledgePercent + "%";
+
+                // === BỔ SUNG LOGIC ĐỘNG CHO KHU VỰC KIẾN TRÚC & TRẠNG THÁI LEAD REAL-TIME[cite: 4] ===
+                updateFlowBadge('statusGoogleSite', ggSite, 'Live Sync');
+                updateFlowBadge('statusWebForm', webForm, 'SUCCESS');
+                updateFlowBadge('statusZaloPortal', zalo, 'Connected');
+                updateFlowBadge('statusSalesAi', salesAi, 'Optimized');
+                updateFlowBadge('statusKythuatAi', kythuatAi, 'Running');
+                updateFlowBadge('statusKnowledgeAi', knowledgeAi, 'Smart Sync');
+                
+                // Trạng thái tổng hợp Cloud Database dựa trên tổng số lead
+                updateFlowBadge('statusCloudDb', total, 'Đã đồng bộ');
+            }
+        }
+
+        // Hàm hỗ trợ tự động đổi trạng thái và màu sắc Badge của sơ đồ kiến trúc dựa trên dữ liệu thực tế[cite: 4]
+        function updateFlowBadge(elementId, count, activeText) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            
+            if (count > 0) {
+                el.innerText = `${activeText} (${count})`;
+                el.style.background = 'rgba(52, 211, 153, 0.2)';
+                el.style.color = '#34d399';
+                el.style.borderColor = 'rgba(52, 211, 153, 0.4)';
+            } else {
+                el.innerText = 'Chờ dữ liệu';
+                el.style.background = 'rgba(251, 191, 36, 0.15)';
+                el.style.color = '#fbbf24';
+                el.style.borderColor = 'rgba(251, 191, 36, 0.3)';
             }
         }
 
