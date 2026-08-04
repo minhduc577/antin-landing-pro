@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mobile App An Tín - Giải Pháp Công Nghệ & Kỹ Thuật Toàn Diện</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,6 +15,9 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #0f172a;
             color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
         .glow-effect {
             box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
@@ -32,28 +35,18 @@
             animation: pulse-slow 3s infinite;
         }
         .app-container {
-            max-width: 480px;
-            margin: 0 auto;
+            width: 100%;
             min-height: 100vh;
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-        }
-        @media (min-width: 768px) {
-            body {
-                background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-                padding: 20px 0;
-            }
-            .app-container {
-                border-radius: 36px;
-                border: 8px solid #334155;
-                min-height: 900px;
-            }
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
     </style>
 </head>
-<body class="flex justify-center items-center">
+<body>
 
-    <div class="app-container relative overflow-hidden flex flex-col justify-between pb-6">
+    <div class="app-container pb-6">
         
         <!-- HEADER -->
         <div>
@@ -62,7 +55,7 @@
                     <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">AI Connected</span>
                 </div>
                 <h1 class="text-xs font-extrabold uppercase tracking-wider mb-1 text-yellow-300">🛡️ AN TÍN ECOSYSTEM</h1>
-                <h2 class="text-base font-black tracking-tight leading-tight">GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN</h2>
+                <h2 class="text-sm font-black tracking-tight leading-tight">GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN</h2>
             </div>
 
             <!-- HERO SECTION -->
@@ -73,8 +66,8 @@
                 <h2 class="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-300">
                     MOBILE APP AN TÍN
                 </h2>
-                <p class="text-[11px] text-slate-300 mt-1 font-medium">
-                    "Một ứng dụng duy nhất cho mọi nhu cầu kỹ thuật công trình của bạn!"
+                <p class="text-[11px] text-slate-300 mt-1 font-medium italic">
+                    "🎯 Một đối tác – Trọn gói giải pháp | 🎯 Một cuộc gọi – Xử lý mọi vấn đề"
                 </p>
 
                 <!-- CÁC HẠNG MỤC NÂNG CẤP SIÊU CẤP (FEATURES GRID) -->
@@ -97,7 +90,7 @@
                     <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
                         <i class="fa-solid fa-robot text-purple-400 text-base mb-1 animate-spin" style="animation-duration: 6s;"></i>
                         <h3 class="text-[11px] font-bold text-slate-100">AI Chẩn Đoán Lỗi</h3>
-                        <p class="text-[9px] text-slate-400">Hỏi đáp kỹ thuật tự động</p>
+                        <p class="text-[9px] text-slate-400">Hỏi đáp kỹ thuật 24/7</p>
                     </div>
                     <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
                         <i class="fa-solid fa-credit-card text-blue-400 text-base mb-1"></i>
@@ -111,31 +104,37 @@
                     </div>
                 </div>
 
-                <!-- DỊCH VỤ MŨI NHỌN -->
-                <div class="mt-3 bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 text-left">
-                    <h4 class="text-[10px] font-bold text-yellow-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                        <i class="fa-solid fa-star"></i> Dịch Vụ Mũi Nhọn An Tín
+                <!-- DỊCH VỤ TOÀN DIỆN CHI TIẾT -->
+                <div class="mt-3 bg-slate-900/90 border border-slate-800 rounded-xl p-3 text-left">
+                    <h4 class="text-[10px] font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                        <i class="fa-solid fa-star"></i> Danh Mục Giải Pháp & Dịch Vụ Toàn Diện
                     </h4>
-                    <div class="text-[10px] text-slate-300 space-y-1">
-                        <div>📹 Camera an ninh – Giám sát 24/7 | 📡 Mạng Wi-Fi & CNTT</div>
-                        <div>🔐 Khóa thông minh & Chống đột nhập | 🚨 Báo cháy tự động</div>
-                        <div>🏠 Smart Home & Thiết bị điện dân dụng, công nghiệp</div>
+                    <div class="text-[10px] text-slate-300 space-y-1.5 leading-relaxed">
+                        <div>📹 Camera an ninh – Giám sát 24/7</div>
+                        <div>📡 Mạng Wi-Fi – Máy tính – Hạ tầng CNTT</div>
+                        <div>🔐 Chống đột nhập – Khóa cửa thông minh</div>
+                        <div>👆 Chấm công vân tay – Kiểm soát ra vào</div>
+                        <div>🚨 Báo cháy tự động – An toàn tài sản</div>
+                        <div>🌐 Thiết kế Website | ☁️ Tên miền - Cloud Server</div>
+                        <div>🏠 Nhà thông minh Smart Home | ⚡ Điện dân dụng & công nghiệp</div>
+                        <div>🔧 Sửa chữa thiết bị điện, gia dụng, bếp điện, quạt điện...</div>
+                        <div>🤖 Tự động hóa thiết bị điện thông minh</div>
                     </div>
                 </div>
 
                 <!-- ACTION BUTTONS / AI & ZALO -->
                 <div class="mt-3 space-y-2">
-                    <a href="https://ebook.antinco.com/trangchu" target="_blank" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition transform active:scale-95">
-                        <i class="fa-solid fa-brain text-yellow-300 text-sm"></i> KHÁM PHÁ AN TÍN ECOSYSTEM AI
+                    <a href="https://ebook.antinco.com/trangchu" target="_blank" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition transform active:scale-95">
+                        <i class="fa-solid fa-brain text-yellow-300 text-sm"></i> AN TÍN ECOSYSTEM AI (Khám Phá Ngay)
                     </a>
-                    <a href="https://zalo.me/0914060339" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition transform active:scale-95">
-                        <i class="fa-solid fa-comment-dots"></i> Hotline & Zalo Kỹ Thuật: 0914 060 339
+                    <a href="https://zalo.me/0914060339" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition transform active:scale-95">
+                        <i class="fa-solid fa-comment-dots"></i> Nhắn Zalo Hotline: 0914 060 339
                     </a>
                     <div class="grid grid-cols-2 gap-2">
-                        <a href="https://zalo.me/3260030944980440169" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-semibold py-1.5 px-2 rounded-xl text-[10px] flex items-center justify-center gap-1 transition">
+                        <a href="https://zalo.me/3260030944980440169" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-semibold py-2 px-2 rounded-xl text-[10px] flex items-center justify-center gap-1.5 transition">
                             <i class="fa-solid fa-building-user"></i> Zalo OA Công Ty
                         </a>
-                        <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-semibold py-1.5 px-2 rounded-xl text-[10px] flex items-center justify-center gap-1 transition">
+                        <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-semibold py-2 px-2 rounded-xl text-[10px] flex items-center justify-center gap-1.5 transition">
                             <i class="fa-solid fa-cube"></i> Zalo Mini App
                         </a>
                     </div>
@@ -144,14 +143,14 @@
         </div>
 
         <!-- FOOTER -->
-        <div class="px-4 pt-2 text-center border-t border-slate-800 mt-1">
+        <div class="px-4 pt-3 text-center border-t border-slate-800 mt-2">
             <h3 class="text-[11px] font-black text-white uppercase mb-1">🏢 CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</h3>
             <p class="text-[9px] text-slate-400 mb-0.5">📍 85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</p>
-            <p class="text-[9px] text-slate-400 mb-0.5">☎️ (028) 3849 3575 * 📱 0914 060 339</p>
-            <p class="text-[9px] text-slate-400 mb-1">
+            <p class="text-[9px] text-slate-400 mb-0.5">☎️ (028) 3849 3575 * 📱 & Zalo: 0914 060 339</p>
+            <p class="text-[9px] text-slate-400 mb-1.5">
                 🌐 <a href="https://khuyenmaicamera.blogspot.com" target="_blank" class="text-cyan-400 hover:underline">khuyenmaicamera.blogspot.com</a> | 📩 ctyantinco@gmail.com
             </p>
-            <div class="text-[9px] font-bold text-pink-400 uppercase tracking-wide">
+            <div class="text-[10px] font-bold text-pink-400 uppercase tracking-wide">
                 💎 AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM.
             </div>
         </div>
