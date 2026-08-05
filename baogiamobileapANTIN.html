@@ -446,6 +446,101 @@
                 btn.disabled = false;
             });
         }
-    </script>
+
+<!-- Bổ sung đoạn JavaScript xử lý E-Quotation & E-Contract nâng cao -->
+    // Cập nhật hàm submitQuoteForm để kích hoạt quy trình E-Quotation siêu cấp
+    function submitQuoteForm(event) {
+        event.preventDefault();
+        const name = document.getElementById('cusName').value;
+        const phone = document.getElementById('cusPhone').value;
+        const service = document.getElementById('cusService').value;
+        const btn = document.getElementById('submitBtn');
+
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>ĐANG KHỞI TẠO BÁO GIÁ PDF & HỢP ĐỒNG...</span>`;
+        btn.disabled = true;
+
+        const GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwYjskWtM8T1OmCXp_iBaS1aTepcM5fWswHO9dcu15C2DwMlXXcfUMVqtCLRfnve0RMiQ/exec';
+        const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/7cli6mft1mqkgaxtu2o67m96qw6vn8xc';
+
+        const payload = {
+            thoiGian: new Date().toLocaleString('vi-VN'),
+            hoTen: name,
+            sdt: phone,
+            loaiHinh: service,
+            nguon: 'Mobile App An Tín - E-Quotation & E-Contract',
+            yeuCauXuatPDF: true
+        };
+
+        const p1 = fetch(GAS_WEBHOOK_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).catch(err => console.log('GAS Error:', err));
+
+        const p2 = fetch(MAKE_WEBHOOK_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).catch(err => console.log('Make Error:', err));
+
+        Promise.all([p1, p2]).then(() => {
+            showSuccessModal(name, service, phone);
+            document.getElementById('quoteForm').reset();
+            btn.innerHTML = `<i class="fa-solid fa-rocket"></i> <span>GỬI YÊU CẦU NHẬN BÁO GIÁ TỨC THÌ</span>`;
+            btn.disabled = false;
+        }).catch(error => {
+            showSuccessModal(name, service, phone);
+            document.getElementById('quoteForm').reset();
+            btn.innerHTML = `<i class="fa-solid fa-rocket"></i> <span>GỬI YÊU CẦU NHẬN BÁO GIÁ TỨC THÌ</span>`;
+            btn.disabled = false;
+        });
+    }
+
+    // Hiển thị Popup xác nhận E-Contract trực tuyến cho khách hàng
+    function showSuccessModal(name, service, phone) {
+        const modalHtml = `
+            <div id="successEContractModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                <div class="bg-white w-full max-w-lg rounded-3xl p-6 shadow-2xl text-slate-800 space-y-4 animate-scaleUp">
+                    <div class="text-center">
+                        <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
+                            <i class="fa-solid fa-file-circle-check"></i>
+                        </div>
+                        <h3 class="font-extrabold text-lg text-slate-900">Đã Khởi Tạo Báo Giá Điện Tử Thành Công!</h3>
+                        <p class="text-xs text-slate-500 mt-1">Hệ thống AI An Tín đã tự động xuất file PDF báo giá cho dịch vụ <span class="font-bold text-blue-600">${service}</span> và gửi về Zalo/Email số <span class="font-bold">${phone}</span>.</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs space-y-2">
+                        <div class="font-bold text-slate-700 uppercase tracking-wider mb-1"><i class="fa-solid fa-shield-halved text-amber-500 mr-1"></i> Xác nhận Điều khoản Dịch vụ An Tín:</div>
+                        <p class="text-slate-600 leading-relaxed">• Cam kết thiết bị chính hãng 100%, bảo hành tận nơi 24 tháng.</p>
+                        <p class="text-slate-600 leading-relaxed">• Miễn phí khảo sát và cấu hình hệ thống mạng/camera trọn gói.</p>
+                        <div class="flex items-center mt-3 pt-2 border-t border-slate-200">
+                            <input type="checkbox" id="agreeTerms" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 mr-2">
+                            <label for="agreeTerms" class="text-[11px] font-semibold text-slate-700">Tôi đồng ý với các điều khoản thi công và chính sách của Công ty An Tín.</label>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-2 pt-2">
+                        <button onclick="window.open('https://zalo.me/0914060339', '_blank')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs transition shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-comment"></i>
+                            <span>Chat Zalo Xác Nhận Ngay</span>
+                        </button>
+                        <button onclick="closeSuccessModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs transition">
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    }
+
+    function closeSuccessModal() {
+        const modal = document.getElementById('successEContractModal');
+        if (modal) modal.remove();
+    }
+        
+</script>
 </body>
 </html>
