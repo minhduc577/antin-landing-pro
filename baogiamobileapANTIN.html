@@ -204,13 +204,13 @@
             </div>
         </div>
 
-        <!-- FORM GỬI YÊU CẦU BÁO GIÁ (KẾT NỐI REAL-TIME GOOGLE APPS SCRIPT & 2 MAKE WEBHOOKS) -->
+        <!-- FORM GỬI YÊU CẦU BÁO GIÁ (KẾT NỐI REAL-TIME GOOGLE APPS SCRIPT & MAKE WEBHOOKS) -->
         <div id="quoteFormSection" class="bg-gradient-to-br from-slate-900 to-blue-950 text-white p-5 rounded-3xl shadow-xl relative overflow-hidden mb-6">
             <div class="absolute right-0 bottom-0 opacity-10 translate-x-5 translate-y-5 pointer-events-none">
                 <i class="fa-solid fa-file-contract text-9xl"></i>
             </div>
             <h3 class="font-bold text-base mb-1 flex items-center"><i class="fa-solid fa-paper-plane text-blue-400 mr-2"></i> Nhận Báo Giá Chi Tiết Ngay</h3>
-            <p class="text-xs text-slate-300 mb-4">Điền thông tin để chuyên viên An Tín và trợ lý AI gửi bảng giá cụ thể qua Zalo & Email tức thì.</p>
+            <p class="text-xs text-slate-300 mb-4">Điền thông tin để chuyên viên An Tín và trợ lý AI gửi bảng giá cụ thể qua Zalo & Email tức thi.</p>
             
             <form id="quoteForm" onsubmit="submitQuoteForm(event)" class="space-y-3 relative z-10">
                 <div>
@@ -327,7 +327,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT TƯƠNG TÁC SIÊU CẤP & TÍCH HỢP SONG SONG GAS + 2 MAKE WEBHOOKS -->
+    <!-- SCRIPT TƯƠNG TÁC TÍCH HỢP ĐỦ TRƯỜNG DỮ LIỆU TỪ CỘT A ĐẾN CỘT M -->
     <script>
         // 1. Đồng hồ đếm ngược Flash Sale
         let totalSeconds = 2 * 3600 + 14 * 60 + 55;
@@ -405,8 +405,7 @@
             }, 800);
         }
 
-        // 3. Xử lý Gửi Form Real-time (Đẩy đồng thời Google Apps Script & 2 Make Webhooks)
-
+        // 3. Xử lý Gửi Form Real-time (Đẩy dữ liệu từ cột A đến cột M về CRM Google Sheets & Webhooks)
         function submitQuoteForm(event) {
             event.preventDefault();
             const name = document.getElementById('cusName').value;
@@ -415,9 +414,9 @@
             const service = document.getElementById('cusService').value;
             const btn = document.getElementById('submitBtn');
 
-            // Lấy lịch sử chat AI tạm thời nếu có tương tác trước đó
+            // Lấy lịch sử chat AI nếu khách hàng có tương tác trực tuyến
             let aiChatHistoryContainer = document.getElementById('chatMessages');
-            let chatLogs = "Khách hàng truy cập trực tiếp từ Web Form";
+            let chatLogs = "Khách hàng đăng ký trực tiếp từ Web Form giải pháp An Tín";
             if (aiChatHistoryContainer) {
                 let messages = aiChatHistoryContainer.querySelectorAll('.bg-white, .bg-blue-600');
                 let logsArray = [];
@@ -429,28 +428,28 @@
                 }
             }
 
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>ĐANG KHỞI TẠO BÁO GIÁ PDF & HỢP ĐỒNG...</span>`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>ĐANG KHỞI TẠO BÁO GIÁ CÁ NHÂN HOÁ & LƯU CRM...</span>`;
             btn.disabled = true;
 
             const GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbymanWOUSsMK2w20w6ffLvLsgoRzNoZ_2eou_KgJoEG7wpqta3OxGtKL_4yUu0H4HbFoA/exec';
             const MAKE_WEBHOOK_URL_1 = 'https://hook.eu1.make.com/cmxwg91omufv2r1j14ssydjech3f8oh2'; 
             const MAKE_WEBHOOK_URL_2 = 'https://hook.eu1.make.com/fv2dqv1immcaq5pvmj9m1u7ftulrfhe2'; 
 
-            // ĐỒNG NHẤT DỮ LIỆU ĐẦY ĐỦ TỪ CỘT A TỚI CỘT M (Đã đổi chỗ cột L và cột M cho nhau)
+            // ÁNH XẠ ĐỦ CÁC TRƯỜNG DỮ LIỆU TỪ CỘT A ĐẾN CỘT M VỀ GOOGLE SHEETS 'CRM - QUẢN LÝ KHÁCH HÀNG'
             const payload = {
-                thoiGian: new Date().toLocaleString('vi-VN'), // Cột A: Thời gian
-                hoTen: name,                                   // Cột B: Họ tên
-                sdt: phone,                                    // Cột C: Số điện thoại
-                email: email,                                  // Cột D: Email
-                loaiHinh: service,                             // Cột E: Loại hình
-                trangThai1: "Đã tiếp nhận",                    // Cột F: Trạng thái 1
-                trangThai2: "Mới đăng ký",                     // Cột G: Trạng thái 2
-                diem: 20,                                      // Cột H: Điểm
-                mucDo: "KHÁCH DÂN DỤNG",                       // Cột I: Mức độ
-                nguon: "Web Form",                             // Cột J: Nguồn
-                idGiaoDich: "ANTIN-" + Math.floor(Math.random() * 900000 + 100000), // Cột K: ID
-                ghiChuThem: "Khách hàng đăng ký nhận báo giá tự động qua giao diện Mobile App", // Cột L: (Đã đưa ghi chú lên trước)
-                lichSuChatAI: chatLogs                         // Cột M: (Đã đưa lịch sử chat AI xuống sau)
+                thoiGian: new Date().toLocaleString('vi-VN'),                                // Cột A: Thời gian đăng ký
+                hoTen: name,                                                                   // Cột B: Họ và tên khách hàng
+                sdt: phone,                                                                    // Cột C: Số điện thoại (Zalo)
+                email: email,                                                                  // Cột D: Địa chỉ Email nhận báo giá
+                loaiHinh: service,                                                             // Cột E: Loại hình dịch vụ quan tâm
+                trangThai1: "Đã tiếp nhận yêu cầu",                                            // Cột F: Trạng thái xử lý 1
+                trangThai2: "Khách hàng mới đăng ký",                                          // Cột G: Trạng thái xử lý 2
+                diem: 100,                                                                     // Cột H: Điểm đánh giá tiềm năng
+                mucDo: "KHÁCH HÀNG TIỀM NĂNG CAO",                                             // Cột I: Mức độ ưu tiên
+                nguon: "Web Form Báo Giá An Tín",                                             // Cột J: Nguồn chuyển đổi
+                idGiaoDich: "ANTIN-CRM-" + Math.floor(Math.random() * 900000 + 100000),          // Cột K: ID Giao dịch / Mã hợp đồng
+                ghiChuThem: "Đã tự động gửi báo giá cá nhân hoá qua Zalo/Email cho khách hàng",  // Cột L: Ghi chú chi tiết hệ thống
+                lichSuChatAI: chatLogs                                                         // Cột M: Lịch sử tương tác trợ lý AI
             };
 
             const p1 = fetch(GAS_WEBHOOK_URL, {
@@ -487,7 +486,7 @@
             });
         }        
 
-        // Hiển thị Popup xác nhận E-Contract trực tuyến cho khách hàng
+        // Hiển thị Popup xác nhận Báo giá cá nhân hoá trực tuyến cho khách hàng
         function showSuccessModal(name, service, phone, email) {
             const modalHtml = `
                 <div id="successEContractModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -496,17 +495,17 @@
                             <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
                                 <i class="fa-solid fa-file-circle-check"></i>
                             </div>
-                            <h3 class="font-extrabold text-lg text-slate-900">Đã Khởi Tạo Báo Giá Điện Tử Thành Công!</h3>
-                            <p class="text-xs text-slate-500 mt-1">Hệ thống AI An Tín đã tự động xuất file PDF báo giá cho dịch vụ <span class="font-bold text-blue-600">${service}</span> và gửi về Zalo <span class="font-bold">${phone}</span> cùng Email <span class="font-bold">${email}</span>.</p>
+                            <h3 class="font-extrabold text-lg text-slate-900">Gửi Báo Giá Cá Nhân Hoá Thành Công!</h3>
+                            <p class="text-xs text-slate-500 mt-1">Hệ thống AI An Tín đã ghi nhận dữ liệu từ cột A đến cột M về CRM, đồng thời tự động xuất bản báo giá riêng cho anh/chị <span class="font-bold text-slate-800">${name}</span> với dịch vụ <span class="font-bold text-blue-600">${service}</span> qua Zalo <span class="font-bold">${phone}</span> và Email <span class="font-bold">${email}</span>.</p>
                         </div>
 
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs space-y-2">
-                            <div class="font-bold text-slate-700 uppercase tracking-wider mb-1"><i class="fa-solid fa-shield-halved text-amber-500 mr-1"></i> Xác nhận Điều khoản Dịch vụ An Tín:</div>
-                            <p class="text-slate-600 leading-relaxed">• Cam kết thiết bị chính hãng 100%, bảo hành tận nơi 24 tháng.</p>
-                            <p class="text-slate-600 leading-relaxed">• Miễn phí khảo sát và cấu hình hệ thống mạng/camera trọn gói.</p>
+                            <div class="font-bold text-slate-700 uppercase tracking-wider mb-1"><i class="fa-solid fa-shield-halved text-amber-500 mr-1"></i> Cam kết dịch vụ trọn gói An Tín:</div>
+                            <p class="text-slate-600 leading-relaxed">• Thiết bị chính hãng 100%, bảo hành kỹ thuật tận nơi 24 tháng.</p>
+                            <p class="text-slate-600 leading-relaxed">• Miễn phí khảo sát hiện trạng, tư vấn và thiết kế giải pháp chuyên sâu.</p>
                             <div class="flex items-center mt-3 pt-2 border-t border-slate-200">
                                 <input type="checkbox" id="agreeTerms" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 mr-2">
-                                <label for="agreeTerms" class="text-[11px] font-semibold text-slate-700">Tôi đồng ý với các điều khoản thi công và chính sách của Công ty An Tín.</label>
+                                <label for="agreeTerms" class="text-[11px] font-semibold text-slate-700">Tôi đồng ý với các điều khoản bảo mật và chính sách chăm sóc của Công ty An Tín.</label>
                             </div>
                         </div>
 
