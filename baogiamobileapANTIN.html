@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bảng Giá & Giải Pháp Công Nghệ Trọn Gói - Cty KT CN An Tín</title>
+    <title>Băng Giá & Giải Pháp Công Nghệ Trọn Gói - Cty KT CN An Tín</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- SheetJS (XLSX) để hỗ trợ trích xuất file Excel trực tiếp về máy khách hàng -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
         .gradient-header { background: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #3b82f6 100%); }
@@ -212,7 +210,7 @@
                 <i class="fa-solid fa-file-contract text-9xl"></i>
             </div>
             <h3 class="font-bold text-base mb-1 flex items-center"><i class="fa-solid fa-paper-plane text-blue-400 mr-2"></i> Nhận Báo Giá Chi Tiết Ngay</h3>
-            <p class="text-xs text-slate-300 mb-4">Điền thông tin để chuyên viên An Tín và trợ lý AI gửi bảng giá cụ thể qua Zalo & Email tức thì, kèm file Excel tải trực tiếp.</p>
+            <p class="text-xs text-slate-300 mb-4">Điền thông tin để chuyên viên An Tín và trợ lý AI gửi bảng giá cụ thể qua Zalo & Email tức thi.</p>
             
             <form id="quoteForm" onsubmit="submitQuoteForm(event)" class="space-y-3 relative z-10">
                 <div>
@@ -240,7 +238,7 @@
                 </div>
                 <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg transition flex items-center justify-center space-x-2 ai-glow-btn mt-2">
                     <i class="fa-solid fa-rocket"></i>
-                    <span>GỬI YÊU CẦU & TẢI XUỐNG BÁO GIÁ EXCEL</span>
+                    <span>GỬI YÊU CẦU NHẬN BÁO GIÁ TỨC THÌ</span>
                 </button>
             </form>
         </div>
@@ -329,7 +327,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT TƯƠNG TÁC TÍCH HỢP ĐỦ TRƯỜNG DỮ LIỆU TỪ CỘT A ĐẾN CỘT M & TẢI FILE EXCEL TRỰC TIẾP -->
+    <!-- SCRIPT TƯƠNG TÁC TÍCH HỢP ĐỦ TRƯỜNG DỮ LIỆU TỪ CỘT A ĐẾN CỘT M -->
     <script>
         // 1. Đồng hồ đếm ngược Flash Sale
         let totalSeconds = 2 * 3600 + 14 * 60 + 55;
@@ -407,36 +405,6 @@
             }, 800);
         }
 
-        // HÀM TẠO VÀ TẢI XUỐNG FILE EXCEL TRỰC TIẾP TRÊN THIẾT BỊ KHÁCH HÀNG (GIẢI PHÁP TRÁNH LỖI ATTACH MAIL)
-        function downloadExcelQuote(payload) {
-            try {
-                const wb = XLSX.utils.book_new();
-                const data = [
-                    ["CÔNG TY KT CN AN TÍN - BẢNG BÁO GIÁ & GIẢI PHÁP TRỌN GÓI"],
-                    ["Thời gian đăng ký:", payload.thoiGian],
-                    ["Mã giao dịch / Hợp đồng:", payload.idGiaoDich],
-                    [""],
-                    ["THÔNG TIN KHÁCH HÀNG"],
-                    ["Họ và tên:", payload.hoTen],
-                    ["Số điện thoại (Zalo):", payload.sdt],
-                    ["Email liên hệ:", payload.email],
-                    [""],
-                    ["CHI TIẾT DỊCH VỤ & GIẢI PHÁP QUAN TÂM"],
-                    ["Loại hình dịch vụ:", payload.loaiHinh],
-                    ["Trạng thái hệ thống:", payload.trangThai2],
-                    ["Mức độ ưu tiên:", payload.mucDo],
-                    ["Ghi chú:", payload.ghiChuThem],
-                    [""],
-                    ["Trân trọng cảm ơn quý khách hàng đã tin tưởng lựa chọn giải pháp công nghệ An Tín!"]
-                ];
-                const ws = XLSX.utils.aoa_to_sheet(data);
-                XLSX.utils.book_append_sheet(wb, ws, "BaoGiaAnTin");
-                XLSX.writeFile(wb, `BaoGia_AnTin_${payload.hoTen.replace(/\s+/g, '_')}.xlsx`);
-            } catch (e) {
-                console.log("Excel Download Error:", e);
-            }
-        }
-
         // 3. Xử lý Gửi Form Real-time (Đẩy dữ liệu từ cột A đến cột M về CRM Google Sheets & Webhooks)
         function submitQuoteForm(event) {
             event.preventDefault();
@@ -460,7 +428,7 @@
                 }
             }
 
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>ĐANG XUẤT BÁO GIÁ EXCEL & ĐỒNG BỘ CRM...</span>`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>ĐANG KHỞI TẠO BÁO GIÁ CÁ NHÂN HOÁ & LƯU CRM...</span>`;
             btn.disabled = true;
 
             const GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbymanWOUSsMK2w20w6ffLvLsgoRzNoZ_2eou_KgJoEG7wpqta3OxGtKL_4yUu0H4HbFoA/exec';
@@ -506,23 +474,20 @@
             }).catch(err => console.log('Make 2 Error:', err));
 
             Promise.all([p1, p2_1, p2_2]).then(() => {
-                // Tự động tải file Excel về thiết bị khách hàng ngay lập tức
-                downloadExcelQuote(payload);
-                showSuccessModal(name, service, phone, email, payload);
+                showSuccessModal(name, service, phone, email);
                 document.getElementById('quoteForm').reset();
-                btn.innerHTML = `<i class="fa-solid fa-rocket"></i> <span>GỬI YÊU CẦU & TẢI XUỐNG BÁO GIÁ EXCEL</span>`;
+                btn.innerHTML = `<i class="fa-solid fa-rocket"></i> <span>GỬI YÊU CẦU NHẬN BÁO GIÁ TỨC THÌ</span>`;
                 btn.disabled = false;
             }).catch(error => {
-                downloadExcelQuote(payload);
-                showSuccessModal(name, service, phone, email, payload);
+                showSuccessModal(name, service, phone, email);
                 document.getElementById('quoteForm').reset();
-                btn.innerHTML = `<i class="fa-solid fa-rocket"></i> <span>GỬI YÊU CẦU & TẢI XUỐNG BÁO GIÁ EXCEL</span>`;
+                btn.innerHTML = `<i class="fa-solid fa-rocket"></i> <span>GỬI YÊU CẦU NHẬN BÁO GIÁ TỨC THÌ</span>`;
                 btn.disabled = false;
             });
         }        
 
-        // Hiển thị Popup xác nhận Báo giá cá nhân hoá kèm nút tải file Excel thủ công nếu cần
-        function showSuccessModal(name, service, phone, email, payload) {
+        // Hiển thị Popup xác nhận Báo giá cá nhân hoá trực tuyến cho khách hàng
+        function showSuccessModal(name, service, phone, email) {
             const modalHtml = `
                 <div id="successEContractModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <div class="bg-white w-full max-w-lg rounded-3xl p-6 shadow-2xl text-slate-800 space-y-4 animate-scaleUp">
@@ -530,20 +495,17 @@
                             <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
                                 <i class="fa-solid fa-file-circle-check"></i>
                             </div>
-                            <h3 class="font-extrabold text-lg text-slate-900">Gửi Báo Giá & Trích Xuất File Thành Công!</h3>
-                            <p class="text-xs text-slate-500 mt-1">Hệ thống AI An Tín đã ghi nhận dữ liệu CRM (cột A-M) và **đã tự động tải file báo giá Excel về thiết bị của bạn**. Nếu trình duyệt chặn, bạn có thể bấm nút tải bên dưới.</p>
+                            <h3 class="font-extrabold text-lg text-slate-900">Gửi Báo Giá Cá Nhân Hoá Thành Công!</h3>
+                            <p class="text-xs text-slate-500 mt-1">Hệ thống AI An Tín đã ghi nhận dữ liệu từ cột A đến cột M về CRM, đồng thời tự động xuất bản báo giá riêng cho anh/chị <span class="font-bold text-slate-800">${name}</span> với dịch vụ <span class="font-bold text-blue-600">${service}</span> qua Zalo <span class="font-bold">${phone}</span> và Email <span class="font-bold">${email}</span>.</p>
                         </div>
 
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs space-y-2">
                             <div class="font-bold text-slate-700 uppercase tracking-wider mb-1"><i class="fa-solid fa-shield-halved text-amber-500 mr-1"></i> Cam kết dịch vụ trọn gói An Tín:</div>
                             <p class="text-slate-600 leading-relaxed">• Thiết bị chính hãng 100%, bảo hành kỹ thuật tận nơi 24 tháng.</p>
                             <p class="text-slate-600 leading-relaxed">• Miễn phí khảo sát hiện trạng, tư vấn và thiết kế giải pháp chuyên sâu.</p>
-                            
-                            <div class="pt-2">
-                                <button onclick='downloadExcelQuote(${JSON.stringify(payload)})' class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center space-x-2 shadow">
-                                    <i class="fa-solid fa-file-excel"></i>
-                                    <span>📥 Bấm Vào Đây Để Tải Lại File Excel Báo Giá</span>
-                                </button>
+                            <div class="flex items-center mt-3 pt-2 border-t border-slate-200">
+                                <input type="checkbox" id="agreeTerms" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 mr-2">
+                                <label for="agreeTerms" class="text-[11px] font-semibold text-slate-700">Tôi đồng ý với các điều khoản bảo mật và chính sách chăm sóc của Công ty An Tín.</label>
                             </div>
                         </div>
 
