@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống AI Quản Trị & Tra Cứu Bảo Hành - An Tín Ecosystem</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+        }
+        .ai-glow { animation: pulseGlow 3s infinite; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 min-h-screen text-slate-100 font-sans p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- HEADER -->
+        <header class="text-center mb-8">
+            <div class="inline-flex items-center gap-3 bg-blue-600/30 border border-blue-400/40 px-5 py-2 rounded-full text-blue-300 text-sm font-semibold mb-4 ai-glow">
+                <i class="fa-solid fa-robot text-cyan-400 animate-bounce"></i> AN TÍN AI ECOSYSTEM - TỰ ĐỘNG CẤP MÃ & QUẢN TRỊ 24/7
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
+                Hệ Thống Tra Cứu & Quản Lý <span class="text-cyan-400">Bảo Hành - Hợp Đồng</span>
+            </h1>
+            <p class="text-slate-300 text-sm md:text-base">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
+        </header>
+
+        <!-- NAVIGATION & ROLE SWITCHER -->
+        <div class="flex flex-wrap justify-between items-center bg-slate-800/80 border border-slate-700 p-4 rounded-2xl mb-6 gap-4 shadow-xl">
+            <div class="flex gap-2">
+                <button onclick="switchTab('search')" id="btnTabSearch" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white transition shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i> Tra Cứu & Nhập Liệu
+                </button>
+                <button onclick="switchTab('admin')" id="btnTabAdmin" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-2">
+                    <i class="fa-solid fa-lock"></i> Quản Trị Admin (Sửa/Xóa)
+                </button>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-400">Trạng thái:</span>
+                <span id="roleBadge" class="px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-300 rounded-lg text-xs font-bold">👤 Tài khoản Nhập liệu</span>
+                <button onclick="toggleAdminMode()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white transition font-medium flex items-center gap-1 shadow-md">
+                    <i class="fa-solid fa-key"></i> Đổi quyền
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 1: TRA CỨU & NHẬP LIỆU -->
+        <div id="sectionSearch" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Form Nhập Liệu & Cấp Mã Tự Động -->
+            <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl shadow-2xl md:col-span-1">
+                <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
+                    <i class="fa-solid fa-user-plus text-cyan-400"></i> Nhập Liệu / Ký HĐ Mới
+                </h2>
+                <p class="text-[11px] text-slate-400 mb-4">Hệ thống sẽ đối chiếu Tên, Phone hoặc Email. Nếu có sẵn sẽ cập nhật, nếu mới sẽ khởi tạo và tự động cấp mã!</p>
+                <form id="upsertForm" onsubmit="handleUpsert(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Họ tên khách hàng *</label>
+                        <input type="text" id="hoTen" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="Nhập họ tên...">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Số điện thoại *</label>
+                        <input type="text" id="soDienThoai" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="Nhập số điện thoại...">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Email</label>
+                        <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="Nhập email...">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Tên thiết bị / Dự án</label>
+                        <input type="text" id="tenThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="VD: Camera Hikvision 4K...">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Nhóm thiết bị / Gói dịch vụ</label>
+                        <select id="nhomThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none">
+                            <option value="Thiết bị chính">Thiết bị chính (12 Tháng BH)</option>
+                            <option value="Phụ kiện">Phụ kiện (3 Tháng BH)</option>
+                            <option value="Sửa chữa">Sửa chữa / Dịch vụ (1 Tháng BH)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mt-2 ai-glow">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Lưu Dữ Liệu & Tự Động Cấp Mã
+                    </button>
+                </form>
+            </div>
+
+            <!-- Kết Quả & Tra Cứu Lọc Nhanh -->
+            <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl shadow-2xl md:col-span-2">
+                <h2 class="text-lg font-bold text-white mb-4 flex items-center justify-between border-b border-slate-700 pb-3">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-database text-cyan-400"></i> Danh Sách Tra Cứu & Hợp Đồng</span>
+                    <button onclick="loadDataList()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-slate-200 transition flex items-center gap-1"><i class="fa-solid fa-rotate"></i> Làm mới</button>
+                </h2>
+                
+                <div class="mb-4">
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Gõ từ khóa (Tên, SĐT, Email, Mã HĐ) để tìm kiếm..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:border-cyan-400 outline-none">
+                </div>
+
+                <div id="resultContainer" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                    <div class="text-center text-slate-400 py-12">
+                        <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cyan-400"></i>
+                        <p>Đang tải dữ liệu từ hệ thống Google Sheets...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: QUẢN TRỊ ADMIN (SỬA / XÓA) -->
+        <div id="sectionAdmin" class="hidden bg-slate-800/90 border border-slate-700 p-6 rounded-2xl shadow-2xl">
+            <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2 border-b border-slate-700 pb-3 text-rose-400">
+                <i class="fa-solid fa-shield-halved"></i> Bảng Quản Trị Dành Cho Admin
+            </h2>
+            <p class="text-xs text-slate-400 mb-4">Quản trị viên có quyền chỉnh sửa thông số hoặc xóa hoàn toàn các dòng dữ liệu không hợp lệ.</p>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-900 text-slate-300 border-b border-slate-700">
+                            <th class="p-3">Khách Hàng / SĐT</th>
+                            <th class="p-3">Mã Giao Dịch</th>
+                            <th class="p-3">Thiết Bị</th>
+                            <th class="p-3">Mã HĐ Bảo Trì</th>
+                            <th class="p-3 text-center">Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <!-- Injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT FRONTEND -->
+    <script>
+        let isAdmin = false;
+        let globalData = [];
+
+        function toggleAdminMode() {
+            let pass = prompt("Nhập mật khẩu quản trị Admin:");
+            if (pass === "antin2026") {
+                isAdmin = true;
+                document.getElementById("roleBadge").className = "px-3 py-1 bg-rose-500/20 border border-rose-500 text-rose-300 rounded-lg text-xs font-bold";
+                document.getElementById("roleBadge").innerText = "🛡️ Quyền Quản Trị Admin";
+                alert("Đã kích hoạt quyền Admin thành công!");
+                loadDataList();
+            } else if (pass !== null) {
+                alert("Mật khẩu không chính xác!");
+            }
+        }
+
+        function switchTab(tab) {
+            if(tab === 'search') {
+                document.getElementById('sectionSearch').classList.remove('hidden');
+                document.getElementById('sectionAdmin').classList.add('hidden');
+                document.getElementById('btnTabSearch').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white transition shadow-lg flex items-center gap-2";
+                document.getElementById('btnTabAdmin').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-2";
+            } else {
+                if(!isAdmin) {
+                    let confirmAdmin = confirm("Khu vực này yêu cầu quyền Admin. Bạn có muốn nhập mật khẩu ngay không?");
+                    if(confirmAdmin) {
+                        toggleAdminMode();
+                        if(!isAdmin) return;
+                    } else {
+                        return;
+                    }
+                }
+                document.getElementById('sectionSearch').classList.add('hidden');
+                document.getElementById('sectionAdmin').classList.remove('hidden');
+                document.getElementById('btnTabAdmin').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-rose-600 text-white transition shadow-lg flex items-center gap-2";
+                document.getElementById('btnTabSearch').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-2";
+                loadAdminTable();
+            }
+        }
+
+        function handleUpsert(e) {
+            e.preventDefault();
+            let payload = {
+                action: "upsertData",
+                hoTen: document.getElementById('hoTen').value,
+                soDienThoai: document.getElementById('soDienThoai').value,
+                email: document.getElementById('email').value,
+                tenThietBi: document.getElementById('tenThietBi').value,
+                nhomThietBi: document.getElementById('nhomThietBi').value
+            };
+
+            if(!payload.hoTen && !payload.soDienThoai && !payload.email) {
+                alert("Vui lòng nhập ít nhất Họ tên, SĐT hoặc Email!");
+                return;
+            }
+
+            fetch(window.location.href, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                loadDataList();
+                document.getElementById('upsertForm').reset();
+            })
+            .catch(err => alert("Lỗi kết nối: " + err));
+        }
+
+        function loadDataList() {
+            fetch(window.location.href + "?action=getData")
+            .then(res => res.json())
+            .then(res => {
+                if(res.status === "success") {
+                    globalData = res.data;
+                    renderResults(globalData);
+                }
+            });
+        }
+
+        function renderResults(data) {
+            let container = document.getElementById('resultContainer');
+            if(data.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-400 py-8">Chưa có dữ liệu hệ thống.</div>`;
+                return;
+            }
+            let html = "";
+            data.forEach(item => {
+                html += `
+                    <div class="bg-slate-900/90 border border-slate-700/80 p-4 rounded-xl shadow-md hover:border-cyan-500 transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-barcode"></i> Mã GD: ${item.maGiaoDich}</span>
+                                <h3 class="text-base font-bold text-white">${item.hoTen} - <span class="text-slate-300">${item.soDienThoai}</span></h3>
+                            </div>
+                            <span class="text-xs px-2.5 py-1 bg-yellow-500/20 text-yellow-300 rounded-lg border border-yellow-500/30 font-semibold"><i class="fa-solid fa-file-contract"></i> ${item.maHopDong}</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300 mt-2 bg-slate-800/60 p-3 rounded-lg border border-slate-700">
+                            <div><i class="fa-solid fa-shield text-cyan-400"></i> <b>Thiết bị:</b> ${item.tenThietBi} (${item.nhomThietBi})</div>
+                            <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Bảo hành:</b> ${item.thoiHanBaoHanh} Tháng (Đến: ${item.ngayKetThuc})</div>
+                            <div><i class="fa-solid fa-clock text-rose-400"></i> <b>Trạng thái BH:</b> ${item.trangThaiBaoHanh}</div>
+                            <div><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>Trạng thái HĐ:</b> ${item.trangThaiHD}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function filterTable() {
+            let keyword = document.getElementById('searchInput').value.toLowerCase();
+            let filtered = globalData.filter(i => 
+                i.hoTen.toLowerCase().includes(keyword) || 
+                i.soDienThoai.toLowerCase().includes(keyword) || 
+                i.email.toLowerCase().includes(keyword) ||
+                i.maHopDong.toLowerCase().includes(keyword) ||
+                i.maGiaoDich.toLowerCase().includes(keyword)
+            );
+            renderResults(filtered);
+        }
+
+        function loadAdminTable() {
+            let tbody = document.getElementById('adminTableBody');
+            let html = "";
+            globalData.forEach(item => {
+                html += `
+                    <tr class="border-b border-slate-700 hover:bg-slate-900/50">
+                        <td class="p-3 font-semibold text-white">${item.hoTen}<br><span class="text-slate-400 font-normal">${item.soDienThoai}</span></td>
+                        <td class="p-3 text-cyan-400 font-mono">${item.maGiaoDich}</td>
+                        <td class="p-3 text-slate-300">${item.tenThietBi}</td>
+                        <td class="p-3 text-yellow-400 font-mono">${item.maHopDong}</td>
+                        <td class="p-3 text-center flex justify-center gap-2">
+                            <button onclick="adminEdit(${item.rowIndex})" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-lg text-xs"><i class="fa-solid fa-pen"></i> Sửa</button>
+                            <button onclick="adminDelete(${item.rowIndex})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded-lg text-xs"><i class="fa-solid fa-trash"></i> Xóa</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function adminDelete(rowIndex) {
+            if(confirm("Bạn có chắc chắn muốn XÓA dòng dữ liệu này trên Google Sheets không?")) {
+                fetch(window.location.href, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "adminDelete", rowIndex: rowIndex })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    alert(res.message);
+                    loadDataList();
+                    loadAdminTable();
+                });
+            }
+        }
+
+        function adminEdit(rowIndex) {
+            let item = globalData.find(i => i.rowIndex === rowIndex);
+            if(!item) return;
+            let newName = prompt("Sửa họ tên khách hàng:", item.hoTen);
+            if(newName === null) return;
+            let newPhone = prompt("Sửa số điện thoại:", item.soDienThoai);
+            if(newPhone === null) return;
+            
+            let payload = {
+                action: "adminUpdate",
+                rowIndex: rowIndex,
+                hoTen: newName,
+                soDienThoai: newPhone,
+                email: item.email,
+                tenThietBi: item.tenThietBi,
+                loaiSuKien: item.loaiSuKien,
+                nhomThietBi: item.nhomThietBi,
+                thoiHanBaoHanh: item.thoiHanBaoHanh,
+                maHopDong: item.maHopDong
+            };
+
+            fetch(window.location.href, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                loadDataList();
+                loadAdminTable();
+            });
+        }
+
+        window.onload = function() {
+            loadDataList();
+        }
+    </script>
+</body>
+</html>
