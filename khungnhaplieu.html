@@ -82,7 +82,7 @@
                 <h2 class="text-base md:text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
                     <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu Chi Tiết (N-Z)
                 </h2>
-                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ đầy đủ 7 trường bảo hành (N-T) và 6 trường hợp đồng (U-Z)!</p>
+                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ phân tách rõ ràng ngữ cảnh Lắp Đặt Mới hoặc Hợp Đồng Bảo Trì!</p>
                 
                 <form id="upsertForm" onsubmit="handleUpsert(event)" class="space-y-3">
                     <!-- Thông tin cơ bản khách hàng -->
@@ -127,10 +127,21 @@
                                 <option value="🤖 Tự động hóa thiết bị điện thông minh"></option>
                             </datalist>
                         </div>
+
+                        <!-- LỰA CHỌN NGỮ CẢNH NGHIỆP VỤ (MỚI TÍCH HỢP) -->
+                        <div class="pt-1">
+                            <label class="block text-[11px] font-semibold text-cyan-300 mb-1">
+                                <i class="fa-solid fa-layer-group"></i> Chọn Ngữ Cảnh Nghiệp Vụ *
+                            </label>
+                            <select id="nguCanhNghiepVu" onchange="toggleNghiepVuContext()" class="w-full bg-slate-900 border border-cyan-500/50 rounded-xl px-3 py-2 text-xs text-cyan-300 font-bold outline-none transition shadow-md focus:border-cyan-400">
+                                <option value="lap_dat">🚀 Hợp Đồng Lắp Đặt Mới (Kích hoạt Bảo Hành N-T)</option>
+                                <option value="bao_tri">🛡️ Hợp Đồng Bảo Trì Định Kỳ (Kích hoạt HĐ U-Z)</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- NHÓM 1: CỘT N ĐẾN T (7 TRƯỜNG BẢO HÀNH) -->
-                    <div class="p-3 bg-blue-950/40 rounded-xl border border-blue-800/60 space-y-2.5">
+                    <div id="boxBaoHanh" class="p-3 bg-blue-950/40 rounded-xl border border-blue-800/60 space-y-2.5 transition-all duration-300">
                         <span class="text-xs font-bold text-blue-400 flex items-center gap-1"><i class="fa-solid fa-shield-halved"></i> Hạng Mục Bảo Hành (Cột N - T)</span>
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột N: Loại Sự Kiện / Giao Dịch</label>
@@ -169,7 +180,7 @@
                     </div>
 
                     <!-- NHÓM 2: CỘT U ĐẾN Z (6 TRƯỜNG HỢP ĐỒNG BẢO TRÌ) -->
-                    <div class="p-3 bg-amber-950/30 rounded-xl border border-amber-800/60 space-y-2.5">
+                    <div id="boxBaoTri" class="p-3 bg-amber-950/30 rounded-xl border border-amber-800/60 space-y-2.5 transition-all duration-300 opacity-40">
                         <span class="text-xs font-bold text-amber-400 flex items-center gap-1"><i class="fa-solid fa-file-contract"></i> Hạng Mục Hợp Đồng Bảo Trì (Cột U - Z)</span>
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột U: Mã Hợp Đồng: Dự Án, Bảo Trì</label>
@@ -329,7 +340,25 @@
         window.addEventListener('DOMContentLoaded', () => {
             updateRoleBadgeUI();
             loadDataList();
+            toggleNghiepVuContext(); // Khởi tạo trạng thái ban đầu cho ngữ cảnh
         });
+
+        // Hàm xử lý tương tác ẩn/hiện và làm nổi bật theo Ngữ Cảnh Nghiệp Vụ
+        function toggleNghiepVuContext() {
+            let mode = document.getElementById('nguCanhNghiepVu').value;
+            let boxBaoHanh = document.getElementById('boxBaoHanh'); // Khung N-T
+            let boxBaoTri = document.getElementById('boxBaoTri');   // Khung U-Z
+
+            if (mode === 'lap_dat') {
+                boxBaoHanh.style.opacity = "1";
+                boxBaoHanh.style.pointerEvents = "auto";
+                boxBaoTri.style.opacity = "0.4";
+            } else {
+                boxBaoHanh.style.opacity = "0.4";
+                boxBaoTri.style.opacity = "1";
+                boxBaoTri.style.pointerEvents = "auto";
+            }
+        }
 
         function updateRoleBadgeUI() {
             let badge = document.getElementById("roleBadge");
@@ -462,29 +491,34 @@
                 localStorage.setItem("an_tin_password", savedPass);
             }
 
+            let mode = document.getElementById('nguCanhNghiepVu').value;
+
             let payload = {
                 action: "upsertData",
                 role: currentRole,
-                authPass: savedPass, // Đính kèm mật khẩu xác thực tránh lỗi từ chối ghi
+                authPass: savedPass,
                 hoTen: document.getElementById('hoTen').value,
                 soDienThoai: document.getElementById('soDienThoai').value,
                 email: document.getElementById('email').value,
                 tenThietBi: document.getElementById('tenThietBi').value,
-                // Cột N-T (7 trường bảo hành)
-                loaiSuKien: document.getElementById('loaiSuKien').value,
-                nhomThietBi: document.getElementById('nhomThietBi').value,
-                ngayKichHoat: document.getElementById('ngayKichHoat').value,
-                thoiHanBaoHanh: document.getElementById('thoiHanBaoHanh').value,
-                ngayBatDau: document.getElementById('ngayBatDau').value,
-                ngayKetThuc: document.getElementById('ngayKetThuc').value,
-                trangThaiThucTe: document.getElementById('trangThaiThucTe').value,
-                // Cột U-Z (6 trường hợp đồng bảo trì)
-                maHopDongBT: document.getElementById('maHopDongBT').value,
-                ngayKyHD: document.getElementById('ngayKyHD').value,
-                thoiHanHD: document.getElementById('thoiHanHD').value,
-                ngayHetHanHD: document.getElementById('ngayHetHanHD').value,
-                trangThaiHD: document.getElementById('trangThaiHD').value,
-                lichBaoTriThang: document.getElementById('lichBaoTriThang').value
+                nguCanhNghiepVu: mode, // Truyền ngữ cảnh để backend xử lý phân tách chính xác tuyệt đối
+                
+                // Cột N-T (7 trường bảo hành) - Chỉ truyền nếu chọn ngữ cảnh lắp đặt hoặc để trống nếu là bảo trì
+                loaiSuKien: mode === 'lap_dat' ? document.getElementById('loaiSuKien').value : "",
+                nhomThietBi: mode === 'lap_dat' ? document.getElementById('nhomThietBi').value : "",
+                ngayKichHoat: mode === 'lap_dat' ? document.getElementById('ngayKichHoat').value : "",
+                thoiHanBaoHanh: mode === 'lap_dat' ? document.getElementById('thoiHanBaoHanh').value : "",
+                ngayBatDau: mode === 'lap_dat' ? document.getElementById('ngayBatDau').value : "",
+                ngayKetThuc: mode === 'lap_dat' ? document.getElementById('ngayKetThuc').value : "",
+                trangThaiThucTe: mode === 'lap_dat' ? document.getElementById('trangThaiThucTe').value : "",
+                
+                // Cột U-Z (6 trường hợp đồng bảo trì) - Chỉ truyền nếu chọn ngữ cảnh bảo trì
+                maHopDongBT: mode === 'bao_tri' ? document.getElementById('maHopDongBT').value : "",
+                ngayKyHD: mode === 'bao_tri' ? document.getElementById('ngayKyHD').value : "",
+                thoiHanHD: mode === 'bao_tri' ? document.getElementById('thoiHanHD').value : "",
+                ngayHetHanHD: mode === 'bao_tri' ? document.getElementById('ngayHetHanHD').value : "",
+                trangThaiHD: mode === 'bao_tri' ? document.getElementById('trangThaiHD').value : "",
+                lichBaoTriThang: mode === 'bao_tri' ? document.getElementById('lichBaoTriThang').value : ""
             };
 
             if(!payload.hoTen && !payload.soDienThoai) {
@@ -502,6 +536,7 @@
                 if(res.status === "success") {
                     loadDataList();
                     document.getElementById('upsertForm').reset();
+                    toggleNghiepVuContext(); // Reset lại giao diện form
                 }
             })
             .catch(err => alert("Lỗi kết nối lưu dữ liệu: " + err));
