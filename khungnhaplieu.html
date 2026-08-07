@@ -39,7 +39,7 @@
                 <i class="fa-solid fa-robot text-cyan-400 animate-bounce"></i> AN TÍN AI ECOSYSTEM - TRỢ LÝ TỰ ĐỘNG CẤP MÃ & BẢO MẬT 24/7
             </div>
             <h1 class="text-2xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
-                Hệ Thống Tra Cứu & Quản Lý <span class="text-cyan-400">Bảo Hành - Hợp Đồng (U-Z)</span>
+                Hệ Thống Tra Cứu & Quản Lý <span class="text-cyan-400">Bảo Hành (N-T) & Hợp Đồng (U-Z)</span>
             </h1>
             <p class="text-slate-300 text-xs md:text-base">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
         </header>
@@ -68,63 +68,100 @@
 
         <!-- TAB 1: TRA CỨU & NHẬP LIỆU -->
         <div id="sectionSearch" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Form Nhập Liệu & Cấp Mã Tự Động (Bao gồm Cột U-Z) -->
+            <!-- Form Nhập Liệu & Cấp Mã Tự Động (Đầy đủ Cột N-T và U-Z) -->
             <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-1 backdrop-blur-md relative overflow-hidden">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 shimmer-bg"></div>
                 <h2 class="text-base md:text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
-                    <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu & HĐ Bảo Trì (U-Z)
+                    <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu Chi Tiết (N-Z)
                 </h2>
-                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ ghi nhận bảo hành và lịch trình bảo trì định kỳ!</p>
+                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ đầy đủ 7 trường bảo hành (N-T) và 6 trường hợp đồng (U-Z)!</p>
+                
                 <form id="upsertForm" onsubmit="handleUpsert(event)" class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Họ tên khách hàng *</label>
-                        <input type="text" id="hoTen" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập họ tên..." required>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Số điện thoại *</label>
-                        <input type="text" id="soDienThoai" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập số điện thoại..." required>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Email</label>
-                        <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập email...">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Tên thiết bị / Dự án</label>
-                        <input type="text" id="tenThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="VD: Camera Hikvision 4K...">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Loại sự kiện (Cột N)</label>
-                        <input type="text" id="loaiSuKien" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="VD: Lắp mới hệ thống, Nâng cấp...">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Nhóm thiết bị / Gói dịch vụ</label>
-                        <select id="nhomThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition">
-                            <option value="Thiết bị chính">Thiết bị chính (12 Tháng BH)</option>
-                            <option value="Phụ kiện">Phụ kiện (3 Tháng BH)</option>
-                            <option value="Sửa chữa">Sửa chữa / Dịch vụ (1 Tháng BH)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Thời hạn bảo hành (Tháng - Tùy chỉnh)</label>
-                        <input type="number" id="thoiHanBaoHanh" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Để trống nếu lấy theo nhóm thiết bị...">
+                    <!-- Thông tin cơ bản khách hàng -->
+                    <div class="space-y-2 pb-2 border-b border-slate-700">
+                        <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-user"></i> Thông tin khách hàng</span>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Họ tên khách hàng *</label>
+                            <input type="text" id="hoTen" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập họ tên..." required>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Số điện thoại *</label>
+                            <input type="text" id="soDienThoai" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập số điện thoại..." required>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Email</label>
+                            <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập email...">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Tên thiết bị / Dự án</label>
+                            <input type="text" id="tenThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" placeholder="VD: Camera Hikvision 4K...">
+                        </div>
                     </div>
 
-                    <!-- MỞ RỘNG CỘT U ĐẾN Z -->
-                    <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-700 space-y-3 mt-2">
-                        <span class="text-xs font-bold text-amber-400 flex items-center gap-1"><i class="fa-solid fa-shield-halved"></i> Thông tin Hợp đồng Bảo trì (U-Z)</span>
+                    <!-- NHÓM 1: CỘT N ĐẾN T (7 TRƯỜNG BẢO HÀNH) -->
+                    <div class="p-3 bg-blue-950/40 rounded-xl border border-blue-800/60 space-y-2.5">
+                        <span class="text-xs font-bold text-blue-400 flex items-center gap-1"><i class="fa-solid fa-shield-halved"></i> Hạng Mục Bảo Hành (Cột N - T)</span>
+                        
                         <div>
-                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột U: Mã Hợp Đồng / Dự Án</label>
-                            <input type="text" id="maHopDongBT" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition font-mono" placeholder="VD: HDBT-2026-001">
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột N: Loại Sự Kiện / Giao Dịch</label>
+                            <input type="text" id="loaiSuKien" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition" placeholder="VD: Lắp mới hệ thống, Nâng cấp...">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột O: Nhóm Thiết Bị</label>
+                            <select id="nhomThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition">
+                                <option value="Thiết bị chính">Thiết bị chính (12 Tháng BH)</option>
+                                <option value="Phụ kiện">Phụ kiện (3 Tháng BH)</option>
+                                <option value="Sửa chữa">Sửa chữa / Dịch vụ (1 Tháng BH)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột P: Ngày Kích Hoạt / Ngày Thay Thế</label>
+                            <input type="date" id="ngayKichHoat" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột Q: Thời Hạn Bảo Hành (Tháng)</label>
+                            <input type="number" id="thoiHanBaoHanh" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition" placeholder="VD: 12">
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột V: Ngày Ký HĐ</label>
-                                <input type="date" id="ngayKyHD" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition">
+                                <label class="block text-[10px] font-semibold text-slate-300 mb-1">Cột R: Ngày Bắt Đầu</label>
+                                <input type="date" id="ngayBatDau" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition">
                             </div>
                             <div>
-                                <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột W: Thời Hạn (Tháng)</label>
+                                <label class="block text-[10px] font-semibold text-slate-300 mb-1">Cột S: Ngày Kết Thúc</label>
+                                <input type="date" id="ngayKetThuc" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột T: Trạng Thái Thực Tế - Siêu thông minh</label>
+                            <input type="text" id="trangThaiThucTe" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition" placeholder="VD: Đang hoạt động ổn định...">
+                        </div>
+                    </div>
+
+                    <!-- NHÓM 2: CỘT U ĐẾN Z (6 TRƯỜNG HỢP ĐỒNG BẢO TRÌ) -->
+                    <div class="p-3 bg-amber-950/30 rounded-xl border border-amber-800/60 space-y-2.5">
+                        <span class="text-xs font-bold text-amber-400 flex items-center gap-1"><i class="fa-solid fa-file-contract"></i> Hạng Mục Hợp Đồng Bảo Trì (Cột U - Z)</span>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột U: Mã Hợp Đồng: Dự Án, Bảo Trì</label>
+                            <input type="text" id="maHopDongBT" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition font-mono" placeholder="VD: HDBT-2026-001">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột V: Ngày Ký Kích Hoạt Hợp Đồng Bảo Trì</label>
+                            <input type="date" id="ngayKyHD" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-300 mb-1">Cột W: Thời Hạn HĐ (Tháng)</label>
                                 <input type="number" id="thoiHanHD" value="12" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition">
                             </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-300 mb-1">Cột X: Ngày Hết Hạn HĐ BT</label>
+                                <input type="date" id="ngayHetHanHD" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột Y: Trạng Thái Hợp Đồng BT</label>
+                            <input type="text" id="trangThaiHD" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition" placeholder="VD: Đang hiệu lực, Đã thanh lý...">
                         </div>
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột Z: Lịch Bảo Trì Hàng Tháng</label>
@@ -374,12 +411,20 @@
                 soDienThoai: document.getElementById('soDienThoai').value,
                 email: document.getElementById('email').value,
                 tenThietBi: document.getElementById('tenThietBi').value,
+                // Cột N-T (7 trường bảo hành)
                 loaiSuKien: document.getElementById('loaiSuKien').value,
                 nhomThietBi: document.getElementById('nhomThietBi').value,
+                ngayKichHoat: document.getElementById('ngayKichHoat').value,
                 thoiHanBaoHanh: document.getElementById('thoiHanBaoHanh').value,
+                ngayBatDau: document.getElementById('ngayBatDau').value,
+                ngayKetThuc: document.getElementById('ngayKetThuc').value,
+                trangThaiThucTe: document.getElementById('trangThaiThucTe').value,
+                // Cột U-Z (6 trường hợp đồng bảo trì)
                 maHopDongBT: document.getElementById('maHopDongBT').value,
                 ngayKyHD: document.getElementById('ngayKyHD').value,
                 thoiHanHD: document.getElementById('thoiHanHD').value,
+                ngayHetHanHD: document.getElementById('ngayHetHanHD').value,
+                trangThaiHD: document.getElementById('trangThaiHD').value,
                 lichBaoTriThang: document.getElementById('lichBaoTriThang').value
             };
 
@@ -432,11 +477,12 @@
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300 mt-2 bg-slate-800/60 p-3 rounded-lg border border-slate-700">
                             <div><i class="fa-solid fa-shield text-cyan-400"></i> <b>Thiết bị:</b> ${item.tenThietBi || 'Chưa cập nhật'} (${item.nhomThietBi || 'N/A'})</div>
-                            <div><i class="fa-solid fa-bolt text-amber-400"></i> <b>Sự kiện:</b> ${item.loaiSuKien || 'N/A'}</div>
-                            <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Bảo hành:</b> ${item.thoiHanBaoHanh || 0} Tháng (Đến: ${item.ngayKetThuc || 'N/A'})</div>
-                            <div><i class="fa-solid fa-clock text-rose-400"></i> <b>Trạng thái BH:</b> ${item.trangThaiBaoHanh || 'N/A'}</div>
-                            <div><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>Trạng thái HĐ (Y):</b> ${item.trangThaiHD || '🟢 Hợp đồng đang hiệu lực'}</div>
-                            <div><i class="fa-solid fa-calendar-days text-amber-400"></i> <b>HĐ Bảo Trì (V-X):</b> Ký: ${item.ngayKyHD || 'N/A'} | Hết hạn: ${item.ngayHetHanHD || 'N/A'}</div>
+                            <div><i class="fa-solid fa-bolt text-amber-400"></i> <b>Sự kiện (N):</b> ${item.loaiSuKien || 'N/A'}</div>
+                            <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Kích hoạt (P):</b> ${item.ngayKichHoat || 'N/A'} | <b>BH:</b> ${item.thoiHanBaoHanh || 0} Tháng</div>
+                            <div><i class="fa-solid fa-clock text-rose-400"></i> <b>Bắt đầu (R) -> Kết thúc (S):</b> ${item.ngayBatDau || 'N/A'} -> ${item.ngayKetThuc || 'N/A'}</div>
+                            <div><i class="fa-solid fa-circle-info text-blue-400"></i> <b>TT Thực Tế (T):</b> ${item.trangThaiThucTe || 'N/A'}</div>
+                            <div><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>HĐ BT (V-X):</b> Ký: ${item.ngayKyHD || 'N/A'} | Hết hạn: ${item.ngayHetHanHD || 'N/A'}</div>
+                            <div><i class="fa-solid fa-shield-halved text-amber-300"></i> <b>Trạng thái HĐ (Y):</b> ${item.trangThaiHD || '🟢 Hợp đồng đang hiệu lực'}</div>
                             <div class="md:col-span-2"><i class="fa-solid fa-clipboard-list text-emerald-400"></i> <b>Lịch BT (Z):</b> ${item.lichBaoTriThang || 'Chưa cập nhật'}</div>
                         </div>
                     </div>
