@@ -248,6 +248,57 @@
             line-height: 1.4;
         }
 
+        /* Nút hành động nâng cao AI & VIP Care */
+        .advanced-actions {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-ai-diag {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
+            color: #93c5fd;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .btn-ai-diag:hover {
+            background: rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-vip-extend {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-vip-extend:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
         /* Danh mục giải pháp thu gọn */
         .services-preview {
             background: rgba(255, 255, 255, 0.03);
@@ -406,6 +457,16 @@
                 <div class="ai-note">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Thiết bị hoạt động ổn định. Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật tận nơi!
                 </div>
+
+                <!-- 2 Nút tích hợp nâng cao mới -->
+                <div class="advanced-actions">
+                    <button class="btn-ai-diag" onclick="requestAiDiagnostics()">
+                        <i class="fa-solid fa-robot"></i> AI Chẩn Đoán Lỗi
+                    </button>
+                    <button class="btn-vip-extend" onclick="extendVipWarranty()">
+                        <i class="fa-solid fa-crown"></i> Gia Hạn VIP Care
+                    </button>
+                </div>
             </div>
 
             <!-- Danh mục tóm tắt -->
@@ -466,6 +527,17 @@
                     document.getElementById('resId').innerText = "ANTIN-" + Math.floor(Math.random() * 900000 + 100000);
                 }
             }, 300);
+        }
+
+        // Hàm xử lý tính năng AI Chẩn Đoán Lỗi mới
+        function requestAiDiagnostics() {
+            alert('🤖 Trợ lý AI An Tín đang phân tích trạng thái thiết bị của bạn... Hệ thống hoạt động hoàn hảo 100%!');
+        }
+
+        // Hàm xử lý tính năng Gia Hạn VIP Care mới
+        function extendVipWarranty() {
+            alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành VIP qua ZaloPay / MoMo...');
+            window.open('https://zalo.me/0914060339', '_blank');
         }
     </script>
 </body>
