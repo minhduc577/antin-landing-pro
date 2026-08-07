@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra Cứu Bảo Hành - CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --primary-glow: #3b82f6;
+            --accent-glow: #8b5cf6;
+            --success-color: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg-dark) 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 520px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Header An Tín Ecosystem */
+        .app-header {
+            background: linear-gradient(135deg, #1d4ed8 0%, #7e22ce 100%);
+            padding: 28px 20px;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .ecosystem-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fbbf24;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .app-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .app-subtitle {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.4;
+        }
+
+        /* Nội dung chính */
+        .app-content {
+            padding: 24px;
+        }
+
+        .search-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-glow);
+            font-size: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 14px 16px 14px 48px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-glow);
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-action {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 14px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
+            filter: brightness(1.1);
+        }
+
+        /* Khung hiển thị kết quả tra cứu AI */
+        .result-container {
+            display: none;
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--success-color);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .result-row span:first-child {
+            color: var(--text-muted);
+        }
+
+        .result-row span:last-child {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .ai-note {
+            margin-top: 15px;
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid var(--primary-glow);
+            padding: 10px 12px;
+            font-size: 0.78rem;
+            color: #93c5fd;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.4;
+        }
+
+        /* Danh mục giải pháp thu gọn */
+        .services-preview {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .services-preview h4 {
+            font-size: 0.85rem;
+            color: #fbbf24;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .services-list {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .services-list div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Phần chân trang doanh nghiệp & Liên kết nút nhấn */
+        .company-info {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .company-info strong {
+            color: #ffffff;
+            font-size: 0.85rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .company-info p {
+            margin-bottom: 6px;
+        }
+
+        .action-buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .btn-link-contact {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #60a5fa;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .btn-link-contact:hover {
+            background: var(--primary-glow);
+            color: #ffffff;
+        }
+
+        .btn-eco-full {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 6px 15px rgba(124, 58, 237, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-eco-full:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <button class="back-btn" onclick="history.back()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="ecosystem-badge">
+                <i class="fa-solid fa-shield-halved"></i> AN TÍN ECOSYSTEM
+            </div>
+            <div class="app-title">TRA CỨU BẢO HÀNH ĐIỆN TỬ</div>
+            <div class="app-subtitle">🛡️ Giải pháp công nghệ & kỹ thuật toàn diện cho mọi công trình</div>
+        </div>
+
+        <!-- Body Form -->
+        <div class="app-content">
+            <div class="search-card">
+                <label class="form-label">Nhập Số Điện Thoại hoặc Mã Giao Dịch (ID):</label>
+                <div class="input-group">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" class="form-input" placeholder="Ví dụ: 0914060339 hoặc ANTIN...">
+                </div>
+                <button class="btn-action" onclick="performWarrantyLookup()">
+                    <i class="fa-solid fa-bolt"></i> Tra Cứu Ngay Lập Tức
+                </button>
+            </div>
+
+            <!-- Khung hiển thị kết quả -->
+            <div id="resultBox" class="result-container">
+                <div class="result-header">
+                    <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành Hợp Lệ
+                </div>
+                <div class="result-row">
+                    <span>Mã Giao Dịch (ID):</span>
+                    <span id="resId">ANTIN-CRM-605324</span>
+                </div>
+                <div class="result-row">
+                    <span>Khách hàng:</span>
+                    <span id="resName">PHAN MINH ĐỨC</span>
+                </div>
+                <div class="result-row">
+                    <span>Giải pháp / Thiết bị:</span>
+                    <span id="resService">Camera an ninh & Thiết bị thông minh</span>
+                </div>
+                <div class="result-row">
+                    <span>Thời hạn bảo hành:</span>
+                    <span style="color: #34d399;">24 Tháng (VIP Care)</span>
+                </div>
+                <div class="ai-note">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Thiết bị hoạt động ổn định. Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật tận nơi!
+                </div>
+            </div>
+
+            <!-- Danh mục tóm tắt -->
+            <div class="services-preview">
+                <h4><i class="fa-solid fa-star" style="color: #fbbf24;"></i> CÁC LĨNH VỰC CHỦ CHỐT AN TÍN:</h4>
+                <div class="services-list">
+                    <div><i class="fa-solid fa-video text-primary"></i> Camera An Ninh</div>
+                    <div><i class="fa-solid fa-wifi text-primary"></i> Mạng Wi-Fi - CNTT</div>
+                    <div><i class="fa-solid fa-lock text-primary"></i> Khóa Smart Home</div>
+                    <div><i class="fa-solid fa-fingerprint text-primary"></i> Kiểm Soát Ra Vào</div>
+                    <div><i class="fa-solid fa-fire text-primary"></i> Báo Cháy Tự Động</div>
+                    <div><i class="fa-solid fa-globe text-primary"></i> Thiết Kế Website</div>
+                </div>
+            </div>
+
+            <!-- Thông tin doanh nghiệp & Nút tương tác -->
+            <div class="company-info">
+                <strong>🏢 CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</strong>
+                <p>📍 85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</p>
+                <p>☎️ (028) 3849 3575 | 📱 Hotline/Zalo: 0914 060 339</p>
+                <p>📩 ctyantinco@gmail.com</p>
+
+                <div class="action-buttons-grid">
+                    <a href="https://zalo.me/0914060339" target="_blank" class="btn-link-contact">
+                        <i class="fa-solid fa-comment-sms"></i> Chat Zalo
+                    </a>
+                    <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-link-contact">
+                        <i class="fa-solid id-badge"></i> Zalo OA
+                    </a>
+                    <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="btn-link-contact">
+                        <i class="fa-solid fa-mobile-screen-button"></i> Zalo Mini App
+                    </a>
+                    <a href="https://khuyenmaicamera.blogspot.com" target="_blank" class="btn-link-contact">
+                        <i class="fa-solid fa-globe"></i> Website
+                    </a>
+                    <a href="https://ebook.antinco.com/trangchu" target="_blank" class="btn-eco-full">
+                        <i class="fa-solid fa-microchip"></i> AN TÍN ECOSYSTEM AI (KHÁM PHÁ NGAY)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function performWarrantyLookup() {
+            var inputVal = document.getElementById('searchInput').value.trim();
+            var resultBox = document.getElementById('resultBox');
+            
+            if(!inputVal) {
+                alert('Vui lòng nhập số điện thoại hoặc mã giao dịch để tra cứu!');
+                return;
+            }
+
+            resultBox.style.display = 'none';
+            setTimeout(function() {
+                resultBox.style.display = 'block';
+                if(inputVal.length > 3) {
+                    document.getElementById('resId').innerText = "ANTIN-" + Math.floor(Math.random() * 900000 + 100000);
+                }
+            }, 300);
+        }
+    </script>
+</body>
+</html>
