@@ -32,14 +32,14 @@
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 min-h-screen text-slate-100 font-sans p-3 md:p-8">
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto">
         <!-- HEADER -->
         <header class="text-center mb-6 md:mb-8">
             <div class="inline-flex items-center gap-2 md:gap-3 bg-blue-600/30 border border-blue-400/40 px-4 md:px-5 py-2 rounded-full text-blue-300 text-xs md:text-sm font-semibold mb-3 md:mb-4 ai-glow ai-float">
                 <i class="fa-solid fa-robot text-cyan-400 animate-bounce"></i> AN TÍN AI ECOSYSTEM - TRỢ LÝ TỰ ĐỘNG CẤP MÃ & BẢO MẬT 24/7
             </div>
             <h1 class="text-2xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
-                Hệ Thống Tra Cứu & Quản Lý <span class="text-cyan-400">Bảo Hành - Hợp Đồng</span>
+                Hệ Thống Tra Cứu & Quản Lý <span class="text-cyan-400">Bảo Hành - Hợp Đồng (U-Z)</span>
             </h1>
             <p class="text-slate-300 text-xs md:text-base">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
         </header>
@@ -67,14 +67,14 @@
         </div>
 
         <!-- TAB 1: TRA CỨU & NHẬP LIỆU -->
-        <div id="sectionSearch" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Form Nhập Liệu & Cấp Mã Tự Động -->
-            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl md:col-span-1 backdrop-blur-md relative overflow-hidden">
+        <div id="sectionSearch" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Form Nhập Liệu & Cấp Mã Tự Động (Bao gồm Cột U-Z) -->
+            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-1 backdrop-blur-md relative overflow-hidden">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 shimmer-bg"></div>
                 <h2 class="text-base md:text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
-                    <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu / Ký HĐ Mới
+                    <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu & HĐ Bảo Trì (U-Z)
                 </h2>
-                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ ghi nhận sự kiện và bảo hành linh hoạt!</p>
+                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ ghi nhận bảo hành và lịch trình bảo trì định kỳ!</p>
                 <form id="upsertForm" onsubmit="handleUpsert(event)" class="space-y-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Họ tên khách hàng *</label>
@@ -108,6 +108,30 @@
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Thời hạn bảo hành (Tháng - Tùy chỉnh)</label>
                         <input type="number" id="thoiHanBaoHanh" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Để trống nếu lấy theo nhóm thiết bị...">
                     </div>
+
+                    <!-- MỞ RỘNG CỘT U ĐẾN Z -->
+                    <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-700 space-y-3 mt-2">
+                        <span class="text-xs font-bold text-amber-400 flex items-center gap-1"><i class="fa-solid fa-shield-halved"></i> Thông tin Hợp đồng Bảo trì (U-Z)</span>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột U: Mã Hợp Đồng / Dự Án</label>
+                            <input type="text" id="maHopDongBT" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition font-mono" placeholder="VD: HDBT-2026-001">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột V: Ngày Ký HĐ</label>
+                                <input type="date" id="ngayKyHD" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột W: Thời Hạn (Tháng)</label>
+                                <input type="number" id="thoiHanHD" value="12" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột Z: Lịch Bảo Trì Hàng Tháng</label>
+                            <input type="text" id="lichBaoTriThang" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 outline-none transition" placeholder="VD: Tháng 1: Đã xong, Tháng 2: Chưa...">
+                        </div>
+                    </div>
+
                     <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mt-3 ai-glow">
                         <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Lưu Dữ Liệu & AI Tự Động Cấp Mã
                     </button>
@@ -115,7 +139,7 @@
             </div>
 
             <!-- Kết Quả & Tra Cứu Lọc Nhanh -->
-            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl md:col-span-2 backdrop-blur-md">
+            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-2 backdrop-blur-md">
                 <h2 class="text-base md:text-lg font-bold text-white mb-4 flex items-center justify-between border-b border-slate-700 pb-3">
                     <span class="flex items-center gap-2"><i class="fa-solid fa-database text-cyan-400"></i> Danh Sách Tra Cứu & Hợp Đồng</span>
                     <button onclick="loadDataList()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-slate-200 transition flex items-center gap-1 shadow hover:scale-105"><i class="fa-solid fa-rotate"></i> Làm mới</button>
@@ -128,7 +152,7 @@
                     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Gõ từ khóa (Tên, SĐT, Email, Mã HĐ)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:border-cyan-400 outline-none transition shadow-inner">
                 </div>
 
-                <div id="resultContainer" class="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+                <div id="resultContainer" class="space-y-4 max-h-[550px] overflow-y-auto pr-1">
                     <div class="text-center text-slate-400 py-12">
                         <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cyan-400"></i>
                         <p class="text-sm">Đang kết nối hệ thống Google Sheets...</p>
@@ -156,7 +180,8 @@
                             <th class="p-3">Khách Hàng / SĐT</th>
                             <th class="p-3">Mã Giao Dịch</th>
                             <th class="p-3">Thiết Bị</th>
-                            <th class="p-3">Mã HĐ Bảo Trì</th>
+                            <th class="p-3">Mã HĐ Bảo Trì (U)</th>
+                            <th class="p-3">Trạng Thái HĐ (Y)</th>
                             <th class="p-3 text-center">Thao Tác</th>
                         </tr>
                     </thead>
@@ -231,7 +256,6 @@
         let currentRole = localStorage.getItem("an_tin_role") || "staff";
         let globalData = [];
 
-        // Khởi tạo trạng thái giao diện dựa vào bộ nhớ cục bộ
         window.addEventListener('DOMContentLoaded', () => {
             updateRoleBadgeUI();
             loadDataList();
@@ -248,12 +272,10 @@
             }
         }
 
-        function openLoginModal() {
-            document.getElementById('loginModal').classList.remove('hidden');
-        }
-        function closeLoginModal() {
-            document.getElementById('loginModal').classList.add('hidden');
-        }
+        function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+        function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+        function openChangePasswordModal() { document.getElementById('changePassModal').classList.remove('hidden'); }
+        function closeChangePasswordModal() { document.getElementById('changePassModal').classList.add('hidden'); }
 
         function submitLogin() {
             let role = document.getElementById('loginRole').value;
@@ -270,11 +292,7 @@
                     currentRole = role;
                     localStorage.setItem("an_tin_role", role);
                     updateRoleBadgeUI();
-                    if(role === 'admin') {
-                        alert("Đăng nhập quyền Admin thành công!");
-                    } else {
-                        alert("Đã chuyển về quyền Nhập liệu!");
-                    }
+                    alert(role === 'admin' ? "Đăng nhập quyền Admin thành công!" : "Đã chuyển về quyền Nhập liệu!");
                     closeLoginModal();
                     document.getElementById('loginPassInput').value = "";
                     loadDataList();
@@ -282,16 +300,7 @@
                     alert("Mật khẩu không chính xác!");
                 }
             })
-            .catch(err => {
-                alert("Lỗi kết nối xác thực: " + err);
-            });
-        }
-
-        function openChangePasswordModal() {
-            document.getElementById('changePassModal').classList.remove('hidden');
-        }
-        function closeChangePasswordModal() {
-            document.getElementById('changePassModal').classList.add('hidden');
+            .catch(err => alert("Lỗi kết nối xác thực: " + err));
         }
 
         function submitChangePassword() {
@@ -322,12 +331,11 @@
 
         function resetStaffPasswordAction() {
             if(currentRole !== 'admin') {
-                alert("Tính năng này chỉ dành cho Admin! Vui lòng đăng nhập tài khoản Admin.");
+                alert("Tính năng này chỉ dành cho Admin!");
                 openLoginModal();
                 return;
             }
-
-            let adminPassConfirm = prompt("Để bảo mật, vui lòng nhập lại mật khẩu Admin để xác nhận Reset tài khoản Nhập liệu:");
+            let adminPassConfirm = prompt("Nhập lại mật khẩu Admin để xác nhận Reset tài khoản Nhập liệu:");
             if(adminPassConfirm === null) return;
 
             fetch(SCRIPT_URL, {
@@ -347,13 +355,8 @@
                 document.getElementById('btnTabAdmin').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2";
             } else {
                 if(currentRole !== 'admin') {
-                    let confirmAdmin = confirm("Khu vực Quản trị Admin yêu cầu đăng nhập quyền Admin. Bạn có muốn mở bảng đăng nhập không?");
-                    if(confirmAdmin) {
-                        openLoginModal();
-                        return;
-                    } else {
-                        return;
-                    }
+                    if(confirm("Khu vực Quản trị yêu cầu quyền Admin. Mở bảng đăng nhập?")) openLoginModal();
+                    return;
                 }
                 document.getElementById('sectionSearch').classList.add('hidden');
                 document.getElementById('sectionAdmin').classList.remove('hidden');
@@ -373,11 +376,15 @@
                 tenThietBi: document.getElementById('tenThietBi').value,
                 loaiSuKien: document.getElementById('loaiSuKien').value,
                 nhomThietBi: document.getElementById('nhomThietBi').value,
-                thoiHanBaoHanh: document.getElementById('thoiHanBaoHanh').value
+                thoiHanBaoHanh: document.getElementById('thoiHanBaoHanh').value,
+                maHopDongBT: document.getElementById('maHopDongBT').value,
+                ngayKyHD: document.getElementById('ngayKyHD').value,
+                thoiHanHD: document.getElementById('thoiHanHD').value,
+                lichBaoTriThang: document.getElementById('lichBaoTriThang').value
             };
 
-            if(!payload.hoTen && !payload.soDienThoai && !payload.email) {
-                alert("Vui lòng nhập ít nhất Họ tên, SĐT hoặc Email!");
+            if(!payload.hoTen && !payload.soDienThoai) {
+                alert("Vui lòng nhập ít nhất Họ tên và Số điện thoại!");
                 return;
             }
 
@@ -403,9 +410,7 @@
                     renderResults(globalData);
                 }
             })
-            .catch(err => {
-                console.error("Lỗi tải danh sách dữ liệu: ", err);
-            });
+            .catch(err => console.error("Lỗi tải dữ liệu: ", err));
         }
 
         function renderResults(data) {
@@ -423,14 +428,16 @@
                                 <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-barcode"></i> Mã GD: ${item.maGiaoDich || 'N/A'}</span>
                                 <h3 class="text-base font-bold text-white">${item.hoTen} - <span class="text-slate-300">${item.soDienThoai}</span></h3>
                             </div>
-                            <span class="text-xs px-2.5 py-1 bg-yellow-500/20 text-yellow-300 rounded-lg border border-yellow-500/30 font-semibold"><i class="fa-solid fa-file-contract"></i> ${item.maHopDong || 'N/A'}</span>
+                            <span class="text-xs px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-lg border border-amber-500/30 font-semibold"><i class="fa-solid fa-file-contract"></i> ${item.maHopDongBT || item.maHopDong || 'N/A'}</span>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300 mt-2 bg-slate-800/60 p-3 rounded-lg border border-slate-700">
                             <div><i class="fa-solid fa-shield text-cyan-400"></i> <b>Thiết bị:</b> ${item.tenThietBi || 'Chưa cập nhật'} (${item.nhomThietBi || 'N/A'})</div>
                             <div><i class="fa-solid fa-bolt text-amber-400"></i> <b>Sự kiện:</b> ${item.loaiSuKien || 'N/A'}</div>
                             <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Bảo hành:</b> ${item.thoiHanBaoHanh || 0} Tháng (Đến: ${item.ngayKetThuc || 'N/A'})</div>
                             <div><i class="fa-solid fa-clock text-rose-400"></i> <b>Trạng thái BH:</b> ${item.trangThaiBaoHanh || 'N/A'}</div>
-                            <div class="md:col-span-2"><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>Trạng thái HĐ:</b> ${item.trangThaiHD || 'N/A'}</div>
+                            <div><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>Trạng thái HĐ (Y):</b> ${item.trangThaiHD || '🟢 Hợp đồng đang hiệu lực'}</div>
+                            <div><i class="fa-solid fa-calendar-days text-amber-400"></i> <b>HĐ Bảo Trì (V-X):</b> Ký: ${item.ngayKyHD || 'N/A'} | Hết hạn: ${item.ngayHetHanHD || 'N/A'}</div>
+                            <div class="md:col-span-2"><i class="fa-solid fa-clipboard-list text-emerald-400"></i> <b>Lịch BT (Z):</b> ${item.lichBaoTriThang || 'Chưa cập nhật'}</div>
                         </div>
                     </div>
                 `;
@@ -444,6 +451,7 @@
                 (i.hoTen && i.hoTen.toLowerCase().includes(keyword)) || 
                 (i.soDienThoai && i.soDienThoai.toLowerCase().includes(keyword)) || 
                 (i.email && i.email.toLowerCase().includes(keyword)) ||
+                (i.maHopDongBT && i.maHopDongBT.toLowerCase().includes(keyword)) ||
                 (i.maHopDong && i.maHopDong.toLowerCase().includes(keyword)) ||
                 (i.maGiaoDich && i.maGiaoDich.toLowerCase().includes(keyword))
             );
@@ -460,7 +468,8 @@
                         <td class="p-3 font-semibold text-white">${item.hoTen}<br><span class="text-slate-400 font-normal">${item.soDienThoai}</span></td>
                         <td class="p-3 text-cyan-400 font-mono">${item.maGiaoDich}</td>
                         <td class="p-3 text-slate-300">${item.tenThietBi}</td>
-                        <td class="p-3 text-yellow-400 font-mono">${item.maHopDong}</td>
+                        <td class="p-3 text-amber-400 font-mono">${item.maHopDongBT || item.maHopDong || 'N/A'}</td>
+                        <td class="p-3 text-slate-300">${item.trangThaiHD || 'N/A'}</td>
                         <td class="p-3 text-center flex justify-center gap-2">
                             <button onclick="adminEdit(${item.rowIndex})" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-lg text-xs transition shadow"><i class="fa-solid fa-pen"></i> Sửa</button>
                             <button onclick="adminDelete(${item.rowIndex})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded-lg text-xs transition shadow"><i class="fa-solid fa-trash"></i> Xóa</button>
@@ -494,6 +503,8 @@
             if(newName === null) return;
             let newPhone = prompt("Sửa số điện thoại:", item.soDienThoai);
             if(newPhone === null) return;
+            let newMaBT = prompt("Sửa Mã HĐ Bảo Trì (Cột U):", item.maHopDongBT || item.maHopDong || "");
+            if(newMaBT === null) return;
             
             let payload = {
                 action: "adminUpdate",
@@ -505,7 +516,7 @@
                 loaiSuKien: item.loaiSuKien,
                 nhomThietBi: item.nhomThietBi,
                 thoiHanBaoHanh: item.thoiHanBaoHanh,
-                maHopDong: item.maHopDong
+                maHopDongBT: newMaBT
             };
 
             fetch(SCRIPT_URL, {
