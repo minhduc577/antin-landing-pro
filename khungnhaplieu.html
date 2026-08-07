@@ -10,44 +10,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 35px rgba(6, 182, 212, 0.8); transform: scale(1.01); }
+        }
+        @keyframes floatEffect {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
         }
         .ai-glow { animation: pulseGlow 3s infinite; }
+        .ai-float { animation: floatEffect 4s ease-in-out infinite; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 min-h-screen text-slate-100 font-sans p-4 md:p-8">
+<body class="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 min-h-screen text-slate-100 font-sans p-3 md:p-8">
 
     <div class="max-w-6xl mx-auto">
         <!-- HEADER -->
-        <header class="text-center mb-8">
-            <div class="inline-flex items-center gap-3 bg-blue-600/30 border border-blue-400/40 px-5 py-2 rounded-full text-blue-300 text-sm font-semibold mb-4 ai-glow">
+        <header class="text-center mb-6 md:mb-8">
+            <div class="inline-flex items-center gap-2 md:gap-3 bg-blue-600/30 border border-blue-400/40 px-4 md:px-5 py-2 rounded-full text-blue-300 text-xs md:text-sm font-semibold mb-3 md:mb-4 ai-glow ai-float">
                 <i class="fa-solid fa-robot text-cyan-400 animate-bounce"></i> AN TÍN AI ECOSYSTEM - TỰ ĐỘNG CẤP MÃ & BẢO MẬT 24/7
             </div>
-            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
+            <h1 class="text-2xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
                 Hệ Thống Tra Cứu & Quản Lý <span class="text-cyan-400">Bảo Hành - Hợp Đồng</span>
             </h1>
-            <p class="text-slate-300 text-sm md:text-base">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
+            <p class="text-slate-300 text-xs md:text-base">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
         </header>
 
         <!-- NAVIGATION & ROLE SWITCHER -->
-        <div class="flex flex-wrap justify-between items-center bg-slate-800/80 border border-slate-700 p-4 rounded-2xl mb-6 gap-4 shadow-xl">
-            <div class="flex gap-2">
-                <button onclick="switchTab('search')" id="btnTabSearch" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white transition shadow-lg flex items-center gap-2">
+        <div class="flex flex-col md:flex-row justify-between items-center bg-slate-800/80 border border-slate-700 p-4 rounded-2xl mb-6 gap-4 shadow-xl backdrop-blur-md">
+            <div class="flex flex-wrap w-full md:w-auto gap-2 justify-center">
+                <button onclick="switchTab('search')" id="btnTabSearch" class="flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-blue-600 text-white transition shadow-lg flex items-center justify-center gap-2 transform active:scale-95">
                     <i class="fa-solid fa-magnifying-glass"></i> Tra Cứu & Nhập Liệu
                 </button>
-                <button onclick="switchTab('admin')" id="btnTabAdmin" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-2">
-                    <i class="fa-solid fa-lock"></i> Quản Trị Admin (Sửa/Xóa)
+                <button onclick="switchTab('admin')" id="btnTabAdmin" class="flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2 transform active:scale-95">
+                    <i class="fa-solid fa-lock"></i> Quản Trị Admin
                 </button>
             </div>
-            <div class="flex flex-wrap items-center gap-2">
+            <div class="flex flex-wrap items-center justify-center gap-2 w-full md:w-auto">
                 <span class="text-xs text-slate-400">Trạng thái:</span>
                 <span id="roleBadge" class="px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-300 rounded-lg text-xs font-bold">👤 Tài khoản Nhập liệu</span>
                 <button onclick="openLoginModal()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white transition font-medium flex items-center gap-1 shadow-md">
-                    <i class="fa-solid fa-key"></i> Chuyển quyền / Đăng nhập
+                    <i class="fa-solid fa-key"></i> Đăng nhập
                 </button>
                 <button onclick="openChangePasswordModal()" class="text-xs bg-amber-600 hover:bg-amber-500 px-3 py-1.5 rounded-lg text-white transition font-medium flex items-center gap-1 shadow-md">
-                    <i class="fa-solid fa-key-skeleton"></i> Đổi mật khẩu
+                    <i class="fa-solid fa-key-skeleton"></i> Đổi MK
                 </button>
             </div>
         </div>
@@ -55,73 +60,76 @@
         <!-- TAB 1: TRA CỨU & NHẬP LIỆU -->
         <div id="sectionSearch" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Form Nhập Liệu & Cấp Mã Tự Động -->
-            <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl shadow-2xl md:col-span-1">
-                <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
-                    <i class="fa-solid fa-user-plus text-cyan-400"></i> Nhập Liệu / Ký HĐ Mới
+            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl md:col-span-1 backdrop-blur-md">
+                <h2 class="text-base md:text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
+                    <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu / Ký HĐ Mới
                 </h2>
-                <p class="text-[11px] text-slate-400 mb-4">Hệ thống đối chiếu Tên, SĐT hoặc Email. Nếu có sẵn sẽ cập nhật, nếu mới sẽ khởi tạo và tự động cấp mã!</p>
+                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động. Nếu đã tồn tại sẽ cập nhật, nếu mới sẽ khởi tạo mã giao dịch và mã hợp đồng!</p>
                 <form id="upsertForm" onsubmit="handleUpsert(event)" class="space-y-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Họ tên khách hàng *</label>
-                        <input type="text" id="hoTen" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="Nhập họ tên...">
+                        <input type="text" id="hoTen" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập họ tên..." required>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Số điện thoại *</label>
-                        <input type="text" id="soDienThoai" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="Nhập số điện thoại...">
+                        <input type="text" id="soDienThoai" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập số điện thoại..." required>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Email</label>
-                        <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="Nhập email...">
+                        <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập email...">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Tên thiết bị / Dự án</label>
-                        <input type="text" id="tenThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none" placeholder="VD: Camera Hikvision 4K...">
+                        <input type="text" id="tenThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none transition" placeholder="VD: Camera Hikvision 4K...">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Nhóm thiết bị / Gói dịch vụ</label>
-                        <select id="nhomThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none">
+                        <select id="nhomThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-cyan-400 outline-none transition">
                             <option value="Thiết bị chính">Thiết bị chính (12 Tháng BH)</option>
                             <option value="Phụ kiện">Phụ kiện (3 Tháng BH)</option>
                             <option value="Sửa chữa">Sửa chữa / Dịch vụ (1 Tháng BH)</option>
                         </select>
                     </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mt-2 ai-glow">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Lưu Dữ Liệu & Tự Động Cấp Mã
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mt-3 ai-glow">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Lưu Dữ Liệu & AI Tự Động Cấp Mã
                     </button>
                 </form>
             </div>
 
             <!-- Kết Quả & Tra Cứu Lọc Nhanh -->
-            <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl shadow-2xl md:col-span-2">
-                <h2 class="text-lg font-bold text-white mb-4 flex items-center justify-between border-b border-slate-700 pb-3">
+            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl md:col-span-2 backdrop-blur-md">
+                <h2 class="text-base md:text-lg font-bold text-white mb-4 flex items-center justify-between border-b border-slate-700 pb-3">
                     <span class="flex items-center gap-2"><i class="fa-solid fa-database text-cyan-400"></i> Danh Sách Tra Cứu & Hợp Đồng</span>
-                    <button onclick="loadDataList()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-slate-200 transition flex items-center gap-1"><i class="fa-solid fa-rotate"></i> Làm mới</button>
+                    <button onclick="loadDataList()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-slate-200 transition flex items-center gap-1 shadow"><i class="fa-solid fa-rotate"></i> Làm mới</button>
                 </h2>
                 
-                <div class="mb-4">
-                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Gõ từ khóa (Tên, SĐT, Email, Mã HĐ) để tìm kiếm..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:border-cyan-400 outline-none">
+                <div class="mb-4 relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-cyan-400">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Gõ từ khóa (Tên, SĐT, Email, Mã HĐ)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:border-cyan-400 outline-none transition shadow-inner">
                 </div>
 
-                <div id="resultContainer" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                <div id="resultContainer" class="space-y-4 max-h-[500px] overflow-y-auto pr-1">
                     <div class="text-center text-slate-400 py-12">
                         <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cyan-400"></i>
-                        <p>Đang tải dữ liệu từ hệ thống Google Sheets...</p>
+                        <p class="text-sm">Đang kết nối hệ thống Google Sheets...</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- TAB 2: QUẢN TRỊ ADMIN (SỬA / XÓA) -->
-        <div id="sectionAdmin" class="hidden bg-slate-800/90 border border-slate-700 p-6 rounded-2xl shadow-2xl">
-            <div class="flex flex-wrap justify-between items-center mb-4 border-b border-slate-700 pb-3">
-                <h2 class="text-xl font-bold text-rose-400 flex items-center gap-2">
+        <div id="sectionAdmin" class="hidden bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl backdrop-blur-md">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-4 border-b border-slate-700 pb-3 gap-3">
+                <h2 class="text-lg md:text-xl font-bold text-rose-400 flex items-center gap-2">
                     <i class="fa-solid fa-shield-halved"></i> Bảng Quản Trị Dành Cho Admin
                 </h2>
-                <button onclick="resetStaffPasswordAction()" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg">
-                    <i class="fa-solid fa-rotate-right"></i> Reset Mật Khẩu Tài Khoản Nhập Liệu
+                <button onclick="resetStaffPasswordAction()" class="w-full md:w-auto bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-rotate-right"></i> Reset MK Tài Khoản Nhập Liệu
                 </button>
             </div>
-            <p class="text-xs text-slate-400 mb-4">Quản trị viên có quyền chỉnh sửa thông số, xóa dòng dữ liệu hoặc quản lý bảo mật tài khoản.</p>
+            <p class="text-xs text-slate-400 mb-4">Quản trị viên có toàn quyền chỉnh sửa thông số, cập nhật dịch vụ hoặc xóa dòng dữ liệu trên hệ thống.</p>
             
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse text-xs">
@@ -144,16 +152,16 @@
 
     <!-- MODAL ĐĂNG NHẬP / CHUYỂN QUYỀN -->
     <div id="loginModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md shadow-2xl">
+        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md shadow-2xl animate-fadeIn">
             <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-lock text-cyan-400"></i> Đăng Nhập Hệ Thống
+                <i class="fa-solid fa-lock text-cyan-400"></i> Xác Thực Đăng Nhập
             </h3>
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Chọn loại tài khoản</label>
                     <select id="loginRole" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white outline-none">
-                        <option value="staff">👤 Tài khoản Nhập liệu (Mặc định: nhaplieu123)</option>
-                        <option value="admin">🛡️ Tài khoản Quản trị Admin (Mặc định: antin2026)</option>
+                        <option value="staff">👤 Tài khoản Nhập liệu</option>
+                        <option value="admin">🛡️ Tài khoản Quản trị Admin</option>
                     </select>
                 </div>
                 <div>
@@ -161,8 +169,8 @@
                     <input type="password" id="loginPassInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white outline-none" placeholder="Nhập mật khẩu...">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button onclick="closeLoginModal()" class="px-4 py-2 bg-slate-700 text-slate-300 rounded-xl text-xs font-bold">Hủy</button>
-                    <button onclick="submitLogin()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold shadow-lg">Xác nhận</button>
+                    <button onclick="closeLoginModal()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-xl text-xs font-bold transition">Hủy</button>
+                    <button onclick="submitLogin()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold shadow-lg transition">Xác nhận</button>
                 </div>
             </div>
         </div>
@@ -170,9 +178,9 @@
 
     <!-- MODAL ĐỔI MẬT KHẨU -->
     <div id="changePassModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md shadow-2xl">
+        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md shadow-2xl animate-fadeIn">
             <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-key-skeleton text-amber-400"></i> Đổi Mật Khẩu Tài Khoản
+                <i class="fa-solid fa-key-skeleton text-amber-400"></i> Đổi Mật Khẩu Hệ Thống
             </h3>
             <div class="space-y-4">
                 <div>
@@ -191,8 +199,8 @@
                     <input type="password" id="newPass" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white outline-none" placeholder="Nhập mật khẩu mới...">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button onclick="closeChangePasswordModal()" class="px-4 py-2 bg-slate-700 text-slate-300 rounded-xl text-xs font-bold">Hủy</button>
-                    <button onclick="submitChangePassword()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold shadow-lg">Cập nhật mật khẩu</button>
+                    <button onclick="closeChangePasswordModal()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-xl text-xs font-bold transition">Hủy</button>
+                    <button onclick="submitChangePassword()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold shadow-lg transition">Cập nhật mật khẩu</button>
                 </div>
             </div>
         </div>
@@ -200,6 +208,9 @@
 
     <!-- SCRIPT FRONTEND -->
     <script>
+        // Đường dẫn Web App Google Apps Script chuẩn xác được tích hợp
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKgi6dsmOMJ2U6okPXhtI9Y6zGlIMnQVcfSJKGjWSjeEIkMXY-2SjEnzWDKXZis9nn5g/exec";
+        
         let currentRole = "staff"; // Mặc định khởi tạo là staff
         let globalData = [];
 
@@ -214,13 +225,15 @@
             let role = document.getElementById('loginRole').value;
             let pass = document.getElementById('loginPassInput').value;
 
-            fetch(window.location.href, {
+            // Kiểm tra phân quyền thông qua Google Apps Script API endpoint
+            fetch(SCRIPT_URL, {
                 method: "POST",
-                body: JSON.stringify({ action: "verifyLogin", role: role, pass: pass })
+                body: JSON.stringify({ action: "verifyLoginCredentials", role: role, pass: pass })
             })
             .then(res => res.json())
             .then(res => {
-                if(res.status === "success") {
+                let isValid = res.isValid !== undefined ? res.isValid : (res.status === "success");
+                if(isValid) {
                     currentRole = role;
                     if(role === 'admin') {
                         document.getElementById("roleBadge").className = "px-3 py-1 bg-rose-500/20 border border-rose-500 text-rose-300 rounded-lg text-xs font-bold";
@@ -235,10 +248,37 @@
                     document.getElementById('loginPassInput').value = "";
                     loadDataList();
                 } else {
-                    alert(res.message || "Mật khẩu không chính xác!");
+                    alert("Mật khẩu không chính xác!");
                 }
             })
-            .catch(err => alert("Lỗi kết nối xác thực: " + err));
+            .catch(err => {
+                // Fallback nếu chạy trong môi trường google.script.run trực tiếp nội bộ
+                if(typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run
+                        .withSuccessHandler(function(isValid) {
+                            if(isValid) {
+                                currentRole = role;
+                                if(role === 'admin') {
+                                    document.getElementById("roleBadge").className = "px-3 py-1 bg-rose-500/20 border border-rose-500 text-rose-300 rounded-lg text-xs font-bold";
+                                    document.getElementById("roleBadge").innerText = "🛡️ Quyền Quản Trị Admin";
+                                    alert("Đăng nhập quyền Admin thành công!");
+                                } else {
+                                    document.getElementById("roleBadge").className = "px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-300 rounded-lg text-xs font-bold";
+                                    document.getElementById("roleBadge").innerText = "👤 Tài khoản Nhập liệu";
+                                    alert("Đã chuyển về quyền Nhập liệu!");
+                                }
+                                closeLoginModal();
+                                document.getElementById('loginPassInput').value = "";
+                                loadDataList();
+                            } else {
+                                alert("Mật khẩu không chính xác!");
+                            }
+                        })
+                        .verifyLoginCredentials(role, pass);
+                } else {
+                    alert("Lỗi kết nối xác thực: " + err);
+                }
+            });
         }
 
         function openChangePasswordModal() {
@@ -258,9 +298,9 @@
                 return;
             }
 
-            fetch(window.location.href, {
+            fetch(SCRIPT_URL, {
                 method: "POST",
-                body: JSON.stringify({ action: "changePassword", role: role, oldPass: oldPass, newPass: newPass })
+                body: JSON.stringify({ action: "processChangePassword", role: role, oldPass: oldPass, newPass: newPass })
             })
             .then(res => res.json())
             .then(res => {
@@ -271,12 +311,27 @@
                     document.getElementById('newPass').value = "";
                 }
             })
-            .catch(err => alert("Lỗi kết nối đổi mật khẩu: " + err));
+            .catch(err => {
+                if(typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run
+                        .withSuccessHandler(function(res) {
+                            alert(res.message);
+                            if(res.status === "success") {
+                                closeChangePasswordModal();
+                                document.getElementById('oldPass').value = "";
+                                document.getElementById('newPass').value = "";
+                            }
+                        })
+                        .processChangePassword({ role: role, oldPass: oldPass, newPass: newPass });
+                } else {
+                    alert("Lỗi kết nối: " + err);
+                }
+            });
         }
 
         function resetStaffPasswordAction() {
             if(currentRole !== 'admin') {
-                alert("Tính năng này chỉ dành cho Admin! Vui lòng đăng nhập tài khoản Admin trước.");
+                alert("Tính năng này chỉ dành cho Admin! Vui lòng đăng nhập tài khoản Admin.");
                 openLoginModal();
                 return;
             }
@@ -284,23 +339,33 @@
             let adminPassConfirm = prompt("Để bảo mật, vui lòng nhập lại mật khẩu Admin để xác nhận Reset tài khoản Nhập liệu:");
             if(adminPassConfirm === null) return;
 
-            fetch(window.location.href, {
+            fetch(SCRIPT_URL, {
                 method: "POST",
-                body: JSON.stringify({ action: "adminResetStaffPass", adminPass: adminPassConfirm })
+                body: JSON.stringify({ action: "processAdminResetStaffPass", adminPass: adminPassConfirm })
             })
             .then(res => res.json())
             .then(res => {
                 alert(res.message);
             })
-            .catch(err => alert("Lỗi kết nối reset: " + err));
+            .catch(err => {
+                if(typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run
+                        .withSuccessHandler(function(res) {
+                            alert(res.message);
+                        })
+                        .processAdminResetStaffPass({ adminPass: adminPassConfirm });
+                } else {
+                    alert("Lỗi kết nối: " + err);
+                }
+            });
         }
 
         function switchTab(tab) {
             if(tab === 'search') {
                 document.getElementById('sectionSearch').classList.remove('hidden');
                 document.getElementById('sectionAdmin').classList.add('hidden');
-                document.getElementById('btnTabSearch').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white transition shadow-lg flex items-center gap-2";
-                document.getElementById('btnTabAdmin').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-2";
+                document.getElementById('btnTabSearch').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-blue-600 text-white transition shadow-lg flex items-center justify-center gap-2";
+                document.getElementById('btnTabAdmin').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2";
             } else {
                 if(currentRole !== 'admin') {
                     let confirmAdmin = confirm("Khu vực Quản trị Admin yêu cầu đăng nhập. Bạn có muốn mở bảng đăng nhập không?");
@@ -313,8 +378,8 @@
                 }
                 document.getElementById('sectionSearch').classList.add('hidden');
                 document.getElementById('sectionAdmin').classList.remove('hidden');
-                document.getElementById('btnTabAdmin').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-rose-600 text-white transition shadow-lg flex items-center gap-2";
-                document.getElementById('btnTabSearch').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-2";
+                document.getElementById('btnTabAdmin').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-rose-600 text-white transition shadow-lg flex items-center justify-center gap-2";
+                document.getElementById('btnTabSearch').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2";
                 loadAdminTable();
             }
         }
@@ -335,7 +400,7 @@
                 return;
             }
 
-            fetch(window.location.href, {
+            fetch(SCRIPT_URL, {
                 method: "POST",
                 body: JSON.stringify(payload)
             })
@@ -345,12 +410,11 @@
                 loadDataList();
                 document.getElementById('upsertForm').reset();
             })
-            .catch(err => alert("Lỗi kết nối: " + err));
+            .catch(err => alert("Lỗi kết nối lưu dữ liệu: " + err));
         }
 
         function loadDataList() {
-            let baseUrl = window.location.href.split('?')[0];
-            fetch(baseUrl + "?action=getData")
+            fetch(SCRIPT_URL + "?action=getData")
             .then(res => res.json())
             .then(res => {
                 if(res.status === "success") {
@@ -358,31 +422,33 @@
                     renderResults(globalData);
                 }
             })
-            .catch(err => console.error("Lỗi tải dữ liệu:", err));
+            .catch(err => {
+                console.error("Lỗi tải danh sách dữ liệu: ", err);
+            });
         }
 
         function renderResults(data) {
             let container = document.getElementById('resultContainer');
-            if(!data || data.length === 0) {
-                container.innerHTML = `<div class="text-center text-slate-400 py-8">Chưa có dữ liệu hệ thống.</div>`;
+            if(data.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-400 py-8 text-sm">Chưa có dữ liệu hệ thống hoặc đang cập nhật.</div>`;
                 return;
             }
             let html = "";
             data.forEach(item => {
                 html += `
-                    <div class="bg-slate-900/90 border border-slate-700/80 p-4 rounded-xl shadow-md hover:border-cyan-500 transition">
-                        <div class="flex justify-between items-start mb-2">
+                    <div class="bg-slate-900/90 border border-slate-700/80 p-4 rounded-xl shadow-md hover:border-cyan-500 transition transform hover:-translate-y-0.5">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-2">
                             <div>
-                                <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-barcode"></i> Mã GD: ${item.maGiaoDich}</span>
+                                <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-barcode"></i> Mã GD: ${item.maGiaoDich || 'N/A'}</span>
                                 <h3 class="text-base font-bold text-white">${item.hoTen} - <span class="text-slate-300">${item.soDienThoai}</span></h3>
                             </div>
-                            <span class="text-xs px-2.5 py-1 bg-yellow-500/20 text-yellow-300 rounded-lg border border-yellow-500/30 font-semibold"><i class="fa-solid fa-file-contract"></i> ${item.maHopDong}</span>
+                            <span class="text-xs px-2.5 py-1 bg-yellow-500/20 text-yellow-300 rounded-lg border border-yellow-500/30 font-semibold"><i class="fa-solid fa-file-contract"></i> ${item.maHopDong || 'N/A'}</span>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300 mt-2 bg-slate-800/60 p-3 rounded-lg border border-slate-700">
-                            <div><i class="fa-solid fa-shield text-cyan-400"></i> <b>Thiết bị:</b> ${item.tenThietBi} (${item.nhomThietBi})</div>
-                            <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Bảo hành:</b> ${item.thoiHanBaoHanh} Tháng (Đến: ${item.ngayKetThuc})</div>
-                            <div><i class="fa-solid fa-clock text-rose-400"></i> <b>Trạng thái BH:</b> ${item.trangThaiBaoHanh}</div>
-                            <div><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>Trạng thái HĐ:</b> ${item.trangThaiHD}</div>
+                            <div><i class="fa-solid fa-shield text-cyan-400"></i> <b>Thiết bị:</b> ${item.tenThietBi || 'Chưa cập nhật'} (${item.nhomThietBi || 'N/A'})</div>
+                            <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Bảo hành:</b> ${item.thoiHanBaoHanh || 0} Tháng (Đến: ${item.ngayKetThuc || 'N/A'})</div>
+                            <div><i class="fa-solid fa-clock text-rose-400"></i> <b>Trạng thái BH:</b> ${item.trangThaiBaoHanh || 'N/A'}</div>
+                            <div><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>Trạng thái HĐ:</b> ${item.trangThaiHD || 'N/A'}</div>
                         </div>
                     </div>
                 `;
@@ -393,28 +459,29 @@
         function filterTable() {
             let keyword = document.getElementById('searchInput').value.toLowerCase();
             let filtered = globalData.filter(i => 
-                i.hoTen.toLowerCase().includes(keyword) || 
-                i.soDienThoai.toLowerCase().includes(keyword) || 
-                i.email.toLowerCase().includes(keyword) ||
-                i.maHopDong.toLowerCase().includes(keyword) ||
-                i.maGiaoDich.toLowerCase().includes(keyword)
+                (i.hoTen && i.hoTen.toLowerCase().includes(keyword)) || 
+                (i.soDienThoai && i.soDienThoai.toLowerCase().includes(keyword)) || 
+                (i.email && i.email.toLowerCase().includes(keyword)) ||
+                (i.maHopDong && i.maHopDong.toLowerCase().includes(keyword)) ||
+                (i.maGiaoDich && i.maGiaoDich.toLowerCase().includes(keyword))
             );
             renderResults(filtered);
         }
 
         function loadAdminTable() {
             let tbody = document.getElementById('adminTableBody');
+            if(!tbody) return;
             let html = "";
             globalData.forEach(item => {
                 html += `
-                    <tr class="border-b border-slate-700 hover:bg-slate-900/50">
+                    <tr class="border-b border-slate-700 hover:bg-slate-900/50 transition">
                         <td class="p-3 font-semibold text-white">${item.hoTen}<br><span class="text-slate-400 font-normal">${item.soDienThoai}</span></td>
                         <td class="p-3 text-cyan-400 font-mono">${item.maGiaoDich}</td>
                         <td class="p-3 text-slate-300">${item.tenThietBi}</td>
                         <td class="p-3 text-yellow-400 font-mono">${item.maHopDong}</td>
                         <td class="p-3 text-center flex justify-center gap-2">
-                            <button onclick="adminEdit(${item.rowIndex})" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-lg text-xs"><i class="fa-solid fa-pen"></i> Sửa</button>
-                            <button onclick="adminDelete(${item.rowIndex})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded-lg text-xs"><i class="fa-solid fa-trash"></i> Xóa</button>
+                            <button onclick="adminEdit(${item.rowIndex})" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-lg text-xs transition shadow"><i class="fa-solid fa-pen"></i> Sửa</button>
+                            <button onclick="adminDelete(${item.rowIndex})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded-lg text-xs transition shadow"><i class="fa-solid fa-trash"></i> Xóa</button>
                         </td>
                     </tr>
                 `;
@@ -424,7 +491,7 @@
 
         function adminDelete(rowIndex) {
             if(confirm("Bạn có chắc chắn muốn XÓA dòng dữ liệu này trên Google Sheets không?")) {
-                fetch(window.location.href, {
+                fetch(SCRIPT_URL, {
                     method: "POST",
                     body: JSON.stringify({ action: "adminDelete", rowIndex: rowIndex })
                 })
@@ -433,7 +500,8 @@
                     alert(res.message);
                     loadDataList();
                     loadAdminTable();
-                });
+                })
+                .catch(err => alert("Lỗi kết nối xóa dữ liệu: " + err));
             }
         }
 
@@ -458,7 +526,7 @@
                 maHopDong: item.maHopDong
             };
 
-            fetch(window.location.href, {
+            fetch(SCRIPT_URL, {
                 method: "POST",
                 body: JSON.stringify(payload)
             })
@@ -467,7 +535,8 @@
                 alert(res.message);
                 loadDataList();
                 loadAdminTable();
-            });
+            })
+            .catch(err => alert("Lỗi kết nối cập nhật: " + err));
         }
 
         window.onload = function() {
