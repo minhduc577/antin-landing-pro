@@ -193,7 +193,7 @@
             filter: brightness(1.1);
         }
 
-        /* Khung hiển thị kết quả tra cứu AI */
+        /* Khung hiển thị kết quả tra cứu AI / Thực tế */
         .result-container {
             display: none;
             background: linear-gradient(145deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%);
@@ -430,7 +430,7 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" id="searchInput" class="form-input" placeholder="Ví dụ: 0914060339 hoặc ANTIN...">
                 </div>
-                <button class="btn-action" onclick="performWarrantyLookup()">
+                <button class="btn-action" onclick="performRealDatabaseLookup()">
                     <i class="fa-solid fa-bolt"></i> Tra Cứu Ngay Lập Tức
                 </button>
             </div>
@@ -454,7 +454,11 @@
                 </div>
                 <div class="result-row">
                     <span>Thời hạn bảo hành:</span>
-                    <span style="color: #34d399;">24 Tháng (VIP Care)</span>
+                    <span style="color: #34d399;" id="resWarranty">24 Tháng (VIP Care)</span>
+                </div>
+                <div class="result-row">
+                    <span>Trạng thái:</span>
+                    <span style="color: #fbbf24;" id="resStatus">Đang hoạt động ổn định</span>
                 </div>
                 <div class="ai-note">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Thiết bị hoạt động ổn định. Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật tận nơi!
@@ -496,7 +500,7 @@
                         <i class="fa-solid fa-comment-sms"></i> Chat Zalo
                     </a>
                     <a href="https://zalo.me/3260030944980440169" target="_blank" class="btn-link-contact">
-                        <i class="fa-solid id-badge"></i> Zalo OA
+                        <i class="fa-solid fa-id-badge"></i> Zalo OA
                     </a>
                     <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="btn-link-contact">
                         <i class="fa-solid fa-mobile-screen-button"></i> Zalo Mini App
@@ -513,25 +517,96 @@
     </div>
 
     <script>
-        function performWarrantyLookup() {
-            var inputVal = document.getElementById('searchInput').value.trim();
+        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script
+        async function performRealDatabaseLookup() {
+            var searchValue = document.getElementById('searchInput').value.trim();
             var resultBox = document.getElementById('resultBox');
             
-            if(!inputVal) {
-                alert('Vui lòng nhập số điện thoại hoặc mã giao dịch để tra cứu!');
+            if(!searchValue) {
+                alert('Vui lòng nhập Số Điện Thoại hoặc Mã Giao Dịch để tra cứu!');
                 return;
             }
 
-            resultBox.style.display = 'none';
-            setTimeout(function() {
-                resultBox.style.display = 'block';
-                if(inputVal.length > 3) {
-                    document.getElementById('resId').innerText = "ANTIN-" + Math.floor(Math.random() * 900000 + 100000);
+            // Hiệu ứng trạng thái đang tải AI
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `
+                <div style="text-align: center; padding: 25px; color: #93c5fd;">
+                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i><br>
+                    <b>✨ AI An Tín đang quét dữ liệu thời gian thực từ Google Sheets...</b>
+                </div>
+            `;
+
+            // Đường dẫn Web App Apps Script đã tích hợp chính xác
+            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzXF_lvdP9BeEafOTf_WEQMDfOtQ41wz4P_Fiyt1DP_VZ8epk_EC0jdUSsSzeq2LWCt8Q/exec";
+
+            try {
+                let response = await fetch(`${WEB_APP_URL}?q=${encodeURIComponent(searchValue)}`);
+                let result = await response.json();
+
+                if (result.status === "success" && result.data.length > 0) {
+                    let item = result.data[0];
+                    
+                    // Khôi phục lại cấu trúc hiển thị kết quả chuẩn cùng dữ liệu trả về từ database
+                    resultBox.innerHTML = `
+                        <div class="result-header">
+                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành Hợp Lệ
+                        </div>
+                        <div class="result-row">
+                            <span>Mã Giao Dịch (ID):</span>
+                            <span>${item.maGiaoDich}</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Khách hàng:</span>
+                            <span>${item.tenKhachHang}</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Số Điện Thoại:</span>
+                            <span>${item.soDienThoai}</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Giải pháp / Thiết bị:</span>
+                            <span>${item.tenThietBi}</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Thời hạn bảo hành:</span>
+                            <span style="color: #34d399;">${item.ngayBaoHanh}</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Trạng thái:</span>
+                            <span style="color: #fbbf24;">${item.trangThai}</span>
+                        </div>
+                        <div class="ai-note">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
+                        </div>
+
+                        <div class="advanced-actions">
+                            <a href="https://ebook.antinco.com/kythuatAI" target="_blank" class="btn-ai-diag">
+                                <i class="fa-solid fa-robot"></i> AI Chẩn Đoán Lỗi
+                            </a>
+                            <button class="btn-vip-extend" onclick="extendVipWarranty()">
+                                <i class="fa-solid fa-crown"></i> Gia Hạn VIP Care
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    resultBox.innerHTML = `
+                        <div style="color: #ff4d4d; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); text-align: center; padding: 20px; border-radius: 16px;">
+                            ❌ Không tìm thấy thông tin phù hợp với từ khóa: <b>${searchValue}</b>.<br><br>
+                            Vui lòng kiểm tra lại hoặc liên hệ Hotline: <a href="tel:0914060339" style="color:#00ffcc; font-weight:700;">0914 060 339</a> để được hỗ trợ ngay lập tức!
+                        </div>
+                    `;
                 }
-            }, 300);
+            } catch (error) {
+                console.error("Lỗi kết nối API:", error);
+                resultBox.innerHTML = `
+                    <div style="color: #ef4444; text-align: center; padding: 15px; background: rgba(239,68,68,0.1); border-radius: 12px;">
+                        ⚠️ Lỗi kết nối hệ thống dữ liệu trực tuyến. Vui lòng thử lại sau giây lát!
+                    </div>
+                `;
+            }
         }
 
-        // Hàm xử lý tính năng Gia Hạn VIP Care mới
+        // Hàm xử lý tính năng Gia Hạn VIP Care
         function extendVipWarranty() {
             alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành VIP qua ZaloPay / MoMo...');
             window.open('https://zalo.me/0914060339', '_blank');
