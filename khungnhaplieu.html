@@ -39,23 +39,26 @@
                 <i class="fa-solid fa-robot text-cyan-400 animate-bounce"></i> AN TÍN AI ECOSYSTEM - TRỢ LÝ TỰ ĐỘNG CẤP MÃ & BẢO MẬT 24/7
             </div>
             <h1 class="text-2xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
-            Hệ Thống Tra Cứu & Quản Lý
-            <span class="block text-xl md:text-3xl text-cyan-400 mt-2 font-bold">Bảo Hành (N-T) & Hợp Đồng (U-Z)</span>
+                Hệ Thống Tra Cứu & Quản Lý
+                <span class="block text-xl md:text-3xl text-cyan-400 mt-2 font-bold">Bảo Hành (N-T) & Hợp Đồng (U-Z)</span>
             </h1>
-            <p class="text-slate-300 text-xs md:text-base">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
+            <p class="text-slate-300 text-xs md:text-base mt-2">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
         </header>
 
-        <!-- NAVIGATION & ROLE SWITCHER -->
-        <div class="flex flex-col md:flex-row justify-between items-center bg-slate-800/80 border border-slate-700 p-4 rounded-2xl mb-6 gap-4 shadow-xl backdrop-blur-md">
-            <div class="flex flex-wrap w-full md:w-auto gap-2 justify-center">
-                <button onclick="switchTab('search')" id="btnTabSearch" class="flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-blue-600 text-white transition shadow-lg flex items-center justify-center gap-2 transform active:scale-95">
+        <!-- NAVIGATION & ROLE SWITCHER (Tối ưu Responsive cho Mobile & Desktop) -->
+        <div class="flex flex-col lg:flex-row justify-between items-center bg-slate-800/80 border border-slate-700 p-4 rounded-2xl mb-6 gap-4 shadow-xl backdrop-blur-md">
+            <!-- Nhóm nút chuyển Tab -->
+            <div class="flex flex-wrap w-full lg:w-auto gap-2 justify-center">
+                <button onclick="switchTab('search')" id="btnTabSearch" class="flex-1 lg:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-blue-600 text-white transition shadow-lg flex items-center justify-center gap-2 transform active:scale-95">
                     <i class="fa-solid fa-magnifying-glass"></i> Tra Cứu & Nhập Liệu
                 </button>
-                <button onclick="switchTab('admin')" id="btnTabAdmin" class="flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2 transform active:scale-95">
+                <button onclick="switchTab('admin')" id="btnTabAdmin" class="flex-1 lg:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2 transform active:scale-95">
                     <i class="fa-solid fa-lock"></i> Quản Trị Admin
                 </button>
             </div>
-            <div class="flex flex-wrap items-center justify-center gap-2 w-full md:w-auto">
+            
+            <!-- Nhóm trạng thái & nút xác thực (Tối ưu gọn gàng trên mobile) -->
+            <div class="flex flex-wrap items-center justify-center gap-2 w-full lg:w-auto">
                 <span class="text-xs text-slate-400">Trạng thái:</span>
                 <span id="roleBadge" class="px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-300 rounded-lg text-xs font-bold">👤 Tài khoản Nhập liệu</span>
                 <button onclick="openLoginModal()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white transition font-medium flex items-center gap-1 shadow-md hover:scale-105">
@@ -67,10 +70,11 @@
             </div>
         </div>
 
-        <!-- TAB 1: TRA CỨU & NHẬP LIỆU -->
-        <div id="sectionSearch" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Form Nhập Liệu & Cấp Mã Tự Động (Đầy đủ Cột N-T và U-Z) -->
-            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-1 backdrop-blur-md relative overflow-hidden">
+        <!-- TAB 1: TRA CỨU & NHẬP LIỆU (Bố cục 2 cột: Cột trái Nhập liệu, Cột phải Danh sách - Tự động stack trên Mobile) -->
+        <div id="sectionSearch" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Form Nhập Liệu & Cấp Mã Tự Động (Chiếm 5 phần trên Desktop, Full trên Mobile) -->
+            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-5 backdrop-blur-md relative overflow-hidden">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 shimmer-bg"></div>
                 <h2 class="text-base md:text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
                     <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu Chi Tiết (N-Z)
@@ -93,9 +97,34 @@
                             <label class="block text-[11px] font-semibold text-slate-300 mb-1">Email</label>
                             <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập email...">
                         </div>
+                        
+                        <!-- Ô Tên thiết bị / Dự án: Hỗ trợ 2 lựa chọn (Nhập thủ công hoặc chọn ngữ cảnh mẫu có icon) -->
                         <div>
-                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Tên thiết bị / Dự án</label>
-                            <input type="text" id="tenThietBi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" placeholder="VD: Camera Hikvision 4K...">
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">
+                                Tên thiết bị / Dự án <span class="text-cyan-400 font-normal">(Nhập tự do hoặc chọn mẫu 👇)</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="tenThietBi" 
+                                list="dsNguCanhThietBi" 
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" 
+                                placeholder="Nhập tên thiết bị hoặc nhấp chọn gợi ý..."
+                            >
+                            <!-- Danh sách 12 gợi ý ngữ cảnh chuyên nghiệp -->
+                            <datalist id="dsNguCanhThietBi">
+                                <option value="📹 Camera an ninh – Giám sát 24/7"></option>
+                                <option value="📡 Mạng Wi-Fi – Máy tính – Hạ tầng CNTT"></option>
+                                <option value="🔐 Chống đột nhập – Khóa cửa thông minh"></option>
+                                <option value="👆 Chấm công vân tay – Kiểm soát ra vào"></option>
+                                <option value="🚨 Báo cháy tự động – An toàn tài sản"></option>
+                                <option value="🌐 Thiết kế Website chuyên nghiệp"></option>
+                                <option value="☁️ Tên miền – Hosting – Cloud Server"></option>
+                                <option value="🏠 Nhà thông minh – Smart Home"></option>
+                                <option value="⚡ Điện dân dụng – Điện công nghiệp"></option>
+                                <option value="🔧 Sửa chữa & bảo trì thiết bị điện gia đình"></option>
+                                <option value="♨️ Ấm điện – Bếp điện – Nồi điện – Quạt điện..."></option>
+                                <option value="🤖 Tự động hóa thiết bị điện thông minh"></option>
+                            </datalist>
                         </div>
                     </div>
 
@@ -176,8 +205,8 @@
                 </form>
             </div>
 
-            <!-- Kết Quả & Tra Cứu Lọc Nhanh -->
-            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-2 backdrop-blur-md">
+            <!-- Kết Quả & Tra Cứu Lọc Nhanh (Chiếm 7 phần trên Desktop, Full trên Mobile) -->
+            <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-7 backdrop-blur-md">
                 <h2 class="text-base md:text-lg font-bold text-white mb-4 flex items-center justify-between border-b border-slate-700 pb-3">
                     <span class="flex items-center gap-2"><i class="fa-solid fa-database text-cyan-400"></i> Danh Sách Tra Cứu & Hợp Đồng</span>
                     <button onclick="loadDataList()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-slate-200 transition flex items-center gap-1 shadow hover:scale-105"><i class="fa-solid fa-rotate"></i> Làm mới</button>
@@ -389,8 +418,8 @@
             if(tab === 'search') {
                 document.getElementById('sectionSearch').classList.remove('hidden');
                 document.getElementById('sectionAdmin').classList.add('hidden');
-                document.getElementById('btnTabSearch').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-blue-600 text-white transition shadow-lg flex items-center justify-center gap-2";
-                document.getElementById('btnTabAdmin').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2";
+                document.getElementById('btnTabSearch').className = "flex-1 lg:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-blue-600 text-white transition shadow-lg flex items-center justify-center gap-2";
+                document.getElementById('btnTabAdmin').className = "flex-1 lg:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2";
             } else {
                 if(currentRole !== 'admin') {
                     if(confirm("Khu vực Quản trị yêu cầu quyền Admin. Mở bảng đăng nhập?")) openLoginModal();
@@ -398,8 +427,8 @@
                 }
                 document.getElementById('sectionSearch').classList.add('hidden');
                 document.getElementById('sectionAdmin').classList.remove('hidden');
-                document.getElementById('btnTabAdmin').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-rose-600 text-white transition shadow-lg flex items-center justify-center gap-2";
-                document.getElementById('btnTabSearch').className = "flex-1 md:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2";
+                document.getElementById('btnTabAdmin').className = "flex-1 lg:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-rose-600 text-white transition shadow-lg flex items-center justify-center gap-2";
+                document.getElementById('btnTabSearch').className = "flex-1 lg:flex-none px-4 md:px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center justify-center gap-2";
                 loadAdminTable();
             }
         }
@@ -408,6 +437,8 @@
             e.preventDefault();
             let payload = {
                 action: "upsertData",
+                role: currentRole,
+                authPass: "", // Sẽ xác thực qua verifyLoginCredentials ở Backend
                 hoTen: document.getElementById('hoTen').value,
                 soDienThoai: document.getElementById('soDienThoai').value,
                 email: document.getElementById('email').value,
