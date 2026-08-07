@@ -59,7 +59,7 @@
                 <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
                     <i class="fa-solid fa-user-plus text-cyan-400"></i> Nhập Liệu / Ký HĐ Mới
                 </h2>
-                <p class="text-[11px] text-slate-400 mb-4">Hệ thống sẽ đối chiếu Tên, Phone hoặc Email. Nếu có sẵn sẽ cập nhật, nếu mới sẽ khởi tạo và tự động cấp mã!</p>
+                <p class="text-[11px] text-slate-400 mb-4">Hệ thống đối chiếu Tên, SĐT hoặc Email. Nếu có sẵn sẽ cập nhật, nếu mới sẽ khởi tạo và tự động cấp mã!</p>
                 <form id="upsertForm" onsubmit="handleUpsert(event)" class="space-y-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Họ tên khách hàng *</label>
@@ -214,28 +214,31 @@
             let role = document.getElementById('loginRole').value;
             let pass = document.getElementById('loginPassInput').value;
 
-            // Gọi kiểm tra nhanh qua script hoặc code
-            google.script.run
-                .withSuccessHandler(function(isValid) {
-                    if(isValid) {
-                        currentRole = role;
-                        if(role === 'admin') {
-                            document.getElementById("roleBadge").className = "px-3 py-1 bg-rose-500/20 border border-rose-500 text-rose-300 rounded-lg text-xs font-bold";
-                            document.getElementById("roleBadge").innerText = "🛡️ Quyền Quản Trị Admin";
-                            alert("Đăng nhập quyền Admin thành công!");
-                        } else {
-                            document.getElementById("roleBadge").className = "px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-300 rounded-lg text-xs font-bold";
-                            document.getElementById("roleBadge").innerText = "👤 Tài khoản Nhập liệu";
-                            alert("Đã chuyển về quyền Nhập liệu!");
-                        }
-                        closeLoginModal();
-                        document.getElementById('loginPassInput').value = "";
-                        loadDataList();
+            fetch(window.location.href, {
+                method: "POST",
+                body: JSON.stringify({ action: "verifyLogin", role: role, pass: pass })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if(res.status === "success") {
+                    currentRole = role;
+                    if(role === 'admin') {
+                        document.getElementById("roleBadge").className = "px-3 py-1 bg-rose-500/20 border border-rose-500 text-rose-300 rounded-lg text-xs font-bold";
+                        document.getElementById("roleBadge").innerText = "🛡️ Quyền Quản Trị Admin";
+                        alert("Đăng nhập quyền Admin thành công!");
                     } else {
-                        alert("Mật khẩu không chính xác!");
+                        document.getElementById("roleBadge").className = "px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-300 rounded-lg text-xs font-bold";
+                        document.getElementById("roleBadge").innerText = "👤 Tài khoản Nhập liệu";
+                        alert("Đã chuyển về quyền Nhập liệu!");
                     }
-                })
-                .verifyLoginCredentials(role, pass);
+                    closeLoginModal();
+                    document.getElementById('loginPassInput').value = "";
+                    loadDataList();
+                } else {
+                    alert(res.message || "Mật khẩu không chính xác!");
+                }
+            })
+            .catch(err => alert("Lỗi kết nối xác thực: " + err));
         }
 
         function openChangePasswordModal() {
@@ -255,21 +258,25 @@
                 return;
             }
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    alert(res.message);
-                    if(res.status === "success") {
-                        closeChangePasswordModal();
-                        document.getElementById('oldPass').value = "";
-                        document.getElementById('newPass').value = "";
-                    }
-                })
-                .processChangePassword({ role: role, oldPass: oldPass, newPass: newPass });
+            fetch(window.location.href, {
+                method: "POST",
+                body: JSON.stringify({ action: "changePassword", role: role, oldPass: oldPass, newPass: newPass })
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                if(res.status === "success") {
+                    closeChangePasswordModal();
+                    document.getElementById('oldPass').value = "";
+                    document.getElementById('newPass').value = "";
+                }
+            })
+            .catch(err => alert("Lỗi kết nối đổi mật khẩu: " + err));
         }
 
         function resetStaffPasswordAction() {
             if(currentRole !== 'admin') {
-                alert("Tính năng này chỉ dành cho Admin! Vui lòng đăng nhập tài khoản Admin.");
+                alert("Tính năng này chỉ dành cho Admin! Vui lòng đăng nhập tài khoản Admin trước.");
                 openLoginModal();
                 return;
             }
@@ -277,11 +284,15 @@
             let adminPassConfirm = prompt("Để bảo mật, vui lòng nhập lại mật khẩu Admin để xác nhận Reset tài khoản Nhập liệu:");
             if(adminPassConfirm === null) return;
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    alert(res.message);
-                })
-                .processAdminResetStaffPass({ adminPass: adminPassConfirm });
+            fetch(window.location.href, {
+                method: "POST",
+                body: JSON.stringify({ action: "adminResetStaffPass", adminPass: adminPassConfirm })
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+            })
+            .catch(err => alert("Lỗi kết nối reset: " + err));
         }
 
         function switchTab(tab) {
@@ -338,19 +349,21 @@
         }
 
         function loadDataList() {
-            fetch(window.location.href + "?action=getData")
+            let baseUrl = window.location.href.split('?')[0];
+            fetch(baseUrl + "?action=getData")
             .then(res => res.json())
             .then(res => {
                 if(res.status === "success") {
                     globalData = res.data;
                     renderResults(globalData);
                 }
-            });
+            })
+            .catch(err => console.error("Lỗi tải dữ liệu:", err));
         }
 
         function renderResults(data) {
             let container = document.getElementById('resultContainer');
-            if(data.length === 0) {
+            if(!data || data.length === 0) {
                 container.innerHTML = `<div class="text-center text-slate-400 py-8">Chưa có dữ liệu hệ thống.</div>`;
                 return;
             }
