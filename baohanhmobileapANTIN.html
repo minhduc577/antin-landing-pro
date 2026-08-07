@@ -264,6 +264,7 @@
             border-radius: 10px;
             font-size: 0.78rem;
             font-weight: 700;
+            text-decoration: none;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -275,6 +276,7 @@
         .btn-ai-diag:hover {
             background: rgba(59, 130, 246, 0.4);
             transform: translateY(-1px);
+            color: #ffffff;
         }
 
         .btn-vip-extend {
@@ -458,11 +460,11 @@
                     <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Thiết bị hoạt động ổn định. Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật tận nơi!
                 </div>
 
-                <!-- 2 Nút tích hợp nâng cao mới -->
+                <!-- 2 Nút tích hợp nâng cao với Link Chẩn Đoán Lỗi -->
                 <div class="advanced-actions">
-                    <button class="btn-ai-diag" onclick="requestAiDiagnostics()">
+                    <a href="https://ebook.antinco.com/kythuatAI" target="_blank" class="btn-ai-diag">
                         <i class="fa-solid fa-robot"></i> AI Chẩn Đoán Lỗi
-                    </button>
+                    </a>
                     <button class="btn-vip-extend" onclick="extendVipWarranty()">
                         <i class="fa-solid fa-crown"></i> Gia Hạn VIP Care
                     </button>
@@ -527,11 +529,6 @@
                     document.getElementById('resId').innerText = "ANTIN-" + Math.floor(Math.random() * 900000 + 100000);
                 }
             }, 300);
-        }
-
-        // Hàm xử lý tính năng AI Chẩn Đoán Lỗi mới
-        function requestAiDiagnostics() {
-            alert('🤖 Trợ lý AI An Tín đang phân tích trạng thái thiết bị của bạn... Hệ thống hoạt động hoàn hảo 100%!');
         }
 
         // Hàm xử lý tính năng Gia Hạn VIP Care mới
