@@ -45,7 +45,7 @@
             <p class="text-slate-300 text-xs md:text-base mt-2">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
         </header>
 
-        <!-- NAVIGATION & ROLE SWITCHER (Tối ưu Responsive cho Mobile & Desktop) -->
+        <!-- NAVIGATION & ROLE SWITCHER -->
         <div class="flex flex-col lg:flex-row justify-between items-center bg-slate-800/80 border border-slate-700 p-4 rounded-2xl mb-6 gap-4 shadow-xl backdrop-blur-md">
             <!-- Nhóm nút chuyển Tab -->
             <div class="flex flex-wrap w-full lg:w-auto gap-2 justify-center">
@@ -57,7 +57,7 @@
                 </button>
             </div>
             
-            <!-- Nhóm trạng thái & nút xác thực (Tối ưu gọn gàng trên mobile) -->
+            <!-- Nhóm trạng thái & nút xác thực tích hợp đầy đủ -->
             <div class="flex flex-wrap items-center justify-center gap-2 w-full lg:w-auto">
                 <span class="text-xs text-slate-400">Trạng thái:</span>
                 <span id="roleBadge" class="px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-300 rounded-lg text-xs font-bold">👤 Tài khoản Nhập liệu</span>
@@ -67,13 +67,16 @@
                 <button onclick="openChangePasswordModal()" class="text-xs bg-amber-600 hover:bg-amber-500 px-3 py-1.5 rounded-lg text-white transition font-medium flex items-center gap-1 shadow-md hover:scale-105">
                     <i class="fa-solid fa-key-skeleton"></i> Đổi MK
                 </button>
+                <button onclick="handleLogout()" class="text-xs bg-rose-600/80 hover:bg-rose-600 px-3 py-1.5 rounded-lg text-white transition font-medium flex items-center gap-1 shadow-md hover:scale-105">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                </button>
             </div>
         </div>
 
-        <!-- TAB 1: TRA CỨU & NHẬP LIỆU (Bố cục 2 cột: Cột trái Nhập liệu, Cột phải Danh sách - Tự động stack trên Mobile) -->
+        <!-- TAB 1: TRA CỨU & NHẬP LIỆU -->
         <div id="sectionSearch" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            <!-- Form Nhập Liệu & Cấp Mã Tự Động (Chiếm 5 phần trên Desktop, Full trên Mobile) -->
+            <!-- Form Nhập Liệu & Cấp Mã Tự Động -->
             <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-5 backdrop-blur-md relative overflow-hidden">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 shimmer-bg"></div>
                 <h2 class="text-base md:text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
@@ -98,7 +101,6 @@
                             <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" placeholder="Nhập email...">
                         </div>
                         
-                        <!-- Ô Tên thiết bị / Dự án: Hỗ trợ 2 lựa chọn (Nhập thủ công hoặc chọn ngữ cảnh mẫu có icon) -->
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-300 mb-1">
                                 Tên thiết bị / Dự án <span class="text-cyan-400 font-normal">(Nhập tự do hoặc chọn mẫu 👇)</span>
@@ -110,7 +112,6 @@
                                 class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-cyan-400 outline-none transition" 
                                 placeholder="Nhập tên thiết bị hoặc nhấp chọn gợi ý..."
                             >
-                            <!-- Danh sách 12 gợi ý ngữ cảnh chuyên nghiệp -->
                             <datalist id="dsNguCanhThietBi">
                                 <option value="📹 Camera an ninh – Giám sát 24/7"></option>
                                 <option value="📡 Mạng Wi-Fi – Máy tính – Hạ tầng CNTT"></option>
@@ -131,7 +132,6 @@
                     <!-- NHÓM 1: CỘT N ĐẾN T (7 TRƯỜNG BẢO HÀNH) -->
                     <div class="p-3 bg-blue-950/40 rounded-xl border border-blue-800/60 space-y-2.5">
                         <span class="text-xs font-bold text-blue-400 flex items-center gap-1"><i class="fa-solid fa-shield-halved"></i> Hạng Mục Bảo Hành (Cột N - T)</span>
-                        
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột N: Loại Sự Kiện / Giao Dịch</label>
                             <input type="text" id="loaiSuKien" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-blue-400 outline-none transition" placeholder="VD: Lắp mới hệ thống, Nâng cấp...">
@@ -205,7 +205,7 @@
                 </form>
             </div>
 
-            <!-- Kết Quả & Tra Cứu Lọc Nhanh (Chiếm 7 phần trên Desktop, Full trên Mobile) -->
+            <!-- Kết Quả & Tra Cứu Lọc Nhanh -->
             <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-7 backdrop-blur-md">
                 <h2 class="text-base md:text-lg font-bold text-white mb-4 flex items-center justify-between border-b border-slate-700 pb-3">
                     <span class="flex items-center gap-2"><i class="fa-solid fa-database text-cyan-400"></i> Danh Sách Tra Cứu & Hợp Đồng</span>
@@ -260,7 +260,7 @@
         </div>
     </div>
 
-    <!-- MODAL ĐĂNG NHẬP / CHUYỂN QUYỀN -->
+    <!-- MODAL ĐĂNG NHẬP -->
     <div id="loginModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md shadow-2xl animate-fadeIn">
             <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -320,7 +320,10 @@
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKgi6dsmOMJ2U6okPXhtI9Y6zGlIMnQVcfSJKGjWSjeEIkMXY-2SjEnzWDKXZis9nn5g/exec";
         
-        let currentRole = localStorage.getItem("an_tin_role") || "staff";
+        // Mặc định luôn khởi tạo là 'staff' để bảo mật khi tải lại trang
+        let currentRole = "staff";
+        localStorage.setItem("an_tin_role", "staff");
+
         let globalData = [];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -358,6 +361,7 @@
                 if(isValid) {
                     currentRole = role;
                     localStorage.setItem("an_tin_role", role);
+                    localStorage.setItem("an_tin_password", pass); // Lưu tạm mật khẩu phục vụ nhập liệu
                     updateRoleBadgeUI();
                     alert(role === 'admin' ? "Đăng nhập quyền Admin thành công!" : "Đã chuyển về quyền Nhập liệu!");
                     closeLoginModal();
@@ -368,6 +372,21 @@
                 }
             })
             .catch(err => alert("Lỗi kết nối xác thực: " + err));
+        }
+
+        function handleLogout() {
+            currentRole = "staff";
+            localStorage.setItem("an_tin_role", "staff");
+            localStorage.removeItem("an_tin_password"); // Xóa mật khẩu tạm
+            updateRoleBadgeUI();
+            
+            let adminSection = document.getElementById('sectionAdmin');
+            if(adminSection && !adminSection.classList.contains('hidden')) {
+                switchTab('search');
+            }
+            
+            alert("Đã đăng xuất khỏi tài khoản quản trị thành công!");
+            loadDataList();
         }
 
         function submitChangePassword() {
@@ -435,10 +454,18 @@
 
         function handleUpsert(e) {
             e.preventDefault();
+            
+            let savedPass = localStorage.getItem("an_tin_password") || "";
+            if(!savedPass) {
+                savedPass = prompt("Vui lòng nhập lại mật khẩu tài khoản (" + currentRole + ") để xác thực ghi dữ liệu:");
+                if(!savedPass) return;
+                localStorage.setItem("an_tin_password", savedPass);
+            }
+
             let payload = {
                 action: "upsertData",
                 role: currentRole,
-                authPass: "", // Sẽ xác thực qua verifyLoginCredentials ở Backend
+                authPass: savedPass, // Đính kèm mật khẩu xác thực tránh lỗi từ chối ghi
                 hoTen: document.getElementById('hoTen').value,
                 soDienThoai: document.getElementById('soDienThoai').value,
                 email: document.getElementById('email').value,
@@ -472,8 +499,10 @@
             .then(res => res.json())
             .then(res => {
                 alert(res.message);
-                loadDataList();
-                document.getElementById('upsertForm').reset();
+                if(res.status === "success") {
+                    loadDataList();
+                    document.getElementById('upsertForm').reset();
+                }
             })
             .catch(err => alert("Lỗi kết nối lưu dữ liệu: " + err));
         }
@@ -560,9 +589,12 @@
 
         function adminDelete(rowIndex) {
             if(confirm("Bạn có chắc chắn muốn XÓA dòng dữ liệu này trên Google Sheets không?")) {
+                let savedPass = localStorage.getItem("an_tin_password") || prompt("Nhập mật khẩu Admin để xác nhận xóa:");
+                if(!savedPass) return;
+
                 fetch(SCRIPT_URL, {
                     method: "POST",
-                    body: JSON.stringify({ action: "adminDelete", rowIndex: rowIndex })
+                    body: JSON.stringify({ action: "adminDelete", rowIndex: rowIndex, authPass: savedPass })
                 })
                 .then(res => res.json())
                 .then(res => {
@@ -583,10 +615,14 @@
             if(newPhone === null) return;
             let newMaBT = prompt("Sửa Mã HĐ Bảo Trì (Cột U):", item.maHopDongBT || item.maHopDong || "");
             if(newMaBT === null) return;
+
+            let savedPass = localStorage.getItem("an_tin_password") || prompt("Nhập mật khẩu Admin để xác nhận cập nhật:");
+            if(!savedPass) return;
             
             let payload = {
                 action: "adminUpdate",
                 rowIndex: rowIndex,
+                authPass: savedPass,
                 hoTen: newName,
                 soDienThoai: newPhone,
                 email: item.email,
