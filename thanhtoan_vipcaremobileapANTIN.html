@@ -134,10 +134,20 @@
             color: #2d3436;
         }
         .syntax-text {
-            font-size: 13px;
+            font-size: 14px;
             color: #e74c3c;
-            font-weight: 700;
-            margin-top: 5px;
+            font-weight: 800;
+            margin-top: 8px;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px dashed #e74c3c;
+            display: inline-block;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .syntax-text:hover {
+            background: rgba(231, 76, 60, 0.2);
         }
         .btn-action {
             width: 100%;
@@ -188,6 +198,31 @@
             background: rgba(255, 255, 255, 0.2);
         }
         
+        /* Thông Báo Sao Chép Thành Công (Toast Notification) */
+        #toastAlert {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #2ecc71;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 10000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        #toastAlert.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
         /* Phần Thông Tin Doanh Nghiệp & Chân Trang */
         .company-footer {
             margin-top: 30px;
@@ -244,6 +279,9 @@
 </head>
 <body>
 
+    <!-- Thông báo nổi khi sao chép -->
+    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã sao chép nội dung chuyển khoản!</div>
+
     <div class="container">
         <!-- Header -->
         <div style="text-align: center;">
@@ -279,11 +317,13 @@
             <span style="font-size: 11px; color: #dfe6e9;">Bao gồm trọn gói dịch vụ AI định kỳ & hỗ trợ kỹ thuật tận nơi 24/7</span>
         </div>
 
-        <!-- Khung Mã QR VietQR Động -->
+        <!-- Khung Mã QR VietQR Động (Đã đồng bộ tuyệt đối) -->
         <div class="qr-section">
             <img id="vietQrImg" src="" alt="Mã VietQR Thanh Toán">
             <p>Quét mã qua App Ngân hàng bất kỳ (VietQR) / MoMo / ZaloPay</p>
-            <div class="syntax-text" id="displaySyntax">Nội dung CK: VIP 0914060339</div>
+            <div class="syntax-text" id="displaySyntax" onclick="copySyntaxText()" title="Bấm để sao chép nhanh nội dung">
+                Nội dung CK: VIP 0914060339 <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>
+            </div>
         </div>
 
         <!-- Nút Kích Thích Hành Động Tích Hợp AI & Zalo -->
@@ -361,7 +401,7 @@
                     <span id="modalCustName" style="font-weight: bold; color: #00cec9;">--</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
-                    <span style="color:#b2bec3;">Mã Giao Dịch / SĐT:</span>
+                    <span style="color:#b2bec3;">Số Điện Thoại:</span>
                     <span id="modalCustPhone" style="font-weight: bold; color: #dfe6e9;">--</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 15px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top:8px; margin-top:8px;">
@@ -374,7 +414,7 @@
             <div style="text-align:center; background:#fff; padding:15px; border-radius:12px; margin-bottom:20px;">
                 <img id="dynamicVietQR" src="" alt="VietQR Thanh Toán" style="max-width:200px; width:100%; height:auto; border-radius:8px; display:inline-block;" />
                 <p style="font-size:12px; color:#2d3436; margin:8px 0 0 0; font-weight:600;">Quét mã QR qua App Ngân hàng bất kỳ (VietQR)</p>
-                <p id="transferSyntax" style="font-size:11px; color:#e74c3c; margin:4px 0 0 0; font-weight:bold;"></p>
+                <p id="transferSyntaxModal" style="font-size:13px; color:#e74c3c; margin:6px 0 0 0; font-weight:bold; background:rgba(231,76,60,0.1); padding:6px; border-radius:6px; cursor:pointer;" onclick="copyModalSyntaxText()">Nội dung: --</p>
             </div>
 
             <!-- Các nút hành động kích thích -->
@@ -398,7 +438,7 @@
     </style>
 
     <script>
-        // Hàm cập nhật động thông tin VietQR và số tiền theo lựa chọn của khách hàng trên trang chính
+        // Hàm cập nhật động thông tin VietQR và đồng bộ hoàn toàn giữa QR và text hướng dẫn
         function updateQRData() {
             var name = document.getElementById('inputName').value.trim() || "KHACH HANG";
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
@@ -410,9 +450,9 @@
             var formattedPrice = Number(amount).toLocaleString('vi-VN') + " VNĐ";
             document.getElementById('displayPrice').innerText = formattedPrice;
 
-            // Nội dung chuyển khoản chuẩn hóa
+            // Nội dung chuyển khoản chuẩn hóa tuyệt đối giữa mã QR và văn bản
             var contentCK = "VIP " + phone;
-            document.getElementById('displaySyntax').innerText = "Nội dung CK: " + contentCK;
+            document.getElementById('displaySyntax').innerHTML = `Nội dung CK: ${contentCK} <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>`;
 
             // Cấu hình thông tin tài khoản ngân hàng nhận tiền doanh nghiệp An Tín
             var bankId = "MB"; 
@@ -430,7 +470,7 @@
         }
 
         // Hàm gọi hiển thị Modal Popup thông minh tích hợp AI
-        function openVipPaymentModal(hoTen, soDienThoai, maGD) {
+        function openVipPaymentModal(hoTen, soDienThoai) {
             var modal = document.getElementById('vipPaymentModal');
             if(!modal) return;
 
@@ -445,12 +485,12 @@
 
             // Hiển thị thông tin khách hàng lên Modal
             document.getElementById('modalCustName').innerText = finalName;
-            document.getElementById('modalCustPhone').innerText = (maGD || "ANTIN") + " - " + finalPhone;
+            document.getElementById('modalCustPhone').innerText = finalPhone;
             document.getElementById('modalDisplayPrice').innerText = formattedPrice;
             
             // Nội dung chuyển khoản tự động
             var noiDungCK = "VIP " + finalPhone;
-            document.getElementById('transferSyntax').innerText = "Nội dung chuyển khoản: " + noiDungCK;
+            document.getElementById('transferSyntaxModal').innerHTML = `Nội dung CK: ${noiDungCK} <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>`;
 
             var bankId = "MB"; 
             var accountNo = "0914060339"; 
@@ -474,14 +514,37 @@
         }
 
         function triggerOpenModalFromMain() {
-            var name = document.getElementById('inputName').value.trim();
             var phone = document.getElementById('inputPhone').value.trim();
             if(!phone) {
                 alert("Vui lòng nhập Số Điện Thoại trước khi mở cổng thanh toán AI!");
                 document.getElementById('inputPhone').focus();
                 return;
             }
-            openVipPaymentModal(name, phone, "ANTIN-VIP");
+            var name = document.getElementById('inputName').value.trim();
+            openVipPaymentModal(name, phone);
+        }
+
+        // Tính năng sao chép thông minh một chạm (Copy to Clipboard)
+        function copySyntaxText() {
+            var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
+            var textToCopy = "VIP " + phone;
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                showToast();
+            });
+        }
+
+        function copyModalSyntaxText() {
+            var phone = document.getElementById('modalCustPhone').innerText || "0914060339";
+            var textToCopy = "VIP " + phone;
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            var x = document.getElementById("toastAlert");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
 
         // Khởi tạo chạy lần đầu khi load trang
