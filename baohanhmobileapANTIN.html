@@ -525,12 +525,12 @@
                     let ngayKT_BH = item.ngayKetThucBH || "07/08/2027";
                     let trangThaiBH = item.trangThaiBH || "Đang bảo hành";
 
-                    // Thông tin Hợp đồng VIP CARE (Cột F-K)
+                    // Thông tin Hợp đồng VIP CARE (Cột F-K) - Định dạng giao diện chuẩn màu Green đồng bộ tuyệt đối với bảo hành
                     let maHopDongVIP = item.maHopDongVIP || "VIPCARE-2026-2704";
                     let ngayKyVIP = item.ngayKyVIP || "8/8/2026";
                     let thoiHanVIP = item.thoiHanVIP || "12";
                     let ngayHetHanVIP = item.ngayHetHanVIP || "8/8/2027";
-                    let trangThaiVIP = item.trangThaiVIP || "VIP Active 24/7";
+                    let trangThaiVIP = item.trangThaiVIP || "Đang hiệu lực";
                     let loaiGoiVIP = item.loaiGoiVIP || "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)";
 
                     resultBox.innerHTML = `
@@ -557,13 +557,17 @@
                             <span>Thời hạn bảo hành:</span>
                             <span style="color: #34d399;">🛠️ [${suKienBH}] | 🛡️ BH: ${thoiHanBH} Tháng (Từ ${ngayBD_BH} đến ${ngayKT_BH}) - 🟢 ${trangThaiBH}</span>
                         </div>
-                        <div class="result-row" style="background: rgba(245, 158, 11, 0.08); padding: 8px; border-radius: 8px; margin-top: 4px; border: 1px dashed rgba(245, 158, 11, 0.3);">
-                            <span style="color: #fbbf24;"><i class="fa-solid fa-crown"></i> Gói VIP Care (Cột F-K):</span>
+                        <div class="result-row">
+                            <span>Gói VIP Care (Cột F-K):</span>
                             <span style="color: #fbbf24; font-weight: 700;">${loaiGoiVIP}</span>
                         </div>
+                        <div class="result-row">
+                            <span>Thời hạn VIP CARE:</span>
+                            <span style="color: #34d399;">📄 [${maHopDongVIP}] | 📅 Ký ${ngayKyVIP} | ⏳ Hạn: ${thoiHanVIP} Tháng (Đến ${ngayHetHanVIP}) - 🟢 ${trangThaiVIP}</span>
+                        </div>
                         <div class="result-row" style="margin-top: 4px;">
-                            <span>Trạng thái:</span>
-                            <span style="color: #fbbf24; font-size: 0.8rem; line-height: 1.4;">📄 <b>[${maHopDongVIP}]:</b> Ký ${ngayKyVIP} (Thời hạn: ${thoiHanVIP} Tháng | Hết hạn: ${ngayHetHanVIP}) | 🟢 <b>${trangThaiVIP}</b> | 📅 <b>Lịch BT:</b> 🤖 Kế hoạch bảo trì định kỳ AI: Đã tự động kích hoạt vận hành 24/7</span>
+                            <span>Lịch BT AI:</span>
+                            <span style="color: #38bdf8; font-size: 0.8rem; line-height: 1.4;">🤖 Kế hoạch bảo trì định kỳ AI: Đã tự động kích hoạt vận hành 24/7</span>
                         </div>
                         <div class="ai-note">
                             <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
