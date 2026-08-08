@@ -52,6 +52,13 @@
             display: inline-block;
             margin-bottom: 12px;
             letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(243,156,18,0.3);
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(243,156,18,0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(243,156,18,0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(243,156,18,0.3); }
         }
         h1 {
             font-size: 24px;
@@ -157,6 +164,15 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 136, 255, 0.6);
         }
+        .btn-ai-popup {
+            background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+            color: #0f1016;
+            box-shadow: 0 5px 20px rgba(241, 196, 15, 0.4);
+        }
+        .btn-ai-popup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.6);
+        }
         .btn-home {
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
@@ -225,9 +241,9 @@
     <div class="container">
         <!-- Header -->
         <div style="text-align: center;">
-            <span class="header-badge"><i class="fa-solid fa-crown"></i> AN TÍN ECOSYSTEM VIP</span>
+            <span class="header-badge"><i class="fa-solid fa-crown"></i> AN TÍN ECOSYSTEM VIP AI</span>
             <h1>Cổng Thanh Toán & Gia Hạn VIP Care</h1>
-            <p class="subtitle">Hệ thống kích hoạt bảo trì, bảo hành thông minh tự động 24/7</p>
+            <p class="subtitle">Hệ thống kích hoạt bảo trì, bảo hành thông minh tự động 24/7 qua AI</p>
         </div>
 
         <!-- Form Nhập Thông Tin Định Danh -->
@@ -264,7 +280,11 @@
             <div class="syntax-text" id="displaySyntax">Nội dung CK: VIP 0914060339</div>
         </div>
 
-        <!-- Nút Kích Thích Hành Động -->
+        <!-- Nút Kích Thích Hành Động Tích Hợp AI & Zalo -->
+        <button type="button" onclick="triggerOpenModalFromMain()" class="btn-action btn-ai-popup">
+            <i class="fa-solid fa-robot"></i> Mở Popup Thanh Toán Siêu Tốc AI
+        </button>
+
         <a id="zaloLinkBtn" href="https://zalo.me/0914060339" target="_blank" class="btn-action btn-zalo">
             <i class="fa-solid fa-comments"></i> Gửi Minh Chứng Chuyển Khoản Qua Zalo (0914060339)
         </a>
@@ -314,8 +334,65 @@
         </div>
     </div>
 
+    <!-- ================= MÃ MODAL CỔNG THANH TOÁN GIA HẠN VIP CARE (CODE 2) ================= -->
+    <div id="vipPaymentModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
+        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #f39c12; border-radius:20px; max-width:480px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative; animation: modalPop 0.3s ease-in-out;">
+            
+            <!-- Nút đóng -->
+            <button onclick="closeVipModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer; transition:0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">&times;</button>
+            
+            <!-- Tiêu đề -->
+            <div style="text-align:center; margin-bottom:20px;">
+                <span style="background: rgba(243,156,18,0.2); color: #f39c12; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; border: 1px solid rgba(243,156,18,0.4);">👑 CỔNG THANH TOÁN TỰ ĐỘNG 24/7</span>
+                <h3 style="margin: 12px 0 5px 0; font-size: 20px; color: #f1c40f;">Gia Hạn Gói VIP Care An Tín</h3>
+                <p style="font-size: 13px; color: #b2bec3; margin:0;">Thanh toán tự động - Kích hoạt bảo trì tức thì qua AI</p>
+            </div>
+
+            <!-- Thông tin gói & số tiền động -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                    <span style="color:#b2bec3;">Khách hàng:</span>
+                    <span id="modalCustName" style="font-weight: bold; color: #00cec9;">--</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                    <span style="color:#b2bec3;">Mã Giao Dịch / SĐT:</span>
+                    <span id="modalCustPhone" style="font-weight: bold; color: #dfe6e9;">--</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 15px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top:8px; margin-top:8px;">
+                    <span style="color:#f1c40f; font-weight:bold;">Phí Duy Trì VIP Care:</span>
+                    <span id="modalDisplayPrice" style="color:#2ecc71; font-weight:bold; font-size:16px;">500,000 VNĐ</span>
+                </div>
+            </div>
+
+            <!-- Khung QR Code VietQR động -->
+            <div style="text-align:center; background:#fff; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <img id="dynamicVietQR" src="" alt="VietQR Thanh Toán" style="max-width:200px; width:100%; height:auto; border-radius:8px; display:inline-block;" />
+                <p style="font-size:12px; color:#2d3436; margin:8px 0 0 0; font-weight:600;">Quét mã QR qua App Ngân hàng bất kỳ (VietQR)</p>
+                <p id="transferSyntax" style="font-size:11px; color:#e74c3c; margin:4px 0 0 0; font-weight:bold;"></p>
+            </div>
+
+            <!-- Các nút hành động kích thích -->
+            <div style="display: flex; gap: 10px; flex-direction: column;">
+                <a id="zaloConfirmBtn" href="https://zalo.me/0914060339" target="_blank" style="background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%); color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 15px rgba(0,136,255,0.4); display:flex; align-items:center; justify-content:center; gap:8px;">
+                    💬 Gửi Minh Chứng Chuyển Khoản Qua Zalo (0914060339)
+                </a>
+                <button onclick="closeVipModal()" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 10px; cursor:pointer; font-weight:600; font-size:13px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                    Đóng Cổng Thanh Toán
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <style>
+    @keyframes modalPop {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+    </style>
+
     <script>
-        // Hàm cập nhật động thông tin VietQR và số tiền theo lựa chọn của khách hàng
+        // Hàm cập nhật động thông tin VietQR và số tiền theo lựa chọn của khách hàng trên trang chính
         function updateQRData() {
             var name = document.getElementById('inputName').value.trim() || "KHACH HANG";
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
@@ -337,13 +414,68 @@
             var template = "compact2";
             var accountName = "PHAN MINH DUC";
 
-            // Tạo URL VietQR chuẩn tự động
+            // Tạo URL VietQR chuẩn tự động cho trang chính
             var qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(contentCK)}&accountName=${encodeURIComponent(accountName)}`;
             document.getElementById('vietQrImg').src = qrUrl;
 
             // Tự động cập nhật cú pháp tin nhắn Zalo kèm theo thông tin khách hàng
             var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${name} (SĐT: ${phone}). Tôi đã thanh toán gói ${packageName} với số tiền ${formattedPrice}. Nhờ hệ thống kiểm tra và kích hoạt giúp.`);
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/0914060339?text=${zaloMsg}`;
+        }
+
+        // Tích hợp Code 3: Hàm gọi hiển thị Modal Popup thông minh
+        function openVipPaymentModal(hoTen, soDienThoai, maGD) {
+            var modal = document.getElementById('vipPaymentModal');
+            if(!modal) return;
+
+            var nameInput = document.getElementById('inputName').value.trim();
+            var phoneInput = document.getElementById('inputPhone').value.trim();
+            var packageSelect = document.getElementById('selectPackage');
+            var amount = packageSelect.value;
+            var formattedPrice = Number(amount).toLocaleString('vi-VN') + " VNĐ";
+
+            var finalName = hoTen || nameInput || "Quý Khách Hàng";
+            var finalPhone = soDienThoai || phoneInput || "0914060339";
+
+            // Hiển thị thông tin khách hàng lên Modal
+            document.getElementById('modalCustName').innerText = finalName;
+            document.getElementById('modalCustPhone').innerText = (maGD || "ANTIN") + " - " + finalPhone;
+            document.getElementById('modalDisplayPrice').innerText = formattedPrice;
+            
+            // Nội dung chuyển khoản tự động
+            var noiDungCK = "VIP " + finalPhone;
+            document.getElementById('transferSyntax').innerText = "Nội dung chuyển khoản: " + noiDungCK;
+
+            var bankId = "MB"; 
+            var accountNo = "0914060339"; 
+            var template = "compact2";
+            var accountName = "PHAN MINH DUC";
+
+            var qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(noiDungCK)}&accountName=${encodeURIComponent(accountName)}`;
+            document.getElementById('dynamicVietQR').src = qrUrl;
+
+            // Cập nhật link Zalo kèm sẵn cú pháp nội dung nhắn tin nhanh
+            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${finalName} (SĐT: ${finalPhone}). Tôi đã chuyển khoản số tiền ${formattedPrice} gia hạn VIP Care. Gửi kèm hình ảnh biên lai thanh toán.`);
+            document.getElementById('zaloConfirmBtn').href = `https://zalo.me/0914060339?text=${zaloMsg}`;
+
+            // Show modal với hiệu ứng mượt mà
+            modal.style.display = 'flex';
+        }
+
+        function closeVipModal() {
+            var modal = document.getElementById('vipPaymentModal');
+            if(modal) modal.style.display = 'none';
+        }
+
+        function triggerOpenModalFromMain() {
+            var name = document.getElementById('inputName').value.trim();
+            var phone = document.getElementById('inputPhone').value.trim();
+            if(!phone) {
+                alert("Vui lòng nhập Số Điện Thoại trước khi mở cổng thanh toán AI!");
+                document.getElementById('inputPhone').focus();
+                return;
+            }
+            openVipPaymentModal(name, phone, "ANTIN-VIP");
         }
 
         // Khởi tạo chạy lần đầu khi load trang
