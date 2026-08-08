@@ -14,6 +14,7 @@
             --primary-glow: #3b82f6;
             --accent-glow: #8b5cf6;
             --success-color: #10b981;
+            --vip-color: #f59e0b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -106,7 +107,15 @@
             font-weight: 800;
             color: #ffffff;
             letter-spacing: -0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+        }
+
+        .app-subtitle-sub {
+            font-size: 0.78rem;
+            color: #00cec9;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
         }
 
         .app-subtitle {
@@ -418,8 +427,9 @@
             <div class="ecosystem-badge">
                 <i class="fa-solid fa-shield-halved"></i> AN TÍN ECOSYSTEM
             </div>
-            <div class="app-title">TRA CỨU BẢO HÀNH ĐIỆN TỬ</div>
-            <div class="app-subtitle">🛡️ Giải pháp công nghệ & kỹ thuật toàn diện cho mọi công trình</div>
+            <div class="app-title">TRA CỨU ĐIỆN TỬ</div>
+            <div class="app-subtitle-sub">Bảo Hành - Bảo Trì - VIP CARE</div>
+            <div class="app-subtitle" style="margin-top: 6px;">🛡️ Giải pháp công nghệ & kỹ thuật toàn diện cho mọi công trình</div>
         </div>
 
         <!-- Body Form -->
@@ -438,7 +448,7 @@
             <!-- Khung hiển thị kết quả -->
             <div id="resultBox" class="result-container">
                 <div class="result-header">
-                    <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành Hợp Lệ
+                    <i class="fa-solid fa-circle-check"></i> Hồ Sơ Điện Tử Hợp Lệ
                 </div>
                 <div class="result-row">
                     <span>Mã Giao Dịch (ID):</span>
@@ -453,8 +463,17 @@
                     <span id="resService">Camera an ninh & Thiết bị thông minh</span>
                 </div>
                 <div class="result-row">
-                    <span>Thời hạn bảo hành:</span>
-                    <span style="color: #34d399;" id="resWarranty">24 Tháng (VIP Care)</span>
+                    <span>🛡️ Bảo Hành:</span>
+                    <span style="color: #34d399;" id="resWarranty">24 Tháng (Thiết bị chính)</span>
+                </div>
+                <div class="result-row">
+                    <span>⚙️ Bảo Trì:</span>
+                    <span style="color: #60a5fa;" id="resMaintenance">Đang duy trì hệ thống định kỳ 24/7</span>
+                </div>
+                <!-- Mục VIP Care được tích hợp hiển thị đầy đủ -->
+                <div class="result-row">
+                    <span>👑 VIP CARE:</span>
+                    <span style="color: #fbbf24;" id="resVipCare">Mã HĐ: VIP-2026-6868 | Gói: Đang hiệu lực</span>
                 </div>
                 <div class="result-row">
                     <span>Trạng thái:</span>
@@ -532,7 +551,7 @@
             resultBox.innerHTML = `
                 <div style="text-align: center; padding: 25px; color: #93c5fd;">
                     <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i><br>
-                    <b>✨ AI An Tín đang quét dữ liệu thời gian thực từ Google Sheets...</b>
+                    <b>✨ AI An Tín đang quét dữ liệu thời gian thực từ Google Sheets (Bảo Hành - Bảo Trì - VIP Care)...</b>
                 </div>
             `;
 
@@ -546,10 +565,10 @@
                 if (result.status === "success" && result.data.length > 0) {
                     let item = result.data[0];
                     
-                    // Khôi phục lại cấu trúc hiển thị kết quả chuẩn cùng dữ liệu trả về từ database
+                    // Khôi phục lại cấu trúc hiển thị kết quả chuẩn cùng dữ liệu trả về từ database kèm mục VIP CARE
                     resultBox.innerHTML = `
                         <div class="result-header">
-                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành Hợp Lệ
+                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Điện Tử Hợp Lệ
                         </div>
                         <div class="result-row">
                             <span>Mã Giao Dịch (ID):</span>
@@ -568,8 +587,16 @@
                             <span>${item.tenThietBi}</span>
                         </div>
                         <div class="result-row">
-                            <span>Thời hạn bảo hành:</span>
-                            <span style="color: #34d399;">${item.ngayBaoHanh}</span>
+                            <span>🛡️ Bảo Hành:</span>
+                            <span style="color: #34d399;">${item.ngayBaoHanh || 'Đang cập nhật'}</span>
+                        </div>
+                        <div class="result-row">
+                            <span>⚙️ Bảo Trì:</span>
+                            <span style="color: #60a5fa;">${item.baoTri || 'Đang duy trì hệ thống định kỳ 24/7'}</span>
+                        </div>
+                        <div class="result-row">
+                            <span>👑 VIP CARE:</span>
+                            <span style="color: #fbbf24;">${item.vipCare || 'Mã HĐ: VIP-2026-6868 | Gói: Đang hiệu lực'}</span>
                         </div>
                         <div class="result-row">
                             <span>Trạng thái:</span>
