@@ -36,10 +36,32 @@
             margin-top: 20px;
             margin-bottom: 30px;
             animation: fadeIn 0.5s ease-in-out;
+            position: relative;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .admin-login-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(243, 156, 18, 0.2);
+            border: 1px solid #f39c12;
+            color: #f39c12;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .admin-login-btn:hover {
+            background: #f39c12;
+            color: #000;
         }
         .header-badge {
             background: rgba(243, 156, 18, 0.15);
@@ -198,7 +220,7 @@
             background: rgba(255, 255, 255, 0.2);
         }
         
-        /* Thông Báo Sao Chép Thành Công (Toast Notification) */
+        /* Toast Notification */
         #toastAlert {
             visibility: hidden;
             min-width: 250px;
@@ -223,7 +245,7 @@
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        /* Phần Thông Tin Doanh Nghiệp & Chân Trang */
+        /* Chân trang */
         .company-footer {
             margin-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -279,10 +301,14 @@
 </head>
 <body>
 
-    <!-- Thông báo nổi khi sao chép -->
-    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã sao chép nội dung chuyển khoản!</div>
+    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã thực hiện thành công!</div>
 
     <div class="container">
+        <!-- Nút mở Quản Trị Admin -->
+        <button onclick="openAdminLoginModal()" class="admin-login-btn">
+            <i class="fa-solid fa-lock"></i> Quản Trị Admin
+        </button>
+
         <!-- Header -->
         <div style="text-align: center;">
             <span class="header-badge"><i class="fa-solid fa-crown"></i> AN TÍN ECOSYSTEM VIP AI</span>
@@ -304,9 +330,7 @@
         <div class="form-group">
             <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn:</label>
             <select id="selectPackage" onchange="updateQRData()">
-                <option value="500000">Gói VIP Care Tiêu Chuẩn (1 Năm) - 500,000 VNĐ</option>
-                <option value="900000">Gói VIP Care Toàn Diện (2 Năm) - 900,000 VNĐ [Tiết kiệm 10%]</option>
-                <option value="1350000">Gói VIP Care Doanh Nghiệp (3 Năm) - 1,350,000 VNĐ [Tiết kiệm 20%]</option>
+                <!-- Các gói dịch vụ được load động bằng JavaScript -->
             </select>
         </div>
 
@@ -317,16 +341,16 @@
             <span style="font-size: 11px; color: #dfe6e9;">Bao gồm trọn gói dịch vụ AI định kỳ & hỗ trợ kỹ thuật tận nơi 24/7</span>
         </div>
 
-        <!-- Khung Mã QR VietQR Động (Đã đồng bộ tuyệt đối) -->
+        <!-- Khung Mã QR Động (Hỗ trợ VietQR API hoặc ảnh upload từ Admin) -->
         <div class="qr-section">
-            <img id="vietQrImg" src="" alt="Mã VietQR Thanh Toán">
-            <p>Quét mã qua App Ngân hàng bất kỳ (VietQR) / MoMo / ZaloPay</p>
+            <img id="vietQrImg" src="" alt="Mã QR Thanh Toán">
+            <p>Quét mã qua App Ngân hàng bất kỳ / MoMo / ZaloPay</p>
             <div class="syntax-text" id="displaySyntax" onclick="copySyntaxText()" title="Bấm để sao chép nhanh nội dung">
                 Nội dung CK: VIP 0914060339 <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>
             </div>
         </div>
 
-        <!-- Nút Kích Thích Hành Động Tích Hợp AI & Zalo -->
+        <!-- Nút Kích Thích Hành Động -->
         <button type="button" onclick="triggerOpenModalFromMain()" class="btn-action btn-ai-popup">
             <i class="fa-solid fa-robot"></i> Mở Popup Thanh Toán Siêu Tốc AI <i class="fa-solid fa-bolt" style="color:#fff;"></i>
         </button>
@@ -339,7 +363,7 @@
             <i class="fa-solid fa-arrow-left"></i> Quay Lại Trang Chủ An Tín Ecosystem
         </a>
 
-        <!-- THÔNG TIN DOANH NGHIỆP & CHÂN TRANG AN TÍN -->
+        <!-- CHÂN TRANG AN TÍN -->
         <div class="company-footer">
             <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH</h4>
             
@@ -371,30 +395,78 @@
                 <p>☎️ (028) 3849 3575 &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" target="_blank">0914 060 339</a></p>
                 <p>🌐 Website: <a href="https://khuyenmaicamera.blogspot.com" target="_blank">khuyenmaicamera.blogspot.com</a></p>
                 <p>📩 Email: <a href="mailto:ctyantinco@gmail.com">ctyantinco@gmail.com</a></p>
-                <p style="margin-top: 8px;">
-                    🔗 <a href="https://zalo.me/3260030944980440169" target="_blank">Zalo OA</a> | 
-                    🔗 <a href="https://zalo.me/s/2109317456418246815/" target="_blank">Zalo Mini App</a> | 
-                    🔗 <a href="https://ebook.antinco.com/trangchu" target="_blank">AN TÍN ECOSYSTEM AI</a>
-                </p>
             </div>
         </div>
     </div>
 
-    <!-- ================= MODAL CỔNG THANH TOÁN GIA HẠN VIP CARE (AI POPUP) ================= -->
+    <!-- ================= MODAL ĐĂNG NHẬP ADMIN ================= -->
+    <div id="adminLoginModal" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
+        <div style="background:#1a1c29; border: 2px solid #f39c12; border-radius:20px; max-width:400px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative;">
+            <button onclick="closeAdminLoginModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
+            <h3 style="color:#f1c40f; margin-bottom:15px; text-align:center;"><i class="fa-solid fa-lock"></i> Đăng Nhập Quản Trị</h3>
+            <div class="form-group">
+                <label>Tên đăng nhập:</label>
+                <input type="text" id="adminUser" value="admin">
+            </div>
+            <div class="form-group">
+                <label>Mật khẩu:</label>
+                <input type="password" id="adminPass" placeholder="Nhập mật khẩu...">
+            </div>
+            <button onclick="processAdminLogin()" class="btn-action btn-ai-popup">Đăng Nhập</button>
+        </div>
+    </div>
+
+    <!-- ================= MODAL QUẢN TRỊ ADMIN (UP QR & QUẢN LÝ GÓI) ================= -->
+    <div id="adminDashboardModal" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px; overflow-y:auto;">
+        <div style="background:#1a1c29; border: 2px solid #2ecc71; border-radius:20px; max-width:550px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(46,204,113, 0.3); position:relative; margin: 30px 0;">
+            <button onclick="closeAdminDashboard()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
+            <h2 style="color:#2ecc71; margin-bottom:15px; text-align:center; font-size:20px;"><i class="fa-solid fa-screwdriver-wrench"></i> Bảng Điều Khiển Quản Trị Viên</h2>
+            
+            <!-- Đổi mật khẩu -->
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
+                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🔑 Đổi Mật Khẩu Quản Trị</h4>
+                <div class="form-group" style="margin-bottom:10px;">
+                    <input type="password" id="newAdminPass" placeholder="Mật khẩu mới...">
+                </div>
+                <button onclick="changeAdminPassword()" style="background:#f39c12; color:#000; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Lưu Mật Khẩu Mới</button>
+            </div>
+
+            <!-- Upload QR Code từ app ngân hàng -->
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
+                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🖼️ Tải Lên Ảnh Mã QR Ngân Hàng</h4>
+                <input type="file" id="qrImageFile" accept="image/*" style="margin-bottom:10px; font-size:12px;">
+                <button onclick="uploadCustomQR()" style="background:#0088ff; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Cập Nhật Ảnh QR</button>
+                <button onclick="resetToVietQRApi()" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px; margin-left:5px;">Dùng VietQR Tự Động</button>
+            </div>
+
+            <!-- Quản lý gói dịch vụ -->
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
+                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn</h4>
+                <div id="packageListAdmin" style="max-height:150px; overflow-y:auto; margin-bottom:10px; font-size:12px;">
+                    <!-- Danh sách gói load bằng JS -->
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="newPkgName" placeholder="Tên gói dịch vụ..." style="font-size:12px; padding:8px;">
+                    <input type="number" id="newPkgPrice" placeholder="Giá (VNĐ)..." style="font-size:12px; padding:8px; width:120px;">
+                    <button onclick="addNewPackage()" style="background:#2ecc71; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px; white-space:nowrap;">Thêm Gói</button>
+                </div>
+            </div>
+
+            <button onclick="closeAdminDashboard()" class="btn-action btn-home">Đóng Quản Trị</button>
+        </div>
+    </div>
+
+    <!-- ================= MODAL POPUP THANH TOÁN AI ================= -->
     <div id="vipPaymentModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
         <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #f39c12; border-radius:20px; max-width:480px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative; animation: modalPop 0.3s ease-in-out;">
+            <button onclick="closeVipModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             
-            <!-- Nút đóng -->
-            <button onclick="closeVipModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer; transition:0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">&times;</button>
-            
-            <!-- Tiêu đề -->
             <div style="text-align:center; margin-bottom:20px;">
                 <span style="background: rgba(243,156,18,0.2); color: #f39c12; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; border: 1px solid rgba(243,156,18,0.4);">👑 CỔNG THANH TOÁN TỰ ĐỘNG 24/7 AI</span>
                 <h3 style="margin: 12px 0 5px 0; font-size: 20px; color: #f1c40f;">Gia Hạn Gói VIP Care An Tín</h3>
                 <p style="font-size: 13px; color: #b2bec3; margin:0;">Thanh toán tự động - Kích hoạt bảo trì tức thì qua AI</p>
             </div>
 
-            <!-- Thông tin gói & số tiền động -->
             <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
                     <span style="color:#b2bec3;">Khách hàng:</span>
@@ -410,23 +482,20 @@
                 </div>
             </div>
 
-            <!-- Khung QR Code VietQR động -->
             <div style="text-align:center; background:#fff; padding:15px; border-radius:12px; margin-bottom:20px;">
-                <img id="dynamicVietQR" src="" alt="VietQR Thanh Toán" style="max-width:200px; width:100%; height:auto; border-radius:8px; display:inline-block;" />
-                <p style="font-size:12px; color:#2d3436; margin:8px 0 0 0; font-weight:600;">Quét mã QR qua App Ngân hàng bất kỳ (VietQR)</p>
+                <img id="modalQrImg" src="" alt="VietQR Thanh Toán" style="max-width:200px; width:100%; height:auto; border-radius:8px; display:inline-block;" />
+                <p style="font-size:12px; color:#2d3436; margin:8px 0 0 0; font-weight:600;">Quét mã QR qua App Ngân hàng bất kỳ</p>
                 <p id="transferSyntaxModal" style="font-size:13px; color:#e74c3c; margin:6px 0 0 0; font-weight:bold; background:rgba(231,76,60,0.1); padding:6px; border-radius:6px; cursor:pointer;" onclick="copyModalSyntaxText()">Nội dung: --</p>
             </div>
 
-            <!-- Các nút hành động kích thích -->
             <div style="display: flex; gap: 10px; flex-direction: column;">
                 <a id="zaloConfirmBtn" href="https://zalo.me/0914060339" target="_blank" style="background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%); color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 15px rgba(0,136,255,0.4); display:flex; align-items:center; justify-content:center; gap:8px;">
                     💬 Gửi Minh Chứng Chuyển Khoản Qua Zalo (0914060339)
                 </a>
-                <button onclick="closeVipModal()" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 10px; cursor:pointer; font-weight:600; font-size:13px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                <button onclick="closeVipModal()" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 10px; cursor:pointer; font-weight:600; font-size:13px;">
                     Đóng Cổng Thanh Toán
                 </button>
             </div>
-
         </div>
     </div>
 
@@ -438,81 +507,181 @@
     </style>
 
     <script>
-        // Hàm cập nhật động thông tin VietQR và đồng bộ hoàn toàn giữa QR và text hướng dẫn
+        // Khởi tạo dữ liệu mặc định nếu chưa có trong localStorage
+        if(!localStorage.getItem('adminPass')) {
+            localStorage.setItem('adminPass', 'antin2026');
+        }
+        if(!localStorage.getItem('packagesData')) {
+            var defaultPkgs = [
+                {name: "Gói VIP Care Tiêu Chuẩn (1 Năm)", price: 500000},
+                {name: "Gói VIP Care Toàn Diện (2 Năm) [Tiết kiệm 10%]", price: 900000},
+                {name: "Gói VIP Care Doanh Nghiệp (3 Năm) [Tiết kiệm 20%]", price: 1350000}
+            ];
+            localStorage.setItem('packagesData', JSON.stringify(defaultPkgs));
+        }
+
+        // Load danh sách gói dịch vụ vào thẻ <select> và bảng Admin
+        function loadPackagesToUI() {
+            var pkgs = JSON.parse(localStorage.getItem('packagesData'));
+            var selectEl = document.getElementById('selectPackage');
+            selectEl.innerHTML = '';
+            
+            pkgs.forEach(function(pkg, index) {
+                var opt = document.createElement('option');
+                opt.value = pkg.price;
+                opt.text = pkg.name + " - " + Number(pkg.price).toLocaleString('vi-VN') + " VNĐ";
+                selectEl.appendChild(opt);
+            });
+
+            // Load vào bảng admin nếu đang mở
+            var adminList = document.getElementById('packageListAdmin');
+            if(adminList) {
+                adminList.innerHTML = '';
+                pkgs.forEach(function(pkg, index) {
+                    adminList.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:6px 10px; border-radius:6px; margin-bottom:5px;">
+                        <span><b>${pkg.name}</b> - ${Number(pkg.price).toLocaleString('vi-VN')}đ</span>
+                        <button onclick="deletePackage(${index})" style="background:#e74c3c; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                    </div>`;
+                });
+            }
+            updateQRData();
+        }
+
+        // Cập nhật QR Code và giá tiền
         function updateQRData() {
-            var name = document.getElementById('inputName').value.trim() || "KHACH HANG";
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
             var amount = packageSelect.value;
-            var packageName = packageSelect.options[packageSelect.selectedIndex].text.split(' - ')[0];
-
-            // Định dạng hiển thị giá tiền
             var formattedPrice = Number(amount).toLocaleString('vi-VN') + " VNĐ";
             document.getElementById('displayPrice').innerText = formattedPrice;
 
-            // Nội dung chuyển khoản chuẩn hóa tuyệt đối giữa mã QR và văn bản
             var contentCK = "VIP " + phone;
             document.getElementById('displaySyntax').innerHTML = `Nội dung CK: ${contentCK} <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>`;
 
-            // Cấu hình thông tin tài khoản ngân hàng nhận tiền doanh nghiệp An Tín
-            var bankId = "MB"; 
-            var accountNo = "0914060339"; 
-            var template = "compact2";
-            var accountName = "PHAN MINH DUC";
+            // Kiểm tra xem Admin có up ảnh QR riêng hay không
+            var customQRImg = localStorage.getItem('customQRImage');
+            if(customQRImg) {
+                document.getElementById('vietQrImg').src = customQRImg;
+            } else {
+                var bankId = "MB"; 
+                var accountNo = "0914060339"; 
+                var template = "compact2";
+                var accountName = "PHAN MINH DUC";
+                var qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(contentCK)}&accountName=${encodeURIComponent(accountName)}`;
+                document.getElementById('vietQrImg').src = qrUrl;
+            }
 
-            // Tạo URL VietQR chuẩn tự động cho trang chính
-            var qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(contentCK)}&accountName=${encodeURIComponent(accountName)}`;
-            document.getElementById('vietQrImg').src = qrUrl;
-
-            // Tự động cập nhật cú pháp tin nhắn Zalo kèm theo thông tin khách hàng
+            var name = document.getElementById('inputName').value.trim() || "KHACH HANG";
+            var packageName = packageSelect.options[packageSelect.selectedIndex] ? packageSelect.options[packageSelect.selectedIndex].text.split(' - ')[0] : "VIP Care";
             var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${name} (SĐT: ${phone}). Tôi đã thanh toán gói ${packageName} với số tiền ${formattedPrice}. Nhờ hệ thống kiểm tra và kích hoạt giúp.`);
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/0914060339?text=${zaloMsg}`;
         }
 
-        // Hàm gọi hiển thị Modal Popup thông minh tích hợp AI
-        function openVipPaymentModal(hoTen, soDienThoai) {
+        // Các hàm Quản Trị Admin
+        function openAdminLoginModal() {
+            document.getElementById('adminLoginModal').style.display = 'flex';
+        }
+        function closeAdminLoginModal() {
+            document.getElementById('adminLoginModal').style.display = 'none';
+        }
+        function processAdminLogin() {
+            var user = document.getElementById('adminUser').value;
+            var pass = document.getElementById('adminPass').value;
+            var storedPass = localStorage.getItem('adminPass');
+
+            if(user === 'admin' && pass === storedPass) {
+                closeAdminLoginModal();
+                document.getElementById('adminDashboardModal').style.display = 'flex';
+                loadPackagesToUI();
+            } else {
+                alert("Sai tên đăng nhập hoặc mật khẩu quản trị!");
+            }
+        }
+        function closeAdminDashboard() {
+            document.getElementById('adminDashboardModal').style.display = 'none';
+        }
+        function changeAdminPassword() {
+            var newPass = document.getElementById('newAdminPass').value;
+            if(!newPass) {
+                alert("Vui lòng nhập mật khẩu mới!");
+                return;
+            }
+            localStorage.setItem('adminPass', newPass);
+            showToast("Đã đổi mật khẩu quản trị thành công!");
+            document.getElementById('newAdminPass').value = '';
+        }
+        function uploadCustomQR() {
+            var fileInput = document.getElementById('qrImageFile');
+            if(fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem('customQRImage', e.target.result);
+                    showToast("Đã cập nhật ảnh QR code ngân hàng thành công!");
+                    updateQRData();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                alert("Vui lòng chọn file ảnh QR từ thiết bị của bạn!");
+            }
+        }
+        function resetToVietQRApi() {
+            localStorage.removeItem('customQRImage');
+            showToast("Đã chuyển về VietQR tự động qua API!");
+            updateQRData();
+        }
+        function addNewPackage() {
+            var name = document.getElementById('newPkgName').value.trim();
+            var price = document.getElementById('newPkgPrice').value.trim();
+            if(!name || !price) {
+                alert("Vui lòng nhập đầy đủ tên gói và giá tiền!");
+                return;
+            }
+            var pkgs = JSON.parse(localStorage.getItem('packagesData'));
+            pkgs.push({name: name, price: Number(price)});
+            localStorage.setItem('packagesData', JSON.stringify(pkgs));
+            document.getElementById('newPkgName').value = '';
+            document.getElementById('newPkgPrice').value = '';
+            loadPackagesToUI();
+            showToast("Đã thêm gói dịch vụ mới thành công!");
+        }
+        function deletePackage(index) {
+            var pkgs = JSON.parse(localStorage.getItem('packagesData'));
+            if(pkgs.length <= 1) {
+                alert("Phải giữ lại ít nhất một gói dịch vụ!");
+                return;
+            }
+            pkgs.splice(index, 1);
+            localStorage.setItem('packagesData', JSON.stringify(pkgs));
+            loadPackagesToUI();
+            showToast("Đã xóa gói dịch vụ!");
+        }
+
+        // Modal thanh toán AI
+        function openVipPaymentModal() {
             var modal = document.getElementById('vipPaymentModal');
             if(!modal) return;
-
-            var nameInput = document.getElementById('inputName').value.trim();
-            var phoneInput = document.getElementById('inputPhone').value.trim();
+            var nameInput = document.getElementById('inputName').value.trim() || "Quý Khách Hàng";
+            var phoneInput = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
             var amount = packageSelect.value;
             var formattedPrice = Number(amount).toLocaleString('vi-VN') + " VNĐ";
 
-            var finalName = hoTen || nameInput || "Quý Khách Hàng";
-            var finalPhone = soDienThoai || phoneInput || "0914060339";
-
-            // Hiển thị thông tin khách hàng lên Modal
-            document.getElementById('modalCustName').innerText = finalName;
-            document.getElementById('modalCustPhone').innerText = finalPhone;
+            document.getElementById('modalCustName').innerText = nameInput;
+            document.getElementById('modalCustPhone').innerText = phoneInput;
             document.getElementById('modalDisplayPrice').innerText = formattedPrice;
             
-            // Nội dung chuyển khoản tự động
-            var noiDungCK = "VIP " + finalPhone;
+            var noiDungCK = "VIP " + phoneInput;
             document.getElementById('transferSyntaxModal').innerHTML = `Nội dung CK: ${noiDungCK} <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>`;
+            document.getElementById('modalQrImg').src = document.getElementById('vietQrImg').src;
 
-            var bankId = "MB"; 
-            var accountNo = "0914060339"; 
-            var template = "compact2";
-            var accountName = "PHAN MINH DUC";
-
-            var qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(noiDungCK)}&accountName=${encodeURIComponent(accountName)}`;
-            document.getElementById('dynamicVietQR').src = qrUrl;
-
-            // Cập nhật link Zalo kèm sẵn cú pháp nội dung nhắn tin nhanh
-            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${finalName} (SĐT: ${finalPhone}). Tôi đã chuyển khoản số tiền ${formattedPrice} gia hạn VIP Care. Gửi kèm hình ảnh biên lai thanh toán.`);
+            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${nameInput} (SĐT: ${phoneInput}). Tôi đã chuyển khoản số tiền ${formattedPrice} gia hạn VIP Care. Gửi kèm hình ảnh biên lai thanh toán.`);
             document.getElementById('zaloConfirmBtn').href = `https://zalo.me/0914060339?text=${zaloMsg}`;
 
-            // Show modal với hiệu ứng mượt mà
             modal.style.display = 'flex';
         }
-
         function closeVipModal() {
-            var modal = document.getElementById('vipPaymentModal');
-            if(modal) modal.style.display = 'none';
+            document.getElementById('vipPaymentModal').style.display = 'none';
         }
-
         function triggerOpenModalFromMain() {
             var phone = document.getElementById('inputPhone').value.trim();
             if(!phone) {
@@ -520,36 +689,27 @@
                 document.getElementById('inputPhone').focus();
                 return;
             }
-            var name = document.getElementById('inputName').value.trim();
-            openVipPaymentModal(name, phone);
+            openVipPaymentModal();
         }
 
-        // Tính năng sao chép thông minh một chạm (Copy to Clipboard)
+        // Sao chép thông minh
         function copySyntaxText() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
-            var textToCopy = "VIP " + phone;
-            navigator.clipboard.writeText(textToCopy).then(function() {
-                showToast();
-            });
+            navigator.clipboard.writeText("VIP " + phone).then(function() { showToast("Đã sao chép nội dung chuyển khoản!"); });
         }
-
         function copyModalSyntaxText() {
             var phone = document.getElementById('modalCustPhone').innerText || "0914060339";
-            var textToCopy = "VIP " + phone;
-            navigator.clipboard.writeText(textToCopy).then(function() {
-                showToast();
-            });
+            navigator.clipboard.writeText("VIP " + phone).then(function() { showToast("Đã sao chép nội dung chuyển khoản!"); });
         }
-
-        function showToast() {
+        function showToast(msg) {
             var x = document.getElementById("toastAlert");
+            if(msg) x.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
             x.className = "show";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
 
-        // Khởi tạo chạy lần đầu khi load trang
         window.onload = function() {
-            updateQRData();
+            loadPackagesToUI();
         };
     </script>
 </body>
