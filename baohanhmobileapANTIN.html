@@ -573,19 +573,24 @@
                 if (result.status === "success" && result.data.length > 0) {
                     let item = result.data[0];
                     
-                    // Ánh xạ chuẩn theo đúng yêu cầu trích xuất cột từ sheet "DS.BaohanhmobileapANTIN":
-                    // 1. VIP CARE: Cột F đến J
+                    // Ánh xạ khách quan chuẩn xác từ Google Sheet:
+                    // 1. VIP CARE (Cột F đến J)
                     let vipCareVal = item.vipCare && item.vipCare.trim() !== "" ? item.vipCare : 'Chưa ký hợp đồng';
                     
-                    // 2. Bảo Hành: Cột N đến T
+                    // 2. Bảo Hành (Cột N đến T)
                     let baoHanhVal = item.baoHanh && item.baoHanh.trim() !== "" ? item.baoHanh : 'Chưa ký hợp đồng';
                     
-                    // 3. Bảo Trì: Cột U đến Z
-                    let baoTriVal = item.baoTri && item.baoTri.trim() !== "" ? item.baoTri : 'Chưa ký hợp đồng';
+                    // 3. Bảo Trì (Cột U đến Z)
+                    let baoTriVal = item.baoTri && item.baoTri.trim() !== "" ? item.baoTri : 'Chưa hiệu lực';
                     
-                    let trangThaiVal = item.trangThai && item.trangThai.trim() !== "" ? item.trangThai : 'Đang hoạt động ổn định';
+                    let trangThaiVal = item.trangThai && item.trangThai.trim() !== "" ? item.trangThai : 'Hồ sơ đã tiếp nhận hệ thống';
 
-                    // Khôi phục lại cấu trúc hiển thị kết quả chuẩn cùng dữ liệu trả về từ database
+                    // Màu sắc trạng thái hiển thị động khách quan
+                    let colorBaoHanh = baoHanhVal === 'Chưa ký hợp đồng' ? '#f87171' : '#34d399';
+                    let colorBaoTri = baoTriVal === 'Chưa hiệu lực' ? '#f87171' : '#60a5fa';
+                    let colorVip = vipCareVal === 'Chưa ký hợp đồng' ? '#f87171' : '#fbbf24';
+
+                    // Đổ dữ liệu kết quả trực quan siêu thông minh
                     resultBox.innerHTML = `
                         <div class="result-header">
                             <i class="fa-solid fa-circle-check"></i> Hồ Sơ Điện Tử Hợp Lệ
@@ -604,26 +609,26 @@
                         </div>
                         <div class="result-row">
                             <span>Giải pháp / Thiết bị:</span>
-                            <span>${item.tenThietBi || 'Camera an ninh & Thiết bị thông minh'}</span>
+                            <span>${item.tenThietBi || 'Hệ thống lắp đặt kỹ thuật'}</span>
                         </div>
                         <div class="result-row">
                             <span>🛡️ Bảo Hành:</span>
-                            <span style="color: #34d399;">${baoHanhVal}</span>
+                            <span style="color: ${colorBaoHanh};">${baoHanhVal}</span>
                         </div>
                         <div class="result-row">
                             <span>⚙️ Bảo Trì:</span>
-                            <span style="color: #60a5fa;">${baoTriVal}</span>
+                            <span style="color: ${colorBaoTri};">${baoTriVal}</span>
                         </div>
                         <div class="result-row">
                             <span>👑 VIP CARE:</span>
-                            <span style="color: #fbbf24;">${vipCareVal}</span>
+                            <span style="color: ${colorVip};">${vipCareVal}</span>
                         </div>
                         <div class="result-row">
                             <span>Trạng thái:</span>
                             <span style="color: #fbbf24;">${trangThaiVal}</span>
                         </div>
                         <div class="ai-note">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ khách quan từ Google Sheet (DS.BaohanhmobileapANTIN). Hỗ trợ kỹ thuật nhanh 24/7!
                         </div>
 
                         <div class="advanced-actions">
@@ -631,7 +636,7 @@
                                 <i class="fa-solid fa-robot"></i> AI Chẩn Đoán Lỗi
                             </a>
                             <button class="btn-vip-extend" onclick="extendVipWarranty()">
-                                <i class="fa-solid fa-crown"></i> Gia Hạn VIP Care
+                                <i class="fa-solid fa-crown"></i> Đăng Ký VIP Care
                             </button>
                         </div>
                     `;
@@ -653,9 +658,9 @@
             }
         }
 
-        // Hàm xử lý tính năng Gia Hạn VIP Care
+        // Hàm xử lý tính năng Gia Hạn / Đăng ký VIP Care
         function extendVipWarranty() {
-            alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành VIP qua ZaloPay / MoMo...');
+            alert('💎 Chuyển hướng đến cổng tư vấn ký kết gói bảo hành VIP & Bảo trì định kỳ qua Zalo...');
             window.open('https://zalo.me/0914060339', '_blank');
         }
     </script>
