@@ -40,7 +40,7 @@
             </div>
             <h1 class="text-2xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
                 Hệ Thống Tra Cứu & Quản Lý
-                <span class="block text-xl md:text-3xl text-cyan-400 mt-2 font-bold">Bảo Hành (N-T) & Hợp Đồng (U-Z)</span>
+                <span class="block text-xl md:text-3xl text-cyan-400 mt-2 font-bold">Bảo Hành (N-T) & Hợp Đồng (U-Z / VIP Care F-K)</span>
             </h1>
             <p class="text-slate-300 text-xs md:text-base mt-2">Camera • Mạng Wi-Fi • Smart Home • Điện Công Nghiệp</p>
         </header>
@@ -80,9 +80,9 @@
             <div class="bg-slate-800/90 border border-slate-700 p-5 md:p-6 rounded-2xl shadow-2xl lg:col-span-5 backdrop-blur-md relative overflow-hidden">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 shimmer-bg"></div>
                 <h2 class="text-base md:text-lg font-bold text-white mb-2 flex items-center gap-2 border-b border-slate-700 pb-3">
-                    <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu Chi Tiết (N-Z)
+                    <i class="fa-solid fa-user-plus text-cyan-400 animate-pulse"></i> Nhập Liệu Chi Tiết (F-Z)
                 </h2>
-                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ phân tách rõ ràng ngữ cảnh Lắp Đặt Mới hoặc Hợp Đồng Bảo Trì!</p>
+                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Hệ thống AI đối chiếu thông tin tự động từ cột A đến Z. Hỗ trợ phân tách rõ ràng ngữ cảnh Lắp Đặt Mới, Hợp Đồng Bảo Trì hoặc Gói VIP Care!</p>
                 
                 <form id="upsertForm" onsubmit="handleUpsert(event)" class="space-y-3">
                     <!-- Thông tin cơ bản khách hàng -->
@@ -128,7 +128,7 @@
                             </datalist>
                         </div>
 
-                        <!-- LỰA CHỌN NGỮ CẢNH NGHIỆP VỤ (MỚI TÍCH HỢP) -->
+                        <!-- LỰA CHỌN NGỮ CẢNH NGHIỆP VỤ (MỚI TÍCH HỢP VIP CARE) -->
                         <div class="pt-1">
                             <label class="block text-[11px] font-semibold text-cyan-300 mb-1">
                                 <i class="fa-solid fa-layer-group"></i> Chọn Ngữ Cảnh Nghiệp Vụ *
@@ -136,6 +136,7 @@
                             <select id="nguCanhNghiepVu" onchange="toggleNghiepVuContext()" class="w-full bg-slate-900 border border-cyan-500/50 rounded-xl px-3 py-2 text-xs text-cyan-300 font-bold outline-none transition shadow-md focus:border-cyan-400">
                                 <option value="lap_dat">🚀 Hợp Đồng Lắp Đặt Mới (Kích hoạt Bảo Hành N-T)</option>
                                 <option value="bao_tri">🛡️ Hợp Đồng Bảo Trì Định Kỳ (Kích hoạt HĐ U-Z)</option>
+                                <option value="vip_care">👑 Hợp Đồng Gói VIP Care (Kích hoạt F-K)</option>
                             </select>
                         </div>
                     </div>
@@ -210,6 +211,41 @@
                         </div>
                     </div>
 
+                    <!-- NHÓM 3: CỘT F ĐẾN K (HỢP ĐỒNG GÓI VIP CARE) - MỚI THÊM BÊN DƯỚI KHỐI BẢO TRÌ -->
+                    <div id="boxVipCare" class="p-3 bg-purple-950/40 rounded-xl border border-purple-800/60 space-y-2.5 transition-all duration-300 opacity-40">
+                        <span class="text-xs font-bold text-purple-400 flex items-center gap-1"><i class="fa-solid fa-crown text-amber-300"></i> Hạng Mục Hợp Đồng Gói VIP Care (Cột F - K)</span>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột F: Mã Hợp Đồng Gói VIP Care (AI Tự Cấp)</label>
+                            <input type="text" id="maVipCare" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-purple-400 outline-none transition font-mono" placeholder="VD: VIPCARE-2026-001 (Tự động cấp)">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột G: Ngày Ký Kích Hoạt Gói VIP Care</label>
+                            <input type="date" id="ngayKyVipCare" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-purple-400 outline-none transition">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-300 mb-1">Cột H: Thời Hạn (Tháng)</label>
+                                <input type="number" id="thoiHanVipCare" value="12" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-purple-400 outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-300 mb-1">Cột I: Ngày Hết Hạn VIP Care</label>
+                                <input type="date" id="ngayHetHanVipCare" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-purple-400 outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột J: Trạng Thái Hợp Đồng VIP Care</label>
+                            <input type="text" id="trangThaiVipCare" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-purple-400 outline-none transition" placeholder="VD: VIP Active, Đã kích hoạt...">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Cột K: Loại Gói VIP Care (Chọn sẵn)</label>
+                            <select id="loaiVipCare" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-purple-400 outline-none transition font-bold text-amber-300">
+                                <option value="Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)">Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)</option>
+                                <option value="Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)">Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)</option>
+                                <option value="Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)">Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mt-3 ai-glow">
                         <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Lưu Dữ Liệu & AI Tự Động Cấp Mã
                     </button>
@@ -227,7 +263,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-cyan-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Gõ từ khóa (Tên, SĐT, Email, Mã HĐ)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:border-cyan-400 outline-none transition shadow-inner">
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Gõ từ khóa (Tên, SĐT, Email, Mã HĐ, VIP Care)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:border-cyan-400 outline-none transition shadow-inner">
                 </div>
 
                 <div id="resultContainer" class="space-y-4 max-h-[550px] overflow-y-auto pr-1">
@@ -257,9 +293,9 @@
                         <tr class="bg-slate-900 text-slate-300 border-b border-slate-700">
                             <th class="p-3">Khách Hàng / SĐT</th>
                             <th class="p-3">Mã Giao Dịch</th>
-                            <th class="p-3">Thiết Bị</th>
-                            <th class="p-3">Mã HĐ Bảo Trì (U)</th>
-                            <th class="p-3">Trạng Thái HĐ (Y)</th>
+                            <th class="p-3">Gói VIP Care (F)</th>
+                            <th class="p-3">Loại VIP (K)</th>
+                            <th class="p-3">Trạng Thái VIP (J)</th>
                             <th class="p-3 text-center">Thao Tác</th>
                         </tr>
                     </thead>
@@ -331,7 +367,6 @@
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKgi6dsmOMJ2U6okPXhtI9Y6zGlIMnQVcfSJKGjWSjeEIkMXY-2SjEnzWDKXZis9nn5g/exec";
         
-        // Mặc định luôn khởi tạo là 'staff' để bảo mật khi tải lại trang
         let currentRole = "staff";
         localStorage.setItem("an_tin_role", "staff");
 
@@ -340,23 +375,37 @@
         window.addEventListener('DOMContentLoaded', () => {
             updateRoleBadgeUI();
             loadDataList();
-            toggleNghiepVuContext(); // Khởi tạo trạng thái ban đầu cho ngữ cảnh
+            toggleNghiepVuContext(); 
         });
 
-        // Hàm xử lý tương tác ẩn/hiện và làm nổi bật theo Ngữ Cảnh Nghiệp Vụ
+        // Hàm điều khiển ẩn/hiện và làm nổi bật theo Ngữ Cảnh Nghiệp Vụ (Lắp đặt, Bảo trì, VIP Care)
         function toggleNghiepVuContext() {
             let mode = document.getElementById('nguCanhNghiepVu').value;
             let boxBaoHanh = document.getElementById('boxBaoHanh'); // Khung N-T
             let boxBaoTri = document.getElementById('boxBaoTri');   // Khung U-Z
+            let boxVipCare = document.getElementById('boxVipCare'); // Khung F-K
 
             if (mode === 'lap_dat') {
                 boxBaoHanh.style.opacity = "1";
                 boxBaoHanh.style.pointerEvents = "auto";
                 boxBaoTri.style.opacity = "0.4";
-            } else {
+                boxBaoTri.style.pointerEvents = "none";
+                boxVipCare.style.opacity = "0.4";
+                boxVipCare.style.pointerEvents = "none";
+            } else if (mode === 'bao_tri') {
                 boxBaoHanh.style.opacity = "0.4";
+                boxBaoHanh.style.pointerEvents = "none";
                 boxBaoTri.style.opacity = "1";
                 boxBaoTri.style.pointerEvents = "auto";
+                boxVipCare.style.opacity = "0.4";
+                boxVipCare.style.pointerEvents = "none";
+            } else { // vip_care
+                boxBaoHanh.style.opacity = "0.4";
+                boxBaoHanh.style.pointerEvents = "none";
+                boxBaoTri.style.opacity = "0.4";
+                boxBaoTri.style.pointerEvents = "none";
+                boxVipCare.style.opacity = "1";
+                boxVipCare.style.pointerEvents = "auto";
             }
         }
 
@@ -390,7 +439,7 @@
                 if(isValid) {
                     currentRole = role;
                     localStorage.setItem("an_tin_role", role);
-                    localStorage.setItem("an_tin_password", pass); // Lưu tạm mật khẩu phục vụ nhập liệu
+                    localStorage.setItem("an_tin_password", pass); 
                     updateRoleBadgeUI();
                     alert(role === 'admin' ? "Đăng nhập quyền Admin thành công!" : "Đã chuyển về quyền Nhập liệu!");
                     closeLoginModal();
@@ -406,7 +455,7 @@
         function handleLogout() {
             currentRole = "staff";
             localStorage.setItem("an_tin_role", "staff");
-            localStorage.removeItem("an_tin_password"); // Xóa mật khẩu tạm
+            localStorage.removeItem("an_tin_password"); 
             updateRoleBadgeUI();
             
             let adminSection = document.getElementById('sectionAdmin');
@@ -501,9 +550,9 @@
                 soDienThoai: document.getElementById('soDienThoai').value,
                 email: document.getElementById('email').value,
                 tenThietBi: document.getElementById('tenThietBi').value,
-                nguCanhNghiepVu: mode, // Truyền ngữ cảnh để backend xử lý phân tách chính xác tuyệt đối
+                nguCanhNghiepVu: mode, 
                 
-                // Cột N-T (7 trường bảo hành) - Chỉ truyền nếu chọn ngữ cảnh lắp đặt hoặc để trống nếu là bảo trì
+                // Cột N-T (Bảo hành)
                 loaiSuKien: mode === 'lap_dat' ? document.getElementById('loaiSuKien').value : "",
                 nhomThietBi: mode === 'lap_dat' ? document.getElementById('nhomThietBi').value : "",
                 ngayKichHoat: mode === 'lap_dat' ? document.getElementById('ngayKichHoat').value : "",
@@ -512,13 +561,21 @@
                 ngayKetThuc: mode === 'lap_dat' ? document.getElementById('ngayKetThuc').value : "",
                 trangThaiThucTe: mode === 'lap_dat' ? document.getElementById('trangThaiThucTe').value : "",
                 
-                // Cột U-Z (6 trường hợp đồng bảo trì) - Chỉ truyền nếu chọn ngữ cảnh bảo trì
+                // Cột U-Z (Bảo trì)
                 maHopDongBT: mode === 'bao_tri' ? document.getElementById('maHopDongBT').value : "",
                 ngayKyHD: mode === 'bao_tri' ? document.getElementById('ngayKyHD').value : "",
                 thoiHanHD: mode === 'bao_tri' ? document.getElementById('thoiHanHD').value : "",
                 ngayHetHanHD: mode === 'bao_tri' ? document.getElementById('ngayHetHanHD').value : "",
                 trangThaiHD: mode === 'bao_tri' ? document.getElementById('trangThaiHD').value : "",
-                lichBaoTriThang: mode === 'bao_tri' ? document.getElementById('lichBaoTriThang').value : ""
+                lichBaoTriThang: mode === 'bao_tri' ? document.getElementById('lichBaoTriThang').value : "",
+
+                // Cột F-K (VIP Care)
+                maVipCare: mode === 'vip_care' ? document.getElementById('maVipCare').value : "",
+                ngayKyVipCare: mode === 'vip_care' ? document.getElementById('ngayKyVipCare').value : "",
+                thoiHanVipCare: mode === 'vip_care' ? document.getElementById('thoiHanVipCare').value : "",
+                ngayHetHanVipCare: mode === 'vip_care' ? document.getElementById('ngayHetHanVipCare').value : "",
+                trangThaiVipCare: mode === 'vip_care' ? document.getElementById('trangThaiVipCare').value : "",
+                loaiVipCare: mode === 'vip_care' ? document.getElementById('loaiVipCare').value : ""
             };
 
             if(!payload.hoTen && !payload.soDienThoai) {
@@ -536,7 +593,7 @@
                 if(res.status === "success") {
                     loadDataList();
                     document.getElementById('upsertForm').reset();
-                    toggleNghiepVuContext(); // Reset lại giao diện form
+                    toggleNghiepVuContext(); 
                 }
             })
             .catch(err => alert("Lỗi kết nối lưu dữ liệu: " + err));
@@ -569,17 +626,18 @@
                                 <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-barcode"></i> Mã GD: ${item.maGiaoDich || 'N/A'}</span>
                                 <h3 class="text-base font-bold text-white">${item.hoTen} - <span class="text-slate-300">${item.soDienThoai}</span></h3>
                             </div>
-                            <span class="text-xs px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-lg border border-amber-500/30 font-semibold"><i class="fa-solid fa-file-contract"></i> ${item.maHopDongBT || item.maHopDong || 'N/A'}</span>
+                            <div class="flex gap-2">
+                                <span class="text-xs px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-lg border border-amber-500/30 font-semibold"><i class="fa-solid fa-file-contract"></i> ${item.maHopDongBT || item.maHopDong || 'HĐ Thường'}</span>
+                                ${item.maVipCare ? `<span class="text-xs px-2.5 py-1 bg-purple-500/20 text-purple-300 rounded-lg border border-purple-500/30 font-bold"><i class="fa-solid fa-crown text-amber-300"></i> ${item.maVipCare}</span>` : ''}
+                            </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300 mt-2 bg-slate-800/60 p-3 rounded-lg border border-slate-700">
-                            <div><i class="fa-solid fa-shield text-cyan-400"></i> <b>Thiết bị:</b> ${item.tenThietBi || 'Chưa cập nhật'} (${item.nhomThietBi || 'N/A'})</div>
+                            <div><i class="fa-solid fa-shield text-cyan-400"></i> <b>Thiết bị:</b> ${item.tenThietBi || 'Chưa cập nhật'}</div>
+                            <div><i class="fa-solid fa-crown text-amber-400"></i> <b>Gói VIP Care (F-K):</b> ${item.loaiVipCare || item.vipCare || 'Chưa đăng ký VIP Care'}</div>
+                            <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Kích hoạt VIP:</b> ${item.ngayKyVipCare || 'N/A'} | <b>Hết hạn:</b> ${item.ngayHetHanVipCare || 'N/A'}</div>
+                            <div><i class="fa-solid fa-circle-info text-blue-400"></i> <b>Trạng thái VIP (J):</b> ${item.trangThaiVipCare || 'N/A'}</div>
                             <div><i class="fa-solid fa-bolt text-amber-400"></i> <b>Sự kiện (N):</b> ${item.loaiSuKien || 'N/A'}</div>
-                            <div><i class="fa-solid fa-calendar-check text-emerald-400"></i> <b>Kích hoạt (P):</b> ${item.ngayKichHoat || 'N/A'} | <b>BH:</b> ${item.thoiHanBaoHanh || 0} Tháng</div>
-                            <div><i class="fa-solid fa-clock text-rose-400"></i> <b>Bắt đầu (R) -> Kết thúc (S):</b> ${item.ngayBatDau || 'N/A'} -> ${item.ngayKetThuc || 'N/A'}</div>
-                            <div><i class="fa-solid fa-circle-info text-blue-400"></i> <b>TT Thực Tế (T):</b> ${item.trangThaiThucTe || 'N/A'}</div>
-                            <div><i class="fa-solid fa-file-shield text-indigo-400"></i> <b>HĐ BT (V-X):</b> Ký: ${item.ngayKyHD || 'N/A'} | Hết hạn: ${item.ngayHetHanHD || 'N/A'}</div>
-                            <div><i class="fa-solid fa-shield-halved text-amber-300"></i> <b>Trạng thái HĐ (Y):</b> ${item.trangThaiHD || '🟢 Hợp đồng đang hiệu lực'}</div>
-                            <div class="md:col-span-2"><i class="fa-solid fa-clipboard-list text-emerald-400"></i> <b>Lịch BT (Z):</b> ${item.lichBaoTriThang || 'Chưa cập nhật'}</div>
+                            <div><i class="fa-solid fa-shield-halved text-amber-300"></i> <b>Trạng thái HĐ (Y):</b> ${item.trangThaiHD || '🟢 Đang hiệu lực'}</div>
                         </div>
                     </div>
                 `;
@@ -594,7 +652,8 @@
                 (i.soDienThoai && i.soDienThoai.toLowerCase().includes(keyword)) || 
                 (i.email && i.email.toLowerCase().includes(keyword)) ||
                 (i.maHopDongBT && i.maHopDongBT.toLowerCase().includes(keyword)) ||
-                (i.maHopDong && i.maHopDong.toLowerCase().includes(keyword)) ||
+                (i.maVipCare && i.maVipCare.toLowerCase().includes(keyword)) ||
+                (i.loaiVipCare && i.loaiVipCare.toLowerCase().includes(keyword)) ||
                 (i.maGiaoDich && i.maGiaoDich.toLowerCase().includes(keyword))
             );
             renderResults(filtered);
@@ -609,9 +668,9 @@
                     <tr class="border-b border-slate-700 hover:bg-slate-900/50 transition">
                         <td class="p-3 font-semibold text-white">${item.hoTen}<br><span class="text-slate-400 font-normal">${item.soDienThoai}</span></td>
                         <td class="p-3 text-cyan-400 font-mono">${item.maGiaoDich}</td>
-                        <td class="p-3 text-slate-300">${item.tenThietBi}</td>
-                        <td class="p-3 text-amber-400 font-mono">${item.maHopDongBT || item.maHopDong || 'N/A'}</td>
-                        <td class="p-3 text-slate-300">${item.trangThaiHD || 'N/A'}</td>
+                        <td class="p-3 text-purple-400 font-mono font-bold">${item.maVipCare || 'N/A'}</td>
+                        <td class="p-3 text-amber-300">${item.loaiVipCare || 'N/A'}</td>
+                        <td class="p-3 text-slate-300">${item.trangThaiVipCare || 'N/A'}</td>
                         <td class="p-3 text-center flex justify-center gap-2">
                             <button onclick="adminEdit(${item.rowIndex})" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-lg text-xs transition shadow"><i class="fa-solid fa-pen"></i> Sửa</button>
                             <button onclick="adminDelete(${item.rowIndex})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded-lg text-xs transition shadow"><i class="fa-solid fa-trash"></i> Xóa</button>
@@ -648,8 +707,8 @@
             if(newName === null) return;
             let newPhone = prompt("Sửa số điện thoại:", item.soDienThoai);
             if(newPhone === null) return;
-            let newMaBT = prompt("Sửa Mã HĐ Bảo Trì (Cột U):", item.maHopDongBT || item.maHopDong || "");
-            if(newMaBT === null) return;
+            let newVip = prompt("Sửa Mã Hợp Đồng VIP Care (Cột F):", item.maVipCare || "");
+            if(newVip === null) return;
 
             let savedPass = localStorage.getItem("an_tin_password") || prompt("Nhập mật khẩu Admin để xác nhận cập nhật:");
             if(!savedPass) return;
@@ -662,10 +721,7 @@
                 soDienThoai: newPhone,
                 email: item.email,
                 tenThietBi: item.tenThietBi,
-                loaiSuKien: item.loaiSuKien,
-                nhomThietBi: item.nhomThietBi,
-                thoiHanBaoHanh: item.thoiHanBaoHanh,
-                maHopDongBT: newMaBT
+                maVipCare: newVip
             };
 
             fetch(SCRIPT_URL, {
