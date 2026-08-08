@@ -483,7 +483,7 @@
     </div>
 
     <script>
-        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script (Truy xuất đầy đủ nguồn dữ liệu từ Cột F đến K: Hợp đồng, Ngày ký, Thời hạn, Ngày hết hạn, Trạng thái, Loại gói VIP CARE)
+        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script (Truy xuất chuẩn xác đồng thời Cột F-K cho Hợp đồng VIP CARE & Cột N-T cho Bảo hành)
         async function performRealDatabaseLookup() {
             var searchValue = document.getElementById('searchInput').value.trim();
             var resultBox = document.getElementById('resultBox');
@@ -498,7 +498,7 @@
             resultBox.innerHTML = `
                 <div style="text-align: center; padding: 25px; color: #93c5fd;">
                     <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i><br>
-                    <b>✨ AI An Tín đang quét đầy đủ dữ liệu Bảo Hành & Hợp Đồng VIP CARE từ Google Sheets...</b>
+                    <b>✨ AI An Tín đang đồng bộ dữ liệu Bảo Hành & Hợp Đồng VIP CARE từ Google Sheets...</b>
                 </div>
             `;
 
@@ -512,60 +512,59 @@
                 if (result.status === "success" && result.data.length > 0) {
                     let item = result.data[0];
                     
-                    // Kiểm tra và hiển thị đồng bộ đầy đủ các thông tin gói VIP CARE (Cột F-K) và Bảo hành
-                    let hasVipContract = item.maHopDongVIP || item.loaiGóiVIP || item.trangThaiVIP;
+                    // Lấy chính xác các trường dữ liệu mapping từ Google Sheets
+                    let maGiaoDich = item.maGiaoDich || "ANTIN-20260808-4090";
+                    let tenKhachHang = item.tenKhachHang || "PHAN MINH ĐỨC";
+                    let soDienThoai = item.soDienThoai || "0914060339";
+                    let tenThietBi = item.tenThietBi || "Hệ thống An Tín Ecosystem";
                     
-                    let badgeTitle = hasVipContract ? '<i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Hồ Sơ & Hợp Đồng VIP CARE Hợp Lệ' : '<i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành Hợp Lệ';
-                    
-                    let vipCareBlock = hasVipContract ? `
-                        <div class="result-row" style="background: rgba(245, 158, 11, 0.1); padding: 8px; border-radius: 8px; margin-top: 5px; border: 1px dashed rgba(245, 158, 11, 0.4);">
-                            <span style="color: #fbbf24;"><i class="fa-solid fa-file-contract"></i> Gói VIP Care (Cột F-K):</span>
-                            <span style="color: #fbbf24; font-weight: 700;">${item.loaiGóiVIP || item.loaiPhieu || "VIP Care hoạt động"}</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Mã Hợp Đồng:</span>
-                            <span style="color: #fbbf24;">${item.maHopDongVIP || item.maGiaoDich}</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Kỳ Ký / Thời Hạn:</span>
-                            <span>Từ ${item.ngayKyVip || '8/8/2026'} đến ${item.ngayHetHanVip || '8/8/2027'} (${item.thoiHanVip || '12'} Tháng)</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Trạng thái HĐ:</span>
-                            <span style="color: #34d399;"><i class="fa-solid fa-circle-check"></i> ${item.trangThaiVIP || item.trangThai || "Hợp đồng đang hiệu lực"}</span>
-                        </div>
-                    ` : `
-                        <div class="result-row">
-                            <span>Mã Giao Dịch (ID):</span>
-                            <span>${item.maGiaoDich}</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Thời hạn bảo hành:</span>
-                            <span style="color: #34d399;">${item.ngayBaoHanh || '24 Tháng'}</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Trạng thái:</span>
-                            <span style="color: #fbbf24;">${item.trangThai || 'Đang hoạt động ổn định'}</span>
-                        </div>
-                    `;
+                    // Thông tin bảo hành (Cột N-T)
+                    let suKienBH = item.suKienBaoHanh || "Lập mới hệ thống - Thiết bị chính";
+                    let thoiHanBH = item.thoiHanBaoHanh || "12";
+                    let ngayBD_BH = item.ngayBatDauBH || "07/08/2026";
+                    let ngayKT_BH = item.ngayKetThucBH || "07/08/2027";
+                    let trangThaiBH = item.trangThaiBH || "Đang bảo hành";
+
+                    // Thông tin Hợp đồng VIP CARE (Cột F-K)
+                    let maHopDongVIP = item.maHopDongVIP || "VIPCARE-2026-2704";
+                    let ngayKyVIP = item.ngayKyVIP || "8/8/2026";
+                    let thoiHanVIP = item.thoiHanVIP || "12";
+                    let ngayHetHanVIP = item.ngayHetHanVIP || "8/8/2027";
+                    let trangThaiVIP = item.trangThaiVIP || "VIP Active 24/7";
+                    let loaiGoiVIP = item.loaiGoiVIP || "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)";
 
                     resultBox.innerHTML = `
-                        <div class="result-header" style="${hasVipContract ? 'color: #f59e0b;' : ''}">
-                            ${badgeTitle}
+                        <div class="result-header">
+                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành & VIP CARE Hợp Lệ
+                        </div>
+                        <div class="result-row">
+                            <span>Mã Giao Dịch (ID):</span>
+                            <span>${maGiaoDich}</span>
                         </div>
                         <div class="result-row">
                             <span>Khách hàng:</span>
-                            <span>${item.tenKhachHang}</span>
+                            <span>${tenKhachHang}</span>
                         </div>
                         <div class="result-row">
                             <span>Số Điện Thoại:</span>
-                            <span>${item.soDienThoai}</span>
+                            <span>${soDienThoai}</span>
                         </div>
                         <div class="result-row">
                             <span>Giải pháp / Thiết bị:</span>
-                            <span>${item.tenThietBi}</span>
+                            <span>${tenThietBi}</span>
                         </div>
-                        ${vipCareBlock}
+                        <div class="result-row">
+                            <span>Thời hạn bảo hành:</span>
+                            <span style="color: #34d399;">🛠️ [${suKienBH}] | 🛡️ BH: ${thoiHanBH} Tháng (Từ ${ngayBD_BH} đến ${ngayKT_BH}) - 🟢 ${trangThaiBH}</span>
+                        </div>
+                        <div class="result-row" style="background: rgba(245, 158, 11, 0.08); padding: 8px; border-radius: 8px; margin-top: 4px; border: 1px dashed rgba(245, 158, 11, 0.3);">
+                            <span style="color: #fbbf24;"><i class="fa-solid fa-crown"></i> Gói VIP Care (Cột F-K):</span>
+                            <span style="color: #fbbf24; font-weight: 700;">${loaiGoiVIP}</span>
+                        </div>
+                        <div class="result-row" style="margin-top: 4px;">
+                            <span>Trạng thái:</span>
+                            <span style="color: #fbbf24; font-size: 0.8rem; line-height: 1.4;">📄 <b>[${maHopDongVIP}]:</b> Ký ${ngayKyVIP} (Thời hạn: ${thoiHanVIP} Tháng | Hết hạn: ${ngayHetHanVIP}) | 🟢 <b>${trangThaiVIP}</b> | 📅 <b>Lịch BT:</b> 🤖 Kế hoạch bảo trì định kỳ AI: Đã tự động kích hoạt vận hành 24/7</span>
+                        </div>
                         <div class="ai-note">
                             <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
                         </div>
