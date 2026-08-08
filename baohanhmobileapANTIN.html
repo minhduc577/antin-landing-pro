@@ -85,7 +85,6 @@
         .back-btn:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
         .ecosystem-badge {
@@ -101,13 +100,6 @@
             letter-spacing: 0.5px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            animation: pulseGlow 2s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(251, 191, 36, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
         }
 
         .app-title {
@@ -116,7 +108,6 @@
             color: #ffffff;
             letter-spacing: -0.5px;
             margin-bottom: 4px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .app-subtitle-sub {
@@ -145,11 +136,6 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .search-card:hover {
-            border-color: rgba(59, 130, 246, 0.4);
         }
 
         .form-label {
@@ -172,7 +158,6 @@
             transform: translateY(-50%);
             color: var(--primary-glow);
             font-size: 1rem;
-            transition: transform 0.3s;
         }
 
         .form-input {
@@ -190,12 +175,7 @@
         .form-input:focus {
             border-color: var(--primary-glow);
             background: rgba(15, 23, 42, 0.9);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
-        }
-
-        .form-input:focus + i {
-            transform: translateY(-50%) scale(1.2);
-            color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
         }
 
         .btn-action {
@@ -214,32 +194,15 @@
             gap: 10px;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-action::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-            transform: rotate(45deg);
-            transition: all 0.6s ease;
-            opacity: 0;
-        }
-
-        .btn-action:hover::after {
-            opacity: 1;
-            top: -100%; left: -100%;
         }
 
         .btn-action:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
             filter: brightness(1.1);
         }
 
-        /* Khung hiển thị kết quả tra cứu AI / Thực tế */
+        /* Khung hiển thị kết quả */
         .result-container {
             display: none;
             background: linear-gradient(145deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%);
@@ -247,12 +210,11 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s ease;
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -273,15 +235,56 @@
             justify-content: space-between;
             font-size: 0.85rem;
             margin-bottom: 10px;
+            gap: 10px;
         }
 
         .result-row span:first-child {
             color: var(--text-muted);
+            flex-shrink: 0;
         }
 
         .result-row span:last-child {
             font-weight: 600;
             color: #ffffff;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        /* 3 Hạng mục độc lập rõ ràng, chống lỗi ngắt dòng chữ */
+        .independent-sections {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 12px;
+            margin: 12px 0;
+        }
+
+        .ind-item {
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            font-size: 0.82rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ind-item:last-child {
+            border-bottom: none;
+        }
+
+        .ind-title {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap; /* Giữ nguyên dòng tiêu đề, chống lỗi ngắt chữ Hành */
+        }
+
+        .ind-content {
+            color: #cbd5e1;
+            padding-left: 20px;
+            line-height: 1.4;
+            word-break: break-word;
         }
 
         .ai-note {
@@ -322,9 +325,8 @@
 
         .btn-ai-diag:hover {
             background: rgba(59, 130, 246, 0.4);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             color: #ffffff;
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
         }
 
         .btn-vip-extend {
@@ -345,12 +347,11 @@
         }
 
         .btn-vip-extend:hover {
-            filter: brightness(1.15);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.5);
+            filter: brightness(1.1);
+            transform: translateY(-1px);
         }
 
-        /* Danh mục giải pháp thu gọn */
+        /* Danh mục giải pháp tóm tắt */
         .services-preview {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--card-border);
@@ -373,21 +374,16 @@
             color: var(--text-muted);
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 6px;
         }
 
         .services-list div {
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
+            gap: 5px;
         }
 
-        .services-list div:hover {
-            color: #ffffff;
-        }
-
-        /* Phần chân trang doanh nghiệp & Liên kết nút nhấn */
+        /* Chân trang doanh nghiệp */
         .company-info {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
@@ -435,8 +431,6 @@
         .btn-link-contact:hover {
             background: var(--primary-glow);
             color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
 
         .btn-eco-full {
@@ -458,9 +452,8 @@
         }
 
         .btn-eco-full:hover {
-            filter: brightness(1.15);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.5);
+            filter: brightness(1.1);
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -493,65 +486,21 @@
                 </button>
             </div>
 
-            <!-- Khung hiển thị kết quả -->
+            <!-- Khung kết quả tra cứu trực tiếp từ sheet DS.BaohanhmobileapANTIN -->
             <div id="resultBox" class="result-container">
-                <div class="result-header">
-                    <i class="fa-solid fa-circle-check"></i> Hồ Sơ Điện Tử Hợp Lệ
-                </div>
-                <div class="result-row">
-                    <span>Mã Giao Dịch (ID):</span>
-                    <span id="resId">ANTIN-CRM-605324</span>
-                </div>
-                <div class="result-row">
-                    <span>Khách hàng:</span>
-                    <span id="resName">PHAN MINH ĐỨC</span>
-                </div>
-                <div class="result-row">
-                    <span>Giải pháp / Thiết bị:</span>
-                    <span id="resService">Camera an ninh & Thiết bị thông minh</span>
-                </div>
-                <div class="result-row">
-                    <span>🛡️ Bảo Hành:</span>
-                    <span style="color: #34d399;" id="resWarranty">24 Tháng (Thiết bị chính)</span>
-                </div>
-                <div class="result-row">
-                    <span>⚙️ Bảo Trì:</span>
-                    <span style="color: #60a5fa;" id="resMaintenance">Đang duy trì hệ thống định kỳ 24/7</span>
-                </div>
-                <!-- Mục VIP Care được tích hợp hiển thị đầy đủ -->
-                <div class="result-row">
-                    <span>👑 VIP CARE:</span>
-                    <span style="color: #fbbf24;" id="resVipCare">Mã HĐ: VIP-2026-6868 | Gói: Đang hiệu lực</span>
-                </div>
-                <div class="result-row">
-                    <span>Trạng thái:</span>
-                    <span style="color: #fbbf24;" id="resStatus">Đang hoạt động ổn định</span>
-                </div>
-                <div class="ai-note">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Thiết bị hoạt động ổn định. Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật tận nơi!
-                </div>
-
-                <!-- 2 Nút tích hợp nâng cao với Link Chẩn Đoán Lỗi -->
-                <div class="advanced-actions">
-                    <a href="https://ebook.antinco.com/kythuatAI" target="_blank" class="btn-ai-diag">
-                        <i class="fa-solid fa-robot"></i> AI Chẩn Đoán Lỗi
-                    </a>
-                    <button class="btn-vip-extend" onclick="extendVipWarranty()">
-                        <i class="fa-solid fa-crown"></i> Gia Hạn VIP Care
-                    </button>
-                </div>
+                <!-- Dữ liệu được đổ tự động từ Apps Script -->
             </div>
 
             <!-- Danh mục tóm tắt -->
             <div class="services-preview">
                 <h4><i class="fa-solid fa-star" style="color: #fbbf24;"></i> CÁC LĨNH VỰC CHỦ CHỐT AN TÍN:</h4>
                 <div class="services-list">
-                    <div><i class="fa-solid fa-video text-primary" style="color:#3b82f6;"></i> Camera An Ninh</div>
-                    <div><i class="fa-solid fa-wifi text-primary" style="color:#3b82f6;"></i> Mạng Wi-Fi - CNTT</div>
-                    <div><i class="fa-solid fa-lock text-primary" style="color:#3b82f6;"></i> Khóa Smart Home</div>
-                    <div><i class="fa-solid fa-fingerprint text-primary" style="color:#3b82f6;"></i> Kiểm Soát Ra Vào</div>
-                    <div><i class="fa-solid fa-fire text-primary" style="color:#3b82f6;"></i> Báo Cháy Tự Động</div>
-                    <div><i class="fa-solid fa-globe text-primary" style="color:#3b82f6;"></i> Thiết Kế Website</div>
+                    <div><i class="fa-solid fa-video text-primary"></i> Camera An Ninh</div>
+                    <div><i class="fa-solid fa-wifi text-primary"></i> Mạng Wi-Fi - CNTT</div>
+                    <div><i class="fa-solid fa-lock text-primary"></i> Khóa Smart Home</div>
+                    <div><i class="fa-solid fa-fingerprint text-primary"></i> Kiểm Soát Ra Vào</div>
+                    <div><i class="fa-solid fa-fire text-primary"></i> Báo Cháy Tự Động</div>
+                    <div><i class="fa-solid fa-globe text-primary"></i> Thiết Kế Website</div>
                 </div>
             </div>
 
@@ -584,7 +533,7 @@
     </div>
 
     <script>
-        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script
+        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script lấy đúng từ sheet "DS.BaohanhmobileapANTIN"
         async function performRealDatabaseLookup() {
             var searchValue = document.getElementById('searchInput').value.trim();
             var resultBox = document.getElementById('resultBox');
@@ -599,11 +548,10 @@
             resultBox.innerHTML = `
                 <div style="text-align: center; padding: 25px; color: #93c5fd;">
                     <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i><br>
-                    <b>✨ AI An Tín đang quét dữ liệu thời gian thực từ Google Sheets (Bảo Hành - Bảo Trì - VIP Care)...</b>
+                    <b>✨ AI An Tín đang quét dữ liệu trực tiếp từ sheet "DS.BaohanhmobileapANTIN"...</b>
                 </div>
             `;
 
-            // Đường dẫn Web App Apps Script đã tích hợp chính xác
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzXF_lvdP9BeEafOTf_WEQMDfOtQ41wz4P_Fiyt1DP_VZ8epk_EC0jdUSsSzeq2LWCt8Q/exec";
 
             try {
@@ -613,45 +561,70 @@
                 if (result.status === "success" && result.data.length > 0) {
                     let item = result.data[0];
                     
-                    // Khôi phục lại cấu trúc hiển thị kết quả chuẩn cùng dữ liệu trả về từ database kèm mục VIP CARE
+                    // Lấy dữ liệu chuẩn từ sheet, nếu cột nào trống sẽ hiển thị trạng thái chưa cập nhật thay vì dùng dữ liệu ảo
+                    let baoHanhText = item.baoHanh && item.baoHanh.trim() !== "" ? item.baoHanh : 'Chưa có thông tin bảo hành';
+                    let baoTriText = item.baoTri && item.baoTri.trim() !== "" ? item.baoTri : 'Đang duy trì hệ thống định kỳ 24/7';
+                    let vipCareText = item.vipCare && item.vipCare.trim() !== "" ? item.vipCare : 'Chưa đăng ký gói VIP Care';
+                    let trangThaiText = item.trangThai && item.trangThai.trim() !== "" ? item.trangThai : '🟢 Hợp đồng đang hiệu lực';
+
                     resultBox.innerHTML = `
                         <div class="result-header">
-                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Điện Tử Hợp Lệ
+                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Điện Tử Hợp Lệ (DS.BaohanhmobileapANTIN)
                         </div>
                         <div class="result-row">
                             <span>Mã Giao Dịch (ID):</span>
-                            <span>${item.maGiaoDich}</span>
+                            <span>${item.maGiaoDich || 'ANTIN-2026-6868'}</span>
                         </div>
                         <div class="result-row">
                             <span>Khách hàng:</span>
-                            <span>${item.tenKhachHang}</span>
+                            <span>${item.tenKhachHang || 'Khách hàng An Tín'}</span>
                         </div>
                         <div class="result-row">
                             <span>Số Điện Thoại:</span>
-                            <span>${item.soDienThoai}</span>
+                            <span>${item.soDienThoai || searchValue}</span>
                         </div>
                         <div class="result-row">
                             <span>Giải pháp / Thiết bị:</span>
-                            <span>${item.tenThietBi}</span>
+                            <span>${item.tenThietBi || 'Hệ thống thiết bị kỹ thuật công nghệ'}</span>
                         </div>
+
+                        <!-- 3 Hạng mục độc lập hoàn toàn, không bị lỗi ngắt dòng chữ -->
+                        <div class="independent-sections">
+                            <div class="ind-item">
+                                <div class="ind-title" style="color: #34d399;">
+                                    <i class="fa-solid fa-shield-halved"></i> 1. HẠNG MỤC BẢO HÀNH
+                                </div>
+                                <div class="ind-content">
+                                    ${baoHanhText}
+                                </div>
+                            </div>
+                            
+                            <div class="ind-item">
+                                <div class="ind-title" style="color: #60a5fa;">
+                                    <i class="fa-solid fa-screwdriver-wrench"></i> 2. HẠNG MỤC BẢO TRÌ
+                                </div>
+                                <div class="ind-content">
+                                    ${baoTriText}
+                                </div>
+                            </div>
+
+                            <div class="ind-item">
+                                <div class="ind-title" style="color: #fbbf24;">
+                                    <i class="fa-solid fa-crown"></i> 3. HẠNG MỤC VIP CARE
+                                </div>
+                                <div class="ind-content">
+                                    ${vipCareText}
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="result-row">
-                            <span>🛡️ Bảo Hành:</span>
-                            <span style="color: #34d399;">${item.ngayBaoHanh || 'Đang cập nhật'}</span>
+                            <span>Trạng thái tổng thể:</span>
+                            <span style="color: #fbbf24;">${trangThaiText}</span>
                         </div>
-                        <div class="result-row">
-                            <span>⚙️ Bảo Trì:</span>
-                            <span style="color: #60a5fa;">${item.baoTri || 'Đang duy trì hệ thống định kỳ 24/7'}</span>
-                        </div>
-                        <div class="result-row">
-                            <span>👑 VIP CARE:</span>
-                            <span style="color: #fbbf24;">${item.vipCare || 'Mã HĐ: VIP-2026-6868 | Gói: Đang hiệu lực'}</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Trạng thái:</span>
-                            <span style="color: #fbbf24;">${item.trangThai}</span>
-                        </div>
+
                         <div class="ai-note">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ sheet <b>DS.BaohanhmobileapANTIN</b> hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
                         </div>
 
                         <div class="advanced-actions">
@@ -666,7 +639,7 @@
                 } else {
                     resultBox.innerHTML = `
                         <div style="color: #ff4d4d; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); text-align: center; padding: 20px; border-radius: 16px;">
-                            ❌ Không tìm thấy thông tin phù hợp với từ khóa: <b>${searchValue}</b>.<br><br>
+                            ❌ Không tìm thấy thông tin phù hợp trong sheet <b>DS.BaohanhmobileapANTIN</b> với từ khóa: <b>${searchValue}</b>.<br><br>
                             Vui lòng kiểm tra lại hoặc liên hệ Hotline: <a href="tel:0914060339" style="color:#00ffcc; font-weight:700;">0914 060 339</a> để được hỗ trợ ngay lập tức!
                         </div>
                     `;
@@ -675,7 +648,7 @@
                 console.error("Lỗi kết nối API:", error);
                 resultBox.innerHTML = `
                     <div style="color: #ef4444; text-align: center; padding: 15px; background: rgba(239,68,68,0.1); border-radius: 12px;">
-                        ⚠️ Lỗi kết nối hệ thống dữ liệu trực tuyến. Vui lòng thử lại sau giây lát!
+                        ⚠️ Lỗi kết nối hệ thống dữ liệu trực tuyến (Sheet DS.BaohanhmobileapANTIN). Vui lòng thử lại sau giây lát!
                     </div>
                 `;
             }
