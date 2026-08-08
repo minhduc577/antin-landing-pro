@@ -499,7 +499,7 @@
             resultBox.innerHTML = `
                 <div style="text-align: center; padding: 25px; color: #93c5fd;">
                     <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i><br>
-                    <b>✨ AI An Tín đang đồng bộ dữ liệu Bảo Hành, VIP CARE & Hợp Đồng Bảo Trì (Cột U-Z) từ Google Sheets...</b>
+                    <b>✨ AI An Tín đang đồng bộ dữ liệu Bảo Hành, VIP CARE & Hợp Đồng Bảo Trì từ Google Sheets...</b>
                 </div>
             `;
 
@@ -519,14 +519,14 @@
                     let soDienThoai = item.soDienThoai || "0914060339";
                     let tenThietBi = item.tenThietBi || "Hệ thống An Tín Ecosystem";
                     
-                    // 1. Thông tin bảo hành (Cột N-T)
+                    // 1. Thông tin bảo hành
                     let suKienBH = item.suKienBaoHanh || "Lập mới hệ thống - Thiết bị chính";
                     let thoiHanBH = item.thoiHanBaoHanh || "12";
                     let ngayBD_BH = item.ngayBatDauBH || "07/08/2026";
                     let ngayKT_BH = item.ngayKetThucBH || "07/08/2027";
                     let trangThaiBH = item.trangThaiBH || "Đang bảo hành";
 
-                    // 2. Thông tin Hợp đồng VIP CARE (Cột F-K)
+                    // 2. Thông tin Hợp đồng VIP CARE
                     let maHopDongVIP = item.maHopDongVIP || "VIPCARE-2026-2704";
                     let ngayKyVIP = item.ngayKyVIP || "8/8/2026";
                     let thoiHanVIP = item.thoiHanVIP || "12";
@@ -534,9 +534,11 @@
                     let trangThaiVIP = item.trangThaiVIP || "Đang hiệu lực";
                     let loaiGoiVIP = item.loaiGoiVIP || "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)";
 
-                    // 3. Thông tin Hợp đồng Bảo trì định kỳ (Cột U-Z - Đồng bộ chuẩn kiểu VIP CARE)
+                    // 3. Thông tin Hợp đồng Bảo trì định kỳ (Cột U-Z: Hiển thị chuẩn ngày bắt đầu, ngày kết thúc và hiệu lực)
                     let maHopDongBT = item.maHopDongBT || item.hopDongBaoTri || "BT-2026-PRO";
-                    let noiDungBT = item.noiDungBaoTri || "Bảo trì định kỳ toàn hệ thống thông minh";
+                    let ngayBD_BT = item.ngayBatDauBT || "08/08/2026";
+                    let ngayKT_BT = item.ngayKetThucBT || "08/08/2027";
+                    let thoiHanBT = item.thoiHanBT || "12 Tháng";
                     let tanSuatBT = item.tanSuatBaoTri || "3 Tháng / Lần";
                     let kyBaoTriTiepTheo = item.kyBaoTriTiepTheo || "08/11/2026";
                     let trangThaiBT = item.trangThaiBT || "Đang vận hành 24/7";
@@ -566,7 +568,7 @@
                             <span style="color: #34d399;">🛠️ [${suKienBH}] | 🛡️ BH: ${thoiHanBH} Tháng (Từ ${ngayBD_BH} đến ${ngayKT_BH}) - 🟢 ${trangThaiBH}</span>
                         </div>
                         <div class="result-row">
-                            <span>Gói VIP Care (Cột F-K):</span>
+                            <span>Gói VIP Care:</span>
                             <span style="color: #fbbf24; font-weight: 700;">${loaiGoiVIP}</span>
                         </div>
                         <div class="result-row">
@@ -575,10 +577,10 @@
                         </div>
                         <div class="result-row">
                             <span>HĐ Bảo Trì (Cột U-Z):</span>
-                            <span style="color: #34d399;">📄 [${maHopDongBT}] | 🔄 Tần suất: ${tanSuatBT} | ⏳ Kế tiếp: ${kyBaoTriTiepTheo} - 🟢 ${trangThaiBT}</span>
+                            <span style="color: #34d399;">📄 [${maHopDongBT}] | 📅 Từ ${ngayBD_BT} đến ${ngayKT_BT} | 🔄 Tần suất: ${tanSuatBT} | ⏳ Kế tiếp: ${kyBaoTriTiepTheo} - 🟢 ${trangThaiBT}</span>
                         </div>
                         <div class="ai-note">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN (Bảo hành N-T, VIP Care F-K, Bảo trì U-Z). Hỗ trợ kỹ thuật nhanh 24/7!
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN (Bảo hành, VIP Care, Bảo trì định kỳ). Hỗ trợ kỹ thuật nhanh 24/7!
                         </div>
 
                         <div class="advanced-actions">
