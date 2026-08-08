@@ -288,6 +288,7 @@
             border-radius: 10px;
             font-size: 0.78rem;
             font-weight: 700;
+            text-decoration: none;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -483,7 +484,7 @@
     </div>
 
     <script>
-        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script (Truy xuất chuẩn xác đồng thời Cột F-K cho VIP CARE, Cột N-T cho Bảo hành, và Cột U-Z cho Bảo trì định kỳ)
+        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script
         async function performRealDatabaseLookup() {
             var searchValue = document.getElementById('searchInput').value.trim();
             var resultBox = document.getElementById('resultBox');
@@ -533,7 +534,7 @@
                     let trangThaiVIP = item.trangThaiVIP || "Đang hiệu lực";
                     let loaiGoiVIP = item.loaiGoiVIP || "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)";
 
-                    // 3. Thông tin Hợp đồng Bảo trì định kỳ (Cột U-Z - Siêu thông minh AI)
+                    // 3. Thông tin Hợp đồng Bảo trì định kỳ (Cột U-Z - Đồng bộ chuẩn kiểu VIP CARE)
                     let maHopDongBT = item.maHopDongBT || item.hopDongBaoTri || "BT-2026-PRO";
                     let noiDungBT = item.noiDungBaoTri || "Bảo trì định kỳ toàn hệ thống thông minh";
                     let tanSuatBT = item.tanSuatBaoTri || "3 Tháng / Lần";
@@ -574,7 +575,7 @@
                         </div>
                         <div class="result-row">
                             <span>HĐ Bảo Trì (Cột U-Z):</span>
-                            <span style="color: #34d399;">🤖 <b>[${maHopDongBT}]</b> | Tần suất: ${tanSuatBT} | Kế tiếp: ${kyBaoTriTiepTheo} - 🟢 ${trangThaiBT}</span>
+                            <span style="color: #34d399;">📄 [${maHopDongBT}] | 🔄 Tần suất: ${tanSuatBT} | ⏳ Kế tiếp: ${kyBaoTriTiepTheo} - 🟢 ${trangThaiBT}</span>
                         </div>
                         <div class="ai-note">
                             <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN (Bảo hành N-T, VIP Care F-K, Bảo trì U-Z). Hỗ trợ kỹ thuật nhanh 24/7!
@@ -584,9 +585,9 @@
                             <a href="https://ebook.antinco.com/kythuatAI" target="_blank" class="btn-ai-diag">
                                 <i class="fa-solid fa-robot"></i> AI Chẩn Đoán Lỗi
                             </a>
-                            <button class="btn-vip-extend" onclick="extendVipWarranty()">
+                            <a href="https://ebook.antinco.com/thanhtoan_vipcaremobileapANTIN" target="_blank" class="btn-vip-extend">
                                 <i class="fa-solid fa-crown"></i> Gia Hạn VIP Care
-                            </button>
+                            </a>
                         </div>
                     `;
                 } else {
@@ -605,12 +606,6 @@
                     </div>
                 `;
             }
-        }
-
-        // Hàm xử lý tính năng Gia Hạn VIP Care
-        function extendVipWarranty() {
-            alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành, bảo trì & VIP Care qua ZaloPay / MoMo...');
-            window.open('https://zalo.me/0914060339', '_blank');
         }
     </script>
 </body>
