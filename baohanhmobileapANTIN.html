@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra Cứu Bảo Hành - CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</title>
+    <title>Tra Cứu Bảo Hành & VIP CARE - CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -236,7 +236,6 @@
         .result-row span:last-child {
             font-weight: 600;
             color: #ffffff;
-            text-align: right;
         }
 
         .ai-note {
@@ -420,7 +419,7 @@
             <div class="ecosystem-badge">
                 <i class="fa-solid fa-shield-halved"></i> AN TÍN ECOSYSTEM
             </div>
-            <div class="app-title">TRA CỨU BẢO HÀNH ĐIỆN TỬ</div>
+            <div class="app-title">TRA CỨU BẢO HÀNH & VIP CARE</div>
             <div class="app-subtitle">🛡️ Giải pháp công nghệ & kỹ thuật toàn diện cho mọi công trình</div>
         </div>
 
@@ -439,7 +438,42 @@
 
             <!-- Khung hiển thị kết quả -->
             <div id="resultBox" class="result-container">
-                <!-- Nội dung tra cứu thực tế từ Google Sheet -->
+                <div class="result-header">
+                    <i class="fa-solid fa-circle-check"></i> Hồ Sơ Tra Cứu Hợp Lệ
+                </div>
+                <div class="result-row">
+                    <span>Mã Giao Dịch (ID):</span>
+                    <span id="resId">ANTIN-CRM-605324</span>
+                </div>
+                <div class="result-row">
+                    <span>Khách hàng:</span>
+                    <span id="resName">PHAN MINH ĐỨC</span>
+                </div>
+                <div class="result-row">
+                    <span>Giải pháp / Thiết bị:</span>
+                    <span id="resService">Camera an ninh & Thiết bị thông minh</span>
+                </div>
+                <div class="result-row">
+                    <span>Thời hạn bảo hành:</span>
+                    <span style="color: #34d399;" id="resWarranty">24 Tháng (VIP Care)</span>
+                </div>
+                <div class="result-row">
+                    <span>Trạng thái:</span>
+                    <span style="color: #fbbf24;" id="resStatus">Đang hoạt động ổn định</span>
+                </div>
+                <div class="ai-note">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Hệ thống đồng bộ thông minh bảo hành & hợp đồng VIP CARE. Hỗ trợ tận nơi 24/7!
+                </div>
+
+                <!-- 2 Nút tích hợp nâng cao với Link Chẩn Đoán Lỗi -->
+                <div class="advanced-actions">
+                    <a href="https://ebook.antinco.com/kythuatAI" target="_blank" class="btn-ai-diag">
+                        <i class="fa-solid fa-robot"></i> AI Chẩn Đoán Lỗi
+                    </a>
+                    <button class="btn-vip-extend" onclick="extendVipWarranty()">
+                        <i class="fa-solid fa-crown"></i> Gia Hạn VIP Care
+                    </button>
+                </div>
             </div>
 
             <!-- Danh mục tóm tắt -->
@@ -484,7 +518,7 @@
     </div>
 
     <script>
-        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script
+        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script (Hỗ trợ trả về cả dữ liệu Bảo Hành và Hợp Đồng VIP CARE)
         async function performRealDatabaseLookup() {
             var searchValue = document.getElementById('searchInput').value.trim();
             var resultBox = document.getElementById('resultBox');
@@ -499,7 +533,7 @@
             resultBox.innerHTML = `
                 <div style="text-align: center; padding: 25px; color: #93c5fd;">
                     <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i><br>
-                    <b>✨ AI An Tín đang quét dữ liệu thời gian thực từ Google Sheets (DS.BaohanhmobileapANTIN)...</b>
+                    <b>✨ AI An Tín đang quét dữ liệu Bảo Hành & VIP CARE thời gian thực từ Google Sheets...</b>
                 </div>
             `;
 
@@ -513,45 +547,42 @@
                 if (result.status === "success" && result.data.length > 0) {
                     let item = result.data[0];
                     
-                    // Xử lý dữ liệu linh hoạt từ Cột F đến K (VIP Care)
-                    let vipCareInfo = item.vipCare && item.vipCare.trim() !== "" ? item.vipCare : 'Chưa ký hợp đồng VIP Care';
-                    let vipColor = vipCareInfo.includes('Chưa') ? '#f87171' : '#fbbf24';
+                    // Kiểm tra xem dữ liệu là VIP CARE hay Bảo hành thông thường dựa vào các trường trả về từ cột F-K hoặc N-T
+                    let isVipCare = item.loaiPhieu === "VIP_CARE" || item.maHopDongVIP; 
+                    let badgeTitle = isVipCare ? '<i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Hợp Đồng VIP CARE Hợp Lệ' : '<i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành Hợp Lệ';
+                    let warrantyLabel = isVipCare ? 'Thời hạn VIP Care:' : 'Thời hạn bảo hành:';
+                    let warrantyValue = isVipCare ? (item.ngayVipCare || item.ngayBaoHanh) : item.ngayBaoHanh;
 
-                    // Đổ dữ liệu đồng bộ chuẩn xác
                     resultBox.innerHTML = `
-                        <div class="result-header">
-                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành Hợp Lệ
+                        <div class="result-header" style="${isVipCare ? 'color: #f59e0b;' : ''}">
+                            ${badgeTitle}
                         </div>
                         <div class="result-row">
-                            <span>Mã Giao Dịch (ID):</span>
-                            <span>${item.maGiaoDich || 'ANTIN-CRM-605324'}</span>
+                            <span>Mã Giao Dịch / ID:</span>
+                            <span>${item.maGiaoDich || item.maHopDongVIP}</span>
                         </div>
                         <div class="result-row">
                             <span>Khách hàng:</span>
-                            <span>${item.tenKhachHang || 'PHAN MINH ĐỨC'}</span>
+                            <span>${item.tenKhachHang}</span>
                         </div>
                         <div class="result-row">
                             <span>Số Điện Thoại:</span>
-                            <span>${item.soDienThoai || searchValue}</span>
+                            <span>${item.soDienThoai}</span>
                         </div>
                         <div class="result-row">
                             <span>Giải pháp / Thiết bị:</span>
-                            <span>${item.tenThietBi || 'Hệ thống thiết bị thông minh'}</span>
+                            <span>${item.tenThietBi}</span>
                         </div>
                         <div class="result-row">
-                            <span>Thời hạn bảo hành:</span>
-                            <span style="color: #34d399;">${item.ngayBaoHanh || '12 Tháng'}</span>
-                        </div>
-                        <div class="result-row">
-                            <span>👑 Gói VIP Care (Cột F-K):</span>
-                            <span style="color: ${vipColor};">${vipCareInfo}</span>
+                            <span>${warrantyLabel}</span>
+                            <span style="color: ${isVipCare ? '#f59e0b' : '#34d399'};">${warrantyValue}</span>
                         </div>
                         <div class="result-row">
                             <span>Trạng thái:</span>
-                            <span style="color: #fbbf24;">${item.trangThai || 'Đang hoạt động ổn định'}</span>
+                            <span style="color: #fbbf24;">${item.trangThai}</span>
                         </div>
                         <div class="ai-note">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN (${isVipCare ? 'Gói VIP CARE độc quyền' : 'Bảo hành tiêu chuẩn'}). Hỗ trợ kỹ thuật nhanh 24/7!
                         </div>
 
                         <div class="advanced-actions">
@@ -566,7 +597,7 @@
                 } else {
                     resultBox.innerHTML = `
                         <div style="color: #ff4d4d; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); text-align: center; padding: 20px; border-radius: 16px;">
-                            ❌ Không tìm thấy thông tin phù hợp với từ khóa: <b>${searchValue}</b>.<br><br>
+                            ❌ Không tìm thấy thông tin Bảo Hành hoặc VIP CARE phù hợp với từ khóa: <b>${searchValue}</b>.<br><br>
                             Vui lòng kiểm tra lại hoặc liên hệ Hotline: <a href="tel:0914060339" style="color:#00ffcc; font-weight:700;">0914 060 339</a> để được hỗ trợ ngay lập tức!
                         </div>
                     `;
@@ -583,7 +614,7 @@
 
         // Hàm xử lý tính năng Gia Hạn VIP Care
         function extendVipWarranty() {
-            alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành VIP qua ZaloPay / MoMo...');
+            alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành & VIP Care qua ZaloPay / MoMo...');
             window.open('https://zalo.me/0914060339', '_blank');
         }
     </script>
