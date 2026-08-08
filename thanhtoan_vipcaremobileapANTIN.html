@@ -168,10 +168,16 @@
             background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
             color: #0f1016;
             box-shadow: 0 5px 20px rgba(241, 196, 15, 0.4);
+            animation: aiPulse 1.5s infinite;
+        }
+        @keyframes aiPulse {
+            0% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(241, 196, 15, 0.8); transform: scale(1.02); }
+            100% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.4); }
         }
         .btn-ai-popup:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.6);
+            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.8);
         }
         .btn-home {
             background: rgba(255, 255, 255, 0.1);
@@ -254,7 +260,7 @@
 
         <div class="form-group">
             <label><i class="fa-solid fa-phone"></i> Số Điện Thoại (Mã định danh giao dịch):</label>
-            <input type="text" id="inputPhone" placeholder="VD: 0914060339" oninput="updateQRData()">
+            <input type="text" id="inputPhone" value="0914060339" placeholder="VD: 0914060339" oninput="updateQRData()">
         </div>
 
         <div class="form-group">
@@ -282,7 +288,7 @@
 
         <!-- Nút Kích Thích Hành Động Tích Hợp AI & Zalo -->
         <button type="button" onclick="triggerOpenModalFromMain()" class="btn-action btn-ai-popup">
-            <i class="fa-solid fa-robot"></i> Mở Popup Thanh Toán Siêu Tốc AI
+            <i class="fa-solid fa-robot"></i> Mở Popup Thanh Toán Siêu Tốc AI <i class="fa-solid fa-bolt" style="color:#fff;"></i>
         </button>
 
         <a id="zaloLinkBtn" href="https://zalo.me/0914060339" target="_blank" class="btn-action btn-zalo">
@@ -334,7 +340,7 @@
         </div>
     </div>
 
-    <!-- ================= MÃ MODAL CỔNG THANH TOÁN GIA HẠN VIP CARE (CODE 2) ================= -->
+    <!-- ================= MODAL CỔNG THANH TOÁN GIA HẠN VIP CARE (AI POPUP) ================= -->
     <div id="vipPaymentModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
         <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #f39c12; border-radius:20px; max-width:480px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative; animation: modalPop 0.3s ease-in-out;">
             
@@ -343,7 +349,7 @@
             
             <!-- Tiêu đề -->
             <div style="text-align:center; margin-bottom:20px;">
-                <span style="background: rgba(243,156,18,0.2); color: #f39c12; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; border: 1px solid rgba(243,156,18,0.4);">👑 CỔNG THANH TOÁN TỰ ĐỘNG 24/7</span>
+                <span style="background: rgba(243,156,18,0.2); color: #f39c12; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; border: 1px solid rgba(243,156,18,0.4);">👑 CỔNG THANH TOÁN TỰ ĐỘNG 24/7 AI</span>
                 <h3 style="margin: 12px 0 5px 0; font-size: 20px; color: #f1c40f;">Gia Hạn Gói VIP Care An Tín</h3>
                 <p style="font-size: 13px; color: #b2bec3; margin:0;">Thanh toán tự động - Kích hoạt bảo trì tức thì qua AI</p>
             </div>
@@ -409,8 +415,8 @@
             document.getElementById('displaySyntax').innerText = "Nội dung CK: " + contentCK;
 
             // Cấu hình thông tin tài khoản ngân hàng nhận tiền doanh nghiệp An Tín
-            var bankId = "MB"; // Ngân hàng MB / Techcombank / VCB...
-            var accountNo = "0914060339"; // Số tài khoản nhận
+            var bankId = "MB"; 
+            var accountNo = "0914060339"; 
             var template = "compact2";
             var accountName = "PHAN MINH DUC";
 
@@ -423,7 +429,7 @@
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/0914060339?text=${zaloMsg}`;
         }
 
-        // Tích hợp Code 3: Hàm gọi hiển thị Modal Popup thông minh
+        // Hàm gọi hiển thị Modal Popup thông minh tích hợp AI
         function openVipPaymentModal(hoTen, soDienThoai, maGD) {
             var modal = document.getElementById('vipPaymentModal');
             if(!modal) return;
