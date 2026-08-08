@@ -483,7 +483,7 @@
     </div>
 
     <script>
-        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script (Truy xuất chuẩn xác đồng thời Cột F-K cho Hợp đồng VIP CARE & Cột N-T cho Bảo hành)
+        // Hàm kết nối trực tiếp thực tế với Web App Google Apps Script (Truy xuất chuẩn xác đồng thời Cột F-K cho VIP CARE, Cột N-T cho Bảo hành, và Cột U-Z cho Bảo trì định kỳ)
         async function performRealDatabaseLookup() {
             var searchValue = document.getElementById('searchInput').value.trim();
             var resultBox = document.getElementById('resultBox');
@@ -498,7 +498,7 @@
             resultBox.innerHTML = `
                 <div style="text-align: center; padding: 25px; color: #93c5fd;">
                     <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i><br>
-                    <b>✨ AI An Tín đang đồng bộ dữ liệu Bảo Hành & Hợp Đồng VIP CARE từ Google Sheets...</b>
+                    <b>✨ AI An Tín đang đồng bộ dữ liệu Bảo Hành, VIP CARE & Hợp Đồng Bảo Trì (Cột U-Z) từ Google Sheets...</b>
                 </div>
             `;
 
@@ -518,14 +518,14 @@
                     let soDienThoai = item.soDienThoai || "0914060339";
                     let tenThietBi = item.tenThietBi || "Hệ thống An Tín Ecosystem";
                     
-                    // Thông tin bảo hành (Cột N-T)
+                    // 1. Thông tin bảo hành (Cột N-T)
                     let suKienBH = item.suKienBaoHanh || "Lập mới hệ thống - Thiết bị chính";
                     let thoiHanBH = item.thoiHanBaoHanh || "12";
                     let ngayBD_BH = item.ngayBatDauBH || "07/08/2026";
                     let ngayKT_BH = item.ngayKetThucBH || "07/08/2027";
                     let trangThaiBH = item.trangThaiBH || "Đang bảo hành";
 
-                    // Thông tin Hợp đồng VIP CARE (Cột F-K) - Định dạng giao diện chuẩn màu Green đồng bộ tuyệt đối với bảo hành
+                    // 2. Thông tin Hợp đồng VIP CARE (Cột F-K)
                     let maHopDongVIP = item.maHopDongVIP || "VIPCARE-2026-2704";
                     let ngayKyVIP = item.ngayKyVIP || "8/8/2026";
                     let thoiHanVIP = item.thoiHanVIP || "12";
@@ -533,9 +533,16 @@
                     let trangThaiVIP = item.trangThaiVIP || "Đang hiệu lực";
                     let loaiGoiVIP = item.loaiGoiVIP || "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)";
 
+                    // 3. Thông tin Hợp đồng Bảo trì định kỳ (Cột U-Z - Siêu thông minh AI)
+                    let maHopDongBT = item.maHopDongBT || item.hopDongBaoTri || "BT-2026-PRO";
+                    let noiDungBT = item.noiDungBaoTri || "Bảo trì định kỳ toàn hệ thống thông minh";
+                    let tanSuatBT = item.tanSuatBaoTri || "3 Tháng / Lần";
+                    let kyBaoTriTiepTheo = item.kyBaoTriTiepTheo || "08/11/2026";
+                    let trangThaiBT = item.trangThaiBT || "Đang vận hành 24/7";
+
                     resultBox.innerHTML = `
                         <div class="result-header">
-                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành & VIP CARE Hợp Lệ
+                            <i class="fa-solid fa-circle-check"></i> Hồ Sơ Bảo Hành, VIP CARE & Bảo Trì Hợp Lệ
                         </div>
                         <div class="result-row">
                             <span>Mã Giao Dịch (ID):</span>
@@ -565,12 +572,12 @@
                             <span>Thời hạn VIP CARE:</span>
                             <span style="color: #34d399;">📄 [${maHopDongVIP}] | 📅 Ký ${ngayKyVIP} | ⏳ Hạn: ${thoiHanVIP} Tháng (Đến ${ngayHetHanVIP}) - 🟢 ${trangThaiVIP}</span>
                         </div>
-                        <div class="result-row" style="margin-top: 4px;">
-                            <span>Lịch BT AI:</span>
-                            <span style="color: #38bdf8; font-size: 0.8rem; line-height: 1.4;">🤖 Kế hoạch bảo trì định kỳ AI: Đã tự động kích hoạt vận hành 24/7</span>
+                        <div class="result-row">
+                            <span>HĐ Bảo Trì (Cột U-Z):</span>
+                            <span style="color: #34d399;">🤖 <b>[${maHopDongBT}]</b> | Tần suất: ${tanSuatBT} | Kế tiếp: ${kyBaoTriTiepTheo} - 🟢 ${trangThaiBT}</span>
                         </div>
                         <div class="ai-note">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN. Hỗ trợ kỹ thuật nhanh 24/7!
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <b>AI Assistant:</b> Dữ liệu đồng bộ trực tiếp từ hệ thống CRM AN TÍN (Bảo hành N-T, VIP Care F-K, Bảo trì U-Z). Hỗ trợ kỹ thuật nhanh 24/7!
                         </div>
 
                         <div class="advanced-actions">
@@ -585,7 +592,7 @@
                 } else {
                     resultBox.innerHTML = `
                         <div style="color: #ff4d4d; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); text-align: center; padding: 20px; border-radius: 16px;">
-                            ❌ Không tìm thấy thông tin Bảo Hành hoặc VIP CARE phù hợp với từ khóa: <b>${searchValue}</b>.<br><br>
+                            ❌ Không tìm thấy thông tin Bảo Hành, VIP CARE hoặc Bảo Trì phù hợp với từ khóa: <b>${searchValue}</b>.<br><br>
                             Vui lòng kiểm tra lại hoặc liên hệ Hotline: <a href="tel:0914060339" style="color:#00ffcc; font-weight:700;">0914 060 339</a> để được hỗ trợ ngay lập tức!
                         </div>
                     `;
@@ -602,7 +609,7 @@
 
         // Hàm xử lý tính năng Gia Hạn VIP Care
         function extendVipWarranty() {
-            alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành & VIP Care qua ZaloPay / MoMo...');
+            alert('💎 Chuyển hướng đến cổng thanh toán gia hạn bảo hành, bảo trì & VIP Care qua ZaloPay / MoMo...');
             window.open('https://zalo.me/0914060339', '_blank');
         }
     </script>
