@@ -131,6 +131,21 @@
             color: #22d3ee;
             border-color: rgba(6,182,212,0.3);
         }
+        .slogan-box {
+            background: rgba(243, 156, 18, 0.08);
+            border-left: 3.5px solid #f39c12;
+            padding: 12px 15px;
+            border-radius: 0 10px 10px 0;
+            margin: 15px 0;
+            font-size: 11.5px;
+            color: #ffeaa7;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+        .contact-info p { margin-bottom: 6px; font-size: 11.5px; }
+        .contact-info a { color: #00cec9; text-decoration: none; }
+        .contact-info a:hover { color: #55efc4; text-decoration: underline; }
+
         .ecosystem-links {
             display: flex;
             flex-wrap: wrap;
@@ -156,6 +171,8 @@
             color: #000;
             transform: translateY(-2px);
         }
+
+        /* Lớp khóa vô hiệu hóa thao tác khi chưa đăng nhập */
         .locked-overlay {
             pointer-events: none;
             filter: blur(2px);
@@ -169,7 +186,7 @@
 
     <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã thực hiện thành công!</div>
 
-    <!-- KHUNG ĐĂNG NHẬP HỆ THỐNG -->
+    <!-- KHUNG ĐĂNG NHẬP NHỎ GỌN HOẶC BANNER XÁC THỰC -->
     <div id="loginCardContainer" class="max-w-md w-full bg-slate-900/95 border border-cyan-500/50 p-6 rounded-3xl shadow-[0_0_35px_rgba(6,182,212,0.3)] mb-6 backdrop-blur-md">
         <div class="text-center mb-4">
             <span class="header-badge"><i class="fa-solid fa-shield-halved"></i> AN TÍN SECURITY GATEWAY</span>
@@ -187,8 +204,9 @@
         </div>
     </div>
 
-    <!-- MÀN HÌNH CHÍNH ỨNG DỤNG -->
+    <!-- MÀN HÌNH CHÍNH ỨNG DỤNG - HIỂN THỊ FULL GIAO DIỆN NGAY LẬP TỨC -->
     <div id="appContainer" class="main-wrapper">
+        <!-- Header module phần mềm quản lý dự án -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 mb-6 gap-3">
             <div>
                 <span class="header-badge"><i class="fa-solid fa-network-wired"></i> AN TÍN PROJECT MANAGEMENT AI v3.0</span>
@@ -201,29 +219,35 @@
                 <button onclick="openChangePassModal()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                     <i class="fa-solid fa-key"></i> Đổi Pass
                 </button>
+                <button id="adminResetBtn" onclick="openAdminResetModal()" class="hidden bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-user-shield"></i> Reset Pass
+                </button>
                 <button onclick="handleLogout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                     <i class="fa-solid fa-power-off"></i> Khóa Lại
                 </button>
             </div>
         </div>
 
-        <!-- DASHBOARD: DANH SÁCH DỰ ÁN -->
+        <!-- =================== DASHBOARD: THANH ĐIỀU HƯỚNG & CHỌN DỰ ÁN =================== -->
         <div class="mb-6 bg-slate-900/80 p-4 rounded-2xl border border-slate-700/80">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                 <div>
                     <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-folder-tree mr-1"></i> Danh Sách Dự Án Đang Quản Lý</h3>
                     <p class="text-xs text-gray-400">Chọn dự án để xem chi tiết tiến độ, camera trực tiếp và báo cáo AI từ Google Sheets</p>
                 </div>
-                <div id="lockedActionAdd" class="locked-overlay flex gap-2">
+                <!-- Vùng thao tác bị khóa nếu chưa đăng nhập -->
+                <div id="lockedActionAdd" class="locked-overlay">
                     <button onclick="openAddProjectModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-plus"></i> Thêm Dự Án Mới
                     </button>
                 </div>
             </div>
+
+            <!-- Các Thẻ Dự Án (Dynamic Grid) -->
             <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
         </div>
 
-        <!-- MODULE CHI TIẾT DỰ ÁN -->
+        <!-- =================== MODULE CHI TIẾT DỰ ÁN ĐƯỢC CHỌN =================== -->
         <div id="project-detail-container" class="relative bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-cyan-500/30 overflow-hidden mb-6">
             <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
 
@@ -239,18 +263,16 @@
                         <span id="p-percent" class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">0%</span>
                         <p class="text-xs text-gray-400 font-medium">Tiến độ tổng thể</p>
                     </div>
-                    <div id="lockedActionEdit" class="locked-overlay flex gap-2">
+                    <!-- Nút chỉnh sửa bị khóa nếu chưa đăng nhập -->
+                    <div id="lockedActionEdit" class="locked-overlay">
                         <button onclick="openEditProgressModal()" class="bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 p-2.5 rounded-xl border border-cyan-500/50 text-xs font-bold cursor-pointer" title="Cập nhật tiến độ dự án">
                             <i class="fa-solid fa-pen-to-square text-base"></i>
-                        </button>
-                        <button onclick="deleteCurrentProject()" class="bg-red-500/20 hover:bg-red-500/40 text-red-300 p-2.5 rounded-xl border border-red-500/50 text-xs font-bold cursor-pointer" title="Xóa dự án này">
-                            <i class="fa-solid fa-trash text-base"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- THANH TIẾN ĐỘ -->
+            <!-- Thanh Tiến Độ Sóng Động -->
             <div class="mb-8">
                 <div class="flex justify-between text-xs sm:text-sm mb-2 text-gray-300">
                     <span id="p-date"><i class="fa-regular fa-calendar-days text-cyan-400 mr-1"></i> Khởi công: --/--/--</span>
@@ -263,30 +285,89 @@
                 </div>
             </div>
 
+            <!-- Các hạng mục chi tiết của dự án -->
             <div id="p-stages-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"></div>
 
+            <!-- Nút tương tác AI & Camera -->
             <div class="flex flex-col sm:flex-row gap-3">
-                <button onclick="showToast('Đang kết nối trực tiếp Camera AI 24/7 của công trình...')" class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3.5 px-5 rounded-2xl shadow-[0_4px_20px_rgba(6,182,212,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer text-sm">
+                <button onclick="showToast('Đang kết nối trực tiếp Camera AI 24/7 của công trình...')" class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3.5 px-5 rounded-2xl shadow-[0_4px_20px_rgba(6,182,212,0.4)] transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer text-sm">
                     <i class="fa-solid fa-video text-base"></i> Xem Camera & Time-Lapse
                 </button>
+                
                 <button onclick="showToast('Trợ lý An Tín AI đang phân tích toàn diện dữ liệu dự án này...')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/40 font-bold py-3.5 px-5 rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg text-sm">
                     <i class="fa-solid fa-robot text-base"></i> Hỏi Trợ Lý An Tín AI
                 </button>
             </div>
         </div>
 
-        <!-- FOOTER THÔNG TIN AN TÍN -->
+        <!-- CHÂN TRANG THÔNG TIN DOANH NGHIỆP & HỆ SINH THÁI AN TÍN -->
         <div class="company-footer">
             <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH[cite: 11].</h4>
+            
             <div class="services-grid">
                 <div class="service-item"><i class="fa-solid fa-video" style="color:#f39c12"></i> Camera an ninh – Giám sát 24/7</div>
                 <div class="service-item"><i class="fa-solid fa-network-wired" style="color:#f39c12"></i> Mạng Wi-Fi – Máy tính – Hạ tầng CNTT</div>
                 <div class="service-item"><i class="fa-solid fa-shield-cat" style="color:#f39c12"></i> Chống đột nhập – Khóa cửa thông minh</div>
                 <div class="service-item"><i class="fa-solid fa-fingerprint" style="color:#f39c12"></i> Chấm công vân tay – Kiểm soát ra vào</div>
+                <div class="service-item"><i class="fa-solid fa-fire-extinguisher" style="color:#f39c12"></i> Báo cháy tự động – An toàn tài sản</div>
+                <div class="service-item"><i class="fa-solid fa-globe" style="color:#f39c12"></i> Thiết kế Website chuyên nghiệp</div>
+                <div class="service-item"><i class="fa-solid fa-cloud" style="color:#f39c12"></i> Tên miền – Hosting – Cloud Server</div>
+                <div class="service-item"><i class="fa-solid fa-house-laptop" style="color:#f39c12"></i> Nhà thông minh – Smart Home</div>
+                <div class="service-item"><i class="fa-solid fa-bolt" style="color:#f39c12"></i> Điện dân dụng – Điện công nghiệp</div>
+                <div class="service-item"><i class="fa-solid fa-screwdriver-wrench" style="color:#f39c12"></i> Sửa chữa & bảo trì thiết bị điện gia đình</div>
+                <div class="service-item"><i class="fa-solid fa-mug-hot" style="color:#f39c12"></i> Ấm điện – Bếp điện – Nồi điện – Quạt điện...</div>
+                <div class="service-item"><i class="fa-solid fa-robot" style="color:#f39c12"></i> Tự động hóa thiết bị điện thông minh</div>
             </div>
+
+            <div class="slogan-box">
+                🎯 Một đối tác – Trọn gói giải pháp<br>
+                🎯 Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật<br>
+                🎯 <b>AN TÍN</b> – Nhanh chóng • Tận tâm • Uy tín • Hiệu quả<br>
+                💎 AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM.
+            </div>
+
             <div class="ecosystem-links">
                 <a href="https://zalo.me/0914060339" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-comment-sms"></i> Zalo (0914060339)</a>
+                <a href="https://zalo.me/3260030944980440169" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-id-card"></i> Zalo OA</a>
+                <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-mobile-screen"></i> Zalo Mini App</a>
                 <a href="https://ebook.antinco.com/trangchu" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-globe"></i> AN TÍN ECOSYSTEM AI</a>
+            </div>
+
+            <div class="contact-info" style="margin-top: 15px;">
+                <p>🏢 <b>CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</b></p>
+                <p>📍 <span>85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</span></p>
+                <p>☎️ <span>(028) 3849 3575</span> &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" target="_blank">0914 060 339</a></p>
+                <p>🌐 Website: <a href="https://khuyenmaicamera.blogspot.com" target="_blank">khuyenmaicamera.blogspot.com</a></p>
+                <p>📩 Email: <a href="mailto:ctyantinco@gmail.com">ctyantinco@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ĐỔI MẬT KHẨU -->
+    <div id="changePassModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full">
+            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Đổi Mật Khẩu Cá Nhân</h3>
+            <div class="space-y-3">
+                <input type="password" id="newPassInput" placeholder="Nhập mật khẩu mới..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-400">
+                <div class="flex gap-2 mt-4">
+                    <button onclick="submitChangePass()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2 rounded-xl text-xs cursor-pointer">Xác Nhận</button>
+                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl text-xs cursor-pointer">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADMIN RESET MẬT KHẨU PM -->
+    <div id="adminResetModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-yellow-500/50 p-6 rounded-2xl max-w-sm w-full">
+            <h3 class="text-base font-bold text-yellow-400 mb-4"><i class="fa-solid fa-user-shield mr-1"></i> Admin Reset Mật Khẩu PM</h3>
+            <div class="space-y-3">
+                <p class="text-xs text-gray-300">Đặt lại mật khẩu cho tài khoản quản lý dự án</p>
+                <input type="text" id="resetPassInput" placeholder="Mật khẩu mới..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-400">
+                <div class="flex gap-2 mt-4">
+                    <button onclick="submitAdminReset()" class="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 rounded-xl text-xs cursor-pointer">Reset</button>
+                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl text-xs cursor-pointer">Hủy</button>
+                </div>
             </div>
         </div>
     </div>
@@ -301,7 +382,7 @@
                     <input type="text" id="mId" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div>
-                    <label class="text-gray-300 font-bold">Tên công trình / Dự án (Đổi tên):</label>
+                    <label class="text-gray-300 font-bold">Tên công trình / Dự án:</label>
                     <input type="text" id="mTitle" placeholder="Ví dụ: River Garden Building..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
@@ -311,7 +392,7 @@
                     </div>
                     <div>
                         <label class="text-gray-300 font-bold">Nhãn phân loại (Badge):</label>
-                        <input type="text" id="mBadge" placeholder="Trọng Điểm" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <input type="text" id="mBadge" placeholder="Dự Án Trọng Điểm" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
@@ -336,34 +417,21 @@
         </div>
     </div>
 
-    <!-- MODAL: ĐỔI MẬT KHẨU -->
-    <div id="changePassModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full">
-            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Đổi Mật Khẩu Quản Trị</h3>
-            <div class="space-y-3 text-xs">
-                <div>
-                    <label class="text-gray-300 font-bold">Mật khẩu mới:</label>
-                    <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                </div>
-                <div class="flex gap-2 mt-4">
-                    <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật</button>
-                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SCRIPT TÍCH HỢP GOOGLE APPS SCRIPT -->
+    <!-- SCRIPT TÍCH HỢP GOOGLE APPS SCRIPT VÀ CƠ CHẾ MỞ KHÓA -->
     <script>
-        let serverAccounts = [];
+        const API_URL = "https://script.google.com/macros/s/AKfycbwgT68YpjYgg2OqcVfCpC4Ddl4-pP7oojPXrA6zRtT-hjq4kv8CZuw7I7PY8oPB7Fibzg/exec";
+
+        let localAccounts = {
+            "admin": { pass: "AbC@CbA@13579", role: "admin", name: "Quản Trị Viên Hệ Thống" },
+            "manager": { pass: "AbC@CbA@13579", role: "manager", name: "Quản Lý Dự Án (PM)" }
+        };
+
         let projectsData = {
             "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Hệ Thống Camera",status:"Bảo trì hệ thống Camera giám sát",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
-            "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Đang cấu hình & tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp hạ tầng mạng & Thiết bị Point to Point WiFi",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
+            "PRJ-02": { title: "River Garden Building", percent: "85%", date: "10/01/2026", speed: "Đang cấu hình & tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp hạ tầng mạng & Thiết bị Point to Point WiFi",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
             "PRJ-03": { title: "Antinco Contract Hub", percent: "90%", date: "15/01/2026", speed: "Chờ nghiệm thu đợt cuối", badge: "Kỹ Thuật", stages: [{icon:"fa-file-contract",color:"purple",title:"Hợp Đồng Kỹ Thuật",status:"Kiểm tra, bảo dưỡng hợp đồng kỹ thuật an ninh",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
-            "PRJ-04": { title: "Bệnh Viện Đa Khoa Hùng Vương", percent: "50%", date: "01/02/2026", speed: "Đang thay thế thiết bị phụ trợ", badge: "Phụ Trợ", stages: [{icon:"fa-server",color:"yellow",title:"Thiết Bị Phụ Trợ",status:"Xử lý sự cố đường truyền mạng nội bộ & tủ rack",statusColor:"text-yellow-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
-            "PRJ-05": { title: "Chuỗi Các Cty Kinh Doanh Vàng Bạc Đá Quý", percent: "50%", date: "10/02/2026", speed: "Lên phương án vật tư", badge: "Vật Tư", stages: [{icon:"fa-video",color:"green",title:"Camera Góc Khuất",status:"Lắp đặt bổ sung camera góc khuất tầng hầm",statusColor:"text-gray-400",iconStyle:"fa-regular fa-clock"}] },
-            "PRJ-06": { title: "Khu Đô Thị Thông Minh Sala", percent: "75%", date: "20/02/2026", speed: "Đang triển khai trục cáp quang", badge: "SmartCity", stages: [{icon:"fa-network-wired",color:"cyan",title:"Trục Cáp Quang",status:"Thi công kéo cáp trục chính và tủ phân phối",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
-            "PRJ-07": { title: "Trung Tâm Thương Mại Vincom", percent: "95%", date: "01/03/2026", speed: "Bàn giao vận hành thử nghiệm", badge: "Commercial", stages: [{icon:"fa-shield-halved",color:"emerald",title:"Kiểm Soát An Ninh",status:"Kích hoạt toàn hệ thống AI nhận diện khuôn mặt",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] }
+            "PRJ-04": { title: "Khu vực kỹ thuật", percent: "50%", date: "01/02/2026", speed: "Đang thay thế thiết bị phụ trợ", badge: "Tủ Rack", stages: [{icon:"fa-server",color:"yellow",title:"Tủ Rack & Cáp",status:"Xử lý sự cố đường truyền mạng nội bộ & tủ rack",statusColor:"text-yellow-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
+            "PRJ-05": { title: "River Garden Building", percent: "30%", date: "10/02/2026", speed: "Lên phương án vật tư", badge: "Hầm Giữ Xe", stages: [{icon:"fa-video",color:"green",title:"Camera Tầng Hầm",status:"Lắp đặt bổ sung camera góc khuất tầng hầm",statusColor:"text-gray-400",iconStyle:"fa-regular fa-clock"}] }
         };
 
         let currentUser = null;
@@ -377,53 +445,51 @@
         }
 
         window.onload = function() {
-            loadDataFromServer();
+            renderProjectsDashboard();
+            switchProject("PRJ-01");
+            fetchDataFromGoogleSheet();
         }
 
-        function loadDataFromServer() {
-            google.script.run
-                .withSuccessHandler(function(data) {
-                    if(data) {
-                        if(data.accounts) serverAccounts = data.accounts;
-                        if(data.projects && Object.keys(data.projects).length > 0) {
-                            projectsData = data.projects;
-                        }
+        function fetchDataFromGoogleSheet() {
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    if(data && data.projects) {
+                        projectsData = data.projects;
+                        renderProjectsDashboard();
+                        switchProject(currentActiveProjId);
                     }
-                    renderProjectsDashboard();
-                    if(!projectsData[currentActiveProjId]) {
-                        currentActiveProjId = Object.keys(projectsData)[0];
+                    if(data && data.accounts) {
+                        localAccounts = data.accounts;
                     }
-                    switchProject(currentActiveProjId);
                 })
-                .withFailureHandler(function(err) {
-                    console.log("Lỗi tải dữ liệu server, dùng dữ liệu mẫu.", err);
-                    renderProjectsDashboard();
-                    switchProject(currentActiveProjId);
-                })
-                .getAppData();
+                .catch(err => {
+                    console.log("Sử dụng dữ liệu cấu hình cục bộ.");
+                });
         }
 
         function handleLogin() {
             let u = document.getElementById("loginUser").value.trim();
             let p = document.getElementById("loginPass").value.trim();
 
-            let matched = serverAccounts.find(acc => acc.username === u && String(acc.password) === String(p));
-            // Tài khoản dự phòng mặc định nếu sheet chưa có
-            if(!matched && u === "admin" && p === "AbC@CbA@13579") {
-                matched = { username: "admin", role: "admin", fullname: "Quản Trị Viên Hệ Thống" };
-            }
-
-            if(matched) {
-                currentUser = matched;
+            if(localAccounts[u] && localAccounts[u].pass === p) {
+                currentUser = { username: u, ...localAccounts[u] };
+                
+                // Mở khóa các vùng thao tác quản trị
                 document.getElementById("lockedActionAdd").classList.remove("locked-overlay");
                 document.getElementById("lockedActionEdit").classList.remove("locked-overlay");
                 document.getElementById("authActionButtons").classList.remove("hidden");
-                document.getElementById("loginCardContainer").style.display = "none";
-                document.getElementById("currentRoleName").innerText = matched.fullname || matched.username;
+                document.getElementById("loginCardContainer").style.display = "none"; // Ẩn khung đăng nhập đi sau khi đã vào thành công
+
+                document.getElementById("currentRoleName").innerText = currentUser.name;
                 document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
+
+                if(currentUser.role === 'admin') {
+                    document.getElementById("adminResetBtn").classList.remove("hidden");
+                }
                 showToast("Đã mở khóa toàn bộ quyền Quản Trị Hệ Thống!");
             } else {
-                alert("Mật khẩu không chính xác! Vui lòng kiểm tra lại thông tin tài khoản.");
+                alert("Mật khẩu không chính xác! Vui lòng dùng mật khẩu chuẩn: AbC@CbA@13579");
             }
         }
 
@@ -474,7 +540,7 @@
             document.getElementById('p-badge').innerHTML = `<i class="fa-solid fa-building"></i> ${proj.badge}`;
 
             let stagesHTML = '';
-            if(proj.stages && Array.isArray(proj.stages)) {
+            if(proj.stages) {
                 proj.stages.forEach(st => {
                     stagesHTML += `
                     <div class="bg-slate-800/65 backdrop-blur-md p-4 rounded-2xl border border-slate-700/60 hover:border-cyan-500/50 transition-all">
@@ -515,12 +581,6 @@
             document.getElementById('projectModal').classList.remove('hidden');
         }
 
-        function openChangePassModal() {
-            if(!currentUser) { alert("Vui lòng đăng nhập!"); return; }
-            document.getElementById('newPassInput').value = "";
-            document.getElementById('changePassModal').classList.remove('hidden');
-        }
-
         function saveProjectData() {
             let id = document.getElementById('mId').value.trim();
             let title = document.getElementById('mTitle').value.trim();
@@ -535,76 +595,61 @@
                 return;
             }
 
-            let projectPayload = {
+            projectsData[id] = {
                 title: title,
                 percent: percent,
+                badge: badge,
                 date: date,
                 speed: speed,
-                badge: badge,
                 stages: [
                     { icon: "fa-shield-halved", color: "cyan", title: "Hạng Mục Thi Công", status: stageDesc, statusColor: "text-cyan-400", iconStyle: "fa-solid fa-circle-check" }
                 ]
             };
 
-            projectsData[id] = projectPayload;
+            // Đồng bộ dữ liệu lên Google Apps Script
+            fetch(API_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "saveProject", id: id, title: title, percent: percent, date: date, speed: speed, badge: badge, stages: stageDesc })
+            }).catch(e => console.log(e));
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    showToast("Đã lưu dự án và đồng bộ Google Sheets thành công!");
-                    renderProjectsDashboard();
-                    switchProject(id);
-                })
-                .withFailureHandler(function(err) {
-                    alert("Lỗi khi lưu: " + err.message);
-                })
-                .saveProject(id, projectPayload);
-
+            renderProjectsDashboard();
+            switchProject(id);
             closeModals();
+            showToast("Đã lưu dự án thành công lên hệ thống Google Sheets!");
         }
 
-        function deleteCurrentProject() {
-            if(!currentUser) { alert("Vui lòng đăng nhập để xóa dự án!"); return; }
-            if(confirm(`Bạn có chắc chắn muốn xóa dự án [${currentActiveProjId}] không?`)) {
-                let deletedId = currentActiveProjId;
-                delete projectsData[deletedId];
-
-                google.script.run
-                    .withSuccessHandler(function(res) {
-                        showToast("Đã xóa dự án thành công!");
-                        let remainingKeys = Object.keys(projectsData);
-                        if(remainingKeys.length > 0) {
-                            currentActiveProjId = remainingKeys[0];
-                            renderProjectsDashboard();
-                            switchProject(currentActiveProjId);
-                        } else {
-                            document.getElementById('projectsGrid').innerHTML = "";
-                        }
-                    })
-                    .withFailureHandler(function(err) {
-                        alert("Lỗi khi xóa: " + err.message);
-                    })
-                    .deleteProject(deletedId);
-            }
+        function openChangePassModal() {
+            document.getElementById('newPassInput').value = "";
+            document.getElementById('changePassModal').classList.remove('hidden');
         }
 
-        function submitNewPassword() {
-            let newPass = document.getElementById('newPassInput').value.trim();
-            if(!newPass) { alert("Vui lòng nhập mật khẩu mới!"); return; }
+        function submitChangePass() {
+            let np = document.getElementById('newPassInput').value.trim();
+            if(!np) { alert("Vui lòng nhập mật khẩu mới!"); return; }
+            localAccounts[currentUser.username].pass = np;
+            closeModals();
+            showToast("Cập nhật mật khẩu cá nhân thành công!");
+        }
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    showToast("Đổi mật khẩu thành công!");
-                    closeModals();
-                })
-                .withFailureHandler(function(err) {
-                    alert("Lỗi: " + err.message);
-                })
-                .updatePassword(currentUser.username, newPass);
+        function openAdminResetModal() {
+            document.getElementById('resetPassInput').value = "";
+            document.getElementById('adminResetModal').classList.remove('hidden');
+        }
+
+        function submitAdminReset() {
+            let np = document.getElementById('resetPassInput').value.trim();
+            if(!np) { alert("Vui lòng nhập mật khẩu mới!"); return; }
+            localAccounts['manager'].pass = np;
+            closeModals();
+            showToast("Admin đã reset mật khẩu cho Project Manager thành công!");
         }
 
         function closeModals() {
-            document.getElementById('projectModal').classList.add('hidden');
             document.getElementById('changePassModal').classList.add('hidden');
+            document.getElementById('adminResetModal').classList.add('hidden');
+            document.getElementById('projectModal').classList.add('hidden');
         }
     </script>
 </body>
