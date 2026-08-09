@@ -398,61 +398,6 @@
             color: #55efc4;
             text-decoration: underline;
         }
-
-        /* NÂNG CẤP MỚI: TRỢ LÝ AI AN TÍN CHATBAR & HIỆU ỨNG NỔI BẬT */
-        .ai-assistant-widget {
-            margin-top: 20px;
-            background: linear-gradient(135deg, rgba(0, 206, 201, 0.1), rgba(243, 156, 18, 0.1));
-            border: 1px solid rgba(0, 206, 201, 0.3);
-            border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        .ai-chat-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 13px;
-            font-weight: bold;
-            color: #55efc4;
-        }
-        .ai-chat-body {
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 12px;
-            color: #dfe6e9;
-            min-height: 50px;
-            max-height: 100px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            border-left: 3px solid #00cec9;
-        }
-        .ai-chat-input-row {
-            display: flex;
-            gap: 8px;
-        }
-        .ai-chat-input-row input {
-            padding: 10px 12px;
-            font-size: 12px;
-            border-radius: 10px;
-        }
-        .ai-send-btn {
-            background: #00cec9;
-            color: #000;
-            border: none;
-            padding: 0 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-        .ai-send-btn:hover {
-            background: #55efc4;
-            transform: scale(1.05);
-        }
     </style>
 </head>
 <body>
@@ -467,9 +412,9 @@
 
         <!-- Header -->
         <div style="text-align: center;">
-            <span class="header-badge"><i class="fa-solid fa-crown"></i> AN TÍN ECOSYSTEM VIP AI v2.5</span>
+            <span class="header-badge"><i class="fa-solid fa-crown"></i> AN TÍN ECOSYSTEM VIP AI</span>
             <h1>Cổng Thanh Toán & Gia Hạn VIP Care</h1>
-            <p class="subtitle">Hệ thống kích hoạt bảo trì, bảo hành thông minh tự động 24/7 qua AI tích hợp nâng cao</p>
+            <p class="subtitle">Hệ thống kích hoạt bảo trì, bảo hành thông minh tự động 24/7 qua AI</p>
         </div>
 
         <!-- Form Nhập Thông Tin Định Danh -->
@@ -513,23 +458,8 @@
             </div>
         </div>
 
-        <!-- Trợ Lý AI Tích Hợp Mới Sống Động -->
-        <div class="ai-assistant-widget">
-            <div class="ai-chat-header">
-                <span><i class="fa-solid fa-wand-magic-sparkles" style="color: #00cec9;"></i> Trợ Lý Ảo AI An Tín Hỗ Trợ Nhanh</span>
-                <span style="font-size: 10px; background: rgba(0,206,201,0.2); padding: 2px 6px; border-radius: 4px;">Online 24/7</span>
-            </div>
-            <div class="ai-chat-body" id="aiChatResponse">
-                👋 Chào bạn! Tôi là trợ lý AI An Tín. Bạn cần tư vấn chọn gói dịch vụ camera hay cấu hình mạng phù hợp nhất không? Hãy hỏi tôi nhé!
-            </div>
-            <div class="ai-chat-input-row">
-                <input type="text" id="aiUserQuery" placeholder="Nhập câu hỏi về dịch vụ, giá cả..." onkeypress="if(event.key === 'Enter') askAiAssistant()">
-                <button class="ai-send-btn" onclick="askAiAssistant()"><i class="fa-solid fa-paper-plane"></i> Hỏi AI</button>
-            </div>
-        </div>
-
         <!-- Nút Kích Thích Hành Động -->
-        <button type="button" onclick="triggerOpenModalFromMain()" class="btn-action btn-ai-popup" style="margin-top: 20px;">
+        <button type="button" onclick="triggerOpenModalFromMain()" class="btn-action btn-ai-popup">
             <i class="fa-solid fa-robot" style="font-size: 18px;"></i> Mở Popup Thanh Toán Siêu Tốc AI <i class="fa-solid fa-bolt" style="color:#fff;"></i>
         </button>
 
@@ -738,34 +668,6 @@
                 detail: "• Trọn gói toàn bộ hệ thống Camera và Wi-Fi.<br>• Bảo dưỡng định kỳ hệ thống điện thông minh, khóa vân tay, chuông cửa màn hình.<br>• Ưu tiên xử lý sự cố khẩn cấp trong vòng 1-2 giờ với đội ngũ chuyên gia kỹ thuật An Tín."
             }
         ];
-
-        // TÍCH HỢP MỚI: TRỢ LÝ AI TƯ VẤN THÔNG MINH
-        function askAiAssistant() {
-            var inputField = document.getElementById('aiUserQuery');
-            var chatBox = document.getElementById('aiChatResponse');
-            var query = inputField.value.trim().toLowerCase();
-            
-            if(!query) return;
-
-            chatBox.innerHTML += `<br><b style="color:#f1c40f;">Bạn:</b> ${inputField.value}`;
-            
-            var reply = "Cảm ơn bạn đã hỏi! Đội ngũ An Tín luôn sẵn sàng hỗ trợ bạn qua Zalo 0914060339 hoặc hotline trực tiếp 24/7.";
-            
-            if(query.includes('camera') || query.includes('giám sát')) {
-                reply = "🤖 Trợ lý AI: Gói VIP Care Tiêu Chuẩn (1.200.000đ) là sự lựa chọn tối ưu nhất chuyên sâu cho hệ thống Camera của bạn!";
-            } else if(query.includes('wifi') || query.includes('mạng')) {
-                reply = "🤖 Trợ lý AI: Bạn nên chọn Gói VIP Care Toàn Diện (1.600.000đ) để bao gồm cả tối ưu mạng Wi-Fi và cân bằng tải Router cực mượt.";
-            } else if(query.includes('giá') || query.includes('bao nhiêu')) {
-                reply = "🤖 Trợ lý AI: Các gói dịch vụ dao động từ 1.200.000đ đến 2.500.000đ/năm trọn gói bảo trì tận nơi.";
-            }
-
-            setTimeout(() => {
-                chatBox.innerHTML += `<br><span style="color:#55efc4;">${reply}</span>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 400);
-
-            inputField.value = '';
-        }
 
         // Hàm khởi tạo và hiển thị chuẩn dòng 7 trở xuống
         function initDynamicPackages() {
