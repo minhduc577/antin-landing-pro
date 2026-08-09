@@ -184,6 +184,10 @@
             <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2.5 rounded-xl shadow-lg transition-all text-xs cursor-pointer flex items-center justify-center gap-2">
                 <i class="fa-solid fa-right-to-bracket"></i> Mở Khóa Trình Quản Lý Logic
             </button>
+            <div class="flex justify-between items-center pt-1 text-[11px]">
+                <span class="text-gray-400">Quên mật khẩu?</span>
+                <button onclick="resetDefaultAccounts()" class="text-cyan-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-rotate"></i> Reset tài khoản về mặc định</button>
+            </div>
         </div>
     </div>
 
@@ -275,17 +279,36 @@
             </div>
         </div>
 
-        <!-- FOOTER THÔNG TIN AN TÍN -->
+        <!-- FOOTER THÔNG TIN AN TÍN (ĐÃ BỔ SUNG ĐẦY ĐỦ THÔNG TIN DOANH NGHIỆP) -->
         <div class="company-footer">
-            <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH[cite: 11].</h4>
+            <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH.[cite: 11]</h4>
             <div class="services-grid">
-                <div class="service-item"><i class="fa-solid fa-video" style="color:#f39c12"></i> Camera an ninh – Giám sát 24/7</div>
-                <div class="service-item"><i class="fa-solid fa-network-wired" style="color:#f39c12"></i> Mạng Wi-Fi – Máy tính – Hạ tầng CNTT</div>
-                <div class="service-item"><i class="fa-solid fa-shield-cat" style="color:#f39c12"></i> Chống đột nhập – Khóa cửa thông minh</div>
-                <div class="service-item"><i class="fa-solid fa-fingerprint" style="color:#f39c12"></i> Chấm công vân tay – Kiểm soát ra vào</div>
+                <div class="service-item"><i class="fa-solid fa-video text-amber-400"></i> Camera an ninh – Giám sát 24/7[cite: 11]</div>
+                <div class="service-item"><i class="fa-solid fa-network-wired text-amber-400"></i> Mạng Wi-Fi – Máy tính – Hạ tầng CNTT[cite: 11]</div>
+                <div class="service-item"><i class="fa-solid fa-shield-cat text-amber-400"></i> Chống đột nhập – Khóa cửa thông minh[cite: 11]</div>
+                <div class="service-item"><i class="fa-solid fa-fingerprint text-amber-400"></i> Chấm công vân tay – Kiểm soát ra vào[cite: 11]</div>
+                <div class="service-item"><i class="fa-solid fa-fire-extinguisher text-amber-400"></i> Báo cháy tự động – An toàn tài sản</div>
+                <div class="service-item"><i class="fa-solid fa-globe text-amber-400"></i> Thiết kế Website chuyên nghiệp</div>
+                <div class="service-item"><i class="fa-solid fa-cloud text-amber-400"></i> Tên miền – Hosting – Cloud Server</div>
+                <div class="service-item"><i class="fa-solid fa-house-chimney text-amber-400"></i> Nhà thông minh – Smart Home</div>
+                <div class="service-item"><i class="fa-solid fa-bolt text-amber-400"></i> Điện dân dụng – Điện công nghiệp</div>
+                <div class="service-item"><i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Sửa chữa & bảo trì thiết bị điện gia đình</div>
+                <div class="service-item"><i class="fa-solid fa-mug-hot text-amber-400"></i> Ấm điện – Bếp điện – Nồi điện – Quạt điện...</div>
+                <div class="service-item"><i class="fa-solid fa-robot text-amber-400"></i> Tự động hóa thiết bị điện thông minh</div>
             </div>
+            
+            <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/60 text-xs mb-3 space-y-1">
+                <p>🏢 <b>CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</b></p>
+                <p>📍 85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</p>
+                <p>☎️ (028) 3849 3575 &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" class="text-cyan-400 hover:underline">0914 060 339</a></p>
+                <p>📩 ctyantinco@gmail.com</p>
+            </div>
+
             <div class="ecosystem-links">
+                <a href="https://khuyenmaicamera.blogspot.com" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-blog"></i> Blog Khuyến Mãi</a>
                 <a href="https://zalo.me/0914060339" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-comment-sms"></i> Zalo (0914060339)</a>
+                <a href="https://zalo.me/3260030944980440169" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-comments"></i> Zalo OA</a>
+                <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-mobile-screen"></i> Zalo Mini App</a>
                 <a href="https://ebook.antinco.com/trangchu" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-globe"></i> AN TÍN ECOSYSTEM AI</a>
             </div>
         </div>
@@ -325,7 +348,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="text-gray-300 font-bold">Hạng mục chi tiết (StagesJSON):</label>
+                    <label class="text-gray-300 font-bold">Hạng mục chi tiết:</label>
                     <input type="text" id="mStages" placeholder="Bảo trì hệ thống Camera giám sát" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div class="flex gap-2 mt-5">
@@ -353,15 +376,13 @@
         </div>
     </div>
 
-    <!-- SCRIPT TÍCH HỢP TOÀN DIỆN & CHỐNG MẤT DỮ LIỆU -->
+    <!-- SCRIPT XỬ LÝ LOGIC -->
     <script>
-        // Tài khoản quản trị & quản lý (Có hỗ trợ đổi pass động)
         let defaultAccounts = [
             { username: "admin", password: "AbC@CbA@13579", role: "admin", fullname: "Quản Trị Viên Hệ Thống" },
             { username: "manager", password: "AbC@CbA@13579", role: "manager", fullname: "Quản Lý Dự Án (PM)" }
         ];
 
-        // Bộ dữ liệu mẫu phong phú
         let defaultProjects = {
             "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Hệ Thống Camera",status:"Bảo trì hệ thống Camera giám sát",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
             "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Đang cấu hình & tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp hạ tầng mạng & Thiết bị Point to Point WiFi",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
@@ -386,24 +407,7 @@
         }
 
         window.onload = function() {
-            // Thử đồng bộ qua Google Apps Script (nếu chạy trong môi trường Google Sheets)
-            if(typeof google !== 'undefined' && google.script && google.script.run) {
-                google.script.run
-                    .withSuccessHandler(function(data) {
-                        if(data) {
-                            if(data.accounts) { serverAccounts = data.accounts; localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts)); }
-                            if(data.projects && Object.keys(data.projects).length > 0) { projectsData = data.projects; localStorage.setItem("antin_projects", JSON.stringify(projectsData)); }
-                        }
-                        initAppUI();
-                    })
-                    .withFailureHandler(function(err) {
-                        console.log("Dùng chế độ lưu trữ cục bộ độc lập.");
-                        initAppUI();
-                    })
-                    .getAppData();
-            } else {
-                initAppUI();
-            }
+            initAppUI();
         }
 
         function initAppUI() {
@@ -430,7 +434,17 @@
                 document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
                 showToast(`Xin chào ${matched.fullname}! Đã mở khóa quyền quản trị.`);
             } else {
-                alert("Mật khẩu hoặc tài khoản không chính xác! (Mặc định: admin / manager với pass: AbC@CbA@13579)");
+                alert("Mật khẩu hoặc tài khoản không chính xác! (Mặc định: admin hoặc manager với pass: AbC@CbA@13579)");
+            }
+        }
+
+        // Tính năng Reset tài khoản quản lý về mặc định
+        function resetDefaultAccounts() {
+            if(confirm("Bạn có chắc chắn muốn đặt lại tài khoản admin và manager về mật khẩu mặc định (AbC@CbA@13579) không?")) {
+                serverAccounts = JSON.parse(JSON.stringify(defaultAccounts));
+                localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
+                showToast("Đã reset tài khoản thành công! Mật khẩu là: AbC@CbA@13579");
+                document.getElementById("loginPass").value = "AbC@CbA@13579";
             }
         }
 
@@ -557,11 +571,6 @@
             projectsData[id] = projectPayload;
             localStorage.setItem("antin_projects", JSON.stringify(projectsData));
 
-            // Đồng bộ nếu có Google Apps Script
-            if(typeof google !== 'undefined' && google.script && google.script.run) {
-                google.script.run.withSuccessHandler().saveProject(id, projectPayload);
-            }
-
             renderProjectsDashboard();
             switchProject(id);
             closeModals();
@@ -574,10 +583,6 @@
                 let deletedId = currentActiveProjId;
                 delete projectsData[deletedId];
                 localStorage.setItem("antin_projects", JSON.stringify(projectsData));
-
-                if(typeof google !== 'undefined' && google.script && google.script.run) {
-                    google.script.run.withSuccessHandler().deleteProject(deletedId);
-                }
 
                 let remainingKeys = Object.keys(projectsData);
                 if(remainingKeys.length > 0) {
@@ -599,16 +604,10 @@
             let newPass = document.getElementById('newPassInput').value.trim();
             if(!newPass) { alert("Vui lòng nhập mật khẩu mới!"); return; }
 
-            // Cập nhật pass cho tài khoản đang đăng nhập
             let acc = serverAccounts.find(a => a.username === currentUser.username);
             if(acc) {
                 acc.password = newPass;
                 localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
-
-                if(typeof google !== 'undefined' && google.script && google.script.run) {
-                    google.script.run.withSuccessHandler().updatePassword(currentUser.username, newPass);
-                }
-
                 showToast(`Đã đổi mật khẩu thành công cho [${currentUser.username}]!`);
                 closeModals();
             } else {
