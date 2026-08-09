@@ -597,7 +597,6 @@
                     var rawPackages = data.goiDichVu || data.packages || data;
                     if(Array.isArray(rawPackages) && rawPackages.length > 0) {
                         var mappedPkgs = rawPackages.map((item, idx) => {
-                            // Nếu dữ liệu trả về là dạng mảng giá trị [id, name, price] hoặc object {id, name, price}
                             let pkgId = "";
                             let pkgName = "";
                             let pkgPrice = 0;
