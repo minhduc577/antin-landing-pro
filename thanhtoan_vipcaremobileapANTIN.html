@@ -134,31 +134,14 @@
             position: relative;
             overflow: hidden;
         }
-        .pricing-box::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(243,156,18,0.1) 0%, transparent 70%);
-            animation: rotateGlow 6s linear infinite;
-        }
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
         .price-text {
             font-size: 30px;
             font-weight: 800;
             color: #2ecc71;
             margin: 5px 0;
             text-shadow: 0 0 12px rgba(46, 204, 113, 0.5);
-            animation: pricePulse 2s infinite;
             position: relative;
             z-index: 1;
-        }
-        @keyframes pricePulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
         }
         .qr-section {
             background: #ffffff;
@@ -232,12 +215,6 @@
             background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
             color: #0f1016;
             box-shadow: 0 5px 20px rgba(241, 196, 15, 0.4);
-            animation: aiPulse 1.5s infinite;
-        }
-        @keyframes aiPulse {
-            0% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.4); }
-            50% { box-shadow: 0 0 28px rgba(241, 196, 15, 0.9); transform: scale(1.02); }
-            100% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.4); }
         }
         .btn-ai-popup:hover {
             transform: translateY(-2px);
@@ -252,7 +229,6 @@
             background: rgba(255, 255, 255, 0.2);
         }
         
-        /* Toast Notification */
         #toastAlert {
             visibility: hidden;
             min-width: 250px;
@@ -277,7 +253,6 @@
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        /* Chân trang động */
         .company-footer {
             margin-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -307,11 +282,6 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: transform 0.2s;
-        }
-        .service-item:hover {
-            transform: translateX(4px);
-            color: #f39c12;
         }
         .slogan-box {
             background: rgba(243, 156, 18, 0.08);
@@ -330,9 +300,6 @@
         .contact-info a {
             color: #00cec9;
             text-decoration: none;
-        }
-        .contact-info a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -364,9 +331,9 @@
             <input type="text" id="inputPhone" value="0914060339" placeholder="VD: 0914060339" oninput="updateQRData()">
         </div>
 
-        <!-- Hiển thị chuẩn xác cấu trúc [ID gói] — [Tên chi tiết] — [Giá] -->
+        <!-- Đã bỏ dòng: ([ID gói] — [Tên chi tiết] — [Giá]): -->
         <div class="form-group">
-            <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn ([ID gói] — [Tên chi tiết] — [Giá]):</label>
+            <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn</label>
             <select id="selectPackage" onchange="updateQRData()">
                 <option value="0" data-pkgid="vip_1" data-name="Đang đồng bộ dữ liệu">Đang đồng bộ dữ liệu từ Sheet thanhtoan_config...</option>
             </select>
@@ -460,14 +427,12 @@
             <button onclick="closeAdminDashboard()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             <h2 style="color:#2ecc71; margin-bottom:15px; text-align:center; font-size:20px;"><i class="fa-solid fa-screwdriver-wrench"></i> Bảng Điều Khiển Quản Trị Viên</h2>
             
-            <!-- Đồng bộ Apps Script -->
             <div style="background:rgba(46,204,113,0.1); border:1px solid #2ecc71; padding:15px; border-radius:12px; margin-bottom:15px;">
                 <h4 style="color:#2ecc71; margin-bottom:8px; font-size:14px;"><i class="fa-solid fa-cloud-arrow-down"></i> Đồng Bộ Google Sheet Apps Script</h4>
                 <p style="font-size:11px; color:#b2bec3; margin-bottom:10px;">Hệ thống liên kết trực tiếp với sheet `thanhtoan_config` của An Tín.</p>
                 <button onclick="fetchDataFromAppsScript()" style="background:#2ecc71; color:#000; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Đồng Bộ Ngay Từ Sheet</button>
             </div>
 
-            <!-- Đổi mật khẩu -->
             <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
                 <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🔑 Đổi Mật Khẩu Quản Trị</h4>
                 <div class="form-group" style="margin-bottom:10px;">
@@ -476,7 +441,6 @@
                 <button onclick="changeAdminPassword()" style="background:#f39c12; color:#000; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Lưu Mật Khẩu Mới</button>
             </div>
 
-            <!-- Upload QR Code -->
             <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
                 <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🖼️ Tải Lên Ảnh Mã QR Ngân Hàng</h4>
                 <input type="file" id="qrImageFile" accept="image/*" style="margin-bottom:10px; font-size:12px;">
@@ -484,12 +448,9 @@
                 <button onclick="resetToVietQRApi()" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px; margin-left:5px;">Dùng VietQR Tự Động</button>
             </div>
 
-            <!-- Quản lý gói dịch vụ -->
             <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
-                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn (Vô Hạn)</h4>
-                <div id="packageListAdmin" style="max-height:150px; overflow-y:auto; margin-bottom:10px; font-size:12px;">
-                    <!-- Danh sách gói load bằng JS -->
-                </div>
+                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn</h4>
+                <div id="packageListAdmin" style="max-height:150px; overflow-y:auto; margin-bottom:10px; font-size:12px;"></div>
                 <div style="display:flex; gap:8px; flex-wrap:wrap;">
                     <input type="text" id="newPkgId" placeholder="ID gói (VD: vip_4)..." style="font-size:12px; padding:8px; width:100px;">
                     <input type="text" id="newPkgName" placeholder="Tên chi tiết..." style="font-size:12px; padding:8px; flex:1;">
@@ -504,7 +465,7 @@
 
     <!-- ================= MODAL POPUP THANH TOÁN AI ================= -->
     <div id="vipPaymentModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
-        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #f39c12; border-radius:20px; max-width:480px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative; animation: modalPop 0.3s ease-in-out;">
+        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #f39c12; border-radius:20px; max-width:480px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative;">
             <button onclick="closeVipModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             
             <div style="text-align:center; margin-bottom:20px;">
@@ -535,7 +496,7 @@
             </div>
 
             <div style="display: flex; gap: 10px; flex-direction: column;">
-                <a id="zaloConfirmBtn" href="https://zalo.me/0914060339" target="_blank" style="background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%); color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 15px rgba(0,136,255,0.4); display:flex; align-items:center; justify-content:center; gap:8px;">
+                <a id="zaloConfirmBtn" href="https://zalo.me/0914060339" target="_blank" style="background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%); color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; display:flex; align-items:center; justify-content:center; gap:8px;">
                     💬 Gửi Minh Chứng Chuyển Khoản Qua Zalo (0914060339)
                 </a>
                 <button onclick="closeVipModal()" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 10px; cursor:pointer; font-weight:600; font-size:13px;">
@@ -545,18 +506,10 @@
         </div>
     </div>
 
-    <style>
-    @keyframes modalPop {
-        from { transform: scale(0.8); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
-    </style>
-
     <script>
-        // Link Apps Script liên kết trực tiếp sheet thanhtoan_config
         var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTLHw2d2RSmlmRc55T8tsI6pw_6BNPPYMLKefLL3QfGOVb6kvcqC9t-VwVRoi7ziBMoQ/exec";
 
-        // Khởi tạo bộ nhớ cục bộ dự phòng chuẩn An Tín
+        // Khởi tạo bộ nhớ cục bộ đồng bộ chính xác mật khẩu & gói dữ liệu
         if(!localStorage.getItem('adminPass')) {
             localStorage.setItem('adminPass', 'antin2026');
         }
@@ -579,7 +532,7 @@
             zalo: "https://zalo.me/0914060339"
         };
 
-        // Hàm gọi đồng bộ dữ liệu từ Google Sheet Apps Script (`thanhtoan_config`)
+        // Hàm gọi dữ liệu từ Apps Script và bóc tách chuẩn 3 trường: id, name, price từ Sheet
         function fetchDataFromAppsScript() {
             showToast("Đang đồng bộ dữ liệu từ Google Sheet thanhtoan_config...");
             fetch(APPS_SCRIPT_URL)
@@ -590,14 +543,19 @@
                         updateEnterpriseUI();
                     }
                     if(data.adminPass) {
-                        localStorage.setItem('adminPass', data.adminPass);
+                        localStorage.setItem('adminPass', String(data.adminPass).trim());
                     }
-                    if(data.goiDichVu && data.goiDichVu.length > 0) {
-                        var mappedPkgs = data.goiDichVu.map((item, idx) => ({
-                            id: item.id || ("vip_" + (idx + 1)),
-                            name: item.name,
-                            price: Number(item.price) || 0
-                        }));
+                    
+                    // Xử lý chuẩn bóc tách 3 trường từ Sheet (Hỗ trợ cả tên key viết thường/viết hoa hoặc mảng dữ liệu thô)
+                    let rawPkgs = data.goiDichVu || data.packages || data.dsGoi || [];
+                    if(rawPkgs.length > 0) {
+                        var mappedPkgs = rawPkgs.map((item, idx) => {
+                            return {
+                                id: String(item.id || item.ID || item.maGoi || ("vip_" + (idx + 1))).trim(),
+                                name: String(item.name || item.tenGoi || item.Tên || "Gói dịch vụ " + (idx + 1)).trim(),
+                                price: Number(item.price || item.gia || item.Gia || 0)
+                            };
+                        });
                         localStorage.setItem('packagesData', JSON.stringify(mappedPkgs));
                     }
                     loadPackagesToUI();
@@ -622,7 +580,6 @@
             document.getElementById('footerSloganText').innerText = enterpriseConfig.slogan;
         }
 
-        // Tải gói dịch vụ vào dropdown với định dạng chuẩn: [ID gói] — [Tên chi tiết] — [Giá]
         function loadPackagesToUI() {
             var pkgs = JSON.parse(localStorage.getItem('packagesData')) || [];
             var selectEl = document.getElementById('selectPackage');
@@ -639,7 +596,8 @@
                 var pkgId = pkg.id || ("vip_" + (index + 1));
                 opt.setAttribute('data-pkgid', pkgId);
                 opt.setAttribute('data-name', pkg.name);
-                opt.text = `${pkgId} — ${pkg.name} — ${Number(pkg.price).toLocaleString('vi-VN')} VNĐ`;
+                // Hiển thị trực tiếp cấu trúc rõ ràng trong select tùy ý
+                opt.text = `[${pkgId}] — ${pkg.name} — ${Number(pkg.price).toLocaleString('vi-VN')} VNĐ`;
                 selectEl.appendChild(opt);
             });
 
@@ -657,7 +615,6 @@
             updateQRData();
         }
 
-        // Cập nhật QR Code và Nội dung chuyển khoản chuẩn hóa: VIP [ID Gói] [Số Điện Thoại]
         function updateQRData() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
@@ -689,17 +646,18 @@
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
         }
 
-        // Các hàm Quản Trị Admin
         function openAdminLoginModal() {
             document.getElementById('adminLoginModal').style.display = 'flex';
         }
         function closeAdminLoginModal() {
             document.getElementById('adminLoginModal').style.display = 'none';
         }
+
+        // Khắc phục triệt để lỗi sai mật khẩu quản trị bằng cách chuẩn hóa kiểu chuỗi và khoảng trắng
         function processAdminLogin() {
-            var user = document.getElementById('adminUser').value;
-            var pass = document.getElementById('adminPass').value;
-            var storedPass = localStorage.getItem('adminPass');
+            var user = document.getElementById('adminUser').value.trim();
+            var pass = document.getElementById('adminPass').value.trim();
+            var storedPass = String(localStorage.getItem('adminPass') || 'antin2026').trim();
 
             if(user === 'admin' && pass === storedPass) {
                 closeAdminLoginModal();
@@ -709,6 +667,7 @@
                 alert("Sai tên đăng nhập hoặc mật khẩu quản trị!");
             }
         }
+
         function closeAdminDashboard() {
             document.getElementById('adminDashboardModal').style.display = 'none';
         }
@@ -770,7 +729,6 @@
             showToast("Đã xóa gói dịch vụ!");
         }
 
-        // Modal thanh toán AI
         function openVipPaymentModal() {
             var modal = document.getElementById('vipPaymentModal');
             if(!modal) return;
@@ -810,7 +768,6 @@
             openVipPaymentModal();
         }
 
-        // Sao chép thông minh
         function copySyntaxText() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
