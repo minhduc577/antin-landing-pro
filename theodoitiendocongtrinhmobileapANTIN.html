@@ -125,7 +125,7 @@
             transition: all 0.3s;
         }
         .ecosystem-link-btn:hover { background: #00cec9; color: #000; }
-        .role-protected { display: none; }
+        .auth-required { display: none !important; }
     </style>
 </head>
 <body data-role="guest">
@@ -154,7 +154,7 @@
                 <button onclick="logoutSystem()" id="btnLogout" class="bg-slate-800 hover:bg-slate-700 text-red-400 px-3 py-1.5 rounded-xl text-xs font-bold transition-all hidden items-center gap-1 cursor-pointer border border-red-500/30">
                     <i class="fa-solid fa-power-off"></i> Đăng Xuất
                 </button>
-                <button onclick="openAdminModal()" id="btnAdminDash" class="role-protected admin-only bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all items-center gap-1.5 cursor-pointer shadow-lg">
+                <button onclick="openAdminModal()" id="btnAdminDash" class="auth-required admin-only bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all items-center gap-1.5 cursor-pointer shadow-lg">
                     <i class="fa-solid fa-user-shield"></i> Quản Trị Admin
                 </button>
             </div>
@@ -167,7 +167,7 @@
                     <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-folder-tree mr-1"></i> Danh Sách Dự Án Đang Quản Lý</h3>
                 </div>
                 <div>
-                    <button onclick="openAddProjectModal()" id="btnAddProj" class="role-protected manager-allowed admin-allowed bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1 rounded-lg text-xs font-bold transition-all items-center gap-1 cursor-pointer">
+                    <button onclick="openAddProjectModal()" id="btnAddProj" class="auth-required manager-or-admin bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1 rounded-lg text-xs font-bold transition-all items-center gap-1 cursor-pointer">
                         <i class="fa-solid fa-plus"></i> Thêm Dự Án
                     </button>
                 </div>
@@ -189,8 +189,8 @@
                         <span id="p-percent" class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">0%</span>
                         <p class="text-[10px] text-gray-400">Hoàn thành</p>
                     </div>
-                    <!-- Chỉ Admin mới được Sửa / Xóa Dự án hiện tại -->
-                    <div id="projectActionButtons" class="role-protected admin-only gap-1.5">
+                    <!-- Nút Sửa / Xóa dự án (Chỉ hiện khi Manager hoặc Admin đăng nhập) -->
+                    <div id="projectActionButtons" class="auth-required manager-or-admin gap-1.5">
                         <button onclick="openEditProgressModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-xl border border-cyan-500/40 text-xs cursor-pointer" title="Sửa dự án">
                             <i class="fa-solid fa-pen"></i>
                         </button>
@@ -228,9 +228,9 @@
         <div class="company-footer">
             <h4 class="text-amber-400 font-bold text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> AN TÍN – GIẢI PHÁP KỸ THUẬT & CÔNG NGHỆ TOÀN DIỆN</h4>
             <div class="services-grid">
-                <div class="service-item"><i class="fa-solid fa-video text-amber-400"></i> Camera an ninh 24/7[cite: 11]</div>
-                <div class="service-item"><i class="fa-solid fa-network-wired text-amber-400"></i> Mạng Wi-Fi & CNTT[cite: 11]</div>
-                <div class="service-item"><i class="fa-solid fa-fingerprint text-amber-400"></i> Kiểm soát ra vào[cite: 11]</div>
+                <div class="service-item"><i class="fa-solid fa-video text-amber-400"></i> Camera an ninh 24/7</div>
+                <div class="service-item"><i class="fa-solid fa-network-wired text-amber-400"></i> Mạng Wi-Fi & CNTT</div>
+                <div class="service-item"><i class="fa-solid fa-fingerprint text-amber-400"></i> Kiểm soát ra vào</div>
                 <div class="service-item"><i class="fa-solid fa-house-chimney text-amber-400"></i> Nhà thông minh Smart Home</div>
                 <div class="service-item"><i class="fa-solid fa-globe text-amber-400"></i> Thiết kế Website & Hosting</div>
                 <div class="service-item"><i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Sửa chữa thiết bị điện</div>
@@ -256,8 +256,8 @@
             </div>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Tên đăng nhập:</label>
-                    <input type="text" id="loginUser" placeholder="Nhập admin hoặc manager1/manager2" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <label class="text-gray-300 font-bold">Tài khoản:</label>
+                    <input type="text" id="loginUser" placeholder="admin hoặc manager01/manager02" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div>
                     <label class="text-gray-300 font-bold">Mật khẩu:</label>
@@ -274,7 +274,7 @@
     <div id="adminModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-xl w-full shadow-2xl">
             <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-                <h3 class="text-sm font-extrabold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-user-shield text-base"></i> Quản Trị Hệ Thống: Cài Đặt 2 Tài Khoản Manager</h3>
+                <h3 class="text-sm font-extrabold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-user-shield text-base"></i> Quản Trị Admin: Cài Đặt 2 Tài Khoản Manager</h3>
                 <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="space-y-4 text-xs">
@@ -301,7 +301,7 @@
     <!-- MODAL: RESET MẬT KHẨU MANAGER -->
     <div id="resetMgrModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
-            <h3 id="resetTitle" class="text-sm font-bold text-amber-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Reset Mật Khẩu Manager</h3>
+            <h3 class="text-sm font-bold text-amber-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Reset Mật Khẩu Manager</h3>
             <div class="space-y-3 text-xs">
                 <div>
                     <label class="text-gray-300 font-bold">Tài khoản:</label>
@@ -366,7 +366,6 @@
 
     <!-- SCRIPT XỬ LÝ DỮ LIỆU & PHÂN QUYỀN -->
     <script>
-        // Dữ liệu dự án chuẩn đồng bộ từ Google Sheets / Apps Script
         let defaultProjects = {
             "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Camera Giám Sát",status:"Đang vận hành ổn định 24/7",statusColor:"text-emerald-400"}] },
             "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp thiết bị Point to Point",statusColor:"text-cyan-400"}] },
@@ -380,11 +379,10 @@
             "manager02": { password: "123", fullname: "Nguyễn Văn An (Manager 2)" }
         };
 
-        let projectsData = JSON.parse(localStorage.getItem("antin_projects_v5")) || defaultProjects;
-        let managersData = JSON.parse(localStorage.getItem("antin_managers_v5")) || defaultManagers;
+        let projectsData = JSON.parse(localStorage.getItem("antin_projects_v6")) || defaultProjects;
+        let managersData = JSON.parse(localStorage.getItem("antin_managers_v6")) || defaultManagers;
         let currentRole = localStorage.getItem("antin_current_role") || "guest"; // guest, manager, admin
         let currentActiveProjId = "PRJ-01";
-        let isEditingProject = false;
 
         function showToast(msg) {
             let x = document.getElementById("toastAlert");
@@ -418,13 +416,13 @@
                 lblCurrentRole.innerText = currentRole === "admin" ? "Administrator" : `Manager (${currentRole})`;
             }
 
-            // Hiển thị / Ẩn các nút theo phân quyền
-            document.querySelectorAll('.role-protected').forEach(el => el.style.display = 'none');
+            // Ẩn/Hiện các thành phần tương tác theo phân quyền
+            document.querySelectorAll('.auth-required').forEach(el => el.style.display = 'none');
             if(currentRole === "admin") {
                 document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'flex');
-                document.querySelectorAll('.manager-allowed').forEach(el => el.style.display = 'flex');
+                document.querySelectorAll('.manager-or-admin').forEach(el => el.style.display = 'flex');
             } else if(currentRole === "manager") {
-                document.querySelectorAll('.manager-allowed').forEach(el => el.style.display = 'flex');
+                document.querySelectorAll('.manager-or-admin').forEach(el => el.style.display = 'flex');
             }
         }
 
@@ -499,9 +497,9 @@
                 localStorage.setItem("antin_current_role", currentRole);
                 closeModals();
                 applyRoleUI();
-                showToast(`Đăng nhập thành công với tư cách Manager (${u})!`);
+                showToast(`Đăng nhập thành công với tài khoản Manager (${u})!`);
             } else {
-                alert("Sai tên đăng nhập hoặc mật khẩu! (Admin: admin / admin123; Manager: manager01 / 123)");
+                alert("Sai tài khoản hoặc mật khẩu! (Admin: admin / admin123; Manager: manager01 / 123)");
             }
         }
 
@@ -542,15 +540,14 @@
             if(!newP) { alert("Vui lòng nhập mật khẩu mới!"); return; }
 
             managersData[u].password = newP;
-            localStorage.setItem("antin_managers_v5", JSON.stringify(managersData));
+            localStorage.setItem("antin_managers_v6", JSON.stringify(managersData));
             closeModals();
             openAdminModal();
             showToast(`Đã reset mật khẩu cho tài khoản [${u}] thành công!`);
         }
 
-        // QUẢN LÝ DỰ ÁN (MANAGER CHỈ ĐƯỢC THÊM, ADMIN ĐƯỢC THÊM/SỬA/XÓA)
+        // QUẢN LÝ DỰ ÁN (MANAGER & ADMIN ĐỀU THÊM/SỬA/XÓA THOẢI MÁI)
         function openAddProjectModal() {
-            isEditingProject = false;
             document.getElementById('projModalTitle').innerHTML = `<i class="fa-solid fa-folder-plus mr-1"></i> Thêm Dự Án Mới`;
             let nextId = "PRJ-0" + (Object.keys(projectsData).length + 1);
             document.getElementById('mId').value = nextId;
@@ -565,11 +562,6 @@
         }
 
         function openEditProgressModal() {
-            if(currentRole !== "admin") {
-                alert("Manager chỉ có quyền thêm dự án mới, không có quyền sửa dự án!");
-                return;
-            }
-            isEditingProject = true;
             document.getElementById('projModalTitle').innerHTML = `<i class="fa-solid fa-pen mr-1"></i> Sửa Thông Tin Dự Án`;
             let proj = projectsData[currentActiveProjId];
             if(!proj) return;
@@ -599,7 +591,7 @@
                 title: title, percent: percent, date: date, speed: speed, badge: badge,
                 stages: [{ icon: "fa-shield-halved", color: "cyan", title: "Hạng Mục", status: stageDesc, statusColor: "text-cyan-400" }]
             };
-            localStorage.setItem("antin_projects_v5", JSON.stringify(projectsData));
+            localStorage.setItem("antin_projects_v6", JSON.stringify(projectsData));
             renderProjectsDashboard();
             switchProject(id);
             closeModals();
@@ -607,13 +599,9 @@
         }
 
         function deleteCurrentProject() {
-            if(currentRole !== "admin") {
-                alert("Chỉ Admin mới có quyền xóa dự án!");
-                return;
-            }
-            if(confirm(`Admin xác nhận xóa dự án [${currentActiveProjId}]?`)) {
+            if(confirm(`Xác nhận xóa dự án [${currentActiveProjId}]?`)) {
                 delete projectsData[currentActiveProjId];
-                localStorage.setItem("antin_projects_v5", JSON.stringify(projectsData));
+                localStorage.setItem("antin_projects_v6", JSON.stringify(projectsData));
                 let keys = Object.keys(projectsData);
                 if(keys.length > 0) { currentActiveProjId = keys[0]; renderProjectsDashboard(); switchProject(currentActiveProjId); }
                 showToast("Đã xóa dự án thành công!");
