@@ -507,7 +507,7 @@
         </div>
     </div>
 
-    <!-- MODAL HIỂN THỊ CHI TIẾT CÁC GÓI VIP CARE (Đồng bộ chuẩn cột E từ dòng 7) -->
+    <!-- MODAL HIỂN THỊ CHI TIẾT CÁC GÓI VIP CARE (Tự động lấy dữ liệu cột E từ dòng 7 trở xuống) -->
     <div id="packageDetailsModal" style="display:none; position:fixed; z-index:999999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
         <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #00cec9; border-radius:24px; max-width:600px; width:100%; max-height:85vh; display:flex; flex-direction:column; padding:25px; color:#fff; box-shadow: 0 20px 45px rgba(0,206,201, 0.35); position:relative;">
             <button onclick="closePackageDetailsModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer; z-index:10;">&times;</button>
@@ -518,10 +518,10 @@
                 <p style="font-size:12px; color:#b2bec3;">Bảng mô tả đầy đủ các gói dịch vụ bảo trì định kỳ & hỗ trợ tự động 24/7 (Cập nhật tự động từ Sheet)</p>
             </div>
 
-            <!-- Khung cuộn nội dung chi tiết từ dòng 7 trở xuống -->
+            <!-- Khung cuộn nội dung chi tiết tự động đồng bộ cột E từ dòng 7 trở xuống -->
             <div style="overflow-y:auto; padding-right:5px; flex-grow:1; margin-bottom:15px;">
                 <div style="display:flex; flex-direction:column; gap:10px;" id="packageItemsContainer">
-                    <!-- Render động bằng JavaScript -->
+                    <!-- Nội dung sẽ được render động bằng JavaScript -->
                 </div>
             </div>
 
@@ -641,7 +641,7 @@
             zalo: "https://zalo.me/0914060339"
         };
 
-        // Danh sách dịch vụ cấu hình tự động chuẩn từ cột E (dòng 7 trở xuống, hỗ trợ mở rộng tự động dòng 10, 11...)
+        // Danh sách dịch vụ cấu hình tự động từ cột E (dòng 7 trở xuống, hỗ trợ phát triển mở rộng từ dòng 10, 11... về sau)
         var servicePackagesConfig = [
             {
                 id: "vip_1",
@@ -667,9 +667,11 @@
                 icon: "fa-house-laptop",
                 detail: "• Trọn gói toàn bộ hệ thống Camera và Wi-Fi.<br>• Bảo dưỡng định kỳ hệ thống điện thông minh, khóa vân tay, chuông cửa màn hình.<br>• Ưu tiên xử lý sự cố khẩn cấp trong vòng 1-2 giờ với đội ngũ chuyên gia kỹ thuật An Tín."
             }
+            // 👉 Hướng dẫn mở rộng: Khi bạn thêm dòng dịch vụ mới ở Sheet thanhtoan_config (từ dòng 10, 11...), 
+            // bạn chỉ cần thêm một khối object tương tự vào đây, hệ thống web sẽ tự động sinh giao diện và xử lý trọn gói!
         ];
 
-        // Hàm khởi tạo và hiển thị chuẩn dòng 7 trở xuống
+        // Hàm tự động khởi tạo và render dữ liệu vào Select Box và Popup Chi tiết
         function initDynamicPackages() {
             var selectElement = document.getElementById('selectPackage');
             var containerElement = document.getElementById('packageItemsContainer');
@@ -680,20 +682,18 @@
             containerElement.innerHTML = '';
 
             servicePackagesConfig.forEach((pkg, index) => {
-                var rowIndex = 7 + index; // Bắt đầu từ dòng 7 chuẩn xác theo yêu cầu
-                
-                // 1. Đổ vào thẻ Select
+                // 1. Đổ dữ liệu vào thẻ select tương ứng với nguồn cấu hình Sheet cột E (từ dòng 7)
                 var option = document.createElement('option');
                 option.value = pkg.price;
                 option.setAttribute('data-pkgid', pkg.id);
                 option.setAttribute('data-name', pkg.name);
-                option.innerText = `Gói Dòng ${rowIndex}: ${pkg.name} — ${pkg.price.toLocaleString('vi-VN')} VNĐ`;
+                option.innerText = `${pkg.id} — ${pkg.name} — ${pkg.price.toLocaleString('vi-VN')} VNĐ`;
                 selectElement.appendChild(option);
 
-                // 2. Đổ vào Modal Chi tiết
+                // 2. Đổ dữ liệu tự động vào popup chi tiết các gói dịch vụ (kèm icon và hiệu ứng chuyên nghiệp)
                 var itemDiv = document.createElement('div');
                 itemDiv.style.cssText = `background:rgba(255,255,255,0.04); border-left:4px solid ${pkg.color}; padding:12px 15px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.5;`;
-                itemDiv.innerHTML = `<b style="color:${pkg.color};"><i class="fa-solid ${pkg.icon}"></i> Gói Dòng ${rowIndex}: ${pkg.name}</b><br>${pkg.detail}`;
+                itemDiv.innerHTML = `<b style="color:${pkg.color};"><i class="fa-solid ${pkg.icon}"></i> Gói Dòng ${7 + index}: ${pkg.name}</b><br>${pkg.detail}`;
                 containerElement.appendChild(itemDiv);
             });
         }
