@@ -588,7 +588,7 @@
             </div>
             <div class="form-group">
                 <label>Mật khẩu quản trị:</label>
-                <input type="password" id="adminPass" placeholder="Nhập mật khẩu quản trị hệ thống...">
+                <input type="password" id="adminPass" placeholder="Mặc định: antin2026">
             </div>
             <button onclick="processAdminLogin()" class="btn-action btn-ai-popup" style="margin-top:10px;">Đăng Nhập</button>
         </div>
@@ -693,10 +693,9 @@
     </style>
 
     <script>
-        // Link Apps Script liên kết trực tiếp sheet thanhtoan_config
         var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTLHw2d2RSmlmRc55T8tsI6pw_6BNPPYMLKefLL3QfGOVb6kvcqC9t-VwVRoi7ziBMoQ/exec";
 
-        // Khởi tạo bộ nhớ cục bộ dự phòng chuẩn An Tín
+        // Khởi tạo bộ nhớ cục bộ chuẩn (Mật khẩu quản trị mặc định: antin2026)
         if(!localStorage.getItem('adminPass')) {
             localStorage.setItem('adminPass', 'antin2026');
         }
@@ -719,7 +718,6 @@
             zalo: "https://zalo.me/0914060339"
         };
 
-        // Hàm gọi đồng bộ dữ liệu thông minh từ Google Sheet Apps Script (`thanhtoan_config`) chuẩn Cột B, C, D
         function fetchDataFromAppsScript() {
             showToast("Đang đồng bộ dữ liệu từ Google Sheet thanhtoan_config...");
             fetch(APPS_SCRIPT_URL)
@@ -778,7 +776,6 @@
             document.getElementById('footerSloganText').innerText = enterpriseConfig.slogan;
         }
 
-        // Tải gói dịch vụ vào dropdown với định dạng chuẩn: [ID gói] — [Tên chi tiết] — [Giá]
         function loadPackagesToUI() {
             var pkgs = JSON.parse(localStorage.getItem('packagesData')) || [];
             var selectEl = document.getElementById('selectPackage');
@@ -813,7 +810,6 @@
             updateQRData();
         }
 
-        // Cập nhật QR Code và Nội dung chuyển khoản chuẩn hóa: VIP [ID Gói] [Số Điện Thoại]
         function updateQRData() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
@@ -845,17 +841,11 @@
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
         }
 
-        // Toggle AI Assistant Bubble
         function toggleAiAssistant() {
             var bubble = document.getElementById('aiChatBubble');
-            if(bubble.style.display === 'block') {
-                bubble.style.display = 'none';
-            } else {
-                bubble.style.display = 'block';
-            }
+            bubble.style.display = (bubble.style.display === 'block') ? 'none' : 'block';
         }
 
-        // Các hàm Quản Trị Admin
         function openAdminLoginModal() {
             document.getElementById('adminLoginModal').style.display = 'flex';
         }
@@ -872,7 +862,7 @@
                 document.getElementById('adminDashboardModal').style.display = 'flex';
                 loadPackagesToUI();
             } else {
-                alert("Sai tên đăng nhập hoặc mật khẩu quản trị!");
+                alert("Sai tên đăng nhập hoặc mật khẩu quản trị! (Mặc định: antin2026)");
             }
         }
         function closeAdminDashboard() {
@@ -936,7 +926,6 @@
             showToast("Đã xóa gói dịch vụ!");
         }
 
-        // Modal thanh toán AI
         function openVipPaymentModal() {
             var modal = document.getElementById('vipPaymentModal');
             if(!modal) return;
@@ -976,7 +965,6 @@
             openVipPaymentModal();
         }
 
-        // Sao chép thông minh
         function copySyntaxText() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
