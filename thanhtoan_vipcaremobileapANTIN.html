@@ -127,12 +127,49 @@
             margin-bottom: 20px;
             position: relative;
         }
+        
+        /* CSS cho dòng chữ Chi tiết các Gói VIP CARE nằm ngay cạnh nhãn Chọn Gói Dịch Vụ */
+        .label-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .label-header-row label {
+            margin-bottom: 0;
+        }
+        .detail-packages-link {
+            font-size: 12.5px;
+            color: #00cec9;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 206, 201, 0.1);
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px dashed rgba(0, 206, 201, 0.4);
+            animation: pulseWave 2s infinite;
+        }
+        .detail-packages-link:hover {
+            color: #55efc4;
+            background: rgba(0, 206, 201, 0.22);
+            transform: scale(1.04);
+        }
+        @keyframes pulseWave {
+            0% { box-shadow: 0 0 0 0 rgba(0, 206, 201, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(0, 206, 201, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 206, 201, 0); }
+        }
+
         label {
             display: block;
             font-size: 13px;
             font-weight: 600;
             color: #dfe6e9;
-            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -394,9 +431,14 @@
             <input type="text" id="inputPhone" value="0914060339" placeholder="VD: 0914060339" oninput="updateQRData()">
         </div>
 
-        <!-- Chọn Gói Dịch Vụ Gia Hạn -->
+        <!-- Chọn Gói Dịch Vụ Gia Hạn & Chèn dòng chữ yêu cầu -->
         <div class="form-group">
-            <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn:</label>
+            <div class="label-header-row">
+                <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn:</label>
+                <span class="detail-packages-link" onclick="openPackageDetailsModal()">
+                    <i class="fa-solid fa-circle-info"></i> Chi tiết các Gói VIP CARE
+                </span>
+            </div>
             <select id="selectPackage" onchange="updateQRData()">
                 <option value="1200000" data-pkgid="vip_1" data-name="Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)">vip_1 — Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm) — 1.200.000 VNĐ</option>
                 <option value="1600000" data-pkgid="vip_2" data-name="Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)">vip_2 — Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm) — 1.600.000 VNĐ</option>
@@ -465,6 +507,45 @@
                 <p>☎️ <span id="footerPhoneDisplay">(028) 3849 3575</span> &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" target="_blank" id="footerZaloLink">0914 060 339</a></p>
                 <p>🌐 Website: <a href="https://khuyenmaicamera.blogspot.com" target="_blank" id="footerWebLink">khuyenmaicamera.blogspot.com</a></p>
                 <p>📩 Email: <a href="mailto:ctyantinco@gmail.com" id="footerEmailLink">ctyantinco@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HIỂN THỊ CHI TIẾT CÁC GÓI VIP CARE (Đồng bộ nội dung cột E từ dòng 6 đến dòng 22) -->
+    <div id="packageDetailsModal" style="display:none; position:fixed; z-index:999999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
+        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #00cec9; border-radius:24px; max-width:600px; width:100%; max-height:85vh; display:flex; flex-direction:column; padding:25px; color:#fff; box-shadow: 0 20px 45px rgba(0,206,201, 0.35); position:relative;">
+            <button onclick="closePackageDetailsModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer; z-index:10;">&times;</button>
+            
+            <div style="text-align:center; margin-bottom:15px; flex-shrink:0;">
+                <span style="background: rgba(0,206,201,0.2); color: #00cec9; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid rgba(0,206,201,0.4);">📊 HỆ THỐNG THÔNG TIN AI AN TÍN</span>
+                <h3 style="margin: 10px 0 4px 0; font-size: 20px; color: #f1c40f;"><i class="fa-solid fa-list-check"></i> Chi Tiết Các Gói VIP Care</h3>
+                <p style="font-size:12px; color:#b2bec3;">Bảng mô tả đầy đủ các gói dịch vụ bảo trì định kỳ & hỗ trợ tự động 24/7</p>
+            </div>
+
+            <!-- Khung cuộn nội dung chi tiết -->
+            <div style="overflow-y:auto; padding-right:5px; flex-grow:1; margin-bottom:15px;">
+                <div style="display:flex; flex-direction:column; gap:10px;" id="packageItemsContainer">
+                    <!-- Các mục chi tiết (Mô phỏng nội dung chuẩn cột E từ dòng 6 đến 22) -->
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #f1c40f; padding:12px 15px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.5;">
+                        <b style="color:#f1c40f;"><i class="fa-solid fa-star"></i> Dòng 6: Tổng quan hệ thống VIP Care AI</b><br>Gói giải pháp công nghệ toàn diện tích hợp trí tuệ nhân tạo (AI) giúp tự động giám sát, cảnh báo sự cố và lên lịch bảo trì định kỳ.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #2ecc71; padding:12px 15px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.5;">
+                        <b style="color:#2ecc71;"><i class="fa-solid fa-video"></i> Dòng 7-10: Gói VIP Care Tiêu Chuẩn (Chuyên Camera)</b><br>• Kiểm tra băng thông, góc nhìn và hồng ngoại camera hàng tháng.<br>• Vệ sinh ống kính, đầu ghi hình (DVR/NVR) định kỳ.<br>• Hỗ trợ xử lý lỗi trực tuyến qua AI và kỹ thuật tận nơi 24/7.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #00cec9; padding:12px 15px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.5;">
+                        <b style="color:#00cec9;"><i class="fa-solid fa-network-wired"></i> Dòng 11-15: Gói VIP Care Toàn Diện (Camera + Wi-Fi)</b><br>• Bao gồm toàn bộ tính năng của gói Camera.<br>• Tối ưu hóa hệ thống mạng Wi-Fi, cân bằng tải Router, kiểm tra độ phủ sóng.<br>• Khắc phục sự cố rớt mạng, cấu hình lại hệ thống mạng nội bộ LAN/WAN.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #e74c3c; padding:12px 15px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.5;">
+                        <b style="color:#e74c3c;"><i class="fa-solid fa-house-laptop"></i> Dòng 16-22: Gói VIP Care VIP (Camera + Wi-Fi + Thiết Bị Điện)</b><br>• Trọn gói toàn bộ hệ thống Camera và Wi-Fi.<br>• Bảo dưỡng định kỳ hệ thống điện thông minh, khóa vân tay, chuông cửa màn hình.<br>• Ưu tiên xử lý sự cố khẩn cấp trong vòng 1-2 giờ với đội ngũ chuyên gia kỹ thuật An Tín.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút tương tác AI thu hút hành động -->
+            <div style="display:flex; gap:10px; flex-shrink:0;">
+                <button onclick="closePackageDetailsModal(); document.getElementById('selectPackage').focus();" class="btn-action btn-ai-popup" style="margin-bottom:0; padding:12px;">
+                    <i class="fa-solid fa-circle-check"><b> Chọn Ngay Gói Phù Hợp</b></i> <i class="fa-solid fa-arrow-right"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -620,8 +701,15 @@
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
         }
 
+        // Hàm mở/đóng Modal Chi tiết các gói VIP CARE
+        function openPackageDetailsModal() {
+            document.getElementById('packageDetailsModal').style.display = 'flex';
+        }
+        function closePackageDetailsModal() {
+            document.getElementById('packageDetailsModal').style.display = 'none';
+        }
+
         function openAdminLoginModal() {
-            // Tự động điền mật khẩu hiện tại đang lưu vào ô input để tránh việc người dùng gõ nhầm
             document.getElementById('adminPass').value = localStorage.getItem('adminPass') || 'antin2026';
             document.getElementById('adminLoginModal').style.display = 'flex';
         }
