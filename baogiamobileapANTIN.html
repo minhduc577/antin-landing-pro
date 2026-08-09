@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Băng Giá & Giải Pháp Công Nghệ Trọn Gói - Cty KT CN An Tín</title>
+    <title>Bảng Giá & Giải Pháp Công Nghệ Trọn Gói - Cty KT CN An Tín</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons -->
@@ -27,57 +27,63 @@
             to { transform: scale(1); opacity: 1; }
         }
         .animate-scaleUp { animation: scaleUp 0.3s ease-out forwards; }
+        /* Tối ưu hóa hiển thị cho Desktop & Mobile */
+        @media (min-width: 768px) {
+            .desktop-max-w { max-width: 768px; margin-left: auto; margin-right: auto; }
+        }
     </style>
 </head>
 <body class="antialiased pb-32">
 
-    <!-- HEADER PROFILE AN TÍN -->
-    <div class="gradient-header text-white px-5 pt-6 pb-9 rounded-b-[3rem] shadow-2xl relative overflow-hidden">
-        <div class="absolute -right-10 -top-10 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
-        
-        <div class="flex items-center justify-between mb-4 relative z-10">
-            <div class="flex items-center space-x-3">
-                <div class="w-13 h-13 bg-white rounded-2xl flex items-center justify-center shadow-lg p-1.5 flex-shrink-0">
-                    <img src="https://antinco.com/wp-content/uploads/2023/12/logo-an-tin.png" alt="An Tín Logo" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3067/3067401.png'">
+    <div class="desktop-max-w">
+        <!-- HEADER PROFILE AN TÍN -->
+        <div class="gradient-header text-white px-5 pt-6 pb-9 rounded-b-[2.5rem] sm:rounded-b-[3rem] shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex items-center justify-between mb-4 relative z-10">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg p-1.5 flex-shrink-0">
+                        <img src="https://antinco.com/wp-content/uploads/2023/12/logo-an-tin.png" alt="An Tín Logo" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3067/3067401.png'">
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-xs sm:text-base leading-tight tracking-wide">CÔNG TY KT CN AN TÍN</h1>
+                        <p class="text-[10px] sm:text-[11px] text-blue-200 flex items-center mt-0.5"><i class="fa-solid fa-location-dot mr-1 text-amber-400"></i> 85/19 Lê Liễu, P. Tân Sơn Nhì, TP.HCM</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-extrabold text-sm sm:text-base leading-tight tracking-wide">CÔNG TY KT CN AN TÍN</h1>
-                    <p class="text-[11px] text-blue-200 flex items-center mt-0.5"><i class="fa-solid fa-location-dot mr-1 text-amber-400"></i> 85/19 Lê Liễu, P. Tân Sơn Nhì, TP.HCM</p>
-                </div>
+                <a href="tel:0914060339" class="bg-white/20 hover:bg-white/30 backdrop-blur-md p-2.5 rounded-2xl transition border border-white/30 shadow-md">
+                    <i class="fa-solid fa-phone text-white"></i>
+                </a>
             </div>
-            <a href="tel:0914060339" class="bg-white/20 hover:bg-white/30 backdrop-blur-md p-2.5 rounded-2xl transition border border-white/30 shadow-md">
-                <i class="fa-solid fa-phone text-white"></i>
-            </a>
-        </div>
 
-        <!-- SLOGAN & THÔNG ĐIỆP CỐT LÕI -->
-        <div class="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl mb-4 text-center relative z-10 shadow-inner">
-            <p class="text-xs font-bold text-amber-300 uppercase tracking-widest mb-1">💎 AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM</p>
-            <p class="text-[11px] text-blue-100 font-medium">🎯 Một đối tác – Trọn gói giải pháp | 🎯 Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật</p>
-        </div>
-
-        <!-- BANNER FLASH SALE / ĐẾM NGƯỢC ƯU ĐÃI -->
-        <div class="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-3 rounded-2xl mb-4 flex items-center justify-between shadow-lg relative z-10">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-stopwatch text-xl animate-bounce"></i>
-                <div>
-                    <div class="text-[11px] font-bold uppercase tracking-wider">Ưu đãi đặc quyền hệ sinh thái</div>
-                    <div class="text-[10px] text-amber-100">Đăng ký ngay qua Mini App để nhận trọn gói ưu đãi</div>
-                </div>
+            <!-- SLOGAN & THÔNG ĐIỆP CỐT LÕI -->
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-3.5 sm:p-4 rounded-2xl mb-4 text-center relative z-10 shadow-inner">
+                <p class="text-[11px] sm:text-xs font-bold text-amber-300 uppercase tracking-widest mb-1">💎 AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM</p>
+                <p class="text-[10px] sm:text-[11px] text-blue-100 font-medium">🎯 Một đối tác – Trọn gói giải pháp | 🎯 Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật</p>
             </div>
-            <div id="countdownTimer" class="bg-black/20 px-2.5 py-1 rounded-xl text-xs font-mono font-bold">02:14:55</div>
-        </div>
 
-        <!-- AI ASSISTANT & ECOSYSTEM LINKS -->
-        <div class="grid grid-cols-2 gap-2 relative z-10">
-            <button onclick="toggleAIChat(true)" class="bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 text-xs font-extrabold p-3 rounded-2xl shadow-lg hover:opacity-95 transition flex items-center justify-center space-x-2 ai-glow-btn">
-                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
-                <span>Trợ Lý AI Tư Vấn</span>
-            </button>
-            <a href="https://ebook.antinco.com/trangchu" target="_blank" class="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white text-xs font-bold p-3 rounded-2xl shadow-md transition flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-book-bookmark text-amber-300"></i>
-                <span>An Tín Ecosystem</span>
-            </a>
+            <!-- BANNER FLASH SALE / ĐẾM NGƯỢC ƯU ĐÃI -->
+            <div class="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-3 rounded-2xl mb-4 flex items-center justify-between shadow-lg relative z-10">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-stopwatch text-lg sm:text-xl animate-bounce"></i>
+                    <div>
+                        <div class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">Ưu đãi đặc quyền hệ sinh thái</div>
+                        <div class="text-[9px] sm:text-[10px] text-amber-100">Đăng ký ngay qua Mini App để nhận trọn gói ưu đãi</div>
+                    </div>
+                </div>
+                <div id="countdownTimer" class="bg-black/20 px-2.5 py-1 rounded-xl text-xs font-mono font-bold">02:14:55</div>
+            </div>
+
+            <!-- AI ASSISTANT & ECOSYSTEM LINKS -->
+            <div class="grid grid-cols-2 gap-2 relative z-10">
+                <button onclick="toggleAIChat(true)" class="bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 text-xs font-extrabold p-3 rounded-2xl shadow-lg hover:opacity-95 transition flex items-center justify-center space-x-2 ai-glow-btn cursor-pointer">
+                    <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+                    <span>Trợ Lý AI Tư Vấn</span>
+                </button>
+                <a href="https://ebook.antinco.com/trangchu" target="_blank" class="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white text-xs font-bold p-3 rounded-2xl shadow-md transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-book-bookmark text-amber-300"></i>
+                    <span>An Tín Ecosystem</span>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -87,17 +93,17 @@
         <!-- THANH TÌM KIẾM & LỌC DỊCH VỤ -->
         <div class="bg-white p-3 rounded-2xl card-shadow mb-5 flex items-center space-x-2 border border-slate-100">
             <i class="fa-solid fa-magnifying-glass text-slate-400 ml-2"></i>
-            <input type="text" id="searchInput" placeholder="Tìm kiếm camera, mạng, smart home, điện..." class="w-full text-sm focus:outline-none bg-transparent" onkeyup="filterServices()">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-md hover:bg-blue-700 transition">Tìm</button>
+            <input type="text" id="searchInput" placeholder="Tìm kiếm camera, mạng, smart home, điện..." class="w-full text-xs sm:text-sm focus:outline-none bg-transparent" onkeyup="filterServices()">
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-md hover:bg-blue-700 transition cursor-pointer">Tìm</button>
         </div>
 
         <!-- HỆ THỐNG GIẢI PHÁP TOÀN DIỆN (GRID ICONIC) -->
         <div class="mb-6">
-            <h2 class="font-bold text-slate-800 text-base mb-3 flex items-center">
+            <h2 class="font-bold text-slate-800 text-sm sm:text-base mb-3 flex items-center">
                 <i class="fa-solid fa-cubes text-blue-600 mr-2"></i> Hệ Thống Giải Pháp & Dịch Vụ An Tín
             </h2>
             
-            <div id="serviceList" class="grid grid-cols-1 gap-3">
+            <div id="serviceList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
                 <!-- Item 1 -->
                 <div class="bg-white p-4 rounded-2xl card-shadow border border-slate-100 service-badge flex items-start space-x-3">
@@ -106,11 +112,11 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-slate-900 text-sm">Camera An Ninh – Giám Sát 24/7</h3>
-                            <span class="font-extrabold text-sm price-tag">Từ 1.490.000đ</span>
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Camera An Ninh – Giám Sát 24/7</h3>
+                            <span class="font-extrabold text-xs sm:text-sm price-tag">Từ 1.490.000đ</span>
                         </div>
-                        <p class="text-xs text-slate-500 mb-2">Trọn gói Full HD, hồng ngoại ban đêm, thẻ nhớ lưu trữ, bảo hành chính hãng 24 tháng.</p>
-                        <button onclick="selectPackage('Camera an ninh 24/7', '1.490.000đ')" class="text-blue-600 text-xs font-bold flex items-center hover:underline">
+                        <p class="text-[11px] sm:text-xs text-slate-500 mb-2">Trọn gói Full HD, hồng ngoại ban đêm, thẻ nhớ lưu trữ, bảo hành chính hãng 24 tháng.</p>
+                        <button onclick="selectPackage('Camera an ninh 24/7', '1.490.000đ')" class="text-blue-600 text-xs font-bold flex items-center hover:underline cursor-pointer">
                             Chọn giải pháp này <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                         </button>
                     </div>
@@ -123,11 +129,11 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-slate-900 text-sm">Mạng Wi-Fi – Máy Tính – Hạ Tầng CNTT</h3>
-                            <span class="font-extrabold text-sm price-tag">Khảo sát miễn phí</span>
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Mạng Wi-Fi – Máy Tính – Hạ Tầng CNTT</h3>
+                            <span class="font-extrabold text-xs sm:text-sm price-tag">Khảo sát miễn phí</span>
                         </div>
-                        <p class="text-xs text-slate-500 mb-2">Thi công mạng LAN/WAN, WiFi chuyên dụng Point-to-Point cho tòa nhà, văn phòng, doanh nghiệp.</p>
-                        <button onclick="selectPackage('Mạng Wi-Fi & Hạ tầng CNTT', 'Khảo sát')" class="text-indigo-600 text-xs font-bold flex items-center hover:underline">
+                        <p class="text-[11px] sm:text-xs text-slate-500 mb-2">Thi công mạng LAN/WAN, WiFi chuyên dụng Point-to-Point cho tòa nhà, văn phòng, doanh nghiệp.</p>
+                        <button onclick="selectPackage('Mạng Wi-Fi & Hạ tầng CNTT', 'Khảo sát')" class="text-indigo-600 text-xs font-bold flex items-center hover:underline cursor-pointer">
                             Chọn giải pháp này <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                         </button>
                     </div>
@@ -140,11 +146,11 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-slate-900 text-sm">Chống Đột Nhập & Khóa Thông Minh</h3>
-                            <span class="font-extrabold text-sm price-tag">Báo giá ưu đãi</span>
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Chống Đột Nhập & Khóa Thông Minh</h3>
+                            <span class="font-extrabold text-xs sm:text-sm price-tag">Báo giá ưu đãi</span>
                         </div>
-                        <p class="text-xs text-slate-500 mb-2">Hệ thống báo động thông minh, khóa cửa vân tay/mã số cao cấp bảo vệ tuyệt đối an toàn tài sản.</p>
-                        <button onclick="selectPackage('Chống đột nhập & Khóa thông minh', 'Ưu đãi')" class="text-amber-600 text-xs font-bold flex items-center hover:underline">
+                        <p class="text-[11px] sm:text-xs text-slate-500 mb-2">Hệ thống báo động thông minh, khóa cửa vân tay/mã số cao cấp bảo vệ tuyệt đối an toàn tài sản.</p>
+                        <button onclick="selectPackage('Chống đột nhập & Khóa thông minh', 'Ưu đãi')" class="text-amber-600 text-xs font-bold flex items-center hover:underline cursor-pointer">
                             Chọn giải pháp này <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                         </button>
                     </div>
@@ -157,11 +163,11 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-slate-900 text-sm">Chấm Công Vân Tay & Kiểm Soát Ra Vào</h3>
-                            <span class="font-extrabold text-sm price-tag">Trọn gói tận nơi</span>
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Chấm Công Vân Tay & Kiểm Soát Ra Vào</h3>
+                            <span class="font-extrabold text-xs sm:text-sm price-tag">Trọn gói tận nơi</span>
                         </div>
-                        <p class="text-xs text-slate-500 mb-2">Máy chấm công chính hãng, phần mềm quản lý nhân sự chuyên nghiệp, kiểm soát cửa Access Control.</p>
-                        <button onclick="selectPackage('Chấm công vân tay & Kiểm soát cửa', 'Trọn gói')" class="text-emerald-600 text-xs font-bold flex items-center hover:underline">
+                        <p class="text-[11px] sm:text-xs text-slate-500 mb-2">Máy chấm công chính hãng, phần mềm quản lý nhân sự chuyên nghiệp, kiểm soát cửa Access Control.</p>
+                        <button onclick="selectPackage('Chấm công vân tay & Kiểm soát cửa', 'Trọn gói')" class="text-emerald-600 text-xs font-bold flex items-center hover:underline cursor-pointer">
                             Chọn giải pháp này <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                         </button>
                     </div>
@@ -174,11 +180,11 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-slate-900 text-sm">Web, Hosting, Cloud Server & Smart Home</h3>
-                            <span class="font-extrabold text-sm price-tag">Giải pháp số 2026</span>
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Web, Hosting, Cloud Server & Smart Home</h3>
+                            <span class="font-extrabold text-xs sm:text-sm price-tag">Giải pháp số 2026</span>
                         </div>
-                        <p class="text-xs text-slate-500 mb-2">Thiết kế website chuyên nghiệp, cung cấp tên miền, hosting, cloud server và giải pháp nhà thông minh.</p>
-                        <button onclick="selectPackage('Web, Hosting, Cloud & Smart Home', 'Tùy chỉnh')" class="text-purple-600 text-xs font-bold flex items-center hover:underline">
+                        <p class="text-[11px] sm:text-xs text-slate-500 mb-2">Thiết kế website chuyên nghiệp, cung cấp tên miền, hosting, cloud server và giải pháp nhà thông minh.</p>
+                        <button onclick="selectPackage('Web, Hosting, Cloud & Smart Home', 'Tùy chỉnh')" class="text-purple-600 text-xs font-bold flex items-center hover:underline cursor-pointer">
                             Chọn giải pháp này <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                         </button>
                     </div>
@@ -191,11 +197,11 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-slate-900 text-sm">Điện Dân Dụng, Công Nghiệp & Thiết Bị Điện</h3>
-                            <span class="font-extrabold text-sm price-tag">Bảo trì 24/7</span>
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">Điện Dân Dụng, Công Nghiệp & Thiết Bị Điện</h3>
+                            <span class="font-extrabold text-xs sm:text-sm price-tag">Bảo trì 24/7</span>
                         </div>
-                        <p class="text-xs text-slate-500 mb-2">Thi công điện, sửa chữa bảo trì thiết bị điện gia đình, ấm điện, bếp điện, nồi điện, quạt điện & tự động hóa.</p>
-                        <button onclick="selectPackage('Điện dân dụng, công nghiệp & Thiết bị điện', 'Bảo trì')" class="text-rose-600 text-xs font-bold flex items-center hover:underline">
+                        <p class="text-[11px] sm:text-xs text-slate-500 mb-2">Thi công điện, sửa chữa bảo trì thiết bị điện gia đình, ấm điện, bếp điện, nồi điện, quạt điện & tự động hóa.</p>
+                        <button onclick="selectPackage('Điện dân dụng, công nghiệp & Thiết bị điện', 'Bảo trì')" class="text-rose-600 text-xs font-bold flex items-center hover:underline cursor-pointer">
                             Chọn giải pháp này <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                         </button>
                     </div>
@@ -205,38 +211,42 @@
         </div>
 
         <!-- FORM GỬI YÊU CẦU BÁO GIÁ (KẾT NỐI REAL-TIME GOOGLE APPS SCRIPT & MAKE WEBHOOKS) -->
-        <div id="quoteFormSection" class="bg-gradient-to-br from-slate-900 to-blue-950 text-white p-5 rounded-3xl shadow-xl relative overflow-hidden mb-6">
+        <div id="quoteFormSection" class="bg-gradient-to-br from-slate-900 to-blue-950 text-white p-5 sm:p-7 rounded-3xl shadow-xl relative overflow-hidden mb-6">
             <div class="absolute right-0 bottom-0 opacity-10 translate-x-5 translate-y-5 pointer-events-none">
                 <i class="fa-solid fa-file-contract text-9xl"></i>
             </div>
-            <h3 class="font-bold text-base mb-1 flex items-center"><i class="fa-solid fa-paper-plane text-blue-400 mr-2"></i> Nhận Báo Giá Chi Tiết Ngay</h3>
-            <p class="text-xs text-slate-300 mb-4">Điền thông tin để chuyên viên An Tín và trợ lý AI gửi bảng giá cụ thể qua Zalo & Email tức thi.</p>
+            <h3 class="font-bold text-sm sm:text-base mb-1 flex items-center"><i class="fa-solid fa-paper-plane text-blue-400 mr-2"></i> Nhận Báo Giá Chi Tiết Ngay</h3>
+            <p class="text-[11px] sm:text-xs text-slate-300 mb-4">Điền thông tin để chuyên viên An Tín và trợ lý AI gửi bảng giá cụ thể qua Zalo & Email tức thì.</p>
             
             <form id="quoteForm" onsubmit="submitQuoteForm(event)" class="space-y-3 relative z-10">
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-300 mb-1">Họ và tên của bạn:</label>
-                    <input type="text" id="cusName" required placeholder="Ví dụ: Phan Minh Đức" class="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 transition">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-300 mb-1">Họ và tên của bạn:</label>
+                        <input type="text" id="cusName" required placeholder="Ví dụ: Phan Minh Đức" class="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-300 mb-1">Số điện thoại (Zalo liên hệ):</label>
+                        <input type="tel" id="cusPhone" required placeholder="Ví dụ: 0914060339" class="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 transition">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-300 mb-1">Số điện thoại (Zalo liên hệ):</label>
-                    <input type="tel" id="cusPhone" required placeholder="Ví dụ: 0914060339" class="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 transition">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-300 mb-1">Địa chỉ Email nhận báo giá/hợp đồng:</label>
+                        <input type="email" id="cusEmail" required placeholder="Ví dụ: ctyantinco@gmail.com" class="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-300 mb-1">Giải pháp / Dịch vụ quan tâm:</label>
+                        <select id="cusService" class="w-full bg-slate-900 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-400 transition">
+                            <option value="Camera an ninh 24/7">Camera an ninh 24/7</option>
+                            <option value="Mạng Wi-Fi & Hạ tầng CNTT">Mạng Wi-Fi & Hạ tầng CNTT</option>
+                            <option value="Chống đột nhập & Khóa thông minh">Chống đột nhập & Khóa thông minh</option>
+                            <option value="Chấm công vân tay & Kiểm soát cửa">Chấm công vân tay & Kiểm soát cửa</option>
+                            <option value="Web, Hosting, Cloud & Smart Home">Web, Hosting, Cloud & Smart Home</option>
+                            <option value="Điện dân dụng, công nghiệp & Thiết bị điện">Điện dân dụng, công nghiệp & Thiết bị điện</option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-300 mb-1">Địa chỉ Email nhận báo giá/hợp đồng:</label>
-                    <input type="email" id="cusEmail" required placeholder="Ví dụ: ctyantinco@gmail.com" class="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 transition">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-300 mb-1">Giải pháp / Dịch vụ quan tâm:</label>
-                    <select id="cusService" class="w-full bg-slate-900 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-400 transition">
-                        <option value="Camera an ninh 24/7">Camera an ninh 24/7</option>
-                        <option value="Mạng Wi-Fi & Hạ tầng CNTT">Mạng Wi-Fi & Hạ tầng CNTT</option>
-                        <option value="Chống đột nhập & Khóa thông minh">Chống đột nhập & Khóa thông minh</option>
-                        <option value="Chấm công vân tay & Kiểm soát cửa">Chấm công vân tay & Kiểm soát cửa</option>
-                        <option value="Web, Hosting, Cloud & Smart Home">Web, Hosting, Cloud & Smart Home</option>
-                        <option value="Điện dân dụng, công nghiệp & Thiết bị điện">Điện dân dụng, công nghiệp & Thiết bị điện</option>
-                    </select>
-                </div>
-                <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg transition flex items-center justify-center space-x-2 ai-glow-btn mt-2">
+                <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl text-xs shadow-lg transition flex items-center justify-center space-x-2 ai-glow-btn mt-3 cursor-pointer">
                     <i class="fa-solid fa-rocket"></i>
                     <span>GỬI YÊU CẦU NHẬN BÁO GIÁ TỨC THÌ</span>
                 </button>
@@ -249,7 +259,7 @@
                 <i class="fa-solid fa-address-card text-blue-600 mr-2"></i> Kênh Kết Nối Chính Thức An Tín
             </h4>
             
-            <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
                 <a href="https://zalo.me/0914060339" target="_blank" class="bg-blue-50 hover:bg-blue-100 text-blue-700 p-2.5 rounded-xl font-semibold flex items-center justify-center space-x-1.5 transition">
                     <i class="fa-solid fa-comment-dots"></i> <span>Zalo Cá Nhân</span>
                 </a>
@@ -273,15 +283,17 @@
     </div>
 
     <!-- THANH ĐIỀU HƯỚNG NỔI BÁM SÁT MÀN HÌNH (FLOATING CTA) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-2xl z-40 flex items-center justify-between max-w-xl mx-auto">
-        <a href="https://zalo.me/0914060339" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-3 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition mr-2 shadow">
-            <i class="fa-solid fa-comment text-sm"></i>
-            <span>Chat Zalo</span>
-        </a>
-        <button onclick="scrollToForm()" class="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2.5 px-3 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 shadow hover:opacity-90 transition">
-            <i class="fa-solid fa-file-invoice text-sm"></i>
-            <span>Nhận Báo Giá</span>
-        </button>
+    <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-2xl z-40">
+        <div class="max-w-xl mx-auto flex items-center justify-between space-x-3">
+            <a href="https://zalo.me/0914060339" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-3 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow">
+                <i class="fa-solid fa-comment text-sm"></i>
+                <span>Chat Zalo</span>
+            </a>
+            <button onclick="scrollToForm()" class="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2.5 px-3 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 shadow hover:opacity-90 transition cursor-pointer">
+                <i class="fa-solid fa-file-invoice text-sm"></i>
+                <span>Nhận Báo Giá</span>
+            </button>
+        </div>
     </div>
 
     <!-- MODAL TRỢ LÝ AI CHAT TRỰC TIẾP -->
@@ -298,7 +310,7 @@
                         <p class="text-[10px] text-blue-200 flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full inline-block mr-1.5 animate-pulse"></span> Sẵn sàng tư vấn giải pháp</p>
                     </div>
                 </div>
-                <button onclick="toggleAIChat(false)" class="text-white/80 hover:text-white p-2 text-base">
+                <button onclick="toggleAIChat(false)" class="text-white/80 hover:text-white p-2 text-base cursor-pointer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -313,14 +325,14 @@
             </div>
             <!-- Gợi ý nhanh -->
             <div class="px-4 py-2 bg-slate-100 flex gap-2 overflow-x-auto text-[11px] whitespace-nowrap">
-                <button onclick="sendQuickPrompt('Báo giá camera an ninh trọn gói')" class="bg-white border border-slate-200 px-3 py-1 rounded-full text-slate-600 hover:bg-blue-50">📷 Báo giá Camera</button>
-                <button onclick="sendQuickPrompt('Tư vấn hệ thống mạng & tổng đài')" class="bg-white border border-slate-200 px-3 py-1 rounded-full text-slate-600 hover:bg-blue-50">📡 Mạng & Tổng đài</button>
-                <button onclick="sendQuickPrompt('Giải pháp Smart Home & Điện')" class="bg-white border border-slate-200 px-3 py-1 rounded-full text-slate-600 hover:bg-blue-50">🏠 Smart Home</button>
+                <button onclick="sendQuickPrompt('Báo giá camera an ninh trọn gói')" class="bg-white border border-slate-200 px-3 py-1 rounded-full text-slate-600 hover:bg-blue-50 cursor-pointer">📷 Báo giá Camera</button>
+                <button onclick="sendQuickPrompt('Tư vấn hệ thống mạng & tổng đài')" class="bg-white border border-slate-200 px-3 py-1 rounded-full text-slate-600 hover:bg-blue-50 cursor-pointer">📡 Mạng & Tổng đài</button>
+                <button onclick="sendQuickPrompt('Giải pháp Smart Home & Điện')" class="bg-white border border-slate-200 px-3 py-1 rounded-full text-slate-600 hover:bg-blue-50 cursor-pointer">🏠 Smart Home</button>
             </div>
             <!-- Input Nhập tin nhắn -->
             <div class="p-3 bg-white border-t border-slate-100 flex items-center space-x-2">
                 <input type="text" id="chatInput" placeholder="Nhập câu hỏi cho trợ lý AI..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-blue-500" onkeypress="if(event.key === 'Enter') sendUserMessage()">
-                <button onclick="sendUserMessage()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow">
+                <button onclick="sendUserMessage()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow cursor-pointer">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
@@ -378,7 +390,7 @@
                     <div class="w-7 h-7 ${isUser ? 'bg-slate-700' : 'bg-blue-600'} text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow">
                         ${isUser ? 'YOU' : 'AI'}
                     </div>
-                    <div class="bg-${isUser ? 'blue-600 text-white' : 'white text-slate-700 border border-slate-100'} p-3 rounded-2xl shadow-sm max-w-[80%] leading-relaxed">
+                    <div class="${isUser ? 'bg-blue-600 text-white' : 'bg-white text-slate-700 border border-slate-100'} p-3 rounded-2xl shadow-sm max-w-[80%] leading-relaxed">
                         ${text}
                     </div>
                 </div>
@@ -510,11 +522,11 @@
                         </div>
 
                         <div class="flex space-x-2 pt-2">
-                            <button onclick="window.open('https://zalo.me/0914060339', '_blank')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs transition shadow flex items-center justify-center space-x-2">
+                            <button onclick="window.open('https://zalo.me/0914060339', '_blank')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs transition shadow flex items-center justify-center space-x-2 cursor-pointer">
                                 <i class="fa-solid fa-comment"></i>
                                 <span>Chat Zalo Xác Nhận Ngay</span>
                             </button>
-                            <button onclick="closeSuccessModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs transition">
+                            <button onclick="closeSuccessModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs transition cursor-pointer">
                                 Đóng
                             </button>
                         </div>
