@@ -174,19 +174,19 @@
         <div class="text-center mb-4">
             <span class="header-badge"><i class="fa-solid fa-shield-halved"></i> AN TÍN SECURITY GATEWAY</span>
             <h2 class="text-lg font-extrabold text-cyan-400 mt-1">Đăng Nhập Quản Trị Hệ Thống</h2>
-            <p class="text-xs text-gray-400">Nhập mật khẩu để mở khóa toàn bộ quyền thao tác dữ liệu</p>
+            <p class="text-xs text-gray-400">Tài khoản mẫu đã được điền sẵn, chỉ cần bấm nút để mở khóa nhanh!</p>
         </div>
         <div class="space-y-3">
             <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản (admin/manager)...">
-                <input type="password" id="loginPass" placeholder="Mật khẩu..." class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản...">
+                <input type="password" id="loginPass" value="AbC@CbA@13579" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Mật khẩu...">
             </div>
             <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2.5 rounded-xl shadow-lg transition-all text-xs cursor-pointer flex items-center justify-center gap-2">
                 <i class="fa-solid fa-right-to-bracket"></i> Mở Khóa Trình Quản Lý Logic
             </button>
             <div class="flex justify-between items-center pt-1 text-[11px]">
-                <span class="text-gray-400">Quên mật khẩu?</span>
-                <button onclick="resetDefaultAccounts()" class="text-cyan-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-rotate"></i> Reset tài khoản về mặc định</button>
+                <span class="text-gray-400">Khôi phục mặc định?</span>
+                <button onclick="openResetModal()" class="text-cyan-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-rotate"></i> Reset tài khoản</button>
             </div>
         </div>
     </div>
@@ -279,7 +279,7 @@
             </div>
         </div>
 
-        <!-- FOOTER THÔNG TIN AN TÍN (ĐÃ BỔ SUNG ĐẦY ĐỦ THÔNG TIN DOANH NGHIỆP) -->
+        <!-- FOOTER THÔNG TIN AN TÍN -->
         <div class="company-footer">
             <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH.[cite: 11]</h4>
             <div class="services-grid">
@@ -320,36 +320,36 @@
             <h3 id="modalProjTitle" class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-folder-plus mr-1"></i> Cập Nhật Dự Án Công Trình</h3>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Mã định danh dự án (Ví dụ: PRJ-06):</label>
+                    <label class="text-gray-300 font-bold">Mã định danh dự án:</label>
                     <input type="text" id="mId" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div>
-                    <label class="text-gray-300 font-bold">Tên công trình / Dự án (Đổi tên):</label>
-                    <input type="text" id="mTitle" placeholder="Ví dụ: River Garden Building..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <label class="text-gray-300 font-bold">Tên công trình / Dự án:</label>
+                    <input type="text" id="mTitle" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="text-gray-300 font-bold">Phần trăm hoàn thành:</label>
-                        <input type="text" id="mPercent" placeholder="100%" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <input type="text" id="mPercent" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                     <div>
                         <label class="text-gray-300 font-bold">Nhãn phân loại (Badge):</label>
-                        <input type="text" id="mBadge" placeholder="Trọng Điểm" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <input type="text" id="mBadge" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="text-gray-300 font-bold">Ngày khởi công:</label>
-                        <input type="text" id="mDate" placeholder="01/01/2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <input type="text" id="mDate" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                     <div>
-                        <label class="text-gray-300 font-bold">Đánh giá tốc độ thi công:</label>
-                        <input type="text" id="mSpeed" placeholder="Hoàn thành định kỳ" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <label class="text-gray-300 font-bold">Tốc độ thi công:</label>
+                        <input type="text" id="mSpeed" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                 </div>
                 <div>
                     <label class="text-gray-300 font-bold">Hạng mục chi tiết:</label>
-                    <input type="text" id="mStages" placeholder="Bảo trì hệ thống Camera giám sát" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <input type="text" id="mStages" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div class="flex gap-2 mt-5">
                     <button onclick="saveProjectData()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Lưu Dữ Liệu</button>
@@ -372,6 +372,19 @@
                     <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật</button>
                     <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: XÁC NHẬN RESET TÀI KHOẢN -->
+    <div id="resetModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full text-center">
+            <div class="text-cyan-400 text-3xl mb-2"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3 class="text-base font-bold text-white mb-2">Khôi Phục Tài Khoản Mặc Định</h3>
+            <p class="text-xs text-gray-300 mb-5">Bạn có chắc chắn muốn đặt lại tài khoản admin và manager về mật khẩu mặc định <b class="text-cyan-400">AbC@CbA@13579</b> không?</p>
+            <div class="flex gap-2">
+                <button onclick="confirmResetDefaultAccounts()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Đồng Ý</button>
+                <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
             </div>
         </div>
     </div>
@@ -434,18 +447,21 @@
                 document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
                 showToast(`Xin chào ${matched.fullname}! Đã mở khóa quyền quản trị.`);
             } else {
-                alert("Mật khẩu hoặc tài khoản không chính xác! (Mặc định: admin hoặc manager với pass: AbC@CbA@13579)");
+                alert("Mật khẩu hoặc tài khoản không chính xác!");
             }
         }
 
-        // Tính năng Reset tài khoản quản lý về mặc định
-        function resetDefaultAccounts() {
-            if(confirm("Bạn có chắc chắn muốn đặt lại tài khoản admin và manager về mật khẩu mặc định (AbC@CbA@13579) không?")) {
-                serverAccounts = JSON.parse(JSON.stringify(defaultAccounts));
-                localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
-                showToast("Đã reset tài khoản thành công! Mật khẩu là: AbC@CbA@13579");
-                document.getElementById("loginPass").value = "AbC@CbA@13579";
-            }
+        function openResetModal() {
+            document.getElementById('resetModal').classList.remove('hidden');
+        }
+
+        function confirmResetDefaultAccounts() {
+            serverAccounts = JSON.parse(JSON.stringify(defaultAccounts));
+            localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
+            document.getElementById("loginUser").value = "admin";
+            document.getElementById("loginPass").value = "AbC@CbA@13579";
+            closeModals();
+            showToast("Đã reset tài khoản thành công! Mật khẩu là: AbC@CbA@13579");
         }
 
         function handleLogout() {
@@ -456,7 +472,6 @@
             document.getElementById("loginCardContainer").style.display = "block";
             document.getElementById("currentRoleName").innerText = "Chưa đăng nhập (Chỉ xem)";
             document.getElementById("currentRoleName").className = "text-yellow-400";
-            document.getElementById("loginPass").value = "";
             showToast("Đã khóa lại khu vực quản trị an toàn.");
         }
 
@@ -618,6 +633,7 @@
         function closeModals() {
             document.getElementById('projectModal').classList.add('hidden');
             document.getElementById('changePassModal').classList.add('hidden');
+            document.getElementById('resetModal').classList.add('hidden');
         }
     </script>
 </body>
