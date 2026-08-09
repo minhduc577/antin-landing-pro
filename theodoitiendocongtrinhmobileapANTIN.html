@@ -131,21 +131,6 @@
             color: #22d3ee;
             border-color: rgba(6,182,212,0.3);
         }
-        .slogan-box {
-            background: rgba(243, 156, 18, 0.08);
-            border-left: 3.5px solid #f39c12;
-            padding: 12px 15px;
-            border-radius: 0 10px 10px 0;
-            margin: 15px 0;
-            font-size: 11.5px;
-            color: #ffeaa7;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-        .contact-info p { margin-bottom: 6px; font-size: 11.5px; }
-        .contact-info a { color: #00cec9; text-decoration: none; }
-        .contact-info a:hover { color: #55efc4; text-decoration: underline; }
-
         .ecosystem-links {
             display: flex;
             flex-wrap: wrap;
@@ -171,7 +156,6 @@
             color: #000;
             transform: translateY(-2px);
         }
-
         .locked-overlay {
             pointer-events: none;
             filter: blur(2px);
@@ -352,22 +336,34 @@
         </div>
     </div>
 
-    <!-- SCRIPT TÍCH HỢP 2 CHIỀU GOOGLE APPS SCRIPT -->
+    <!-- MODAL: ĐỔI MẬT KHẨU -->
+    <div id="changePassModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full">
+            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Đổi Mật Khẩu Quản Trị</h3>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="text-gray-300 font-bold">Mật khẩu mới:</label>
+                    <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật</button>
+                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT TÍCH HỢP GOOGLE APPS SCRIPT -->
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbwgT68YpjYgg2OqcVfCpC4Ddl4-pP7oojPXrA6zRtT-hjq4kv8CZuw7I7PY8oPB7Fibzg/exec";
-
-        let localAccounts = {
-            "admin": { pass: "AbC@CbA@13579", role: "admin", name: "Quản Trị Viên Hệ Thống" },
-            "manager": { pass: "AbC@CbA@13579", role: "manager", name: "Quản Lý Dự Án (PM)" }
-        };
-
-        // Dữ liệu mẫu đồng bộ chuẩn theo yêu cầu hình ảnh của bạn[cite: 12]
+        let serverAccounts = [];
         let projectsData = {
             "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Hệ Thống Camera",status:"Bảo trì hệ thống Camera giám sát",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
             "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Đang cấu hình & tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp hạ tầng mạng & Thiết bị Point to Point WiFi",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
             "PRJ-03": { title: "Antinco Contract Hub", percent: "90%", date: "15/01/2026", speed: "Chờ nghiệm thu đợt cuối", badge: "Kỹ Thuật", stages: [{icon:"fa-file-contract",color:"purple",title:"Hợp Đồng Kỹ Thuật",status:"Kiểm tra, bảo dưỡng hợp đồng kỹ thuật an ninh",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
             "PRJ-04": { title: "Bệnh Viện Đa Khoa Hùng Vương", percent: "50%", date: "01/02/2026", speed: "Đang thay thế thiết bị phụ trợ", badge: "Phụ Trợ", stages: [{icon:"fa-server",color:"yellow",title:"Thiết Bị Phụ Trợ",status:"Xử lý sự cố đường truyền mạng nội bộ & tủ rack",statusColor:"text-yellow-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
-            "PRJ-05": { title: "Chuỗi Các Cty Kinh Doanh Vàng Bạc Đá Quý", percent: "50%", date: "10/02/2026", speed: "Lên phương án vật tư", badge: "Vật Tư", stages: [{icon:"fa-video",color:"green",title:"Camera Góc Khuất",status:"Lắp đặt bổ sung camera góc khuất tầng hầm",statusColor:"text-gray-400",iconStyle:"fa-regular fa-clock"}] }
+            "PRJ-05": { title: "Chuỗi Các Cty Kinh Doanh Vàng Bạc Đá Quý", percent: "50%", date: "10/02/2026", speed: "Lên phương án vật tư", badge: "Vật Tư", stages: [{icon:"fa-video",color:"green",title:"Camera Góc Khuất",status:"Lắp đặt bổ sung camera góc khuất tầng hầm",statusColor:"text-gray-400",iconStyle:"fa-regular fa-clock"}] },
+            "PRJ-06": { title: "Khu Đô Thị Thông Minh Sala", percent: "75%", date: "20/02/2026", speed: "Đang triển khai trục cáp quang", badge: "SmartCity", stages: [{icon:"fa-network-wired",color:"cyan",title:"Trục Cáp Quang",status:"Thi công kéo cáp trục chính và tủ phân phối",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
+            "PRJ-07": { title: "Trung Tâm Thương Mại Vincom", percent: "95%", date: "01/03/2026", speed: "Bàn giao vận hành thử nghiệm", badge: "Commercial", stages: [{icon:"fa-shield-halved",color:"emerald",title:"Kiểm Soát An Ninh",status:"Kích hoạt toàn hệ thống AI nhận diện khuôn mặt",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] }
         };
 
         let currentUser = null;
@@ -381,39 +377,53 @@
         }
 
         window.onload = function() {
-            renderProjectsDashboard();
-            switchProject("PRJ-01");
-            fetchDataFromGoogleSheet();
+            loadDataFromServer();
         }
 
-        function fetchDataFromGoogleSheet() {
-            fetch(API_URL)
-                .then(res => res.json())
-                .then(data => {
-                    if(data && data.projects) {
-                        projectsData = data.projects;
-                        renderProjectsDashboard();
-                        switchProject(currentActiveProjId);
+        function loadDataFromServer() {
+            google.script.run
+                .withSuccessHandler(function(data) {
+                    if(data) {
+                        if(data.accounts) serverAccounts = data.accounts;
+                        if(data.projects && Object.keys(data.projects).length > 0) {
+                            projectsData = data.projects;
+                        }
                     }
+                    renderProjectsDashboard();
+                    if(!projectsData[currentActiveProjId]) {
+                        currentActiveProjId = Object.keys(projectsData)[0];
+                    }
+                    switchProject(currentActiveProjId);
                 })
-                .catch(err => { console.log("Dùng dữ liệu cục bộ."); });
+                .withFailureHandler(function(err) {
+                    console.log("Lỗi tải dữ liệu server, dùng dữ liệu mẫu.", err);
+                    renderProjectsDashboard();
+                    switchProject(currentActiveProjId);
+                })
+                .getAppData();
         }
 
         function handleLogin() {
             let u = document.getElementById("loginUser").value.trim();
             let p = document.getElementById("loginPass").value.trim();
 
-            if(localAccounts[u] && localAccounts[u].pass === p) {
-                currentUser = { username: u, ...localAccounts[u] };
+            let matched = serverAccounts.find(acc => acc.username === u && String(acc.password) === String(p));
+            // Tài khoản dự phòng mặc định nếu sheet chưa có
+            if(!matched && u === "admin" && p === "AbC@CbA@13579") {
+                matched = { username: "admin", role: "admin", fullname: "Quản Trị Viên Hệ Thống" };
+            }
+
+            if(matched) {
+                currentUser = matched;
                 document.getElementById("lockedActionAdd").classList.remove("locked-overlay");
                 document.getElementById("lockedActionEdit").classList.remove("locked-overlay");
                 document.getElementById("authActionButtons").classList.remove("hidden");
                 document.getElementById("loginCardContainer").style.display = "none";
-                document.getElementById("currentRoleName").innerText = currentUser.name;
+                document.getElementById("currentRoleName").innerText = matched.fullname || matched.username;
                 document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
                 showToast("Đã mở khóa toàn bộ quyền Quản Trị Hệ Thống!");
             } else {
-                alert("Mật khẩu không chính xác! Vui lòng dùng mật khẩu chuẩn: AbC@CbA@13579");
+                alert("Mật khẩu không chính xác! Vui lòng kiểm tra lại thông tin tài khoản.");
             }
         }
 
@@ -464,7 +474,7 @@
             document.getElementById('p-badge').innerHTML = `<i class="fa-solid fa-building"></i> ${proj.badge}`;
 
             let stagesHTML = '';
-            if(proj.stages) {
+            if(proj.stages && Array.isArray(proj.stages)) {
                 proj.stages.forEach(st => {
                     stagesHTML += `
                     <div class="bg-slate-800/65 backdrop-blur-md p-4 rounded-2xl border border-slate-700/60 hover:border-cyan-500/50 transition-all">
@@ -505,6 +515,12 @@
             document.getElementById('projectModal').classList.remove('hidden');
         }
 
+        function openChangePassModal() {
+            if(!currentUser) { alert("Vui lòng đăng nhập!"); return; }
+            document.getElementById('newPassInput').value = "";
+            document.getElementById('changePassModal').classList.remove('hidden');
+        }
+
         function saveProjectData() {
             let id = document.getElementById('mId').value.trim();
             let title = document.getElementById('mTitle').value.trim();
@@ -519,29 +535,31 @@
                 return;
             }
 
-            projectsData[id] = {
+            let projectPayload = {
                 title: title,
                 percent: percent,
-                badge: badge,
                 date: date,
                 speed: speed,
+                badge: badge,
                 stages: [
                     { icon: "fa-shield-halved", color: "cyan", title: "Hạng Mục Thi Công", status: stageDesc, statusColor: "text-cyan-400", iconStyle: "fa-solid fa-circle-check" }
                 ]
             };
 
-            // Đồng bộ 2 chiều lên Google Apps Script
-            fetch(API_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ action: "saveProject", id: id, title: title, percent: percent, date: date, speed: speed, badge: badge, stages: stageDesc })
-            }).catch(e => console.log(e));
+            projectsData[id] = projectPayload;
 
-            renderProjectsDashboard();
-            switchProject(id);
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    showToast("Đã lưu dự án và đồng bộ Google Sheets thành công!");
+                    renderProjectsDashboard();
+                    switchProject(id);
+                })
+                .withFailureHandler(function(err) {
+                    alert("Lỗi khi lưu: " + err.message);
+                })
+                .saveProject(id, projectPayload);
+
             closeModals();
-            showToast("Đã lưu dữ liệu và đồng bộ lên Google Sheets thành công!");
         }
 
         function deleteCurrentProject() {
@@ -549,27 +567,44 @@
             if(confirm(`Bạn có chắc chắn muốn xóa dự án [${currentActiveProjId}] không?`)) {
                 let deletedId = currentActiveProjId;
                 delete projectsData[deletedId];
-                
-                // Đồng bộ lệnh xóa lên Apps Script
-                fetch(API_URL, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "deleteProject", id: deletedId })
-                }).catch(e => console.log(e));
 
-                let remainingKeys = Object.keys(projectsData);
-                if(remainingKeys.length > 0) {
-                    currentActiveProjId = remainingKeys[0];
-                }
-                renderProjectsDashboard();
-                if(remainingKeys.length > 0) switchProject(currentActiveProjId);
-                showToast("Đã xóa dự án thành công!");
+                google.script.run
+                    .withSuccessHandler(function(res) {
+                        showToast("Đã xóa dự án thành công!");
+                        let remainingKeys = Object.keys(projectsData);
+                        if(remainingKeys.length > 0) {
+                            currentActiveProjId = remainingKeys[0];
+                            renderProjectsDashboard();
+                            switchProject(currentActiveProjId);
+                        } else {
+                            document.getElementById('projectsGrid').innerHTML = "";
+                        }
+                    })
+                    .withFailureHandler(function(err) {
+                        alert("Lỗi khi xóa: " + err.message);
+                    })
+                    .deleteProject(deletedId);
             }
+        }
+
+        function submitNewPassword() {
+            let newPass = document.getElementById('newPassInput').value.trim();
+            if(!newPass) { alert("Vui lòng nhập mật khẩu mới!"); return; }
+
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    showToast("Đổi mật khẩu thành công!");
+                    closeModals();
+                })
+                .withFailureHandler(function(err) {
+                    alert("Lỗi: " + err.message);
+                })
+                .updatePassword(currentUser.username, newPass);
         }
 
         function closeModals() {
             document.getElementById('projectModal').classList.add('hidden');
+            document.getElementById('changePassModal').classList.add('hidden');
         }
     </script>
 </body>
