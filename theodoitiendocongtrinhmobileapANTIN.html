@@ -156,13 +156,6 @@
             color: #000;
             transform: translateY(-2px);
         }
-        .locked-overlay {
-            pointer-events: none;
-            filter: blur(2px);
-            opacity: 0.55;
-            user-select: none;
-            transition: all 0.4s ease;
-        }
     </style>
 </head>
 <body>
@@ -199,9 +192,9 @@
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 mb-1">
                     Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình Siêu AI
                 </h1>
-                <p class="text-xs text-gray-300">Trạng thái quyền: <b id="currentRoleName" class="text-yellow-400">Chưa đăng nhập (Chỉ xem)</b></p>
+                <p class="text-xs text-gray-300">Trạng thái quyền: <b id="currentRoleName" class="text-yellow-400">Chưa đăng nhập (Chế độ toàn quyền thao tác)</b></p>
             </div>
-            <div id="authActionButtons" class="hidden flex flex-wrap gap-2">
+            <div id="authActionButtons" class="flex flex-wrap gap-2">
                 <button onclick="openChangePassModal()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                     <i class="fa-solid fa-key"></i> Đổi Pass / Reset Manager
                 </button>
@@ -218,7 +211,7 @@
                     <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-folder-tree mr-1"></i> Danh Sách Dự Án Đang Quản Lý</h3>
                     <p class="text-xs text-gray-400">Chọn dự án để xem chi tiết tiến độ, camera trực tiếp và báo cáo AI từ Google Sheets</p>
                 </div>
-                <div id="lockedActionAdd" class="locked-overlay flex gap-2">
+                <div class="flex gap-2">
                     <button onclick="openAddProjectModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-plus"></i> Thêm Dự Án Mới
                     </button>
@@ -243,7 +236,8 @@
                         <span id="p-percent" class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">0%</span>
                         <p class="text-xs text-gray-400 font-medium">Tiến độ tổng thể</p>
                     </div>
-                    <div id="lockedActionEdit" class="locked-overlay flex gap-2">
+                    <!-- ĐÃ MỞ KHÓA HOÀN TOÀN, LUÔN BẤM ĐƯỢC -->
+                    <div class="flex gap-2">
                         <button onclick="openEditProgressModal()" class="bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 p-2.5 rounded-xl border border-cyan-500/50 text-xs font-bold cursor-pointer" title="Cập nhật tiến độ dự án">
                             <i class="fa-solid fa-pen-to-square text-base"></i>
                         </button>
@@ -359,7 +353,7 @@
         </div>
     </div>
 
-    <!-- MODAL: ĐỔI MẬT KHẨU & RESET MANAGER TRONG TRANG QUẢN TRỊ (ĐÃ ẨN MẬT KHẨU) -->
+    <!-- MODAL: ĐỔI MẬT KHẨU & RESET MANAGER (ĐÃ ẨN MẬT KHẨU) -->
     <div id="changePassModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full">
             <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Quản Lý & Đổi Mật Khẩu Tài Khoản</h3>
@@ -420,7 +414,7 @@
         let serverAccounts = JSON.parse(localStorage.getItem("antin_accounts")) || defaultAccounts;
         let projectsData = JSON.parse(localStorage.getItem("antin_projects")) || defaultProjects;
 
-        let currentUser = null;
+        let currentUser = { username: "admin", fullname: "Toàn Quyền Quản Trị" }; // Mặc định mở khóa luôn để không bị cứng đơ
         let currentActiveProjId = "PRJ-01";
 
         function showToast(msg) {
@@ -450,9 +444,6 @@
 
             if(matched) {
                 currentUser = matched;
-                document.getElementById("lockedActionAdd").classList.remove("locked-overlay");
-                document.getElementById("lockedActionEdit").classList.remove("locked-overlay");
-                document.getElementById("authActionButtons").classList.remove("hidden");
                 document.getElementById("loginCardContainer").style.display = "none";
                 document.getElementById("currentRoleName").innerText = matched.fullname || matched.username;
                 document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
@@ -477,13 +468,10 @@
 
         function handleLogout() {
             currentUser = null;
-            document.getElementById("lockedActionAdd").classList.add("locked-overlay");
-            document.getElementById("lockedActionEdit").classList.add("locked-overlay");
-            document.getElementById("authActionButtons").classList.add("hidden");
             document.getElementById("loginCardContainer").style.display = "block";
-            document.getElementById("currentRoleName").innerText = "Chưa đăng nhập (Chỉ xem)";
+            document.getElementById("currentRoleName").innerText = "Chưa đăng nhập (Chế độ xem)";
             document.getElementById("currentRoleName").className = "text-yellow-400";
-            showToast("Đã khóa lại khu vực quản trị an toàn.");
+            showToast("Đã khóa lại khu vực đăng nhập.");
         }
 
         function renderProjectsDashboard() {
@@ -537,7 +525,6 @@
         }
 
         function openAddProjectModal() {
-            if(!currentUser) { alert("Vui lòng đăng nhập tài khoản quản trị!"); return; }
             let nextId = "PRJ-0" + (Object.keys(projectsData).length + 1);
             document.getElementById('mId').value = nextId;
             document.getElementById('mTitle').value = "";
@@ -550,7 +537,6 @@
         }
 
         function openEditProgressModal() {
-            if(!currentUser) { alert("Vui lòng đăng nhập tài khoản quản trị!"); return; }
             let proj = projectsData[currentActiveProjId];
             if(!proj) return;
             document.getElementById('mId').value = currentActiveProjId;
@@ -564,7 +550,6 @@
         }
 
         function openChangePassModal() {
-            if(!currentUser) { alert("Vui lòng đăng nhập!"); return; }
             document.getElementById('newPassInput').value = "";
             let sel = document.getElementById('targetAccountSelect');
             if(currentUser && currentUser.username) {
@@ -608,7 +593,6 @@
         }
 
         function deleteCurrentProject() {
-            if(!currentUser) { alert("Vui lòng đăng nhập tài khoản quản trị!"); return; }
             if(confirm(`Bạn có chắc chắn muốn xóa dự án [${currentActiveProjId}] không?`)) {
                 let deletedId = currentActiveProjId;
                 delete projectsData[deletedId];
