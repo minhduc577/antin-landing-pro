@@ -41,6 +41,15 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            max-width: 480px;
+            margin: 0 auto;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+        @media (min-width: 768px) {
+            body {
+                background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+                padding: 20px 0;
+            }
         }
     </style>
 </head>
@@ -72,36 +81,47 @@
 
                 <!-- CÁC HẠNG MỤC NÂNG CẤP SIÊU CẤP (FEATURES GRID) -->
                 <div class="grid grid-cols-2 gap-2.5 mt-3 text-left">
-                    <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
-                        <i class="fa-solid fa-file-invoice-dollar text-emerald-400 text-base mb-1"></i>
+                    <!-- 1. Xem Báo Giá -->
+                    <a href="https://ebook.antinco.com/baogiamobileapANTIN" target="_blank" class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer block group">
+                        <i class="fa-solid fa-file-invoice-dollar text-emerald-400 text-base mb-1 group-hover:scale-110 transition-transform"></i>
                         <h3 class="text-[11px] font-bold text-slate-100">Xem Báo Giá</h3>
                         <p class="text-[9px] text-slate-400">Minh bạch, tức thì</p>
-                    </div>
-                    <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
-                        <i class="fa-solid fa-shield-halved text-cyan-400 text-base mb-1"></i>
+                    </a>
+                    
+                    <!-- 2. Tra Cứu Bảo Hành -->
+                    <a href="https://ebook.antinco.com/baohanhmobileapANTIN" target="_blank" class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer block group">
+                        <i class="fa-solid fa-shield-halved text-cyan-400 text-base mb-1 group-hover:scale-110 transition-transform"></i>
                         <h3 class="text-[11px] font-bold text-slate-100">Tra Cứu Bảo Hành</h3>
                         <p class="text-[9px] text-slate-400">Điện tử tự động 24/7</p>
-                    </div>
-                    <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
-                        <i class="fa-solid fa-screwdriver-wrench text-amber-400 text-base mb-1"></i>
-                        <h3 class="text-[11px] font-bold text-slate-100">Yêu Cầu Bảo Trì</h3>
-                        <p class="text-[9px] text-slate-400">Xử lý sự cố nhanh</p>
-                    </div>
-                    <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
-                        <i class="fa-solid fa-robot text-purple-400 text-base mb-1 animate-spin" style="animation-duration: 6s;"></i>
-                        <h3 class="text-[11px] font-bold text-slate-100">AI Chẩn Đoán Lỗi</h3>
+                    </a>
+
+                    <!-- 3. SalesAI -->
+                    <a href="https://ebook.antinco.com/salesAI" target="_blank" class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer block group">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-base mb-1 group-hover:scale-110 transition-transform"></i>
+                        <h3 class="text-[11px] font-bold text-slate-100">SalesAI</h3>
+                        <p class="text-[9px] text-slate-400">Tư vấn thông minh</p>
+                    </a>
+
+                    <!-- 4. KythuatAI -->
+                    <a href="https://ebook.antinco.com/kythuatAI" target="_blank" class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer block group">
+                        <i class="fa-solid fa-robot text-purple-400 text-base mb-1 animate-spin group-hover:scale-110" style="animation-duration: 6s;"></i>
+                        <h3 class="text-[11px] font-bold text-slate-100">KythuatAI</h3>
                         <p class="text-[9px] text-slate-400">Hỏi đáp kỹ thuật 24/7</p>
-                    </div>
-                    <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
-                        <i class="fa-solid fa-credit-card text-blue-400 text-base mb-1"></i>
+                    </a>
+
+                    <!-- 5. Thanh Toán -->
+                    <a href="https://ebook.antinco.com/thanhtoan_vipcaremobileapANTIN" target="_blank" class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer block group">
+                        <i class="fa-solid fa-credit-card text-blue-400 text-base mb-1 group-hover:scale-110 transition-transform"></i>
                         <h3 class="text-[11px] font-bold text-slate-100">Thanh Toán</h3>
                         <p class="text-[9px] text-slate-400">MoMo, ZaloPay, QR</p>
-                    </div>
-                    <div class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer">
-                        <i class="fa-solid fa-chart-line text-pink-400 text-base mb-1"></i>
+                    </a>
+
+                    <!-- 6. Tiến Độ Dự Án -->
+                    <a href="https://script.google.com/macros/s/AKfycbw42VA6VRmPBH9G_5K1SLDPWLa4AMwVYC1haF2qQ47bDZX-VqoMKv95-mnF3uZT8SDkIQ/exec" target="_blank" class="bg-slate-800/80 border border-slate-700 p-2.5 rounded-xl glow-card cursor-pointer block group">
+                        <i class="fa-solid fa-chart-line text-pink-400 text-base mb-1 group-hover:scale-110 transition-transform"></i>
                         <h3 class="text-[11px] font-bold text-slate-100">Tiến Độ Dự Án</h3>
                         <p class="text-[9px] text-slate-400">Giám sát công trình</p>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- DỊCH VỤ TOÀN DIỆN CHI TIẾT -->
