@@ -245,7 +245,7 @@
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        /* Chân trang */
+        /* Chân trang động */
         .company-footer {
             margin-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -330,7 +330,7 @@
         <div class="form-group">
             <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn:</label>
             <select id="selectPackage" onchange="updateQRData()">
-                <!-- Các gói dịch vụ được load động bằng JavaScript -->
+                <!-- Các gói dịch vụ được load động từ Google Apps Script / LocalStorage -->
             </select>
         </div>
 
@@ -341,7 +341,7 @@
             <span style="font-size: 11px; color: #dfe6e9;">Bao gồm trọn gói dịch vụ AI định kỳ & hỗ trợ kỹ thuật tận nơi 24/7</span>
         </div>
 
-        <!-- Khung Mã QR Động (Hỗ trợ VietQR API hoặc ảnh upload từ Admin) -->
+        <!-- Khung Mã QR Động -->
         <div class="qr-section">
             <img id="vietQrImg" src="" alt="Mã QR Thanh Toán">
             <p>Quét mã qua App Ngân hàng bất kỳ / MoMo / ZaloPay</p>
@@ -363,11 +363,11 @@
             <i class="fa-solid fa-arrow-left"></i> Quay Lại Trang Chủ An Tín Ecosystem
         </a>
 
-        <!-- CHÂN TRANG AN TÍN -->
-        <div class="company-footer">
-            <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH</h4>
+        <!-- CHÂN TRANG AN TÍN (DYNAMIC FOOTER) -->
+        <div class="company-footer" id="dynamicFooter">
+            <h4 id="footerCompanyName">🛡️ CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</h4>
             
-            <div class="services-grid">
+            <div class="services-grid" id="footerServicesGrid">
                 <div class="service-item"><i class="fa-solid fa-video" style="color:#f39c12"></i> Camera an ninh – Giám sát 24/7</div>
                 <div class="service-item"><i class="fa-solid fa-network-wired" style="color:#f39c12"></i> Mạng Wi-Fi – Hạ tầng CNTT</div>
                 <div class="service-item"><i class="fa-solid fa-shield-cat" style="color:#f39c12"></i> Chống đột nhập – Khóa thông minh</div>
@@ -386,15 +386,15 @@
                 🎯 Một đối tác – Trọn gói giải pháp<br>
                 🎯 Một cuộc gọi – Xử lý mọi vấn đề kỹ thuật<br>
                 🎯 <b>AN TÍN</b> – Nhanh chóng • Tận tâm • Uy tín • Hiệu quả<br>
-                💎 <b>AN TÍN</b> – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM.
+                💎 <span id="footerSloganText">AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM.</span>
             </div>
 
-            <div class="contact-info">
-                <p>🏢 <b>CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</b></p>
-                <p>📍 85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</p>
-                <p>☎️ (028) 3849 3575 &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" target="_blank">0914 060 339</a></p>
-                <p>🌐 Website: <a href="https://khuyenmaicamera.blogspot.com" target="_blank">khuyenmaicamera.blogspot.com</a></p>
-                <p>📩 Email: <a href="mailto:ctyantinco@gmail.com">ctyantinco@gmail.com</a></p>
+            <div class="contact-info" id="footerContactInfo">
+                <p>🏢 <b id="footerCompNameSub">CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</b></p>
+                <p>📍 <span id="footerAddress">85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</span></p>
+                <p>☎️ <span id="footerPhoneDisplay">(028) 3849 3575</span> &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" target="_blank" id="footerZaloLink">0914 060 339</a></p>
+                <p>🌐 Website: <a href="https://khuyenmaicamera.blogspot.com" target="_blank" id="footerWebLink">khuyenmaicamera.blogspot.com</a></p>
+                <p>📩 Email: <a href="mailto:ctyantinco@gmail.com" id="footerEmailLink">ctyantinco@gmail.com</a></p>
             </div>
         </div>
     </div>
@@ -416,12 +416,19 @@
         </div>
     </div>
 
-    <!-- ================= MODAL QUẢN TRỊ ADMIN (UP QR & QUẢN LÝ GÓI) ================= -->
+    <!-- ================= MODAL QUẢN TRỊ ADMIN ================= -->
     <div id="adminDashboardModal" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px; overflow-y:auto;">
         <div style="background:#1a1c29; border: 2px solid #2ecc71; border-radius:20px; max-width:550px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(46,204,113, 0.3); position:relative; margin: 30px 0;">
             <button onclick="closeAdminDashboard()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             <h2 style="color:#2ecc71; margin-bottom:15px; text-align:center; font-size:20px;"><i class="fa-solid fa-screwdriver-wrench"></i> Bảng Điều Khiển Quản Trị Viên</h2>
             
+            <!-- Đồng bộ Apps Script -->
+            <div style="background:rgba(46,204,113,0.1); border:1px solid #2ecc71; padding:15px; border-radius:12px; margin-bottom:15px;">
+                <h4 style="color:#2ecc71; margin-bottom:8px; font-size:14px;"><i class="fa-solid fa-cloud-arrow-down"></i> Đồng Bộ Google Sheet Apps Script</h4>
+                <p style="font-size:11px; color:#b2bec3; margin-bottom:10px;">Hệ thống đang liên kết trực tiếp với dữ liệu trên Google Sheet của An Tín.</p>
+                <button onclick="fetchDataFromAppsScript()" style="background:#2ecc71; color:#000; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Đồng Bộ Ngay Từ Sheet</button>
+            </div>
+
             <!-- Đổi mật khẩu -->
             <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
                 <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🔑 Đổi Mật Khẩu Quản Trị</h4>
@@ -431,7 +438,7 @@
                 <button onclick="changeAdminPassword()" style="background:#f39c12; color:#000; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Lưu Mật Khẩu Mới</button>
             </div>
 
-            <!-- Upload QR Code từ app ngân hàng -->
+            <!-- Upload QR Code -->
             <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
                 <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🖼️ Tải Lên Ảnh Mã QR Ngân Hàng</h4>
                 <input type="file" id="qrImageFile" accept="image/*" style="margin-bottom:10px; font-size:12px;">
@@ -441,12 +448,12 @@
 
             <!-- Quản lý gói dịch vụ -->
             <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
-                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn</h4>
+                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn (Hỗ trợ Gói Vĩnh Viễn / Vô Hạn)</h4>
                 <div id="packageListAdmin" style="max-height:150px; overflow-y:auto; margin-bottom:10px; font-size:12px;">
                     <!-- Danh sách gói load bằng JS -->
                 </div>
-                <div style="display:flex; gap:8px;">
-                    <input type="text" id="newPkgName" placeholder="Tên gói dịch vụ..." style="font-size:12px; padding:8px;">
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <input type="text" id="newPkgName" placeholder="Tên gói (VD: Gói VIP Care Vĩnh Viễn)..." style="font-size:12px; padding:8px; flex:1;">
                     <input type="number" id="newPkgPrice" placeholder="Giá (VNĐ)..." style="font-size:12px; padding:8px; width:120px;">
                     <button onclick="addNewPackage()" style="background:#2ecc71; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px; white-space:nowrap;">Thêm Gói</button>
                 </div>
@@ -507,17 +514,76 @@
     </style>
 
     <script>
-        // Khởi tạo dữ liệu mặc định nếu chưa có trong localStorage
+        // Link Apps Script ổn định được giữ nguyên vẹn
+        var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTLHw2d2RSmlmRc55T8tsI6pw_6BNPPYMLKefLL3QfGOVb6kvcqC9t-VwVRoi7ziBMoQ/exec";
+
+        // Khởi tạo bộ nhớ cục bộ nếu chưa có
         if(!localStorage.getItem('adminPass')) {
-            localStorage.setItem('adminPass', 'antin2026');
+            localStorage.setItem('adminPass', '123456');
         }
         if(!localStorage.getItem('packagesData')) {
             var defaultPkgs = [
                 {name: "Gói VIP Care Tiêu Chuẩn (1 Năm)", price: 500000},
-                {name: "Gói VIP Care Toàn Diện (2 Năm) [Tiết kiệm 10%]", price: 900000},
-                {name: "Gói VIP Care Doanh Nghiệp (3 Năm) [Tiết kiệm 20%]", price: 1350000}
+                {name: "Gói VIP Care Toàn Diện (2 Năm)", price: 900000},
+                {name: "Gói VIP Care Vĩnh Viễn (Trọn Đời)", price: 3000000}
             ];
             localStorage.setItem('packagesData', JSON.stringify(defaultPkgs));
+        }
+
+        // Thông tin doanh nghiệp mặc định chuẩn An Tín (có thể cập nhật động từ Apps Script)
+        var enterpriseConfig = {
+            name: "CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN",
+            phone: "0914060339",
+            slogan: "AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM.",
+            address: "85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM",
+            website: "https://khuyenmaicamera.blogspot.com",
+            email: "ctyantinco@gmail.com",
+            zalo: "https://zalo.me/0914060339"
+        };
+
+        // Hàm gọi dữ liệu từ Apps Script (Google Sheet)
+        function fetchDataFromAppsScript() {
+            showToast("Đang đồng bộ dữ liệu từ Google Sheet...");
+            fetch(APPS_SCRIPT_URL)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.enterprise) {
+                        enterpriseConfig = data.enterprise;
+                        updateEnterpriseUI();
+                    }
+                    if(data.adminPass) {
+                        localStorage.setItem('adminPass', data.adminPass);
+                    }
+                    if(data.goiDichVu && data.goiDichVu.length > 0) {
+                        var mappedPkgs = data.goiDichVu.map(item => ({
+                            name: item.name,
+                            price: Number(item.price)
+                        }));
+                        localStorage.setItem('packagesData', JSON.stringify(mappedPkgs));
+                    }
+                    loadPackagesToUI();
+                    showToast("Đồng bộ dữ liệu thành công từ Google Sheet!");
+                })
+                .catch(error => {
+                    console.log("Lỗi đồng bộ Sheet, dùng bộ nhớ đệm:", error);
+                    loadPackagesToUI();
+                    showToast("Đã tải dữ liệu từ bộ nhớ đệm cục bộ.");
+                });
+        }
+
+        // Cập nhật thông tin doanh nghiệp ra footer tự động
+        function updateEnterpriseUI() {
+            document.getElementById('footerCompanyName').innerText = "🛡️ " + enterpriseConfig.name;
+            document.getElementById('footerCompNameSub').innerText = enterpriseConfig.name;
+            document.getElementById('footerAddress').innerText = enterpriseConfig.address;
+            document.getElementById('footerPhoneDisplay').innerText = "(028) 3849 3575";
+            document.getElementById('footerZaloLink').innerText = enterpriseConfig.phone;
+            document.getElementById('footerZaloLink').href = enterpriseConfig.zalo;
+            document.getElementById('footerWebLink').innerText = enterpriseConfig.website.replace('https://', '');
+            document.getElementById('footerWebLink').href = enterpriseConfig.website;
+            document.getElementById('footerEmailLink').innerText = enterpriseConfig.email;
+            document.getElementById('footerEmailLink').href = "mailto:" + enterpriseConfig.email;
+            document.getElementById('footerSloganText').innerText = enterpriseConfig.slogan;
         }
 
         // Load danh sách gói dịch vụ vào thẻ <select> và bảng Admin
@@ -547,7 +613,7 @@
             updateQRData();
         }
 
-        // Cập nhật QR Code và giá tiền
+        // Cập nhật QR Code và giá tiền với hàm định dạng tiền tệ chuyên nghiệp
         function updateQRData() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
@@ -709,8 +775,9 @@
         }
 
         window.onload = function() {
-            loadPackagesToUI();
+            fetchDataFromAppsScript();
         };
     </script>
 </body>
 </html>
+```[cite: 1]
