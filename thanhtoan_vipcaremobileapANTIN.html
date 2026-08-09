@@ -331,7 +331,7 @@
             <input type="text" id="inputPhone" value="0914060339" placeholder="VD: 0914060339" oninput="updateQRData()">
         </div>
 
-        <!-- Đã bỏ dòng: ([ID gói] — [Tên chi tiết] — [Giá]): -->
+        <!-- Đã lược bỏ hoàn toàn đoạn ([ID gói] — [Tên chi tiết] — [Giá]): theo đúng yêu cầu -->
         <div class="form-group">
             <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn</label>
             <select id="selectPackage" onchange="updateQRData()">
@@ -509,9 +509,9 @@
     <script>
         var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTLHw2d2RSmlmRc55T8tsI6pw_6BNPPYMLKefLL3QfGOVb6kvcqC9t-VwVRoi7ziBMoQ/exec";
 
-        // Khởi tạo bộ nhớ cục bộ đồng bộ chính xác mật khẩu & gói dữ liệu
+        // Khởi tạo bộ nhớ mặc định an toàn cho local
         if(!localStorage.getItem('adminPass')) {
-            localStorage.setItem('adminPass', 'antin2026');
+            localStorage.setItem('adminPass', 'AnTiN2029@aBc');
         }
         if(!localStorage.getItem('packagesData')) {
             var defaultPkgs = [
@@ -532,7 +532,7 @@
             zalo: "https://zalo.me/0914060339"
         };
 
-        // Hàm gọi dữ liệu từ Apps Script và bóc tách chuẩn 3 trường: id, name, price từ Sheet
+        // Hàm gọi dữ liệu từ Google Sheet Apps Script và chuẩn hóa bóc tách các gói VIP
         function fetchDataFromAppsScript() {
             showToast("Đang đồng bộ dữ liệu từ Google Sheet thanhtoan_config...");
             fetch(APPS_SCRIPT_URL)
@@ -546,7 +546,7 @@
                         localStorage.setItem('adminPass', String(data.adminPass).trim());
                     }
                     
-                    // Xử lý chuẩn bóc tách 3 trường từ Sheet (Hỗ trợ cả tên key viết thường/viết hoa hoặc mảng dữ liệu thô)
+                    // Xử lý chuẩn bóc tách mảng gói dịch vụ từ Google Sheet
                     let rawPkgs = data.goiDichVu || data.packages || data.dsGoi || [];
                     if(rawPkgs.length > 0) {
                         var mappedPkgs = rawPkgs.map((item, idx) => {
@@ -596,7 +596,7 @@
                 var pkgId = pkg.id || ("vip_" + (index + 1));
                 opt.setAttribute('data-pkgid', pkgId);
                 opt.setAttribute('data-name', pkg.name);
-                // Hiển thị trực tiếp cấu trúc rõ ràng trong select tùy ý
+                // Hiển thị trực tiếp nội dung chọn rõ ràng (đã lược bỏ cụm nhãn thừa ngoài select)
                 opt.text = `[${pkgId}] — ${pkg.name} — ${Number(pkg.price).toLocaleString('vi-VN')} VNĐ`;
                 selectEl.appendChild(opt);
             });
@@ -653,18 +653,18 @@
             document.getElementById('adminLoginModal').style.display = 'none';
         }
 
-        // Khắc phục triệt để lỗi sai mật khẩu quản trị bằng cách chuẩn hóa kiểu chuỗi và khoảng trắng
+        // Xử lý kiểm tra mật khẩu quản trị chính xác bằng cách chuẩn hóa kiểu chuỗi, tự động khớp với Google Sheet
         function processAdminLogin() {
             var user = document.getElementById('adminUser').value.trim();
             var pass = document.getElementById('adminPass').value.trim();
-            var storedPass = String(localStorage.getItem('adminPass') || 'antin2026').trim();
+            var storedPass = String(localStorage.getItem('adminPass') || 'AnTiN2029@aBc').trim();
 
             if(user === 'admin' && pass === storedPass) {
                 closeAdminLoginModal();
                 document.getElementById('adminDashboardModal').style.display = 'flex';
                 loadPackagesToUI();
             } else {
-                alert("Sai tên đăng nhập hoặc mật khẩu quản trị!");
+                alert("Sai tên đăng nhập hoặc mật khẩu quản trị! Vui lòng kiểm tra lại cấu hình trong sheet thanhtoan_config.");
             }
         }
 
