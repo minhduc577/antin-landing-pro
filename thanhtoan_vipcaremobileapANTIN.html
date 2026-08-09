@@ -436,7 +436,7 @@
                     <i class="fa-solid fa-circle-info"></i> Chi tiết các Gói VIP CARE
                 </span>
             </div>
-            <!-- Dữ liệu select tự động liên kết cột E từ dòng 7 trở xuống -->
+            <!-- Dữ liệu select tự động liên kết -->
             <select id="selectPackage" onchange="updateQRData()">
                 <!-- Sẽ được render tự động qua JavaScript từ dữ liệu cấu hình -->
             </select>
@@ -507,21 +507,40 @@
         </div>
     </div>
 
-    <!-- MODAL HIỂN THỊ CHI TIẾT CÁC GÓI VIP CARE (Tự động lấy dữ liệu cột E từ dòng 7 trở xuống) -->
+    <!-- MODAL HIỂN THỊ CHI TIẾT CÁC GÓI VIP CARE (Đã cập nhật chuẩn xác ngữ liệu yêu cầu, lượt bỏ ký tự dòng 7...) -->
     <div id="packageDetailsModal" style="display:none; position:fixed; z-index:999999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
-        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #00cec9; border-radius:24px; max-width:600px; width:100%; max-height:85vh; display:flex; flex-direction:column; padding:25px; color:#fff; box-shadow: 0 20px 45px rgba(0,206,201, 0.35); position:relative;">
+        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #00cec9; border-radius:24px; max-width:650px; width:100%; max-height:85vh; display:flex; flex-direction:column; padding:25px; color:#fff; box-shadow: 0 20px 45px rgba(0,206,201, 0.35); position:relative;">
             <button onclick="closePackageDetailsModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer; z-index:10;">&times;</button>
             
             <div style="text-align:center; margin-bottom:15px; flex-shrink:0;">
                 <span style="background: rgba(0,206,201,0.2); color: #00cec9; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid rgba(0,206,201,0.4);">📊 HỆ THỐNG THÔNG TIN AI AN TÍN</span>
-                <h3 style="margin: 10px 0 4px 0; font-size: 20px; color: #f1c40f;"><i class="fa-solid fa-list-check"></i> Chi Tiết Các Gói VIP Care</h3>
-                <p style="font-size:12px; color:#b2bec3;">Bảng mô tả đầy đủ các gói dịch vụ bảo trì định kỳ & hỗ trợ tự động 24/7 (Cập nhật tự động từ Sheet)</p>
+                <h3 style="margin: 10px 0 4px 0; font-size: 20px; color: #f1c40f;"><i class="fa-solid fa-list-check"></i> CHI TIẾT QUYỀN LỢI CÁC GÓI VIP</h3>
+                <p style="font-size:12px; color:#b2bec3;">Bảng mô tả đầy đủ chính sách dịch vụ bảo trì định kỳ & hỗ trợ tự động 24/7</p>
             </div>
 
-            <!-- Khung cuộn nội dung chi tiết tự động đồng bộ cột E từ dòng 7 trở xuống -->
+            <!-- Khung cuộn nội dung chi tiết -->
             <div style="overflow-y:auto; padding-right:5px; flex-grow:1; margin-bottom:15px;">
-                <div style="display:flex; flex-direction:column; gap:10px;" id="packageItemsContainer">
-                    <!-- Nội dung sẽ được render động bằng JavaScript -->
+                <div style="display:flex; flex-direction:column; gap:12px;" id="packageItemsContainer">
+                    <!-- Nội dung chính sách chi tiết -->
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #f39c12; padding:14px; border-radius:0 10px 10px 0; font-size:12.5px; line-height:1.6;">
+                        <b style="color:#f39c12;"><i class="fa-solid fa-triangle-exclamation"></i> QUY ĐỊNH CHUNG:</b><br>
+                        Áp dụng trường hợp khách hàng không ký hợp đồng bảo trì, thông thường không có hợp đồng bảo trì, hay không tham gia Gói VIP CARE — thì mỗi lần AN TÍN nhận thông báo sửa chữa Camera, WIFI, Thiết bị điện gia đình, .. Khi AN TÍN đến phí đến & kiểm tra tính phí 300K đến 500K tuỳ gần hay xa & khi sửa thì tính thêm phí thực tế sửa chữa.
+                    </div>
+
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #2ecc71; padding:14px; border-radius:0 10px 10px 0; font-size:12.5px; line-height:1.6;">
+                        <b style="color:#2ecc71;"><i class="fa-solid fa-video"></i> Gói VIP1:</b><br>
+                        Sửa chữa Hệ Thống Camera, Đội ngũ kỹ thuật AN TÍN sẽ có mặt tại địa chỉ khách hàng trong vòng 24h kể từ khi nhận thông báo chính thức từ Quý khách để sửa chữa camera và hoàn toàn miễn phí (Nếu không phát sinh vật tư khi sửa chữa) và Ngoại trừ cài lại mạng internet để xem camera trên điện thoại do nhà mạng thay modem mới hay reset default modem làm mất cấu hình camera/300k/1 lần cài đặt.
+                    </div>
+
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #00cec9; padding:14px; border-radius:0 10px 10px 0; font-size:12.5px; line-height:1.6;">
+                        <b style="color:#00cec9;"><i class="fa-solid fa-network-wired"></i> Gói VIP2:</b><br>
+                        Sửa chữa Hệ Thống Camera, Hệ thống mạng WIFI, Đội ngũ kỹ thuật AN TÍN sẽ có mặt tại địa chỉ khách hàng trong vòng 24h kể từ khi nhận thông báo chính thức từ Quý khách để sửa chữa camera và hoàn toàn miễn phí (Nếu không phát sinh vật tư khi sửa chữa) và Ngoại trừ cài lại mạng internet để xem camera trên điện thoại do nhà mạng thay modem mới hay reset default modem làm mất cấu hình camera/300k/1 lần cài đặt.
+                    </div>
+
+                    <div style="background:rgba(255,255,255,0.04); border-left:4px solid #e74c3c; padding:14px; border-radius:0 10px 10px 0; font-size:12.5px; line-height:1.6;">
+                        <b style="color:#e74c3c;"><i class="fa-solid fa-house-laptop"></i> Gói VIP3:</b><br>
+                        Sửa chữa Hệ Thống Camera, Hệ thống mạng WIFI, Hệ thống tất cả các thiết bị điện trong gia đình, Đội ngũ kỹ thuật AN TÍN sẽ có mặt tại địa chỉ khách hàng trong vòng 24h kể từ khi nhận thông báo chính thức từ Quý khách để sửa chữa camera và hoàn toàn miễn phí (Nếu không phát sinh vật tư khi sửa chữa) và Ngoại trừ cài lại mạng internet để xem camera trên điện thoại do nhà mạng thay modem mới hay reset default modem làm mất cấu hình camera/300k/1 lần cài đặt.
+                    </div>
                 </div>
             </div>
 
@@ -641,60 +660,43 @@
             zalo: "https://zalo.me/0914060339"
         };
 
-        // Danh sách dịch vụ cấu hình tự động từ cột E (dòng 7 trở xuống, hỗ trợ phát triển mở rộng từ dòng 10, 11... về sau)
         var servicePackagesConfig = [
             {
                 id: "vip_1",
                 name: "Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)",
                 price: 1200000,
                 color: "#2ecc71",
-                icon: "fa-video",
-                detail: "• Kiểm tra băng thông, góc nhìn và hồng ngoại camera hàng tháng.<br>• Vệ sinh ống kính, đầu ghi hình (DVR/NVR) định kỳ.<br>• Hỗ trợ xử lý lỗi trực tuyến qua AI và kỹ thuật tận nơi 24/7."
+                icon: "fa-video"
             },
             {
                 id: "vip_2",
                 name: "Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)",
                 price: 1600000,
                 color: "#00cec9",
-                icon: "fa-network-wired",
-                detail: "• Bao gồm toàn bộ tính năng của gói Camera.<br>• Tối ưu hóa hệ thống mạng Wi-Fi, cân bằng tải Router, kiểm tra độ phủ sóng.<br>• Khắc phục sự cố rớt mạng, cấu hình lại hệ thống mạng nội bộ LAN/WAN."
+                icon: "fa-network-wired"
             },
             {
                 id: "vip_3",
                 name: "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)",
                 price: 2500000,
                 color: "#e74c3c",
-                icon: "fa-house-laptop",
-                detail: "• Trọn gói toàn bộ hệ thống Camera và Wi-Fi.<br>• Bảo dưỡng định kỳ hệ thống điện thông minh, khóa vân tay, chuông cửa màn hình.<br>• Ưu tiên xử lý sự cố khẩn cấp trong vòng 1-2 giờ với đội ngũ chuyên gia kỹ thuật An Tín."
+                icon: "fa-house-laptop"
             }
-            // 👉 Hướng dẫn mở rộng: Khi bạn thêm dòng dịch vụ mới ở Sheet thanhtoan_config (từ dòng 10, 11...), 
-            // bạn chỉ cần thêm một khối object tương tự vào đây, hệ thống web sẽ tự động sinh giao diện và xử lý trọn gói!
         ];
 
-        // Hàm tự động khởi tạo và render dữ liệu vào Select Box và Popup Chi tiết
         function initDynamicPackages() {
             var selectElement = document.getElementById('selectPackage');
-            var containerElement = document.getElementById('packageItemsContainer');
-            
-            if(!selectElement || !containerElement) return;
+            if(!selectElement) return;
 
             selectElement.innerHTML = '';
-            containerElement.innerHTML = '';
 
-            servicePackagesConfig.forEach((pkg, index) => {
-                // 1. Đổ dữ liệu vào thẻ select tương ứng với nguồn cấu hình Sheet cột E (từ dòng 7)
+            servicePackagesConfig.forEach((pkg) => {
                 var option = document.createElement('option');
                 option.value = pkg.price;
                 option.setAttribute('data-pkgid', pkg.id);
                 option.setAttribute('data-name', pkg.name);
                 option.innerText = `${pkg.id} — ${pkg.name} — ${pkg.price.toLocaleString('vi-VN')} VNĐ`;
                 selectElement.appendChild(option);
-
-                // 2. Đổ dữ liệu tự động vào popup chi tiết các gói dịch vụ (kèm icon và hiệu ứng chuyên nghiệp)
-                var itemDiv = document.createElement('div');
-                itemDiv.style.cssText = `background:rgba(255,255,255,0.04); border-left:4px solid ${pkg.color}; padding:12px 15px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.5;`;
-                itemDiv.innerHTML = `<b style="color:${pkg.color};"><i class="fa-solid ${pkg.icon}"></i> Gói Dòng ${7 + index}: ${pkg.name}</b><br>${pkg.detail}`;
-                containerElement.appendChild(itemDiv);
             });
         }
 
