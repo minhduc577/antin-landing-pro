@@ -343,7 +343,7 @@
             <input type="text" id="inputPhone" value="0914060339" placeholder="VD: 0914060339" oninput="updateQRData()">
         </div>
 
-        <!-- ĐÃ SỬA LỖI PHẦN KHOANH ĐỎ: Đảm bảo hiển thị đúng cấu trúc [ID gói] — [Tên chi tiết] — [Giá] -->
+        <!-- ĐÃ SỬA LỖI: Hiển thị chuẩn xác cấu trúc [ID gói] — [Tên chi tiết] — [Giá] -->
         <div class="form-group">
             <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn ([ID gói] — [Tên chi tiết] — [Giá]):</label>
             <select id="selectPackage" onchange="updateQRData()">
@@ -535,7 +535,7 @@
         // Link Apps Script liên kết trực tiếp sheet thanhtoan_config
         var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTLHw2d2RSmlmRc55T8tsI6pw_6BNPPYMLKefLL3QfGOVb6kvcqC9t-VwVRoi7ziBMoQ/exec";
 
-        // Khởi tạo bộ nhớ cục bộ dự phòng
+        // Khởi tạo bộ nhớ cục bộ dự phòng chuẩn An Tín
         if(!localStorage.getItem('adminPass')) {
             localStorage.setItem('adminPass', 'antin2026');
         }
@@ -601,7 +601,7 @@
             document.getElementById('footerSloganText').innerText = enterpriseConfig.slogan;
         }
 
-        // Tải gói dịch vụ vào dropdown chuẩn hóa: [ID gói] — [Tên gói chi tiết] — [Giá tiền]
+        // Tải gói dịch vụ vào dropdown với định dạng chuẩn: [ID gói] — [Tên chi tiết] — [Giá]
         function loadPackagesToUI() {
             var pkgs = JSON.parse(localStorage.getItem('packagesData')) || [];
             var selectEl = document.getElementById('selectPackage');
