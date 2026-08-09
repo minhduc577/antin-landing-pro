@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình Siêu AI v3.5 - AN TÍN</title>
+    <title>Hệ Thống Quản Lý Công Trình & Phân Quyền Admin - AN TÍN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,7 +22,7 @@
         .main-wrapper {
             max-width: 960px;
             width: 100%;
-            background: rgba(20, 22, 33, 0.85);
+            background: rgba(20, 22, 33, 0.88);
             border: 1px solid rgba(6, 182, 212, 0.3);
             border-radius: 24px;
             padding: 24px;
@@ -129,26 +129,23 @@
 </head>
 <body>
 
-    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Hệ thống đã đồng bộ thành công!</div>
+    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Thao tác thành công!</div>
 
-    <!-- MÀN HÌNH CHÍNH (GIAO DIỆN SIÊU AI V3.5) -->
+    <!-- MÀN HÌNH CHÍNH (GIAO DIỆN QUẢN LÝ CÔNG TRÌNH) -->
     <div class="main-wrapper">
         <!-- HEADER TOP BAR -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 mb-5 gap-3">
             <div>
-                <span class="header-badge"><i class="fa-solid fa-microchip"></i> AN TÍN PROJECT MANAGEMENT AI v3.5</span>
+                <span class="header-badge"><i class="fa-solid fa-shield-halved"></i> AN TÍN PROJECT MANAGEMENT AI v4.0</span>
                 <h1 class="text-xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
                     Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình
                 </h1>
-                <p class="text-[11px] text-gray-400 mt-0.5">Trạng thái Google Sheet: <b class="text-emerald-400">Hoạt động ngầm tự động (Sync 2 chiều)</b></p>
+                <p class="text-[11px] text-gray-400 mt-0.5">Trạng thái: <b class="text-emerald-400">Đồng bộ Google Sheets ngầm tự động 2 chiều</b></p>
             </div>
-            <!-- CÁC NÚT ĐIỀU KHIỂN GỌN GÀNG -->
+            <!-- CÁC NÚT ĐIỀU HƯỚNG QUẢN TRỊ ADMIN -->
             <div class="flex flex-wrap gap-2">
-                <button onclick="syncDataToCloud()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-cloud-arrow-up"></i> Lưu Sheet
-                </button>
-                <button onclick="openSettingsModal()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-gear"></i> Cấu Hình API
+                <button onclick="openAdminModal()" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-lg">
+                    <i class="fa-solid fa-user-shield"></i> Quản Trị Admin & Manager
                 </button>
             </div>
         </div>
@@ -239,31 +236,62 @@
         </div>
     </div>
 
-    <!-- MODAL: CẤU HÌNH API GOOGLE SHEETS / APPS SCRIPT (ẨN ĐI, CHỈ HIỆN KHI BẤM CÀI ĐẶT) -->
-    <div id="settingsModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-md w-full shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-sm font-bold text-cyan-400"><i class="fa-solid fa-gear mr-1"></i> Cấu Hình Kết Nối Google Sheets & Apps Script</h3>
+    <!-- MODAL: QUẢN TRỊ ADMIN & QUẢN LÝ MANAGER -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-2xl w-full shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+                <h3 class="text-sm font-extrabold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-user-shield text-base"></i> Bảng Điều Hành Admin: Quản Lý Tài Khoản Manager</h3>
                 <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
+            <div class="space-y-4 text-xs">
+                <div class="flex justify-between items-center">
+                    <p class="text-gray-300">Danh sách các tài khoản Manager đang vận hành hệ thống dự án:</p>
+                    <button onclick="openAddManagerModal()" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1 cursor-pointer">
+                        <i class="fa-solid fa-user-plus"></i> Thêm Manager Mới
+                    </button>
+                </div>
+                <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800/80 text-gray-300 border-b border-slate-700">
+                                <th class="p-3">Tên Tài Khoản</th>
+                                <th class="p-3">Họ Tên / Chức Vụ</th>
+                                <th class="p-3">Trạng Thái</th>
+                                <th class="p-3 text-right">Thao Tác Admin (Reset/Xóa)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="managerTableBody">
+                            <!-- Dữ liệu render động bằng JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex justify-end pt-2">
+                    <button onclick="closeModals()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 px-5 rounded-xl text-xs cursor-pointer">Đóng Bảng Quản Trị</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: THÊM / RESET MẬT KHẨU MANAGER -->
+    <div id="managerActionModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
+            <h3 id="mgrModalTitle" class="text-sm font-bold text-amber-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Reset Mật Khẩu Manager</h3>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Đường dẫn Web App Apps Script (API):</label>
-                    <input type="text" id="scriptApiUrl" value="https://script.google.com/macros/s/AKfycb.../exec" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-cyan-300 mt-1 focus:outline-none focus:border-cyan-400">
+                    <label class="text-gray-300 font-bold">Tài khoản Manager:</label>
+                    <input type="text" id="mgrUsername" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="text-gray-300 font-bold">Tài khoản:</label>
-                        <input type="text" id="loginUser" value="admin" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                    </div>
-                    <div>
-                        <label class="text-gray-300 font-bold">Mật khẩu ánh xạ:</label>
-                        <input type="password" id="loginPass" value="" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" placeholder="Mật khẩu...">
-                    </div>
+                <div>
+                    <label class="text-gray-300 font-bold">Họ tên kỹ sư / quản lý:</label>
+                    <input type="text" id="mgrFullname" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                </div>
+                <div>
+                    <label class="text-gray-300 font-bold">Mật khẩu mới (Reset):</label>
+                    <input type="text" id="mgrNewPass" value="antin@2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-cyan-300 mt-1 font-bold">
                 </div>
                 <div class="flex gap-2 pt-2">
-                    <button onclick="saveApiSettings()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Lưu & Kết Nối Ngầm</button>
-                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Đóng</button>
+                    <button onclick="saveManagerData()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Xác Nhận Lưu</button>
+                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
             </div>
         </div>
@@ -323,7 +351,14 @@
             "PRJ-04": { title: "Bệnh Viện Đa Khoa Hùng Vương", percent: "50%", date: "01/02/2026", speed: "Xử lý phụ trợ", badge: "Phụ Trợ", stages: [{icon:"fa-server",color:"yellow",title:"Tủ Rack & Mạng",status:"Khắc phục sự cố đường truyền",statusColor:"text-yellow-400"}] }
         };
 
-        let projectsData = JSON.parse(localStorage.getItem("antin_sheet_projects_v35")) || defaultProjects;
+        let defaultManagers = {
+            "manager01": { fullname: "Phạm Minh Đức (Kỹ Thuật Trưởng)", status: "Đang hoạt động" },
+            "manager02": { fullname: "Nguyễn Văn An (Giám Sát Mạng)", status: "Đang hoạt động" },
+            "manager03": { fullname: "Trần Thị Mai (Quản Lý Hợp Đồng)", status: "Đang hoạt động" }
+        };
+
+        let projectsData = JSON.parse(localStorage.getItem("antin_projects_v4")) || defaultProjects;
+        let managersData = JSON.parse(localStorage.getItem("antin_managers_v4")) || defaultManagers;
         let currentActiveProjId = "PRJ-01";
 
         function showToast(msg) {
@@ -368,7 +403,7 @@
             document.getElementById('p-title').innerText = proj.title;
             document.getElementById('p-percent').innerText = proj.percent;
             document.getElementById('p-progress-bar').style.width = proj.percent;
-            document.getElementById('p-date').innerHTML = `<i class="fa-regular fa-calendar text-cyan-400 mr-1"></i> Khởi công: ${proj.date}`;
+            document.getElementById('p-date').innerHTML = `<i class="regular fa-calendar text-cyan-400 mr-1"></i> Khởi công: ${proj.date}`;
             document.getElementById('p-status-speed').innerHTML = `<i class="fa-solid fa-rocket"></i> ${proj.speed}`;
             document.getElementById('p-badge').innerHTML = `<i class="fa-solid fa-building"></i> ${proj.badge}`;
 
@@ -388,7 +423,70 @@
             document.getElementById('p-stages-grid').innerHTML = stagesHTML;
         }
 
-        function openSettingsModal() { document.getElementById('settingsModal').classList.remove('hidden'); }
+        // QUẢN TRỊ ADMIN & MANAGER
+        function openAdminModal() {
+            renderManagerTable();
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function renderManagerTable() {
+            let html = "";
+            for(let username in managersData) {
+                let mgr = managersData[username];
+                html += `
+                <tr class="border-b border-slate-800 hover:bg-slate-800/40">
+                    <td class="p-3 font-bold text-amber-300"><i class="fa-solid fa-user-gear mr-1"></i> ${username}</td>
+                    <td class="p-3 text-gray-200">${mgr.fullname}</td>
+                    <td class="p-3 text-emerald-400 font-medium">${mgr.status}</td>
+                    <td class="p-3 text-right space-x-1">
+                        <button onclick="openResetManagerModal('${username}')" class="bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 px-2.5 py-1 rounded-lg font-bold text-[11px] cursor-pointer"><i class="fa-solid fa-key"></i> Reset Pass</button>
+                        <button onclick="deleteManager('${username}')" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 px-2 py-1 rounded-lg font-bold text-[11px] cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            }
+            document.getElementById('managerTableBody').innerHTML = html;
+        }
+
+        function openAddManagerModal() {
+            document.getElementById('mgrModalTitle').innerHTML = `<i class="fa-solid fa-user-plus mr-1"></i> Thêm Tài Khoản Manager Mới`;
+            document.getElementById('mgrUsername').value = "manager" + (Object.keys(managersData).length + 1);
+            document.getElementById('mgrUsername').readOnly = false;
+            document.getElementById('mgrFullname').value = "";
+            document.getElementById('mgrNewPass').value = "antin@2026";
+            document.getElementById('managerActionModal').classList.remove('hidden');
+        }
+
+        function openResetManagerModal(username) {
+            document.getElementById('mgrModalTitle').innerHTML = `<i class="fa-solid fa-key mr-1"></i> Reset Mật Khẩu: ${username}`;
+            document.getElementById('mgrUsername').value = username;
+            document.getElementById('mgrUsername').readOnly = true;
+            document.getElementById('mgrFullname').value = managersData[username].fullname;
+            document.getElementById('mgrNewPass').value = "antin@2026";
+            document.getElementById('managerActionModal').classList.remove('hidden');
+        }
+
+        function saveManagerData() {
+            let u = document.getElementById('mgrUsername').value.trim();
+            let name = document.getElementById('mgrFullname').value.trim();
+            if(!u || !name) { alert("Vui lòng nhập đủ thông tin!"); return; }
+
+            managersData[u] = { fullname: name, status: "Đang hoạt động" };
+            localStorage.setItem("antin_managers_v4", JSON.stringify(managersData));
+            closeModals();
+            openAdminModal();
+            showToast(`Đã lưu và cấp lại quyền cho tài khoản [${u}] thành công!`);
+        }
+
+        function deleteManager(username) {
+            if(confirm(`Admin chắc chắn muốn xóa tài khoản quản lý [${username}]?`)) {
+                delete managersData[username];
+                localStorage.setItem("antin_managers_v4", JSON.stringify(managersData));
+                renderManagerTable();
+                showToast(`Đã xóa tài khoản [${username}] khỏi hệ thống!`);
+            }
+        }
+
+        // QUẢN LÝ DỰ ÁN
         function openAddProjectModal() {
             let nextId = "PRJ-0" + (Object.keys(projectsData).length + 1);
             document.getElementById('mId').value = nextId;
@@ -400,6 +498,7 @@
             document.getElementById('mStages').value = "Khảo sát & lắp đặt thiết bị";
             document.getElementById('projectModal').classList.remove('hidden');
         }
+
         function openEditProgressModal() {
             let proj = projectsData[currentActiveProjId];
             if(!proj) return;
@@ -411,11 +510,6 @@
             document.getElementById('mSpeed').value = proj.speed;
             document.getElementById('mStages').value = proj.stages && proj.stages[0] ? proj.stages[0].status : "";
             document.getElementById('projectModal').classList.remove('hidden');
-        }
-
-        function saveApiSettings() {
-            showToast("Đã lưu cấu hình ánh xạ API Google Sheets ngầm thành công!");
-            closeModals();
         }
 
         function saveProjectData() {
@@ -433,29 +527,26 @@
                 title: title, percent: percent, date: date, speed: speed, badge: badge,
                 stages: [{ icon: "fa-shield-halved", color: "cyan", title: "Hạng Mục", status: stageDesc, statusColor: "text-cyan-400" }]
             };
-            localStorage.setItem("antin_sheet_projects_v35", JSON.stringify(projectsData));
+            localStorage.setItem("antin_projects_v4", JSON.stringify(projectsData));
             renderProjectsDashboard();
             switchProject(id);
             closeModals();
-            showToast("Đã cập nhật dữ liệu và đồng bộ ngầm thành công!");
+            showToast("Đã cập nhật dự án và đồng bộ ngầm thành công!");
         }
 
         function deleteCurrentProject() {
             if(confirm(`Xóa dự án [${currentActiveProjId}]?`)) {
                 delete projectsData[currentActiveProjId];
-                localStorage.setItem("antin_sheet_projects_v35", JSON.stringify(projectsData));
+                localStorage.setItem("antin_projects_v4", JSON.stringify(projectsData));
                 let keys = Object.keys(projectsData);
                 if(keys.length > 0) { currentActiveProjId = keys[0]; renderProjectsDashboard(); switchProject(currentActiveProjId); }
                 showToast("Đã xóa dự án thành công!");
             }
         }
 
-        function syncDataToCloud() {
-            showToast("Đang đồng bộ dữ liệu ngầm 2 chiều lên Google Sheets...");
-        }
-
         function closeModals() {
-            document.getElementById('settingsModal').classList.add('hidden');
+            document.getElementById('adminModal').classList.add('hidden');
+            document.getElementById('managerActionModal').classList.add('hidden');
             document.getElementById('projectModal').classList.add('hidden');
         }
     </script>
