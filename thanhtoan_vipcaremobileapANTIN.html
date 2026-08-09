@@ -436,9 +436,8 @@
                     <i class="fa-solid fa-circle-info"></i> Chi tiết các Gói VIP CARE
                 </span>
             </div>
-            <!-- Dữ liệu select tự động liên kết cột E từ dòng 7 trở xuống -->
             <select id="selectPackage" onchange="updateQRData()">
-                <!-- Sẽ được render tự động qua JavaScript từ dữ liệu cấu hình -->
+                <!-- Sẽ được render tự động qua JavaScript -->
             </select>
         </div>
 
@@ -507,21 +506,21 @@
         </div>
     </div>
 
-    <!-- MODAL HIỂN THỊ CHI TIẾT CÁC GÓI VIP CARE (Cập nhật ngữ cảnh từ file chi tiết) -->
+    <!-- MODAL HIỂN THỊ CHI TIẾT CÁC GÓI VIP CARE ĐÃ CẬP NHẬT NỘI DUNG MỚI NHẤT -->
     <div id="packageDetailsModal" style="display:none; position:fixed; z-index:999999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
         <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #00cec9; border-radius:24px; max-width:600px; width:100%; max-height:85vh; display:flex; flex-direction:column; padding:25px; color:#fff; box-shadow: 0 20px 45px rgba(0,206,201, 0.35); position:relative;">
             <button onclick="closePackageDetailsModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer; z-index:10;">&times;</button>
             
             <div style="text-align:center; margin-bottom:15px; flex-shrink:0;">
                 <span style="background: rgba(0,206,201,0.2); color: #00cec9; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid rgba(0,206,201,0.4);">📊 HỆ THỐNG THÔNG TIN AI AN TÍN</span>
-                <h3 style="margin: 10px 0 4px 0; font-size: 20px; color: #f1c40f;"><i class="fa-solid fa-list-check"></i> Chi Tiết Các Gói VIP Care</h3>
-                <p style="font-size:12px; color:#b2bec3;">Bảng mô tả đầy đủ các gói dịch vụ bảo trì định kỳ & hỗ trợ tự động 24/7 </p>
+                <h3 style="margin: 10px 0 4px 0; font-size: 20px; color: #f1c40f;"><i class="fa-solid fa-list-check"></i> Chi Tiết Quyền Lợi Các Gói VIP CARE</h3>
+                <p style="font-size:12px; color:#b2bec3;">Áp dụng trường hợp không có hợp đồng bảo trì (Phí kiểm tra thông thường từ 300K - 500K tùy xa gần)</p>
             </div>
 
-            <!-- Khung cuộn nội dung chi tiết tự động đồng bộ cột E từ dòng 7 trở xuống -->
+            <!-- Khung cuộn nội dung chi tiết -->
             <div style="overflow-y:auto; padding-right:5px; flex-grow:1; margin-bottom:15px;">
                 <div style="display:flex; flex-direction:column; gap:12px;" id="packageItemsContainer">
-                    <!-- Nội dung sẽ được render động bằng JavaScript -->
+                    <!-- Nội dung render động qua JavaScript bên dưới -->
                 </div>
             </div>
 
@@ -641,35 +640,34 @@
             zalo: "https://zalo.me/0914060339"
         };
 
-        // Danh sách 3 Gói VIP Care được phát triển chi tiết chính xác theo tài liệu yêu cầu của bạn
+        // Danh sách gói dịch vụ với nội dung chi tiết mới nhất theo yêu cầu
         var servicePackagesConfig = [
             {
                 id: "vip_1",
-                name: "Gói Dòng 7: Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)",
+                name: "Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)",
                 price: 1200000,
                 color: "#2ecc71",
                 icon: "fa-video",
-                detail: "• <b>Phạm vi sửa chữa:</b> Sửa chữa chuyên sâu Hệ Thống Camera an ninh[cite: 12].<br>• <b>Thời gian cam kết:</b> Kỹ thuật viên AN TÍN có mặt tận nơi trong vòng <b>24h</b> kể từ khi nhận thông báo chính thức[cite: 12].<br>• <b>Quyền lợi ưu đãi:</b> Hoàn toàn miễn phí công kiểm tra & sửa chữa (nếu không phát sinh vật tư thay thế)[cite: 12].<br>• <i>Lưu ý kỹ thuật:</i> Ngoại trừ trường hợp cấu hình lại mạng internet xem camera trên điện thoại do nhà mạng thay modem mới hoặc reset default modem (phí cài đặt lẻ: 300K/lần)[cite: 12]."
+                detail: "<b>Gói VIP1:</b> Sửa chữa Hệ Thống Camera. Đội ngũ kỹ thuật AN TÍN sẽ có mặt tại địa chỉ khách hàng trong vòng <b>24h</b> kể từ khi nhận thông báo chính thức để sửa chữa hoàn toàn miễn phí (nếu không phát sinh vật tư).<br><i>* Lưu ý ngoại trừ cài lại mạng internet để xem camera trên điện thoại do nhà mạng thay modem mới hoặc reset default làm mất cấu hình: tính phí 300K/lần.</i>"
             },
             {
                 id: "vip_2",
-                name: "Gói Dòng 8: Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)",
+                name: "Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)",
                 price: 1600000,
                 color: "#00cec9",
                 icon: "fa-network-wired",
-                detail: "• <b>Phạm vi sửa chữa:</b> Trọn gói Hệ Thống Camera và Hạ tầng mạng WIFI[cite: 12].<br>• <b>Thời gian cam kết:</b> Có mặt hỗ trợ trực tiếp tại địa chỉ khách hàng trong vòng <b>24h</b>[cite: 12].<br>• <b>Quyền lợi ưu đãi:</b> Miễn phí hoàn toàn công sửa chữa, tối ưu hóa phát sóng và cân bằng tải Router (không phát sinh vật tư)[cite: 12].<br>• <i>Lưu ý kỹ thuật:</i> Ngoại trừ cấu hình lại mạng internet do nhà mạng đổi modem/reset default (phí cài đặt: 300K/lần)[cite: 12]."
+                detail: "<b>Gói VIP2:</b> Sửa chữa Hệ Thống Camera, Hệ thống mạng WIFI. Đội ngũ kỹ thuật AN TÍN sẽ có mặt trong vòng <b>24h</b> để sửa chữa miễn phí (nếu không phát sinh vật tư).<br><i>* Lưu ý ngoại trừ cài lại mạng internet do nhà mạng đổi modem/reset làm mất cấu hình camera: tính phí 300K/lần.</i>"
             },
             {
                 id: "vip_3",
-                name: "Gói Dòng 9: Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)",
+                name: "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)",
                 price: 2500000,
                 color: "#e74c3c",
                 icon: "fa-house-laptop",
-                detail: "• <b>Phạm vi sửa chữa:</b> Tích hợp toàn diện Hệ Thống Camera, Mạng WIFI và Toàn bộ Thiết bị điện trong gia đình/văn phòng[cite: 12].<br>• <b>Thời gian cam kết:</b> Có mặt xử lý nhanh chóng trong vòng <b>24h</b> (Ưu tiên xử lý sự cố khẩn cấp từ đội ngũ chuyên gia kỹ thuật cấp cao)[cite: 12].<br>• <b>Quyền lợi ưu đãi:</b> Miễn phí công kiểm tra và khắc phục sự cố định kỳ, an toàn điện tuyệt đối[cite: 12].<br>• <i>Lưu ý kỹ thuật:</i> Ngoại trừ cấu hình lại mạng internet do thay đổi modem mạng (phí cài đặt: 300K/lần)[cite: 12]."
+                detail: "<b>Gói VIP3:</b> Sửa chữa Hệ Thống Camera, Hệ thống mạng WIFI, Hệ thống tất cả thiết bị điện trong gia đình. Đội ngũ kỹ thuật AN TÍN có mặt trong vòng <b>24h</b> để sửa chữa miễn phí (nếu không phát sinh vật tư).<br><i>* Lưu ý ngoại trừ cài lại mạng internet do nhà mạng đổi modem/reset làm mất cấu hình camera: tính phí 300K/lần.</i>"
             }
         ];
 
-        // Hàm tự động khởi tạo và render dữ liệu vào Select Box và Popup Chi tiết
         function initDynamicPackages() {
             var selectElement = document.getElementById('selectPackage');
             var containerElement = document.getElementById('packageItemsContainer');
@@ -684,12 +682,12 @@
                 option.value = pkg.price;
                 option.setAttribute('data-pkgid', pkg.id);
                 option.setAttribute('data-name', pkg.name);
-                option.innerText = `${pkg.name} — ${pkg.price.toLocaleString('vi-VN')} VNĐ`;
+                option.innerText = `${pkg.id} — ${pkg.name} — ${pkg.price.toLocaleString('vi-VN')} VNĐ`;
                 selectElement.appendChild(option);
 
                 var itemDiv = document.createElement('div');
-                itemDiv.style.cssText = `background:rgba(255,255,255,0.04); border-left:4px solid ${pkg.color}; padding:14px 16px; border-radius:0 12px 12px 0; font-size:12.5px; line-height:1.6;`;
-                itemDiv.innerHTML = `<b style="color:${pkg.color}; font-size:14px;"><i class="fa-solid ${pkg.icon}"></i> ${pkg.name}</b><br><div style="margin-top:6px; color:#dfe6e9;">${pkg.detail}</div>`;
+                itemDiv.style.cssText = `background:rgba(255,255,255,0.04); border-left:4px solid ${pkg.color}; padding:14px; border-radius:0 10px 10px 0; font-size:12.5px; line-height:1.6;`;
+                itemDiv.innerHTML = `<b style="color:${pkg.color}; font-size:13.5px;"><i class="fa-solid ${pkg.icon}"></i> ${pkg.name}</b><br><div style="margin-top:6px; color:#e2e8f0;">${pkg.detail}</div>`;
                 containerElement.appendChild(itemDiv);
             });
         }
