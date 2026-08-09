@@ -119,6 +119,10 @@
             box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
             background: rgba(255, 255, 255, 0.08);
         }
+        select option {
+            background: #1a1c29;
+            color: #fff;
+        }
         .pricing-box {
             background: linear-gradient(145deg, rgba(243, 156, 18, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%);
             border: 1px dashed #f39c12;
@@ -337,7 +341,7 @@
         <!-- Khung Hiển Thị Giá & Tổng Tiền -->
         <div class="pricing-box">
             <span style="font-size: 13px; color: #b2bec3; font-weight: 600;">TỔNG THANH TOÁN TỰ ĐỘNG</span>
-            <div class="price-text" id="displayPrice">500,000 VNĐ</div>
+            <div class="price-text" id="displayPrice">0 VNĐ</div>
             <span style="font-size: 11px; color: #dfe6e9;">Bao gồm trọn gói dịch vụ AI định kỳ & hỗ trợ kỹ thuật tận nơi 24/7</span>
         </div>
 
@@ -425,7 +429,7 @@
             <!-- Đồng bộ Apps Script -->
             <div style="background:rgba(46,204,113,0.1); border:1px solid #2ecc71; padding:15px; border-radius:12px; margin-bottom:15px;">
                 <h4 style="color:#2ecc71; margin-bottom:8px; font-size:14px;"><i class="fa-solid fa-cloud-arrow-down"></i> Đồng Bộ Google Sheet Apps Script</h4>
-                <p style="font-size:11px; color:#b2bec3; margin-bottom:10px;">Hệ thống đang liên kết trực tiếp với dữ liệu trên Google Sheet của An Tín.</p>
+                <p style="font-size:11px; color:#b2bec3; margin-bottom:10px;">Hệ thống liên kết trực tiếp với sheet `ThanhToan_Config` của An Tín.</p>
                 <button onclick="fetchDataFromAppsScript()" style="background:#2ecc71; color:#000; border:none; padding:8px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Đồng Bộ Ngay Từ Sheet</button>
             </div>
 
@@ -448,7 +452,7 @@
 
             <!-- Quản lý gói dịch vụ -->
             <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;">
-                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn (Hỗ trợ Gói Vĩnh Viễn / Vô Hạn)</h4>
+                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn (Vô Hạn)</h4>
                 <div id="packageListAdmin" style="max-height:150px; overflow-y:auto; margin-bottom:10px; font-size:12px;">
                     <!-- Danh sách gói load bằng JS -->
                 </div>
@@ -485,7 +489,7 @@
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 15px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top:8px; margin-top:8px;">
                     <span style="color:#f1c40f; font-weight:bold;">Phí Duy Trì VIP Care:</span>
-                    <span id="modalDisplayPrice" style="color:#2ecc71; font-weight:bold; font-size:16px;">500,000 VNĐ</span>
+                    <span id="modalDisplayPrice" style="color:#2ecc71; font-weight:bold; font-size:16px;">0 VNĐ</span>
                 </div>
             </div>
 
@@ -514,23 +518,22 @@
     </style>
 
     <script>
-        // Link Apps Script ổn định được giữ nguyên vẹn
+        // Link Apps Script chuẩn được giữ nguyên vẹn
         var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTLHw2d2RSmlmRc55T8tsI6pw_6BNPPYMLKefLL3QfGOVb6kvcqC9t-VwVRoi7ziBMoQ/exec";
 
-        // Khởi tạo bộ nhớ cục bộ nếu chưa có
+        // Khởi tạo bộ nhớ cục bộ dự phòng
         if(!localStorage.getItem('adminPass')) {
-            localStorage.setItem('adminPass', '123456');
+            localStorage.setItem('adminPass', 'antin2026');
         }
         if(!localStorage.getItem('packagesData')) {
             var defaultPkgs = [
-                {name: "Gói VIP Care Tiêu Chuẩn (1 Năm)", price: 500000},
-                {name: "Gói VIP Care Toàn Diện (2 Năm)", price: 900000},
-                {name: "Gói VIP Care Vĩnh Viễn (Trọn Đời)", price: 3000000}
+                {name: "Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)", price: 1200000},
+                {name: "Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)", price: 1600000},
+                {name: "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)", price: 2500000}
             ];
             localStorage.setItem('packagesData', JSON.stringify(defaultPkgs));
         }
 
-        // Thông tin doanh nghiệp mặc định chuẩn An Tín (có thể cập nhật động từ Apps Script)
         var enterpriseConfig = {
             name: "CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN",
             phone: "0914060339",
@@ -541,7 +544,7 @@
             zalo: "https://zalo.me/0914060339"
         };
 
-        // Hàm gọi dữ liệu từ Apps Script (Google Sheet)
+        // Hàm gọi dữ liệu từ Google Sheet Apps Script
         function fetchDataFromAppsScript() {
             showToast("Đang đồng bộ dữ liệu từ Google Sheet...");
             fetch(APPS_SCRIPT_URL)
@@ -571,22 +574,19 @@
                 });
         }
 
-        // Cập nhật thông tin doanh nghiệp ra footer tự động
         function updateEnterpriseUI() {
             document.getElementById('footerCompanyName').innerText = "🛡️ " + enterpriseConfig.name;
             document.getElementById('footerCompNameSub').innerText = enterpriseConfig.name;
             document.getElementById('footerAddress').innerText = enterpriseConfig.address;
-            document.getElementById('footerPhoneDisplay').innerText = "(028) 3849 3575";
+            document.getElementById('footerPhoneDisplay').innerText = enterpriseConfig.phone;
             document.getElementById('footerZaloLink').innerText = enterpriseConfig.phone;
             document.getElementById('footerZaloLink').href = enterpriseConfig.zalo;
             document.getElementById('footerWebLink').innerText = enterpriseConfig.website.replace('https://', '');
             document.getElementById('footerWebLink').href = enterpriseConfig.website;
-            document.getElementById('footerEmailLink').innerText = enterpriseConfig.email;
-            document.getElementById('footerEmailLink').href = "mailto:" + enterpriseConfig.email;
             document.getElementById('footerSloganText').innerText = enterpriseConfig.slogan;
         }
 
-        // Load danh sách gói dịch vụ vào thẻ <select> và bảng Admin
+        // Tải gói dịch vụ vào dropdown và bảng quản trị (Hiển thị đầy đủ Tên Gói + Giá Tiền chuẩn chỉnh)
         function loadPackagesToUI() {
             var pkgs = JSON.parse(localStorage.getItem('packagesData'));
             var selectEl = document.getElementById('selectPackage');
@@ -595,17 +595,17 @@
             pkgs.forEach(function(pkg, index) {
                 var opt = document.createElement('option');
                 opt.value = pkg.price;
-                opt.text = pkg.name + " - " + Number(pkg.price).toLocaleString('vi-VN') + " VNĐ";
+                opt.setAttribute('data-name', pkg.name);
+                opt.text = pkg.name + " — " + Number(pkg.price).toLocaleString('vi-VN') + " VNĐ";
                 selectEl.appendChild(opt);
             });
 
-            // Load vào bảng admin nếu đang mở
             var adminList = document.getElementById('packageListAdmin');
             if(adminList) {
                 adminList.innerHTML = '';
                 pkgs.forEach(function(pkg, index) {
                     adminList.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:6px 10px; border-radius:6px; margin-bottom:5px;">
-                        <span><b>${pkg.name}</b> - ${Number(pkg.price).toLocaleString('vi-VN')}đ</span>
+                        <span><b>${pkg.name}</b> — ${Number(pkg.price).toLocaleString('vi-VN')}đ</span>
                         <button onclick="deletePackage(${index})" style="background:#e74c3c; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
                     </div>`;
                 });
@@ -613,24 +613,30 @@
             updateQRData();
         }
 
-        // Cập nhật QR Code và giá tiền với hàm định dạng tiền tệ chuyên nghiệp
+        // Cập nhật QR Code và Nội dung chuyển khoản siêu thông minh AI: [Tên Gói Rút Gọn] + [Số Điện Thoại]
         function updateQRData() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
             var packageSelect = document.getElementById('selectPackage');
-            var amount = packageSelect.value;
+            var amount = packageSelect.value || 0;
             var formattedPrice = Number(amount).toLocaleString('vi-VN') + " VNĐ";
             document.getElementById('displayPrice').innerText = formattedPrice;
 
-            var contentCK = "VIP " + phone;
+            // Xử lý lấy tên gói và rút gọn thông minh làm cú pháp chuyển khoản
+            var selectedOption = packageSelect.options[packageSelect.selectedIndex];
+            var rawPkgName = selectedOption ? (selectedOption.getAttribute('data-name') || selectedOption.text.split(' — ')[0]) : "VIP Care";
+            
+            var shortPkgName = rawPkgName.replace(/Gói VIP Care\s*/i, "VIP ").replace(/\s*\(.*?\)/g, "").trim();
+            if(!shortPkgName.startsWith("VIP")) shortPkgName = "VIP " + shortPkgName;
+
+            var contentCK = shortPkgName + " " + phone;
             document.getElementById('displaySyntax').innerHTML = `Nội dung CK: ${contentCK} <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>`;
 
-            // Kiểm tra xem Admin có up ảnh QR riêng hay không
             var customQRImg = localStorage.getItem('customQRImage');
             if(customQRImg) {
                 document.getElementById('vietQrImg').src = customQRImg;
             } else {
                 var bankId = "MB"; 
-                var accountNo = "0914060339"; 
+                var accountNo = enterpriseConfig.phone || "0914060339"; 
                 var template = "compact2";
                 var accountName = "PHAN MINH DUC";
                 var qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(contentCK)}&accountName=${encodeURIComponent(accountName)}`;
@@ -638,9 +644,8 @@
             }
 
             var name = document.getElementById('inputName').value.trim() || "KHACH HANG";
-            var packageName = packageSelect.options[packageSelect.selectedIndex] ? packageSelect.options[packageSelect.selectedIndex].text.split(' - ')[0] : "VIP Care";
-            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${name} (SĐT: ${phone}). Tôi đã thanh toán gói ${packageName} với số tiền ${formattedPrice}. Nhờ hệ thống kiểm tra và kích hoạt giúp.`);
-            document.getElementById('zaloLinkBtn').href = `https://zalo.me/0914060339?text=${zaloMsg}`;
+            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${name} (SĐT: ${phone}). Tôi muốn đăng ký ${rawPkgName} với mức phí ${formattedPrice}. Nội dung chuyển khoản: ${contentCK}. Nhờ hệ thống kiểm tra và kích hoạt giúp.`);
+            document.getElementById('zaloLinkBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
         }
 
         // Các hàm Quản Trị Admin
@@ -667,7 +672,7 @@
             document.getElementById('adminDashboardModal').style.display = 'none';
         }
         function changeAdminPassword() {
-            var newPass = document.getElementById('newAdminPass').value;
+            var newPass = document.getElementById('newAdminPass').value.trim();
             if(!newPass) {
                 alert("Vui lòng nhập mật khẩu mới!");
                 return;
@@ -736,12 +741,17 @@
             document.getElementById('modalCustPhone').innerText = phoneInput;
             document.getElementById('modalDisplayPrice').innerText = formattedPrice;
             
-            var noiDungCK = "VIP " + phoneInput;
+            var selectedOption = packageSelect.options[packageSelect.selectedIndex];
+            var rawPkgName = selectedOption ? (selectedOption.getAttribute('data-name') || "VIP Care") : "VIP Care";
+            var shortPkgName = rawPkgName.replace(/Gói VIP Care\s*/i, "VIP ").replace(/\s*\(.*?\)/g, "").trim();
+            if(!shortPkgName.startsWith("VIP")) shortPkgName = "VIP " + shortPkgName;
+
+            var noiDungCK = shortPkgName + " " + phoneInput;
             document.getElementById('transferSyntaxModal').innerHTML = `Nội dung CK: ${noiDungCK} <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>`;
             document.getElementById('modalQrImg').src = document.getElementById('vietQrImg').src;
 
-            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${nameInput} (SĐT: ${phoneInput}). Tôi đã chuyển khoản số tiền ${formattedPrice} gia hạn VIP Care. Gửi kèm hình ảnh biên lai thanh toán.`);
-            document.getElementById('zaloConfirmBtn').href = `https://zalo.me/0914060339?text=${zaloMsg}`;
+            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${nameInput} (SĐT: ${phoneInput}). Tôi đã thanh toán số tiền ${formattedPrice} gia hạn ${rawPkgName}. Nội dung CK: ${noiDungCK}. Gửi kèm hình ảnh biên lai thanh toán.`);
+            document.getElementById('zaloConfirmBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
 
             modal.style.display = 'flex';
         }
@@ -761,11 +771,23 @@
         // Sao chép thông minh
         function copySyntaxText() {
             var phone = document.getElementById('inputPhone').value.trim() || "0914060339";
-            navigator.clipboard.writeText("VIP " + phone).then(function() { showToast("Đã sao chép nội dung chuyển khoản!"); });
+            var packageSelect = document.getElementById('selectPackage');
+            var selectedOption = packageSelect.options[packageSelect.selectedIndex];
+            var rawPkgName = selectedOption ? (selectedOption.getAttribute('data-name') || "VIP") : "VIP";
+            var shortPkgName = rawPkgName.replace(/Gói VIP Care\s*/i, "VIP ").replace(/\s*\(.*?\)/g, "").trim();
+            if(!shortPkgName.startsWith("VIP")) shortPkgName = "VIP " + shortPkgName;
+
+            navigator.clipboard.writeText(shortPkgName + " " + phone).then(function() { showToast("Đã sao chép nội dung chuyển khoản!"); });
         }
         function copyModalSyntaxText() {
             var phone = document.getElementById('modalCustPhone').innerText || "0914060339";
-            navigator.clipboard.writeText("VIP " + phone).then(function() { showToast("Đã sao chép nội dung chuyển khoản!"); });
+            var packageSelect = document.getElementById('selectPackage');
+            var selectedOption = packageSelect.options[packageSelect.selectedIndex];
+            var rawPkgName = selectedOption ? (selectedOption.getAttribute('data-name') || "VIP") : "VIP";
+            var shortPkgName = rawPkgName.replace(/Gói VIP Care\s*/i, "VIP ").replace(/\s*\(.*?\)/g, "").trim();
+            if(!shortPkgName.startsWith("VIP")) shortPkgName = "VIP " + shortPkgName;
+
+            navigator.clipboard.writeText(shortPkgName + " " + phone).then(function() { showToast("Đã sao chép nội dung chuyển khoản!"); });
         }
         function showToast(msg) {
             var x = document.getElementById("toastAlert");
@@ -780,4 +802,3 @@
     </script>
 </body>
 </html>
-```[cite: 1]
