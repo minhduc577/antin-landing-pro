@@ -141,7 +141,7 @@
                 <h1 class="text-xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
                     Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình
                 </h1>
-                <p class="text-[11px] text-gray-400 mt-0.5">Trạng thái: <b class="text-emerald-400">Đồng bộ Google Sheets & Apps Script tự động ngầm 2 chiều</b></p>
+                <p class="text-[11px] text-gray-400 mt-0.5">Trạng thái: <b id="syncStatus" class="text-emerald-400">Đang đồng bộ trực tiếp Google Sheets...</b></p>
             </div>
             <!-- ĐIỀU HƯỚNG ĐĂNG NHẬP / QUẢN TRỊ -->
             <div class="flex flex-wrap items-center gap-2">
@@ -172,7 +172,9 @@
                     </button>
                 </div>
             </div>
-            <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-4 gap-3"></div>
+            <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                <div class="col-span-4 text-center py-4 text-xs text-cyan-300"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang tải danh sách công trình từ Google Sheet...</div>
+            </div>
         </div>
 
         <!-- MODULE CHI TIẾT DỰ ÁN -->
@@ -257,7 +259,7 @@
             <div class="space-y-3 text-xs">
                 <div>
                     <label class="text-gray-300 font-bold">Tài khoản:</label>
-                    <input type="text" id="loginUser" placeholder="admin hoặc manager01/manager02" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <input type="text" id="loginUser" placeholder="Nhập tài khoản (admin, manager01...)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div>
                     <label class="text-gray-300 font-bold">Mật khẩu:</label>
@@ -270,22 +272,23 @@
         </div>
     </div>
 
-    <!-- MODAL: QUẢN TRỊ ADMIN (RESET 2 MANAGER) -->
+    <!-- MODAL: QUẢN TRỊ ADMIN (QUẢN LÝ TÀI KHOẢN & RESET MẬT KHẨU) -->
     <div id="adminModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-xl w-full shadow-2xl">
             <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-                <h3 class="text-sm font-extrabold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-user-shield text-base"></i> Quản Trị Admin: Cài Đặt 2 Tài Khoản Manager</h3>
+                <h3 class="text-sm font-extrabold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-user-shield text-base"></i> Quản Trị Admin: Quản Lý Tài Khoản Google Sheets</h3>
                 <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="space-y-4 text-xs">
-                <p class="text-gray-300">Quản lý và reset mật khẩu cho 2 tài khoản Manager chính thức:</p>
+                <p class="text-gray-300">Quản lý và cập nhật mật khẩu trực tiếp từ Sheet <code class="text-cyan-400">Accounts</code>:</p>
                 <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-800/80 text-gray-300 border-b border-slate-700">
                                 <th class="p-3">Tài Khoản</th>
-                                <th class="p-3">Họ Tên Quản Lý</th>
-                                <th class="p-3 text-right">Hành Động Admin</th>
+                                <th class="p-3">Họ Tên</th>
+                                <th class="p-3">Quyền</th>
+                                <th class="p-3 text-right">Hành Động</th>
                             </tr>
                         </thead>
                         <tbody id="managerTableBody"></tbody>
@@ -298,10 +301,10 @@
         </div>
     </div>
 
-    <!-- MODAL: RESET MẬT KHẨU MANAGER -->
+    <!-- MODAL: RESET MẬT KHẨU -->
     <div id="resetMgrModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
-            <h3 class="text-sm font-bold text-amber-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Reset Mật Khẩu Manager</h3>
+            <h3 class="text-sm font-bold text-amber-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Đổi Mật Khẩu Tài Khoản</h3>
             <div class="space-y-3 text-xs">
                 <div>
                     <label class="text-gray-300 font-bold">Tài khoản:</label>
@@ -312,7 +315,7 @@
                     <input type="text" id="resetNewPass" value="antin@2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-cyan-300 mt-1 font-bold">
                 </div>
                 <div class="flex gap-2 pt-2">
-                    <button onclick="saveResetPassword()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật Mật Khẩu</button>
+                    <button onclick="saveResetPassword()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật Google Sheet</button>
                     <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
             </div>
@@ -325,64 +328,51 @@
             <h3 id="projModalTitle" class="text-sm font-bold text-cyan-400 mb-4"><i class="fa-solid fa-folder-plus mr-1"></i> Thêm Dự Án Mới</h3>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Mã dự án:</label>
-                    <input type="text" id="mId" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <label class="text-gray-300 font-bold">Mã dự án (ID):</label>
+                    <input type="text" id="mId" placeholder="Ví dụ: PRJ-05" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div>
                     <label class="text-gray-300 font-bold">Tên công trình:</label>
-                    <input type="text" id="mTitle" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <input type="text" id="mTitle" placeholder="Nhập tên dự án..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="text-gray-300 font-bold">Tiến độ (%):</label>
-                        <input type="text" id="mPercent" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <input type="text" id="mPercent" placeholder="100%" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                     <div>
                         <label class="text-gray-300 font-bold">Nhãn:</label>
-                        <input type="text" id="mBadge" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <input type="text" id="mBadge" placeholder="Trọng Điểm" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="text-gray-300 font-bold">Khởi công:</label>
-                        <input type="text" id="mDate" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <input type="text" id="mDate" placeholder="01/01/2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                     <div>
-                        <label class="text-gray-300 font-bold">Tốc độ:</label>
-                        <input type="text" id="mSpeed" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <label class="text-gray-300 font-bold">Tốc độ / Trạng thái:</label>
+                        <input type="text" id="mSpeed" placeholder="Hoàn thành định kỳ" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                     </div>
                 </div>
                 <div>
-                    <label class="text-gray-300 font-bold">Hạng mục công việc:</label>
-                    <input type="text" id="mStages" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <label class="text-gray-300 font-bold">Nội dung hạng mục (Stage):</label>
+                    <input type="text" id="mStages" placeholder="Đang vận hành ổn định 24/7" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div class="flex gap-2 mt-4">
-                    <button onclick="saveProjectData()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Lưu Dữ Liệu</button>
+                    <button onclick="saveProjectData()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Lưu Vào Google Sheet</button>
                     <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT XỬ LÝ DỮ LIỆU & PHÂN QUYỀN -->
+    <!-- SCRIPT TÍCH HỢP APPS SCRIPT -->
     <script>
-        let defaultProjects = {
-            "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Camera Giám Sát",status:"Đang vận hành ổn định 24/7",statusColor:"text-emerald-400"}] },
-            "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp thiết bị Point to Point",statusColor:"text-cyan-400"}] },
-            "PRJ-03": { title: "Antinco Contract Hub", percent: "90%", date: "15/01/2026", speed: "Chờ nghiệm thu", badge: "Kỹ Thuật", stages: [{icon:"fa-file-contract",color:"purple",title:"Hợp Đồng",status:"Kiểm tra bảo dưỡng định kỳ",statusColor:"text-emerald-400"}] },
-            "PRJ-04": { title: "Bệnh Viện Đa Khoa Hùng Vương", percent: "50%", date: "01/02/2026", speed: "Xử lý phụ trợ", badge: "Phụ Trợ", stages: [{icon:"fa-server",color:"yellow",title:"Tủ Rack & Mạng",status:"Khắc phục sự cố đường truyền",statusColor:"text-yellow-400"}] }
-        };
-
-        // 2 Tài khoản Manager chính thức
-        let defaultManagers = {
-            "manager01": { password: "123", fullname: "Phạm Minh Đức (Manager 1)" },
-            "manager02": { password: "123", fullname: "Nguyễn Văn An (Manager 2)" }
-        };
-
-        let projectsData = JSON.parse(localStorage.getItem("antin_projects_v6")) || defaultProjects;
-        let managersData = JSON.parse(localStorage.getItem("antin_managers_v6")) || defaultManagers;
-        let currentRole = localStorage.getItem("antin_current_role") || "guest"; // guest, manager, admin
-        let currentActiveProjId = "PRJ-01";
+        let appData = { accounts: [], projects: {} };
+        let currentRole = localStorage.getItem("antin_current_role") || "guest";
+        let currentLoggedInUser = localStorage.getItem("antin_current_user") || "";
+        let currentActiveProjId = "";
 
         function showToast(msg) {
             let x = document.getElementById("toastAlert");
@@ -392,10 +382,30 @@
         }
 
         window.onload = function() {
-            applyRoleUI();
-            renderProjectsDashboard();
-            if(!projectsData[currentActiveProjId]) currentActiveProjId = Object.keys(projectsData)[0];
-            if(currentActiveProjId) switchProject(currentActiveProjId);
+            loadDataFromGoogleSheet();
+        }
+
+        // Gọi hàm getAppData() từ Google Apps Script
+        function loadDataFromGoogleSheet() {
+            document.getElementById("syncStatus.innerHTML") = "Đang đồng bộ trực tiếp Google Sheets...";
+            google.script.run
+                .withSuccessHandler(function(data) {
+                    appData = data;
+                    document.getElementById("syncStatus").innerText = "Đã đồng bộ Google Sheets thời gian thực";
+                    applyRoleUI();
+                    renderProjectsDashboard();
+                    
+                    let keys = Object.keys(appData.projects);
+                    if(keys.length > 0) {
+                        if(!appData.projects[currentActiveProjId]) currentActiveProjId = keys[0];
+                        switchProject(currentActiveProjId);
+                    }
+                })
+                .withFailureHandler(function(err) {
+                    document.getElementById("syncStatus").innerText = "Lỗi kết nối Google Sheets!";
+                    showToast("Lỗi đồng bộ: " + err.message);
+                })
+                .getAppData();
         }
 
         function applyRoleUI() {
@@ -413,10 +423,10 @@
                 btnLogin.classList.add("hidden");
                 btnLogout.classList.remove("hidden");
                 currentUserBadge.classList.remove("hidden");
-                lblCurrentRole.innerText = currentRole === "admin" ? "Administrator" : `Manager (${currentRole})`;
+                lblCurrentRole.innerText = currentRole === "admin" ? "Administrator" : `Manager (${currentLoggedInUser})`;
             }
 
-            // Ẩn/Hiện các thành phần tương tác theo phân quyền
+            // Phân quyền giao diện
             document.querySelectorAll('.auth-required').forEach(el => el.style.display = 'none');
             if(currentRole === "admin") {
                 document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'flex');
@@ -428,8 +438,9 @@
 
         function renderProjectsDashboard() {
             let html = "";
-            for(let id in projectsData) {
-                let prj = projectsData[id];
+            let projects = appData.projects;
+            for(let id in projects) {
+                let prj = projects[id];
                 let isActive = (id === currentActiveProjId) ? "active" : "";
                 html += `
                 <div id="proj-${id}" onclick="switchProject('${id}')" class="project-card-item ${isActive} bg-slate-900/60 p-3 rounded-xl border border-slate-800">
@@ -440,7 +451,7 @@
                     <h4 class="text-xs font-bold text-white truncate">${prj.title}</h4>
                 </div>`;
             }
-            document.getElementById("projectsGrid").innerHTML = html;
+            document.getElementById("projectsGrid").innerHTML = html || '<div class="col-span-4 text-center text-xs text-gray-400">Chưa có dự án nào trong Google Sheet</div>';
         }
 
         function switchProject(id) {
@@ -449,7 +460,7 @@
             let activeEl = document.getElementById('proj-' + id);
             if(activeEl) activeEl.classList.add('active');
 
-            let proj = projectsData[id];
+            let proj = appData.projects[id];
             if(!proj) return;
 
             document.getElementById('p-title').innerText = proj.title;
@@ -460,22 +471,25 @@
             document.getElementById('p-badge').innerHTML = `<i class="fa-solid fa-building"></i> ${proj.badge}`;
 
             let stagesHTML = '';
-            if(proj.stages) {
+            if(proj.stages && Array.isArray(proj.stages)) {
                 proj.stages.forEach(st => {
                     stagesHTML += `
                     <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800">
                         <div class="flex items-center gap-2.5 mb-1.5">
-                            <span class="p-2 bg-${st.color}-500/20 rounded-lg text-${st.color}-400 text-sm"><i class="fa-solid ${st.icon}"></i></span>
-                            <h4 class="font-semibold text-xs">${st.title}</h4>
+                            <span class="p-2 bg-cyan-500/20 rounded-lg text-cyan-400 text-sm"><i class="fa-solid fa-shield-halved"></i></span>
+                            <h4 class="font-semibold text-xs">${st.title || 'Hạng Mục'}</h4>
                         </div>
-                        <p class="text-[11px] ${st.statusColor} font-medium"><i class="fa-solid fa-circle-check mr-1"></i> ${st.status}</p>
+                        <p class="text-[11px] text-cyan-400 font-medium"><i class="fa-solid fa-circle-check mr-1"></i> ${st.status}</p>
                     </div>`;
                 });
+            }
+            if(!stagesHTML) {
+                stagesHTML = `<div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 col-span-2 text-xs text-gray-400">Đang cập nhật tiến độ chi tiết...</div>`;
             }
             document.getElementById('p-stages-grid').innerHTML = stagesHTML;
         }
 
-        // ĐĂNG NHẬP / ĐĂNG XUẤT
+        // ĐĂNG NHẬP XÁC THỰC TỪ SHEET ACCOUNTS
         function openLoginModal() {
             document.getElementById('loginUser').value = "";
             document.getElementById('loginPass').value = "";
@@ -486,44 +500,44 @@
             let u = document.getElementById('loginUser').value.trim();
             let p = document.getElementById('loginPass').value.trim();
 
-            if(u === "admin" && p === "admin123") {
-                currentRole = "admin";
+            let matchedAccount = appData.accounts.find(acc => acc.username === u && String(acc.password) === p);
+
+            if(matchedAccount) {
+                currentRole = matchedAccount.role.toLowerCase() === "admin" ? "admin" : "manager";
+                currentLoggedInUser = matchedAccount.username;
                 localStorage.setItem("antin_current_role", currentRole);
+                localStorage.setItem("antin_current_user", currentLoggedInUser);
                 closeModals();
                 applyRoleUI();
-                showToast("Đăng nhập thành công với quyền Admin!");
-            } else if(managersData[u] && managersData[u].password === p) {
-                currentRole = "manager";
-                localStorage.setItem("antin_current_role", currentRole);
-                closeModals();
-                applyRoleUI();
-                showToast(`Đăng nhập thành công với tài khoản Manager (${u})!`);
+                showToast(`Đăng nhập thành công (${matchedAccount.fullname})!`);
             } else {
-                alert("Sai tài khoản hoặc mật khẩu! (Admin: admin / admin123; Manager: manager01 / 123)");
+                alert("Sai tài khoản hoặc mật khẩu so với dữ liệu trong Google Sheet Accounts!");
             }
         }
 
         function logoutSystem() {
             currentRole = "guest";
+            currentLoggedInUser = "";
             localStorage.setItem("antin_current_role", currentRole);
+            localStorage.removeItem("antin_current_user");
             applyRoleUI();
-            showToast("Đã đăng xuất hệ thống về chế độ xem!");
+            showToast("Đã đăng xuất hệ thống!");
         }
 
-        // QUẢN TRỊ ADMIN (RESET 2 MANAGER)
+        // QUẢN TRỊ ADMIN (HIỂN THỊ DANH SÁCH TÀI KHOẢN TỪ GOOGLE SHEET)
         function openAdminModal() {
             let html = "";
-            for(let username in managersData) {
-                let mgr = managersData[username];
+            appData.accounts.forEach(acc => {
                 html += `
                 <tr class="border-b border-slate-800 hover:bg-slate-800/40">
-                    <td class="p-3 font-bold text-amber-300"><i class="fa-solid fa-user-gear mr-1"></i> ${username}</td>
-                    <td class="p-3 text-gray-200">${mgr.fullname}</td>
+                    <td class="p-3 font-bold text-amber-300"><i class="fa-solid fa-user mr-1"></i> ${acc.username}</td>
+                    <td class="p-3 text-gray-200">${acc.fullname}</td>
+                    <td class="p-3 text-cyan-400 font-semibold">${acc.role}</td>
                     <td class="p-3 text-right">
-                        <button onclick="openResetManagerModal('${username}')" class="bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 px-3 py-1 rounded-lg font-bold text-[11px] cursor-pointer"><i class="fa-solid fa-key"></i> Reset Mật Khẩu</button>
+                        <button onclick="openResetManagerModal('${acc.username}')" class="bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 px-3 py-1 rounded-lg font-bold text-[11px] cursor-pointer"><i class="fa-solid fa-key"></i> Đổi Pass</button>
                     </td>
                 </tr>`;
-            }
+            });
             document.getElementById('managerTableBody').innerHTML = html;
             document.getElementById('adminModal').classList.remove('hidden');
         }
@@ -534,36 +548,42 @@
             document.getElementById('resetMgrModal').classList.remove('hidden');
         }
 
+        // Gọi hàm updatePassword trực tiếp xuống Google Apps Script
         function saveResetPassword() {
             let u = document.getElementById('resetUsername').value;
             let newP = document.getElementById('resetNewPass').value.trim();
             if(!newP) { alert("Vui lòng nhập mật khẩu mới!"); return; }
 
-            managersData[u].password = newP;
-            localStorage.setItem("antin_managers_v6", JSON.stringify(managersData));
-            closeModals();
-            openAdminModal();
-            showToast(`Đã reset mật khẩu cho tài khoản [${u}] thành công!`);
+            showToast("Đang cập nhật mật khẩu lên Google Sheet...");
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    closeModals();
+                    loadDataFromGoogleSheet();
+                    showToast(res.message);
+                })
+                .withFailureHandler(function(err) {
+                    alert("Lỗi: " + err.message);
+                })
+                .updatePassword(u, newP);
         }
 
-        // QUẢN LÝ DỰ ÁN (MANAGER & ADMIN ĐỀU THÊM/SỬA/XÓA THOẢI MÁI)
+        // THÊM / SỬA DỰ ÁN TRỰC TIẾP VÀO GOOGLE SHEET
         function openAddProjectModal() {
             document.getElementById('projModalTitle').innerHTML = `<i class="fa-solid fa-folder-plus mr-1"></i> Thêm Dự Án Mới`;
-            let nextId = "PRJ-0" + (Object.keys(projectsData).length + 1);
-            document.getElementById('mId').value = nextId;
+            document.getElementById('mId').value = "PRJ-0" + (Object.keys(appData.projects).length + 1);
             document.getElementById('mId').readOnly = false;
             document.getElementById('mTitle').value = "";
             document.getElementById('mPercent').value = "50%";
             document.getElementById('mBadge').value = "Dự Án Mới";
             document.getElementById('mDate').value = "09/08/2026";
             document.getElementById('mSpeed').value = "Triển khai tiêu chuẩn";
-            document.getElementById('mStages').value = "Khảo sát & lắp đặt thiết bị";
+            document.getElementById('mStages').value = "Đang thi công phần cứng";
             document.getElementById('projectModal').classList.remove('hidden');
         }
 
         function openEditProgressModal() {
             document.getElementById('projModalTitle').innerHTML = `<i class="fa-solid fa-pen mr-1"></i> Sửa Thông Tin Dự Án`;
-            let proj = projectsData[currentActiveProjId];
+            let proj = appData.projects[currentActiveProjId];
             if(!proj) return;
             document.getElementById('mId').value = currentActiveProjId;
             document.getElementById('mId').readOnly = true;
@@ -576,6 +596,7 @@
             document.getElementById('projectModal').classList.remove('hidden');
         }
 
+        // Gọi hàm saveProject từ Google Apps Script xuống Google Sheets
         function saveProjectData() {
             let id = document.getElementById('mId').value.trim();
             let title = document.getElementById('mTitle').value.trim();
@@ -585,26 +606,37 @@
             let speed = document.getElementById('mSpeed').value.trim();
             let stageDesc = document.getElementById('mStages').value.trim();
 
-            if(!id || !title) { alert("Vui lòng nhập đầy đủ thông tin!"); return; }
+            if(!id || !title) { alert("Vui lòng nhập đầy đủ mã và tên dự án!"); return; }
 
-            projectsData[id] = {
-                title: title, percent: percent, date: date, speed: speed, badge: badge,
-                stages: [{ icon: "fa-shield-halved", color: "cyan", title: "Hạng Mục", status: stageDesc, statusColor: "text-cyan-400" }]
+            let projectPayload = {
+                title: title,
+                percent: percent,
+                date: date,
+                speed: speed,
+                badge: badge,
+                stages: [{ title: "Hạng Mục Thi Công", status: stageDesc }]
             };
-            localStorage.setItem("antin_projects_v6", JSON.stringify(projectsData));
-            renderProjectsDashboard();
-            switchProject(id);
-            closeModals();
-            showToast("Đã lưu dữ liệu dự án và đồng bộ thành công Apps Script!");
+
+            showToast("Đang lưu dữ liệu xuống Google Sheet...");
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    closeModals();
+                    loadDataFromGoogleSheet(); // Tải lại dữ liệu mới nhất từ Sheet
+                    showToast(res.message);
+                })
+                .withFailureHandler(function(err) {
+                    alert("Lỗi lưu dự án: " + err.message);
+                })
+                .saveProject(id, projectPayload);
         }
 
         function deleteCurrentProject() {
-            if(confirm(`Xác nhận xóa dự án [${currentActiveProjId}]?`)) {
-                delete projectsData[currentActiveProjId];
-                localStorage.setItem("antin_projects_v6", JSON.stringify(projectsData));
-                let keys = Object.keys(projectsData);
-                if(keys.length > 0) { currentActiveProjId = keys[0]; renderProjectsDashboard(); switchProject(currentActiveProjId); }
-                showToast("Đã xóa dự án thành công!");
+            if(confirm(`Xác nhận xóa dự án [${currentActiveProjId}]? (Lưu ý: Bạn có thể cấu hình hàm xóa trực tiếp trong Apps Script nếu cần).`)) {
+                delete appData.projects[currentActiveProjId];
+                renderProjectsDashboard();
+                let keys = Object.keys(appData.projects);
+                if(keys.length > 0) { currentActiveProjId = keys[0]; switchProject(currentActiveProjId); }
+                showToast("Đã xóa khỏi giao diện tạm thời!");
             }
         }
 
