@@ -178,7 +178,7 @@
         </div>
         <div class="space-y-3">
             <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản...">
+                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản (admin/manager)...">
                 <input type="password" id="loginPass" placeholder="Mật khẩu..." class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
             </div>
             <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2.5 rounded-xl shadow-lg transition-all text-xs cursor-pointer flex items-center justify-center gap-2">
@@ -343,7 +343,7 @@
             <div class="space-y-3 text-xs">
                 <div>
                     <label class="text-gray-300 font-bold">Mật khẩu mới:</label>
-                    <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" placeholder="Nhập mật khẩu mới...">
                 </div>
                 <div class="flex gap-2 mt-4">
                     <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật</button>
@@ -353,10 +353,16 @@
         </div>
     </div>
 
-    <!-- SCRIPT TÍCH HỢP GOOGLE APPS SCRIPT -->
+    <!-- SCRIPT TÍCH HỢP TOÀN DIỆN & CHỐNG MẤT DỮ LIỆU -->
     <script>
-        let serverAccounts = [];
-        let projectsData = {
+        // Tài khoản quản trị & quản lý (Có hỗ trợ đổi pass động)
+        let defaultAccounts = [
+            { username: "admin", password: "AbC@CbA@13579", role: "admin", fullname: "Quản Trị Viên Hệ Thống" },
+            { username: "manager", password: "AbC@CbA@13579", role: "manager", fullname: "Quản Lý Dự Án (PM)" }
+        ];
+
+        // Bộ dữ liệu mẫu phong phú
+        let defaultProjects = {
             "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Hệ Thống Camera",status:"Bảo trì hệ thống Camera giám sát",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
             "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Đang cấu hình & tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp hạ tầng mạng & Thiết bị Point to Point WiFi",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
             "PRJ-03": { title: "Antinco Contract Hub", percent: "90%", date: "15/01/2026", speed: "Chờ nghiệm thu đợt cuối", badge: "Kỹ Thuật", stages: [{icon:"fa-file-contract",color:"purple",title:"Hợp Đồng Kỹ Thuật",status:"Kiểm tra, bảo dưỡng hợp đồng kỹ thuật an ninh",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
@@ -365,6 +371,9 @@
             "PRJ-06": { title: "Khu Đô Thị Thông Minh Sala", percent: "75%", date: "20/02/2026", speed: "Đang triển khai trục cáp quang", badge: "SmartCity", stages: [{icon:"fa-network-wired",color:"cyan",title:"Trục Cáp Quang",status:"Thi công kéo cáp trục chính và tủ phân phối",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
             "PRJ-07": { title: "Trung Tâm Thương Mại Vincom", percent: "95%", date: "01/03/2026", speed: "Bàn giao vận hành thử nghiệm", badge: "Commercial", stages: [{icon:"fa-shield-halved",color:"emerald",title:"Kiểm Soát An Ninh",status:"Kích hoạt toàn hệ thống AI nhận diện khuôn mặt",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] }
         };
+
+        let serverAccounts = JSON.parse(localStorage.getItem("antin_accounts")) || defaultAccounts;
+        let projectsData = JSON.parse(localStorage.getItem("antin_projects")) || defaultProjects;
 
         let currentUser = null;
         let currentActiveProjId = "PRJ-01";
@@ -377,41 +386,39 @@
         }
 
         window.onload = function() {
-            loadDataFromServer();
+            // Thử đồng bộ qua Google Apps Script (nếu chạy trong môi trường Google Sheets)
+            if(typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(data) {
+                        if(data) {
+                            if(data.accounts) { serverAccounts = data.accounts; localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts)); }
+                            if(data.projects && Object.keys(data.projects).length > 0) { projectsData = data.projects; localStorage.setItem("antin_projects", JSON.stringify(projectsData)); }
+                        }
+                        initAppUI();
+                    })
+                    .withFailureHandler(function(err) {
+                        console.log("Dùng chế độ lưu trữ cục bộ độc lập.");
+                        initAppUI();
+                    })
+                    .getAppData();
+            } else {
+                initAppUI();
+            }
         }
 
-        function loadDataFromServer() {
-            google.script.run
-                .withSuccessHandler(function(data) {
-                    if(data) {
-                        if(data.accounts) serverAccounts = data.accounts;
-                        if(data.projects && Object.keys(data.projects).length > 0) {
-                            projectsData = data.projects;
-                        }
-                    }
-                    renderProjectsDashboard();
-                    if(!projectsData[currentActiveProjId]) {
-                        currentActiveProjId = Object.keys(projectsData)[0];
-                    }
-                    switchProject(currentActiveProjId);
-                })
-                .withFailureHandler(function(err) {
-                    console.log("Lỗi tải dữ liệu server, dùng dữ liệu mẫu.", err);
-                    renderProjectsDashboard();
-                    switchProject(currentActiveProjId);
-                })
-                .getAppData();
+        function initAppUI() {
+            renderProjectsDashboard();
+            if(!projectsData[currentActiveProjId]) {
+                currentActiveProjId = Object.keys(projectsData)[0] || "";
+            }
+            if(currentActiveProjId) switchProject(currentActiveProjId);
         }
 
         function handleLogin() {
-            let u = document.getElementById("loginUser").value.trim();
+            let u = document.getElementById("loginUser").value.trim().toLowerCase();
             let p = document.getElementById("loginPass").value.trim();
 
-            let matched = serverAccounts.find(acc => acc.username === u && String(acc.password) === String(p));
-            // Tài khoản dự phòng mặc định nếu sheet chưa có
-            if(!matched && u === "admin" && p === "AbC@CbA@13579") {
-                matched = { username: "admin", role: "admin", fullname: "Quản Trị Viên Hệ Thống" };
-            }
+            let matched = serverAccounts.find(acc => acc.username.toLowerCase() === u && String(acc.password) === String(p));
 
             if(matched) {
                 currentUser = matched;
@@ -421,9 +428,9 @@
                 document.getElementById("loginCardContainer").style.display = "none";
                 document.getElementById("currentRoleName").innerText = matched.fullname || matched.username;
                 document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
-                showToast("Đã mở khóa toàn bộ quyền Quản Trị Hệ Thống!");
+                showToast(`Xin chào ${matched.fullname}! Đã mở khóa quyền quản trị.`);
             } else {
-                alert("Mật khẩu không chính xác! Vui lòng kiểm tra lại thông tin tài khoản.");
+                alert("Mật khẩu hoặc tài khoản không chính xác! (Mặc định: admin / manager với pass: AbC@CbA@13579)");
             }
         }
 
@@ -490,7 +497,7 @@
         }
 
         function openAddProjectModal() {
-            if(!currentUser) { alert("Vui lòng đăng nhập để thực hiện thêm dự án!"); return; }
+            if(!currentUser) { alert("Vui lòng đăng nhập tài khoản quản trị!"); return; }
             let nextId = "PRJ-0" + (Object.keys(projectsData).length + 1);
             document.getElementById('mId').value = nextId;
             document.getElementById('mTitle').value = "";
@@ -503,8 +510,9 @@
         }
 
         function openEditProgressModal() {
-            if(!currentUser) { alert("Vui lòng đăng nhập để chỉnh sửa thông tin dự án!"); return; }
+            if(!currentUser) { alert("Vui lòng đăng nhập tài khoản quản trị!"); return; }
             let proj = projectsData[currentActiveProjId];
+            if(!proj) return;
             document.getElementById('mId').value = currentActiveProjId;
             document.getElementById('mTitle').value = proj.title;
             document.getElementById('mPercent').value = proj.percent;
@@ -547,43 +555,43 @@
             };
 
             projectsData[id] = projectPayload;
+            localStorage.setItem("antin_projects", JSON.stringify(projectsData));
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    showToast("Đã lưu dự án và đồng bộ Google Sheets thành công!");
-                    renderProjectsDashboard();
-                    switchProject(id);
-                })
-                .withFailureHandler(function(err) {
-                    alert("Lỗi khi lưu: " + err.message);
-                })
-                .saveProject(id, projectPayload);
+            // Đồng bộ nếu có Google Apps Script
+            if(typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run.withSuccessHandler().saveProject(id, projectPayload);
+            }
 
+            renderProjectsDashboard();
+            switchProject(id);
             closeModals();
+            showToast("Đã lưu và cập nhật dự án thành công!");
         }
 
         function deleteCurrentProject() {
-            if(!currentUser) { alert("Vui lòng đăng nhập để xóa dự án!"); return; }
+            if(!currentUser) { alert("Vui lòng đăng nhập tài khoản quản trị!"); return; }
             if(confirm(`Bạn có chắc chắn muốn xóa dự án [${currentActiveProjId}] không?`)) {
                 let deletedId = currentActiveProjId;
                 delete projectsData[deletedId];
+                localStorage.setItem("antin_projects", JSON.stringify(projectsData));
 
-                google.script.run
-                    .withSuccessHandler(function(res) {
-                        showToast("Đã xóa dự án thành công!");
-                        let remainingKeys = Object.keys(projectsData);
-                        if(remainingKeys.length > 0) {
-                            currentActiveProjId = remainingKeys[0];
-                            renderProjectsDashboard();
-                            switchProject(currentActiveProjId);
-                        } else {
-                            document.getElementById('projectsGrid').innerHTML = "";
-                        }
-                    })
-                    .withFailureHandler(function(err) {
-                        alert("Lỗi khi xóa: " + err.message);
-                    })
-                    .deleteProject(deletedId);
+                if(typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler().deleteProject(deletedId);
+                }
+
+                let remainingKeys = Object.keys(projectsData);
+                if(remainingKeys.length > 0) {
+                    currentActiveProjId = remainingKeys[0];
+                    renderProjectsDashboard();
+                    switchProject(currentActiveProjId);
+                } else {
+                    document.getElementById('projectsGrid').innerHTML = "";
+                    document.getElementById('p-title').innerText = "Chưa có dự án nào";
+                    document.getElementById('p-percent').innerText = "0%";
+                    document.getElementById('p-progress-bar').style.width = "0%";
+                    document.getElementById('p-stages-grid').innerHTML = "";
+                }
+                showToast("Đã xóa dự án thành công!");
             }
         }
 
@@ -591,15 +599,21 @@
             let newPass = document.getElementById('newPassInput').value.trim();
             if(!newPass) { alert("Vui lòng nhập mật khẩu mới!"); return; }
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    showToast("Đổi mật khẩu thành công!");
-                    closeModals();
-                })
-                .withFailureHandler(function(err) {
-                    alert("Lỗi: " + err.message);
-                })
-                .updatePassword(currentUser.username, newPass);
+            // Cập nhật pass cho tài khoản đang đăng nhập
+            let acc = serverAccounts.find(a => a.username === currentUser.username);
+            if(acc) {
+                acc.password = newPass;
+                localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
+
+                if(typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler().updatePassword(currentUser.username, newPass);
+                }
+
+                showToast(`Đã đổi mật khẩu thành công cho [${currentUser.username}]!`);
+                closeModals();
+            } else {
+                alert("Không tìm thấy tài khoản để đổi mật khẩu.");
+            }
         }
 
         function closeModals() {
