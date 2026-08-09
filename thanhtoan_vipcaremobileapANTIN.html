@@ -505,8 +505,9 @@
                 <input type="text" id="adminUser" value="admin">
             </div>
             <div class="form-group">
-                <label>Mật khẩu (Mặc định: antin2026):</label>
-                <input type="password" id="adminPass" placeholder="Nhập mật khẩu...">
+                <label>Mật khẩu quản trị:</label>
+                <!-- Đã bảo mật thông tin hiển thị placeholder, không public password trực tiếp ra ngoài -->
+                <input type="password" id="adminPass" placeholder="Nhập mật khẩu quản trị hệ thống...">
             </div>
             <button onclick="processAdminLogin()" class="btn-action btn-ai-popup">Đăng Nhập</button>
         </div>
@@ -790,7 +791,7 @@
                 document.getElementById('adminDashboardModal').style.display = 'flex';
                 loadPackagesToUI();
             } else {
-                alert("Sai tên đăng nhập hoặc mật khẩu quản trị! (Mật khẩu mặc định: antin2026)");
+                alert("Sai tên đăng nhập hoặc mật khẩu quản trị!");
             }
         }
         function closeAdminDashboard() {
