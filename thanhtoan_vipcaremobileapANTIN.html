@@ -343,9 +343,9 @@
             <input type="text" id="inputPhone" value="0914060339" placeholder="VD: 0914060339" oninput="updateQRData()">
         </div>
 
-        <!-- ĐÃ XÓA BỎ DÒNG CHÚ THÍCH THEO YÊU CẦU -->
+        <!-- Hiển thị chuẩn xác cấu trúc [ID gói] — [Tên chi tiết] — [Giá] -->
         <div class="form-group">
-            <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn:</label>
+            <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn ([ID gói] — [Tên chi tiết] — [Giá]):</label>
             <select id="selectPackage" onchange="updateQRData()">
                 <option value="0" data-pkgid="vip_1" data-name="Đang đồng bộ dữ liệu">Đang đồng bộ dữ liệu từ Sheet thanhtoan_config...</option>
             </select>
@@ -601,7 +601,7 @@
             document.getElementById('footerSloganText').innerText = enterpriseConfig.slogan;
         }
 
-        // Tải gói dịch vụ vào dropdown (Đã loại bỏ hoàn toàn phần chú thích thừa ở nhãn trên giao diện)
+        // Tải gói dịch vụ vào dropdown với định dạng chuẩn: [ID gói] — [Tên chi tiết] — [Giá]
         function loadPackagesToUI() {
             var pkgs = JSON.parse(localStorage.getItem('packagesData')) || [];
             var selectEl = document.getElementById('selectPackage');
