@@ -3,64 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ Thống Quản Lý Công Trình & Phân Quyền - AN TÍN</title>
+    <title>Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình Siêu AI - AN TÍN</title>
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * { font-family: 'Montserrat', sans-serif; }
         body {
-            background: radial-gradient(circle at center, #13151f 0%, #090a0f 100%);
+            background: radial-gradient(circle at center, #1a1c29 0%, #0f1016 100%);
             color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             overflow-x: hidden;
         }
         .main-wrapper {
             max-width: 960px;
             width: 100%;
-            background: rgba(20, 22, 33, 0.88);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 182, 212, 0.15);
+            background: rgba(26, 28, 41, 0.95);
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            border-radius: 28px;
+            padding: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(6, 182, 212, 0.25);
             backdrop-filter: blur(16px);
             margin-bottom: 30px;
             position: relative;
         }
         .header-badge {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.25));
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.3));
             color: #22d3ee;
-            padding: 6px 14px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            border: 1px solid rgba(6, 182, 212, 0.4);
             display: inline-block;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
+            margin-bottom: 15px;
+            letter-spacing: 1.2px;
+            box-shadow: 0 0 20px rgba(6,182,212,0.3);
+            animation: pulseGlow 2.5s infinite;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 0 12px rgba(6,182,212,0.3); }
+            50% { transform: scale(1.04); box-shadow: 0 0 25px rgba(6,182,212,0.7); }
+            100% { transform: scale(1); box-shadow: 0 0 12px rgba(6,182,212,0.3); }
         }
         #toastAlert {
             visibility: hidden;
-            min-width: 280px;
+            min-width: 290px;
             background: linear-gradient(135deg, #06b6d4, #3b82f6);
             color: #fff;
             text-align: center;
             border-radius: 12px;
-            padding: 12px 20px;
+            padding: 14px 20px;
             position: fixed;
             z-index: 100000;
             left: 50%;
             bottom: 30px;
-            transform: translateX(-50%) translateY(40px);
+            transform: translateX(-50%) translateY(50px);
             font-size: 13px;
             font-weight: 700;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             opacity: 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         #toastAlert.show { visibility: visible; transform: translateX(-50%) translateY(0); opacity: 1; }
 
@@ -69,54 +79,71 @@
             cursor: pointer;
         }
         .project-card-item:hover {
-            border-color: rgba(6, 182, 212, 0.7);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2);
         }
         .project-card-item.active {
             border-color: #06b6d4;
-            background: rgba(6, 182, 212, 0.1);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            background: rgba(6, 182, 212, 0.12);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
         }
 
         .company-footer {
-            margin-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 20px;
+            margin-top: 35px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 22px;
             font-size: 12px;
             color: #b2bec3;
+            text-align: left;
+        }
+        .company-footer h4 {
+            color: #f39c12;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
-        @media(max-width: 768px) { .services-grid { grid-template-columns: 1fr; } }
+        @media(max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
         .service-item {
-            font-size: 11px;
+            font-size: 11.5px;
             color: #dfe6e9;
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 6px;
+            transition: all 0.25s;
             background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .service-item:hover {
+            transform: translateX(6px);
+            background: rgba(6, 182, 212, 0.08);
+            color: #22d3ee;
+            border-color: rgba(6,182,212,0.3);
         }
         .ecosystem-links {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 12px;
+            margin-top: 15px;
         }
         .ecosystem-link-btn {
-            background: rgba(0, 206, 201, 0.08);
-            border: 1px solid rgba(0, 206, 201, 0.3);
+            background: rgba(0, 206, 201, 0.1);
+            border: 1px solid rgba(0, 206, 201, 0.4);
             color: #00cec9;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 10.5px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
             font-weight: 700;
             text-decoration: none;
             display: inline-flex;
@@ -124,334 +151,393 @@
             gap: 5px;
             transition: all 0.3s;
         }
-        .ecosystem-link-btn:hover { background: #00cec9; color: #000; }
-        .auth-required { display: none !important; }
+        .ecosystem-link-btn:hover {
+            background: #00cec9;
+            color: #000;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
-<body data-role="guest">
+<body>
 
-    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Thao tác thành công!</div>
+    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã thực hiện thành công!</div>
 
-    <!-- MÀN HÌNH CHÍNH -->
-    <div class="main-wrapper">
-        <!-- HEADER TOP BAR -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 mb-5 gap-3">
-            <div>
-                <span class="header-badge"><i class="fa-solid fa-shield-halved"></i> AN TÍN PROJECT MANAGEMENT AI v4.0</span>
-                <h1 class="text-xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
-                    Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình
-                </h1>
-                <p class="text-[11px] text-gray-400 mt-0.5">Trạng thái: <b id="syncStatus" class="text-emerald-400">Đang đồng bộ trực tiếp Google Sheets...</b></p>
+    <!-- KHUNG ĐĂNG NHẬP HỆ THỐNG -->
+    <div id="loginCardContainer" class="max-w-md w-full bg-slate-900/95 border border-cyan-500/50 p-6 rounded-3xl shadow-[0_0_35px_rgba(6,182,212,0.3)] mb-6 backdrop-blur-md">
+        <div class="text-center mb-4">
+            <span class="header-badge"><i class="fa-solid fa-shield-halved"></i> AN TÍN SECURITY GATEWAY</span>
+            <h2 class="text-lg font-extrabold text-cyan-400 mt-1">Đăng Nhập Quản Trị Hệ Thống</h2>
+            <p class="text-xs text-gray-400">Tài khoản mẫu (admin / manager) đã được điền sẵn, bấm đăng nhập để mở khóa!</p>
+        </div>
+        <div class="space-y-3">
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản...">
+                <input type="password" id="loginPass" value="AbC@CbA@13579" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Mật khẩu...">
             </div>
-            <!-- ĐIỀU HƯỚNG ĐĂNG NHẬP / QUẢN TRỊ -->
-            <div class="flex flex-wrap items-center gap-2">
-                <div id="currentUserBadge" class="text-xs text-gray-300 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700 hidden">
-                    <i class="fa-solid fa-user-circle text-cyan-400 mr-1"></i> <span id="lblCurrentRole">Khách</span>
-                </div>
-                <button onclick="openLoginModal()" id="btnLogin" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-lg">
-                    <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập Hệ Thống
+            <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2.5 rounded-xl shadow-lg transition-all text-xs cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> Mở Khóa Trình Quản Lý Logic
+            </button>
+            <div class="flex justify-between items-center pt-1 text-[11px]">
+                <span class="text-gray-400">Khôi phục mặc định toàn bộ?</span>
+                <button onclick="openResetModal()" class="text-cyan-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-rotate"></i> Reset tài khoản</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MÀN HÌNH CHÍNH ỨNG DỤNG -->
+    <div id="appContainer" class="main-wrapper">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 mb-6 gap-3">
+            <div>
+                <span class="header-badge"><i class="fa-solid fa-network-wired"></i> AN TÍN PROJECT MANAGEMENT AI v3.0</span>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 mb-1">
+                    Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình Siêu AI
+                </h1>
+                <p class="text-xs text-gray-300">Trạng thái quyền: <b id="currentRoleName" class="text-yellow-400">Đang đồng bộ Google Sheets...</b></p>
+            </div>
+            <div id="authActionButtons" class="flex flex-wrap gap-2">
+                <button onclick="syncDataFromCloud()" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> Đồng Bộ Sheet
                 </button>
-                <button onclick="logoutSystem()" id="btnLogout" class="bg-slate-800 hover:bg-slate-700 text-red-400 px-3 py-1.5 rounded-xl text-xs font-bold transition-all hidden items-center gap-1 cursor-pointer border border-red-500/30">
-                    <i class="fa-solid fa-power-off"></i> Đăng Xuất
+                <button onclick="openChangePassModal()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-key"></i> Đổi Mật Khẩu
                 </button>
-                <button onclick="openAdminModal()" id="btnAdminDash" class="auth-required admin-only bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all items-center gap-1.5 cursor-pointer shadow-lg">
-                    <i class="fa-solid fa-user-shield"></i> Quản Trị Admin
+                <button onclick="handleLogout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-power-off"></i> Khóa Lại
                 </button>
             </div>
         </div>
 
         <!-- DASHBOARD: DANH SÁCH DỰ ÁN -->
-        <div class="mb-5 bg-slate-900/70 p-4 rounded-2xl border border-slate-800">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
+        <div class="mb-6 bg-slate-900/80 p-4 rounded-2xl border border-slate-700/80">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                 <div>
-                    <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-folder-tree mr-1"></i> Danh Sách Dự Án Đang Quản Lý</h3>
+                    <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-folder-tree mr-1"></i> Danh Sách Dự Án Đang Quản Lý</h3>
+                    <p class="text-xs text-gray-400">Chọn dự án để xem chi tiết tiến độ, camera trực tiếp và báo cáo AI từ Google Sheets</p>
                 </div>
-                <div>
-                    <button onclick="openAddProjectModal()" id="btnAddProj" class="auth-required manager-or-admin bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1 rounded-lg text-xs font-bold transition-all items-center gap-1 cursor-pointer">
-                        <i class="fa-solid fa-plus"></i> Thêm Dự Án
+                <div class="flex gap-2">
+                    <button onclick="openAddProjectModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-plus"></i> Thêm Dự Án Mới
                     </button>
                 </div>
             </div>
-            <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                <div class="col-span-4 text-center py-4 text-xs text-cyan-300"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang tải danh sách công trình từ Google Sheet...</div>
-            </div>
+            <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
         </div>
 
         <!-- MODULE CHI TIẾT DỰ ÁN -->
-        <div class="relative bg-gradient-to-br from-slate-900 via-blue-950/60 to-slate-900 text-white p-5 sm:p-6 rounded-2xl shadow-xl border border-cyan-500/30 overflow-hidden mb-5">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+        <div id="project-detail-container" class="relative bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-cyan-500/30 overflow-hidden mb-6">
+            <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <div>
-                    <span id="p-badge" class="px-2.5 py-0.5 bg-cyan-500/20 text-cyan-400 text-[11px] font-semibold rounded-full border border-cyan-500/40 inline-flex items-center gap-1 mb-1">
-                        <i class="fa-solid fa-building"></i> Trọng Điểm
+                    <span id="p-badge" class="px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-semibold rounded-full border border-cyan-500/40 inline-flex items-center gap-1 mb-2">
+                        <i class="fa-solid fa-building"></i> Dự Án Trọng Điểm
                     </span>
-                    <h2 id="p-title" class="text-xl sm:text-2xl font-extrabold text-white">Đang tải dữ liệu...</h2>
+                    <h2 id="p-title" class="text-2xl sm:text-3xl font-extrabold tracking-wide text-white">Đang tải dữ liệu...</h2>
                 </div>
-                <div class="flex items-center gap-4">
-                    <div class="text-right">
-                        <span id="p-percent" class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">0%</span>
-                        <p class="text-[10px] text-gray-400">Hoàn thành</p>
+                <div class="text-left sm:text-right flex items-center gap-3">
+                    <div>
+                        <span id="p-percent" class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">0%</span>
+                        <p class="text-xs text-gray-400 font-medium">Tiến độ tổng thể</p>
                     </div>
-                    <!-- Nút Sửa / Xóa dự án (Chỉ hiện khi Manager hoặc Admin đăng nhập) -->
-                    <div id="projectActionButtons" class="auth-required manager-or-admin gap-1.5">
-                        <button onclick="openEditProgressModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-xl border border-cyan-500/40 text-xs cursor-pointer" title="Sửa dự án">
-                            <i class="fa-solid fa-pen"></i>
+                    <div class="flex gap-2">
+                        <button onclick="openEditProgressModal()" class="bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 p-2.5 rounded-xl border border-cyan-500/50 text-xs font-bold cursor-pointer" title="Cập nhật tiến độ dự án">
+                            <i class="fa-solid fa-pen-to-square text-base"></i>
                         </button>
-                        <button onclick="deleteCurrentProject()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 p-2 rounded-xl border border-red-500/40 text-xs cursor-pointer" title="Xóa dự án">
-                            <i class="fa-solid fa-trash"></i>
+                        <button onclick="deleteCurrentProject()" class="bg-red-500/20 hover:bg-red-500/40 text-red-300 p-2.5 rounded-xl border border-red-500/50 text-xs font-bold cursor-pointer" title="Xóa dự án này">
+                            <i class="fa-solid fa-trash text-base"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- THANH TIẾN ĐỘ -->
-            <div class="mb-5">
-                <div class="flex justify-between text-xs mb-1.5 text-gray-300">
-                    <span id="p-date"><i class="regular fa-calendar text-cyan-400 mr-1"></i> Khởi công: --/--/--</span>
-                    <span id="p-status-speed" class="text-emerald-400 font-semibold"><i class="fa-solid fa-rocket"></i> Tối ưu tiến độ</span>
+            <div class="mb-8">
+                <div class="flex justify-between text-xs sm:text-sm mb-2 text-gray-300">
+                    <span id="p-date"><i class="fa-regular fa-calendar-days text-cyan-400 mr-1"></i> Khởi công: --/--/--</span>
+                    <span id="p-status-speed" class="text-emerald-400 font-semibold flex items-center gap-1"><i class="fa-solid fa-rocket"></i> Đang tối ưu tiến độ</span>
                 </div>
-                <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden p-0.5 border border-slate-700">
-                    <div id="p-progress-bar" class="bg-gradient-to-r from-blue-500 via-cyan-400 to-emerald-400 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
+                <div class="w-full bg-slate-800 h-4 rounded-full overflow-hidden p-0.5 border border-slate-700/80 shadow-inner">
+                    <div id="p-progress-bar" class="bg-gradient-to-r from-blue-500 via-cyan-400 to-emerald-400 h-full rounded-full transition-all duration-1000 relative shadow-[0_0_15px_rgba(6,182,212,0.8)]" style="width: 0%;">
+                        <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                    </div>
                 </div>
             </div>
 
-            <div id="p-stages-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5"></div>
+            <div id="p-stages-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"></div>
 
-            <div class="flex flex-col sm:flex-row gap-2">
-                <button onclick="showToast('Đang kết nối Camera AI 24/7 trực tiếp từ Google Sheet...')" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-xs">
-                    <i class="fa-solid fa-video"></i> Xem Camera 24/7
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="openCameraModal()" class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3.5 px-5 rounded-2xl shadow-[0_4px_20px_rgba(6,182,212,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer text-sm">
+                    <i class="fa-solid fa-video text-base"></i> Xem Camera & Time-Lapse
                 </button>
-                <button onclick="showToast('Trợ lý An Tín AI đang phân tích dữ liệu ánh xạ...')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-xs">
-                    <i class="fa-solid fa-robot"></i> Hỏi Trợ Lý AI
+                <button onclick="openAiAssistantModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/40 font-bold py-3.5 px-5 rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg text-sm">
+                    <i class="fa-solid fa-robot text-base"></i> Trợ Lý An Tín AI Phân Tích
                 </button>
             </div>
         </div>
 
         <!-- FOOTER THÔNG TIN AN TÍN -->
         <div class="company-footer">
-            <h4 class="text-amber-400 font-bold text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> AN TÍN – GIẢI PHÁP KỸ THUẬT & CÔNG NGHỆ TOÀN DIỆN</h4>
+            <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH.</h4>
             <div class="services-grid">
-                <div class="service-item"><i class="fa-solid fa-video text-amber-400"></i> Camera an ninh 24/7</div>
-                <div class="service-item"><i class="fa-solid fa-network-wired text-amber-400"></i> Mạng Wi-Fi & CNTT</div>
-                <div class="service-item"><i class="fa-solid fa-fingerprint text-amber-400"></i> Kiểm soát ra vào</div>
-                <div class="service-item"><i class="fa-solid fa-house-chimney text-amber-400"></i> Nhà thông minh Smart Home</div>
-                <div class="service-item"><i class="fa-solid fa-globe text-amber-400"></i> Thiết kế Website & Hosting</div>
-                <div class="service-item"><i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Sửa chữa thiết bị điện</div>
+                <div class="service-item"><i class="fa-solid fa-video text-amber-400"></i> Camera an ninh – Giám sát 24/7</div>
+                <div class="service-item"><i class="fa-solid fa-network-wired text-amber-400"></i> Mạng Wi-Fi – Máy tính – Hạ tầng CNTT</div>
+                <div class="service-item"><i class="fa-solid fa-shield-cat text-amber-400"></i> Chống đột nhập – Khóa cửa thông minh</div>
+                <div class="service-item"><i class="fa-solid fa-fingerprint text-amber-400"></i> Chấm công vân tay – Kiểm soát ra vào</div>
+                <div class="service-item"><i class="fa-solid fa-fire-extinguisher text-amber-400"></i> Báo cháy tự động – An toàn tài sản</div>
+                <div class="service-item"><i class="fa-solid fa-globe text-amber-400"></i> Thiết kế Website chuyên nghiệp</div>
+                <div class="service-item"><i class="fa-solid fa-cloud text-amber-400"></i> Tên miền – Hosting – Cloud Server</div>
+                <div class="service-item"><i class="fa-solid fa-house-chimney text-amber-400"></i> Nhà thông minh – Smart Home</div>
+                <div class="service-item"><i class="fa-solid fa-bolt text-amber-400"></i> Điện dân dụng – Điện công nghiệp</div>
+                <div class="service-item"><i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Sửa chữa & bảo trì thiết bị điện gia đình</div>
+                <div class="service-item"><i class="fa-solid fa-mug-hot text-amber-400"></i> Ấm điện – Bếp điện – Nồi điện – Quạt điện...</div>
+                <div class="service-item"><i class="fa-solid fa-robot text-amber-400"></i> Tự động hóa thiết bị điện thông minh</div>
             </div>
-            <div class="text-[11px] text-gray-400 space-y-0.5 mb-2">
-                <p>📍 85/19 Lê Liễu, P. Tân Sơn Nhì, TP. HCM &nbsp;|&nbsp; ☎️ (028) 3849 3575 &nbsp;|&nbsp; 📱 Zalo: <a href="https://zalo.me/0914060339" class="text-cyan-400 hover:underline">0914 060 339</a></p>
+            
+            <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/60 text-xs mb-3 space-y-1">
+                <p>🏢 <b>CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</b></p>
+                <p>📍 85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</p>
+                <p>☎️ (028) 3849 3575 &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" class="text-cyan-400 hover:underline">0914 060 339</a></p>
+                <p>📩 ctyantinco@gmail.com</p>
             </div>
+
             <div class="ecosystem-links">
                 <a href="https://khuyenmaicamera.blogspot.com" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-blog"></i> Blog Khuyến Mãi</a>
-                <a href="https://zalo.me/0914060339" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-comment-sms"></i> Zalo Cá Nhân</a>
+                <a href="https://zalo.me/0914060339" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-comment-sms"></i> Zalo (0914060339)</a>
                 <a href="https://zalo.me/3260030944980440169" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-comments"></i> Zalo OA</a>
-                <a href="https://ebook.antinco.com/trangchu" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-globe"></i> AN TÍN ECOSYSTEM</a>
+                <a href="https://zalo.me/s/2109317456418246815/" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-mobile-screen"></i> Zalo Mini App</a>
+                <a href="https://ebook.antinco.com/trangchu" target="_blank" class="ecosystem-link-btn"><i class="fa-solid fa-globe"></i> AN TÍN ECOSYSTEM AI</a>
             </div>
         </div>
     </div>
 
-    <!-- MODAL: ĐĂNG NHẬP HỆ THỐNG -->
-    <div id="loginModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
-            <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-                <h3 class="text-sm font-bold text-cyan-400"><i class="fa-solid fa-lock mr-1"></i> Đăng Nhập Quản Trị / Manager</h3>
-                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
+    <!-- MODAL: THÊM / CẬP NHẬT DỰ ÁN -->
+    <div id="projectModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-lg w-full">
+            <h3 id="modalProjTitle" class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-folder-plus mr-1"></i> Cập Nhật Dự Án Công Trình</h3>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Tài khoản:</label>
-                    <input type="text" id="loginUser" placeholder="Nhập tài khoản (admin, manager01...)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <label class="text-gray-300 font-bold">Mã định danh dự án:</label>
+                    <input type="text" id="mId" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
                 <div>
-                    <label class="text-gray-300 font-bold">Mật khẩu:</label>
-                    <input type="password" id="loginPass" placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <label class="text-gray-300 font-bold">Tên công trình / Dự án:</label>
+                    <input type="text" id="mTitle" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
                 </div>
-                <div class="pt-2">
-                    <button onclick="processLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black py-2.5 rounded-xl text-xs cursor-pointer shadow-lg">Xác Nhận Đăng Nhập</button>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-gray-300 font-bold">Phần trăm hoàn thành:</label>
+                        <input type="text" id="mPercent" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    </div>
+                    <div>
+                        <label class="text-gray-300 font-bold">Nhãn phân loại (Badge):</label>
+                        <input type="text" id="mBadge" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL: QUẢN TRỊ ADMIN (QUẢN LÝ TÀI KHOẢN & RESET MẬT KHẨU) -->
-    <div id="adminModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-xl w-full shadow-2xl">
-            <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-                <h3 class="text-sm font-extrabold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-user-shield text-base"></i> Quản Trị Admin: Quản Lý Tài Khoản Google Sheets</h3>
-                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="space-y-4 text-xs">
-                <p class="text-gray-300">Quản lý và cập nhật mật khẩu trực tiếp từ Sheet <code class="text-cyan-400">Accounts</code>:</p>
-                <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-800/80 text-gray-300 border-b border-slate-700">
-                                <th class="p-3">Tài Khoản</th>
-                                <th class="p-3">Họ Tên</th>
-                                <th class="p-3">Quyền</th>
-                                <th class="p-3 text-right">Hành Động</th>
-                            </tr>
-                        </thead>
-                        <tbody id="managerTableBody"></tbody>
-                    </table>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-gray-300 font-bold">Ngày khởi công:</label>
+                        <input type="text" id="mDate" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    </div>
+                    <div>
+                        <label class="text-gray-300 font-bold">Tốc độ thi công:</label>
+                        <input type="text" id="mSpeed" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    </div>
                 </div>
-                <div class="flex justify-end pt-2">
-                    <button onclick="closeModals()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 px-5 rounded-xl text-xs cursor-pointer">Đóng Bảng Quản Trị</button>
+                <div>
+                    <label class="text-gray-300 font-bold">Hạng mục chi tiết (Stages):</label>
+                    <input type="text" id="mStages" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" placeholder="Mô tả hạng mục công việc...">
+                </div>
+                <div class="flex gap-2 mt-5">
+                    <button onclick="saveProjectData()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Lưu Lên Google Sheets</button>
+                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL: RESET MẬT KHẨU -->
-    <div id="resetMgrModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-amber-500/50 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
-            <h3 class="text-sm font-bold text-amber-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Đổi Mật Khẩu Tài Khoản</h3>
+    <!-- MODAL: XEM CAMERA TRỰC TIẾP -->
+    <div id="cameraModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-xl w-full text-center">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-base font-bold text-cyan-400"><i class="fa-solid fa-video mr-1"></i> Camera An Ninh & Giám Sát 24/7</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="bg-black rounded-xl p-4 border border-slate-700 relative overflow-hidden mb-4">
+                <div class="absolute top-3 left-3 bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-bold animate-pulse flex items-center gap-1">
+                    <i class="fa-solid fa-circle text-[6px]"></i> LIVE STREAM
+                </div>
+                <div class="py-12 flex flex-col items-center justify-center text-gray-400">
+                    <i class="fa-solid fa-video text-4xl text-cyan-400 mb-2 animate-bounce"></i>
+                    <p class="text-xs">Đang kết nối luồng RTSP / Cloud Camera AN TÍN tại công trình...</p>
+                    <p class="text-[11px] text-emerald-400 mt-1 font-mono">Trạng thái: Tín hiệu ổn định (1080P 60FPS)</p>
+                </div>
+            </div>
+            <button onclick="closeModals()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Đóng Cửa Sổ</button>
+        </div>
+    </div>
+
+    <!-- MODAL: TRỢ LÝ AN TÍN AI PHÂN TÍCH -->
+    <div id="aiAssistantModal" class="fixed inset-0 bg-slate-950/85 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-xl w-full">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-base font-bold text-cyan-400"><i class="fa-solid fa-robot mr-1"></i> Trợ Lý An Tín AI - Báo Cáo Thông Minh</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700 text-xs text-gray-200 space-y-2 mb-4 leading-relaxed">
+                <p class="text-cyan-300 font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Phân tích tự động từ cơ sở dữ liệu Google Sheets:</p>
+                <p id="aiAnalysisContent">Đang phân tích thông số dự án...</p>
+            </div>
+            <button onclick="closeModals()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Xác Nhận & Trở Về</button>
+        </div>
+    </div>
+
+    <!-- MODAL: ĐỔI MẬT KHẨU TÀI KHOẢN -->
+    <div id="changePassModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full">
+            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Quản Lý & Đổi Mật Khẩu Tài Khoản</h3>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Tài khoản:</label>
-                    <input type="text" id="resetUsername" readonly class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <label class="text-gray-300 font-bold">Chọn tài khoản cần đổi:</label>
+                    <select id="targetAccountSelect" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <option value="manager">Manager (Quản Lý Dự Án)</option>
+                        <option value="admin">Admin (Quản Trị Hệ Thống)</option>
+                    </select>
                 </div>
                 <div>
                     <label class="text-gray-300 font-bold">Mật khẩu mới:</label>
-                    <input type="text" id="resetNewPass" value="antin@2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-cyan-300 mt-1 font-bold">
-                </div>
-                <div class="flex gap-2 pt-2">
-                    <button onclick="saveResetPassword()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật Google Sheet</button>
-                    <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL: THÊM / SỬA DỰ ÁN -->
-    <div id="projectModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-lg w-full">
-            <h3 id="projModalTitle" class="text-sm font-bold text-cyan-400 mb-4"><i class="fa-solid fa-folder-plus mr-1"></i> Thêm Dự Án Mới</h3>
-            <div class="space-y-3 text-xs">
-                <div>
-                    <label class="text-gray-300 font-bold">Mã dự án (ID):</label>
-                    <input type="text" id="mId" placeholder="Ví dụ: PRJ-05" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                </div>
-                <div>
-                    <label class="text-gray-300 font-bold">Tên công trình:</label>
-                    <input type="text" id="mTitle" placeholder="Nhập tên dự án..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="text-gray-300 font-bold">Tiến độ (%):</label>
-                        <input type="text" id="mPercent" placeholder="100%" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                    </div>
-                    <div>
-                        <label class="text-gray-300 font-bold">Nhãn:</label>
-                        <input type="text" id="mBadge" placeholder="Trọng Điểm" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="text-gray-300 font-bold">Khởi công:</label>
-                        <input type="text" id="mDate" placeholder="01/01/2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                    </div>
-                    <div>
-                        <label class="text-gray-300 font-bold">Tốc độ / Trạng thái:</label>
-                        <input type="text" id="mSpeed" placeholder="Hoàn thành định kỳ" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                    </div>
-                </div>
-                <div>
-                    <label class="text-gray-300 font-bold">Nội dung hạng mục (Stage):</label>
-                    <input type="text" id="mStages" placeholder="Đang vận hành ổn định 24/7" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                    <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" placeholder="Nhập mật khẩu mới...">
                 </div>
                 <div class="flex gap-2 mt-4">
-                    <button onclick="saveProjectData()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs cursor-pointer">Lưu Vào Google Sheet</button>
+                    <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật Mật Khẩu</button>
                     <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT TÍCH HỢP APPS SCRIPT -->
+    <!-- MODAL: XÁC NHẬN RESET TÀI KHOẢN -->
+    <div id="resetModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full text-center">
+            <div class="text-cyan-400 text-3xl mb-2"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3 class="text-base font-bold text-white mb-2">Khôi Phục Tài Khoản Mặc Định</h3>
+            <p class="text-xs text-gray-300 mb-5">Bạn có chắc chắn muốn đặt lại tài khoản hệ thống về mặc định không?</p>
+            <div class="flex gap-2">
+                <button onclick="confirmResetDefaultAccounts()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Đồng Ý</button>
+                <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT XỬ LÝ LOGIC & GIAO TIẾP APPS SCRIPT -->
     <script>
-        let appData = { accounts: [], projects: {} };
-        let currentRole = localStorage.getItem("antin_current_role") || "guest";
-        let currentLoggedInUser = localStorage.getItem("antin_current_user") || "";
-        let currentActiveProjId = "";
+        // Dữ liệu dự phòng mẫu chuẩn
+        let serverAccounts = [
+            { username: "admin", password: "AbC@CbA@13579", role: "admin", fullname: "Quản Trị Viên Hệ Thống" },
+            { username: "manager", password: "AbC@CbA@13579", role: "manager", fullname: "Quản Lý Dự Án (PM)" }
+        ];
+
+        let projectsData = {
+            "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Hệ Thống Camera",status:"Bảo trì hệ thống Camera giám sát",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
+            "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Đang cấu hình & tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp hạ tầng mạng & Thiết bị Point to Point WiFi",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
+            "PRJ-03": { title: "Antinco Contract Hub", percent: "90%", date: "15/01/2026", speed: "Chờ nghiệm thu đợt cuối", badge: "Kỹ Thuật", stages: [{icon:"fa-file-contract",color:"purple",title:"Hợp Đồng Kỹ Thuật",status:"Kiểm tra, bảo dưỡng hợp đồng kỹ thuật an ninh",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
+            "PRJ-04": { title: "Bệnh Viện Đa Khoa Hùng Vương", percent: "50%", date: "01/02/2026", speed: "Đang thay thế thiết bị phụ trợ", badge: "Phụ Trợ", stages: [{icon:"fa-server",color:"yellow",title:"Thiết Bị Phụ Trợ",status:"Xử lý sự cố đường truyền mạng nội bộ & tủ rack",statusColor:"text-yellow-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
+            "PRJ-05": { title: "Chuỗi Các Cty Kinh Doanh Vàng Bạc Đá Quý", percent: "50%", date: "10/02/2026", speed: "Lên phương án vật tư", badge: "Vật Tư", stages: [{icon:"fa-video",color:"green",title:"Camera Góc Khuất",status:"Lắp đặt bổ sung camera góc khuất tầng hầm",statusColor:"text-gray-400",iconStyle:"fa-regular fa-clock"}] }
+        };
+
+        let currentUser = null;
+        let currentActiveProjId = "PRJ-01";
 
         function showToast(msg) {
-            let x = document.getElementById("toastAlert");
+            var x = document.getElementById("toastAlert");
             if(msg) x.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
             x.className = "show";
-            setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
 
         window.onload = function() {
-            loadDataFromGoogleSheet();
+            syncDataFromCloud();
         }
 
-        // Gọi hàm getAppData() từ Google Apps Script
-        function loadDataFromGoogleSheet() {
-            document.getElementById("syncStatus.innerHTML") = "Đang đồng bộ trực tiếp Google Sheets...";
-            google.script.run
-                .withSuccessHandler(function(data) {
-                    appData = data;
-                    document.getElementById("syncStatus").innerText = "Đã đồng bộ Google Sheets thời gian thực";
-                    applyRoleUI();
-                    renderProjectsDashboard();
-                    
-                    let keys = Object.keys(appData.projects);
-                    if(keys.length > 0) {
-                        if(!appData.projects[currentActiveProjId]) currentActiveProjId = keys[0];
-                        switchProject(currentActiveProjId);
-                    }
-                })
-                .withFailureHandler(function(err) {
-                    document.getElementById("syncStatus").innerText = "Lỗi kết nối Google Sheets!";
-                    showToast("Lỗi đồng bộ: " + err.message);
-                })
-                .getAppData();
-        }
-
-        function applyRoleUI() {
-            document.body.setAttribute("data-role", currentRole);
-            let btnLogin = document.getElementById('btnLogin');
-            let btnLogout = document.getElementById('btnLogout');
-            let currentUserBadge = document.getElementById('currentUserBadge');
-            let lblCurrentRole = document.getElementById('lblCurrentRole');
-
-            if(currentRole === "guest") {
-                btnLogin.classList.remove("hidden");
-                btnLogout.classList.add("hidden");
-                currentUserBadge.classList.add("hidden");
+        // Đồng bộ dữ liệu trực tiếp từ Google Sheets qua google.script.run
+        function syncDataFromCloud() {
+            showToast("Đang kết nối và đồng bộ dữ liệu với Google Sheets...");
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(data) {
+                        if (data) {
+                            if (data.accounts && data.accounts.length > 0) serverAccounts = data.accounts;
+                            if (data.projects && Object.keys(data.projects).length > 0) projectsData = data.projects;
+                            initAppUI();
+                            showToast("Đồng bộ dữ liệu thành công từ Google Sheets!");
+                        }
+                    })
+                    .withFailureHandler(function(err) {
+                        console.warn("Lỗi đồng bộ cloud, chuyển sang LocalStorage:", err);
+                        loadLocalFallback();
+                    })
+                    .getAppData();
             } else {
-                btnLogin.classList.add("hidden");
-                btnLogout.classList.remove("hidden");
-                currentUserBadge.classList.remove("hidden");
-                lblCurrentRole.innerText = currentRole === "admin" ? "Administrator" : `Manager (${currentLoggedInUser})`;
+                loadLocalFallback();
             }
+        }
 
-            // Phân quyền giao diện
-            document.querySelectorAll('.auth-required').forEach(el => el.style.display = 'none');
-            if(currentRole === "admin") {
-                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'flex');
-                document.querySelectorAll('.manager-or-admin').forEach(el => el.style.display = 'flex');
-            } else if(currentRole === "manager") {
-                document.querySelectorAll('.manager-or-admin').forEach(el => el.style.display = 'flex');
+        function loadLocalFallback() {
+            let localAcc = localStorage.getItem("antin_accounts");
+            let localProj = localStorage.getItem("antin_projects");
+            if(localAcc) serverAccounts = JSON.parse(localAcc);
+            if(localProj) projectsData = JSON.parse(localProj);
+            initAppUI();
+        }
+
+        function initAppUI() {
+            renderProjectsDashboard();
+            if(!projectsData[currentActiveProjId]) {
+                currentActiveProjId = Object.keys(projectsData)[0] || "";
             }
+            if(currentActiveProjId) switchProject(currentActiveProjId);
+        }
+
+        function handleLogin() {
+            let u = document.getElementById("loginUser").value.trim().toLowerCase();
+            let p = document.getElementById("loginPass").value.trim();
+
+            let matched = serverAccounts.find(acc => acc.username.toLowerCase() === u && String(acc.password) === String(p));
+
+            if(matched) {
+                currentUser = matched;
+                document.getElementById("loginCardContainer").style.display = "none";
+                document.getElementById("currentRoleName দিন").innerText = matched.fullname || matched.username;
+                document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
+                showToast(`Xin chào ${matched.fullname}! Đăng nhập thành công.`);
+            } else {
+                alert("Tài khoản hoặc mật khẩu không chính xác!");
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById("loginCardContainer").style.display = "block";
+            document.getElementById("currentRoleName").innerText = "Chưa đăng nhập";
+            document.getElementById("currentRoleName").className = "text-yellow-400";
+            showToast("Đã khóa hệ thống bảo mật.");
         }
 
         function renderProjectsDashboard() {
             let html = "";
-            let projects = appData.projects;
-            for(let id in projects) {
-                let prj = projects[id];
+            for(let id in projectsData) {
+                let prj = projectsData[id];
                 let isActive = (id === currentActiveProjId) ? "active" : "";
                 html += `
-                <div id="proj-${id}" onclick="switchProject('${id}')" class="project-card-item ${isActive} bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                <div id="proj-${id}" onclick="switchProject('${id}')" class="project-card-item ${isActive} bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="text-[11px] font-bold text-cyan-400">${id}</span>
-                        <span class="text-[11px] font-black text-emerald-400">${prj.percent}</span>
+                        <span class="text-xs font-bold text-cyan-300">${id}</span>
+                        <span class="text-xs font-black text-emerald-400">${prj.percent}</span>
                     </div>
-                    <h4 class="text-xs font-bold text-white truncate">${prj.title}</h4>
+                    <h4 class="text-sm font-bold text-white truncate">${prj.title}</h4>
+                    <p class="text-[11px] text-gray-400 mt-1"><i class="fa-regular fa-clock mr-1"></i> Khởi công: ${prj.date}</p>
                 </div>`;
             }
-            document.getElementById("projectsGrid").innerHTML = html || '<div class="col-span-4 text-center text-xs text-gray-400">Chưa có dự án nào trong Google Sheet</div>';
+            document.getElementById("projectsGrid").innerHTML = html;
         }
 
         function switchProject(id) {
@@ -460,13 +546,13 @@
             let activeEl = document.getElementById('proj-' + id);
             if(activeEl) activeEl.classList.add('active');
 
-            let proj = appData.projects[id];
+            let proj = projectsData[id];
             if(!proj) return;
 
             document.getElementById('p-title').innerText = proj.title;
             document.getElementById('p-percent').innerText = proj.percent;
             document.getElementById('p-progress-bar').style.width = proj.percent;
-            document.getElementById('p-date').innerHTML = `<i class="regular fa-calendar text-cyan-400 mr-1"></i> Khởi công: ${proj.date}`;
+            document.getElementById('p-date').innerHTML = `<i class="fa-regular fa-calendar-days text-cyan-400 mr-1"></i> Khởi công: ${proj.date}`;
             document.getElementById('p-status-speed').innerHTML = `<i class="fa-solid fa-rocket"></i> ${proj.speed}`;
             document.getElementById('p-badge').innerHTML = `<i class="fa-solid fa-building"></i> ${proj.badge}`;
 
@@ -474,119 +560,34 @@
             if(proj.stages && Array.isArray(proj.stages)) {
                 proj.stages.forEach(st => {
                     stagesHTML += `
-                    <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800">
-                        <div class="flex items-center gap-2.5 mb-1.5">
-                            <span class="p-2 bg-cyan-500/20 rounded-lg text-cyan-400 text-sm"><i class="fa-solid fa-shield-halved"></i></span>
-                            <h4 class="font-semibold text-xs">${st.title || 'Hạng Mục'}</h4>
+                    <div class="bg-slate-800/65 backdrop-blur-md p-4 rounded-2xl border border-slate-700/60 hover:border-cyan-500/50 transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="p-2.5 bg-cyan-500/20 rounded-xl text-cyan-400 text-lg"><i class="fa-solid ${st.icon || 'fa-check'}"></i></span>
+                            <h4 class="font-semibold text-sm">${st.title || 'Hạng mục'}</h4>
                         </div>
-                        <p class="text-[11px] text-cyan-400 font-medium"><i class="fa-solid fa-circle-check mr-1"></i> ${st.status}</p>
+                        <p class="text-xs ${st.statusColor || 'text-cyan-400'} font-semibold"><i class="${st.iconStyle || 'fa-solid fa-circle-check'} mr-1"></i> ${st.status}</p>
                     </div>`;
                 });
-            }
-            if(!stagesHTML) {
-                stagesHTML = `<div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 col-span-2 text-xs text-gray-400">Đang cập nhật tiến độ chi tiết...</div>`;
             }
             document.getElementById('p-stages-grid').innerHTML = stagesHTML;
         }
 
-        // ĐĂNG NHẬP XÁC THỰC TỪ SHEET ACCOUNTS
-        function openLoginModal() {
-            document.getElementById('loginUser').value = "";
-            document.getElementById('loginPass').value = "";
-            document.getElementById('loginModal').classList.remove('hidden');
-        }
-
-        function processLogin() {
-            let u = document.getElementById('loginUser').value.trim();
-            let p = document.getElementById('loginPass').value.trim();
-
-            let matchedAccount = appData.accounts.find(acc => acc.username === u && String(acc.password) === p);
-
-            if(matchedAccount) {
-                currentRole = matchedAccount.role.toLowerCase() === "admin" ? "admin" : "manager";
-                currentLoggedInUser = matchedAccount.username;
-                localStorage.setItem("antin_current_role", currentRole);
-                localStorage.setItem("antin_current_user", currentLoggedInUser);
-                closeModals();
-                applyRoleUI();
-                showToast(`Đăng nhập thành công (${matchedAccount.fullname})!`);
-            } else {
-                alert("Sai tài khoản hoặc mật khẩu so với dữ liệu trong Google Sheet Accounts!");
-            }
-        }
-
-        function logoutSystem() {
-            currentRole = "guest";
-            currentLoggedInUser = "";
-            localStorage.setItem("antin_current_role", currentRole);
-            localStorage.removeItem("antin_current_user");
-            applyRoleUI();
-            showToast("Đã đăng xuất hệ thống!");
-        }
-
-        // QUẢN TRỊ ADMIN (HIỂN THỊ DANH SÁCH TÀI KHOẢN TỪ GOOGLE SHEET)
-        function openAdminModal() {
-            let html = "";
-            appData.accounts.forEach(acc => {
-                html += `
-                <tr class="border-b border-slate-800 hover:bg-slate-800/40">
-                    <td class="p-3 font-bold text-amber-300"><i class="fa-solid fa-user mr-1"></i> ${acc.username}</td>
-                    <td class="p-3 text-gray-200">${acc.fullname}</td>
-                    <td class="p-3 text-cyan-400 font-semibold">${acc.role}</td>
-                    <td class="p-3 text-right">
-                        <button onclick="openResetManagerModal('${acc.username}')" class="bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 px-3 py-1 rounded-lg font-bold text-[11px] cursor-pointer"><i class="fa-solid fa-key"></i> Đổi Pass</button>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('managerTableBody').innerHTML = html;
-            document.getElementById('adminModal').classList.remove('hidden');
-        }
-
-        function openResetManagerModal(username) {
-            document.getElementById('resetUsername').value = username;
-            document.getElementById('resetNewPass').value = "antin@2026";
-            document.getElementById('resetMgrModal').classList.remove('hidden');
-        }
-
-        // Gọi hàm updatePassword trực tiếp xuống Google Apps Script
-        function saveResetPassword() {
-            let u = document.getElementById('resetUsername').value;
-            let newP = document.getElementById('resetNewPass').value.trim();
-            if(!newP) { alert("Vui lòng nhập mật khẩu mới!"); return; }
-
-            showToast("Đang cập nhật mật khẩu lên Google Sheet...");
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    closeModals();
-                    loadDataFromGoogleSheet();
-                    showToast(res.message);
-                })
-                .withFailureHandler(function(err) {
-                    alert("Lỗi: " + err.message);
-                })
-                .updatePassword(u, newP);
-        }
-
-        // THÊM / SỬA DỰ ÁN TRỰC TIẾP VÀO GOOGLE SHEET
         function openAddProjectModal() {
-            document.getElementById('projModalTitle').innerHTML = `<i class="fa-solid fa-folder-plus mr-1"></i> Thêm Dự Án Mới`;
-            document.getElementById('mId').value = "PRJ-0" + (Object.keys(appData.projects).length + 1);
-            document.getElementById('mId').readOnly = false;
+            let nextId = "PRJ-0" + (Object.keys(projectsData).length + 1);
+            document.getElementById('mId').value = nextId;
             document.getElementById('mTitle').value = "";
-            document.getElementById('mPercent').value = "50%";
+            document.getElementById('mPercent').value = "60%";
             document.getElementById('mBadge').value = "Dự Án Mới";
             document.getElementById('mDate').value = "09/08/2026";
-            document.getElementById('mSpeed').value = "Triển khai tiêu chuẩn";
-            document.getElementById('mStages').value = "Đang thi công phần cứng";
+            document.getElementById('mSpeed').value = "Đang thi công tiêu chuẩn";
+            document.getElementById('mStages').value = "Lắp đặt thiết bị và cấu hình hệ thống an ninh";
             document.getElementById('projectModal').classList.remove('hidden');
         }
 
         function openEditProgressModal() {
-            document.getElementById('projModalTitle').innerHTML = `<i class="fa-solid fa-pen mr-1"></i> Sửa Thông Tin Dự Án`;
-            let proj = appData.projects[currentActiveProjId];
+            let proj = projectsData[currentActiveProjId];
             if(!proj) return;
             document.getElementById('mId').value = currentActiveProjId;
-            document.getElementById('mId').readOnly = true;
             document.getElementById('mTitle').value = proj.title;
             document.getElementById('mPercent').value = proj.percent;
             document.getElementById('mBadge').value = proj.badge;
@@ -596,7 +597,6 @@
             document.getElementById('projectModal').classList.remove('hidden');
         }
 
-        // Gọi hàm saveProject từ Google Apps Script xuống Google Sheets
         function saveProjectData() {
             let id = document.getElementById('mId').value.trim();
             let title = document.getElementById('mTitle').value.trim();
@@ -606,7 +606,10 @@
             let speed = document.getElementById('mSpeed').value.trim();
             let stageDesc = document.getElementById('mStages').value.trim();
 
-            if(!id || !title) { alert("Vui lòng nhập đầy đủ mã và tên dự án!"); return; }
+            if(!id || !title) {
+                alert("Vui lòng nhập đầy đủ Mã định danh và Tên công trình!");
+                return;
+            }
 
             let projectPayload = {
                 title: title,
@@ -614,37 +617,108 @@
                 date: date,
                 speed: speed,
                 badge: badge,
-                stages: [{ title: "Hạng Mục Thi Công", status: stageDesc }]
+                stages: [
+                    { icon: "fa-shield-halved", color: "cyan", title: "Hạng Mục Thi Công", status: stageDesc, statusColor: "text-cyan-400", iconStyle: "fa-solid fa-circle-check" }
+                ]
             };
 
-            showToast("Đang lưu dữ liệu xuống Google Sheet...");
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    closeModals();
-                    loadDataFromGoogleSheet(); // Tải lại dữ liệu mới nhất từ Sheet
+            projectsData[id] = projectPayload;
+            localStorage.setItem("antin_projects", JSON.stringify(projectsData));
+
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run.withSuccessHandler(function(res){
                     showToast(res.message);
-                })
-                .withFailureHandler(function(err) {
-                    alert("Lỗi lưu dự án: " + err.message);
-                })
-                .saveProject(id, projectPayload);
+                }).saveProject(id, projectPayload);
+            } else {
+                showToast("Đã lưu dự án thành công!");
+            }
+
+            renderProjectsDashboard();
+            switchProject(id);
+            closeModals();
         }
 
         function deleteCurrentProject() {
-            if(confirm(`Xác nhận xóa dự án [${currentActiveProjId}]? (Lưu ý: Bạn có thể cấu hình hàm xóa trực tiếp trong Apps Script nếu cần).`)) {
-                delete appData.projects[currentActiveProjId];
-                renderProjectsDashboard();
-                let keys = Object.keys(appData.projects);
-                if(keys.length > 0) { currentActiveProjId = keys[0]; switchProject(currentActiveProjId); }
-                showToast("Đã xóa khỏi giao diện tạm thời!");
+            if(confirm(`Bạn có chắc chắn muốn xóa dự án [${currentActiveProjId}] không?`)) {
+                let deletedId = currentActiveProjId;
+                delete projectsData[deletedId];
+                localStorage.setItem("antin_projects", JSON.stringify(projectsData));
+
+                if (typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler(function(res){
+                        showToast(res.message);
+                    }).deleteProjectOnSheet(deletedId);
+                } else {
+                    showToast("Đã xóa dự án thành công!");
+                }
+
+                let remainingKeys = Object.keys(projectsData);
+                if(remainingKeys.length > 0) {
+                    currentActiveProjId = remainingKeys[0];
+                    renderProjectsDashboard();
+                    switchProject(currentActiveProjId);
+                } else {
+                    document.getElementById('projectsGrid').innerHTML = "";
+                    document.getElementById('p-title').innerText = "Chưa có dự án nào";
+                    document.getElementById('p-percent').innerText = "0%";
+                    document.getElementById('p-progress-bar').style.width = "0%";
+                    document.getElementById('p-stages-grid').innerHTML = "";
+                }
             }
         }
 
+        function openCameraModal() {
+            document.getElementById('cameraModal').classList.remove('hidden');
+        }
+
+        function openAiAssistantModal() {
+            let proj = projectsData[currentActiveProjId];
+            let report = `Dự án [${proj.title}] hiện đạt tiến độ ${proj.percent}. Tốc độ thi công: "${proj.speed}". Hệ thống AI An Tín đánh giá dự án đang bám sát kế hoạch kỹ thuật, đảm bảo an toàn tuyệt đối và sẵn sàng bàn giao đúng hạn.`;
+            document.getElementById('aiAnalysisContent').innerText = report;
+            document.getElementById('aiAssistantModal').classList.remove('hidden');
+        }
+
+        function openChangePassModal() {
+            document.getElementById('newPassInput').value = "";
+            document.getElementById('changePassModal').classList.remove('hidden');
+        }
+
+        function submitNewPassword() {
+            let targetUser = document.getElementById('targetAccountSelect').value;
+            let newPass = document.getElementById('newPassInput').value.trim();
+            if(!newPass) { alert("Vui lòng nhập mật khẩu mới!"); return; }
+
+            let acc = serverAccounts.find(a => a.username === targetUser);
+            if(acc) {
+                acc.password = newPass;
+                localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
+                
+                if (typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler(function(res){
+                        showToast(res.message);
+                    }).updatePassword(targetUser, newPass);
+                } else {
+                    showToast(`Đã đổi mật khẩu thành công cho [${targetUser}]!`);
+                }
+                closeModals();
+            }
+        }
+
+        function openResetModal() {
+            document.getElementById('resetModal').classList.remove('hidden');
+        }
+
+        function confirmResetDefaultAccounts() {
+            closeModals();
+            showToast("Hệ thống đã sẵn sàng khôi phục mặc định.");
+        }
+
         function closeModals() {
-            document.getElementById('loginModal').classList.add('hidden');
-            document.getElementById('adminModal').classList.add('hidden');
-            document.getElementById('resetMgrModal').classList.add('hidden');
             document.getElementById('projectModal').classList.add('hidden');
+            document.getElementById('cameraModal').classList.add('hidden');
+            document.getElementById('aiAssistantModal').classList.add('hidden');
+            document.getElementById('changePassModal').classList.add('hidden');
+            document.getElementById('resetModal').classList.add('hidden');
         }
     </script>
 </body>
