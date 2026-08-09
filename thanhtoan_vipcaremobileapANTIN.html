@@ -174,17 +174,6 @@
             overflow: hidden;
             box-shadow: inset 0 0 20px rgba(243, 156, 18, 0.1);
         }
-        .pricing-box::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(243,156,18,0.15) 0%, transparent 70%);
-            animation: rotateGlow 8s linear infinite;
-        }
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
         .price-text {
             font-size: 34px;
             font-weight: 800;
@@ -192,8 +181,6 @@
             margin: 8px 0;
             text-shadow: 0 0 18px rgba(46, 204, 113, 0.6);
             animation: pricePulse 2s infinite;
-            position: relative;
-            z-index: 1;
         }
         @keyframes pricePulse {
             0% { transform: scale(1); }
@@ -210,7 +197,6 @@
             margin-bottom: 25px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.4);
             position: relative;
-            animation: qrFadeIn 0.5s ease-in-out;
         }
         .qr-section img {
             max-width: 230px;
@@ -222,12 +208,6 @@
         }
         .qr-section img:hover {
             transform: scale(1.05) rotate(1deg);
-        }
-        .qr-section p {
-            font-size: 12px;
-            font-weight: 700;
-            margin-top: 12px;
-            color: #2d3436;
         }
         .syntax-text {
             font-size: 14px;
@@ -245,7 +225,6 @@
         .syntax-text:hover {
             background: rgba(231, 76, 60, 0.18);
             transform: scale(1.03);
-            box-shadow: 0 4px 12px rgba(231,76,60,0.2);
         }
 
         .btn-action {
@@ -263,24 +242,7 @@
             gap: 12px;
             text-decoration: none;
             margin-bottom: 14px;
-            position: relative;
-            overflow: hidden;
         }
-        .btn-action::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%; width: 300%; height: 300%;
-            background: rgba(255,255,255,0.15);
-            transform: translate(-50%, -50%) scale(0);
-            border-radius: 50%;
-            transition: transform 0.6s ease-out;
-        }
-        .btn-action:active::after {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0;
-            transition: 0s;
-        }
-
         .btn-zalo {
             background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%);
             color: white;
@@ -290,7 +252,6 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 28px rgba(0, 136, 255, 0.6);
         }
-
         .btn-ai-popup {
             background: linear-gradient(135deg, #f1c40f 0%, #f39c12 50%, #e67e22 100%);
             color: #0f1016;
@@ -303,11 +264,6 @@
             50% { box-shadow: 0 0 32px rgba(241, 196, 15, 0.9); transform: translateY(-2px) scale(1.01); }
             100% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.4); }
         }
-        .btn-ai-popup:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(241, 196, 15, 0.9);
-        }
-
         .btn-home {
             background: rgba(255, 255, 255, 0.06);
             color: #ffffff;
@@ -318,7 +274,6 @@
             transform: translateY(-2px);
         }
         
-        /* Toast Notification */
         #toastAlert {
             visibility: hidden;
             min-width: 270px;
@@ -344,7 +299,7 @@
             opacity: 1;
         }
 
-        /* Chân trang động */
+        /* Chân trang AN TÍN */
         .company-footer {
             margin-top: 35px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -377,9 +332,9 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.25s;
             padding: 4px 6px;
             border-radius: 6px;
+            transition: all 0.25s;
         }
         .service-item:hover {
             transform: translateX(6px);
@@ -404,81 +359,16 @@
         .contact-info a {
             color: #00cec9;
             text-decoration: none;
-            transition: color 0.2s;
         }
         .contact-info a:hover {
             color: #55efc4;
             text-decoration: underline;
-        }
-
-        /* AI Assistant Floating Widget */
-        .ai-assistant-widget {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 99998;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        .ai-chat-bubble {
-            background: rgba(26, 28, 41, 0.98);
-            border: 1.5px solid #f39c12;
-            padding: 14px 18px;
-            border-radius: 18px;
-            color: #fff;
-            font-size: 12.5px;
-            max-width: 280px;
-            margin-bottom: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            animation: bounceBubble 3s infinite;
-            display: none;
-            position: relative;
-            line-height: 1.4;
-        }
-        @keyframes bounceBubble {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-        .ai-fab-btn {
-            background: linear-gradient(135deg, #00cec9 0%, #0984e3 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2.5px solid #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0,206,201,0.6);
-            transition: all 0.3s;
-            animation: fabPulse 2s infinite;
-        }
-        @keyframes fabPulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 206, 201, 0.6); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 206, 201, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 206, 201, 0); }
-        }
-        .ai-fab-btn:hover {
-            transform: scale(1.12) rotate(10deg);
         }
     </style>
 </head>
 <body>
 
     <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã thực hiện thành công!</div>
-
-    <!-- AI Floating Widget -->
-    <div class="ai-assistant-widget">
-        <div class="ai-chat-bubble" id="aiChatBubble">
-            👋 Chào bạn! Cần tôi hỗ trợ tư vấn chọn gói VIP Care hoặc kiểm tra mã giao dịch tự động không?
-        </div>
-        <div class="ai-fab-btn" onclick="toggleAiAssistant()" title="Trợ lý AI An Tín">
-            <i class="fa-solid fa-robot"></i>
-        </div>
-    </div>
 
     <div class="container">
         <!-- Nút mở Quản Trị Admin -->
@@ -504,18 +394,20 @@
             <input type="text" id="inputPhone" value="0914060339" placeholder="VD: 0914060339" oninput="updateQRData()">
         </div>
 
-        <!-- Hiển thị chuẩn xác cấu trúc [ID gói] — [Tên chi tiết] — [Giá] -->
+        <!-- Chọn Gói Dịch Vụ Gia Hạn -->
         <div class="form-group">
             <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn:</label>
             <select id="selectPackage" onchange="updateQRData()">
-                <option value="0" data-pkgid="vip_1" data-name="Đang đồng bộ dữ liệu">Đang đồng bộ dữ liệu từ Sheet thanhtoan_config...</option>
+                <option value="1200000" data-pkgid="vip_1" data-name="Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)">vip_1 — Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm) — 1.200.000 VNĐ</option>
+                <option value="1600000" data-pkgid="vip_2" data-name="Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)">vip_2 — Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm) — 1.600.000 VNĐ</option>
+                <option value="2500000" data-pkgid="vip_3" data-name="Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)">vip_3 — Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm) — 2.500.000 VNĐ</option>
             </select>
         </div>
 
         <!-- Khung Hiển Thị Giá & Tổng Tiền -->
         <div class="pricing-box">
             <span style="font-size: 13px; color: #b2bec3; font-weight: 600; letter-spacing: 0.5px;">TỔNG THANH TOÁN TỰ ĐỘNG</span>
-            <div class="price-text" id="displayPrice">0 VNĐ</div>
+            <div class="price-text" id="displayPrice">1.200.000 VNĐ</div>
             <span style="font-size: 11.5px; color: #dfe6e9;">⚡ Bao gồm trọn gói dịch vụ AI định kỳ & hỗ trợ kỹ thuật tận nơi 24/7</span>
         </div>
 
@@ -541,11 +433,11 @@
             <i class="fa-solid fa-arrow-left"></i> Quay Lại Trang Chủ An Tín Ecosystem
         </a>
 
-        <!-- CHÂN TRANG AN TÍN (DYNAMIC FOOTER) -->
+        <!-- CHÂN TRANG CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN -->
         <div class="company-footer" id="dynamicFooter">
             <h4 id="footerCompanyName">🛡️ CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</h4>
             
-            <div class="services-grid" id="footerServicesGrid">
+            <div class="services-grid">
                 <div class="service-item"><i class="fa-solid fa-video" style="color:#f39c12"></i> Camera an ninh – Giám sát 24/7</div>
                 <div class="service-item"><i class="fa-solid fa-network-wired" style="color:#f39c12"></i> Mạng Wi-Fi – Hạ tầng CNTT</div>
                 <div class="service-item"><i class="fa-solid fa-shield-cat" style="color:#f39c12"></i> Chống đột nhập – Khóa thông minh</div>
@@ -567,7 +459,7 @@
                 💎 <span id="footerSloganText">AN TÍN – KẾT NỐI CÔNG NGHỆ, KIẾN TẠO AN TÂM.</span>
             </div>
 
-            <div class="contact-info" id="footerContactInfo">
+            <div class="contact-info">
                 <p>🏢 <b id="footerCompNameSub">CÔNG TY KỸ THUẬT CÔNG NGHỆ AN TÍN</b></p>
                 <p>📍 <span id="footerAddress">85/19 Lê Liễu, Phường Tân Sơn Nhì, Tp. HCM</span></p>
                 <p>☎️ <span id="footerPhoneDisplay">(028) 3849 3575</span> &nbsp;|&nbsp; 📱 & Zalo: <a href="https://zalo.me/0914060339" target="_blank" id="footerZaloLink">0914 060 339</a></p>
@@ -577,9 +469,9 @@
         </div>
     </div>
 
-    <!-- ================= MODAL ĐĂNG NHẬP ADMIN ================= -->
+    <!-- MODAL ĐĂNG NHẬP ADMIN -->
     <div id="adminLoginModal" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
-        <div style="background:#1a1c29; border: 2px solid #f39c12; border-radius:22px; max-width:400px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative; animation: modalPop 0.3s ease;">
+        <div style="background:#1a1c29; border: 2px solid #f39c12; border-radius:22px; max-width:400px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(243,156,18, 0.3); position:relative;">
             <button onclick="closeAdminLoginModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             <h3 style="color:#f1c40f; margin-bottom:18px; text-align:center;"><i class="fa-solid fa-lock"></i> Đăng Nhập Quản Trị</h3>
             <div class="form-group">
@@ -588,26 +480,23 @@
             </div>
             <div class="form-group">
                 <label>Mật khẩu quản trị:</label>
-                <input type="password" id="adminPass" placeholder="Mặc định: antin2026">
+                <input type="password" id="adminPass" placeholder="Mặc định: antin2026" value="antin2026">
             </div>
             <button onclick="processAdminLogin()" class="btn-action btn-ai-popup" style="margin-top:10px;">Đăng Nhập</button>
         </div>
     </div>
 
-    <!-- ================= MODAL QUẢN TRỊ ADMIN ================= -->
+    <!-- MODAL QUẢN TRỊ ADMIN -->
     <div id="adminDashboardModal" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px; overflow-y:auto;">
-        <div style="background:#1a1c29; border: 2px solid #2ecc71; border-radius:22px; max-width:550px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(46,204,113, 0.3); position:relative; margin: 30px 0; animation: modalPop 0.3s ease;">
+        <div style="background:#1a1c29; border: 2px solid #2ecc71; border-radius:22px; max-width:550px; width:100%; padding:25px; color:#fff; box-shadow: 0 15px 35px rgba(46,204,113, 0.3); position:relative; margin: 30px 0;">
             <button onclick="closeAdminDashboard()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             <h2 style="color:#2ecc71; margin-bottom:18px; text-align:center; font-size:20px;"><i class="fa-solid fa-screwdriver-wrench"></i> Bảng Điều Khiển Quản Trị Viên</h2>
             
-            <!-- Đồng bộ Apps Script -->
             <div style="background:rgba(46,204,113,0.08); border:1px solid #2ecc71; padding:15px; border-radius:14px; margin-bottom:15px;">
                 <h4 style="color:#2ecc71; margin-bottom:8px; font-size:14px;"><i class="fa-solid fa-cloud-arrow-down"></i> Đồng Bộ Google Sheet Apps Script</h4>
-                <p style="font-size:11.5px; color:#b2bec3; margin-bottom:10px;">Hệ thống liên kết trực tiếp với sheet `thanhtoan_config` (Cột B, C, D).</p>
-                <button onclick="fetchDataFromAppsScript()" style="background:#2ecc71; color:#000; border:none; padding:9px 16px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px; transition:0.2s;">Đồng Bộ Ngay Từ Sheet</button>
+                <button onclick="fetchDataFromAppsScript()" style="background:#2ecc71; color:#000; border:none; padding:9px 16px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Đồng Bộ Ngay Từ Sheet</button>
             </div>
 
-            <!-- Đổi mật khẩu -->
             <div style="background:rgba(255,255,255,0.04); padding:15px; border-radius:14px; margin-bottom:15px;">
                 <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🔑 Đổi Mật Khẩu Quản Trị</h4>
                 <div class="form-group" style="margin-bottom:10px;">
@@ -616,25 +505,12 @@
                 <button onclick="changeAdminPassword()" style="background:#f39c12; color:#000; border:none; padding:9px 16px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Lưu Mật Khẩu Mới</button>
             </div>
 
-            <!-- Upload QR Code -->
             <div style="background:rgba(255,255,255,0.04); padding:15px; border-radius:14px; margin-bottom:15px;">
                 <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">🖼️ Tải Lên Ảnh Mã QR Ngân Hàng</h4>
                 <input type="file" id="qrImageFile" accept="image/*" style="margin-bottom:10px; font-size:12px;">
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <div style="display:flex; gap:8px;">
                     <button onclick="uploadCustomQR()" style="background:#0088ff; color:#fff; border:none; padding:9px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Cập Nhật Ảnh QR</button>
                     <button onclick="resetToVietQRApi()" style="background:rgba(255,255,255,0.1); color:#fff; border:none; padding:9px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Dùng VietQR Tự Động</button>
-                </div>
-            </div>
-
-            <!-- Quản lý gói dịch vụ -->
-            <div style="background:rgba(255,255,255,0.04); padding:15px; border-radius:14px; margin-bottom:15px;">
-                <h4 style="color:#f1c40f; margin-bottom:10px; font-size:14px;">📦 Quản Lý Gói Dịch Vụ Gia Hạn</h4>
-                <div id="packageListAdmin" style="max-height:160px; overflow-y:auto; margin-bottom:12px; font-size:12px; padding-right:5px;"></div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                    <input type="text" id="newPkgId" placeholder="ID gói..." style="font-size:12px; padding:8px; width:90px;">
-                    <input type="text" id="newPkgName" placeholder="Tên chi tiết..." style="font-size:12px; padding:8px; flex:1;">
-                    <input type="number" id="newPkgPrice" placeholder="Giá..." style="font-size:12px; padding:8px; width:100px;">
-                    <button onclick="addNewPackage()" style="background:#2ecc71; color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px; white-space:nowrap;">Thêm</button>
                 </div>
             </div>
 
@@ -642,15 +518,14 @@
         </div>
     </div>
 
-    <!-- ================= MODAL POPUP THANH TOÁN AI ================= -->
+    <!-- MODAL POPUP THANH TOÁN AI -->
     <div id="vipPaymentModal" style="display:none; position:fixed; z-index:999999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:15px;">
-        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #f39c12; border-radius:24px; max-width:480px; width:100%; padding:25px; color:#fff; box-shadow: 0 20px 45px rgba(243,156,18, 0.35); position:relative; animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        <div style="background:linear-gradient(135deg, #1a1c29 0%, #0d0e15 100%); border: 2px solid #f39c12; border-radius:24px; max-width:480px; width:100%; padding:25px; color:#fff; box-shadow: 0 20px 45px rgba(243,156,18, 0.35); position:relative;">
             <button onclick="closeVipModal()" style="position:absolute; top:15px; right:15px; background:transparent; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             
             <div style="text-align:center; margin-bottom:18px;">
                 <span style="background: rgba(243,156,18,0.2); color: #f39c12; padding: 6px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid rgba(243,156,18,0.4);">👑 CỔNG THANH TOÁN TỰ ĐỘNG 24/7 AI</span>
                 <h3 style="margin: 12px 0 4px 0; font-size: 21px; color: #f1c40f;">Gia Hạn Gói VIP Care An Tín</h3>
-                <p style="font-size: 12px; color: #b2bec3; margin:0;">Thanh toán tự động - Kích hoạt bảo trì tức thì qua AI</p>
             </div>
 
             <div style="background: rgba(255,255,255,0.04); border-radius: 14px; padding: 15px; margin-bottom: 18px; border: 1px solid rgba(255,255,255,0.1);">
@@ -675,7 +550,7 @@
             </div>
 
             <div style="display: flex; gap: 10px; flex-direction: column;">
-                <a id="zaloConfirmBtn" href="https://zalo.me/0914060339" target="_blank" style="background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%); color: white; text-align: center; padding: 13px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 15px rgba(0,136,255,0.4); display:flex; align-items:center; justify-content:center; gap:8px;">
+                <a id="zaloConfirmBtn" href="https://zalo.me/0914060339" target="_blank" style="background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%); color: white; text-align: center; padding: 13px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; display:flex; align-items:center; justify-content:center; gap:8px;">
                     💬 Gửi Minh Chứng Chuyển Khoản Qua Zalo (0914060339)
                 </a>
                 <button onclick="closeVipModal()" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 11px; border-radius: 12px; cursor:pointer; font-weight:600; font-size:13px;">
@@ -685,27 +560,11 @@
         </div>
     </div>
 
-    <style>
-    @keyframes modalPop {
-        from { transform: scale(0.85); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
-    </style>
-
     <script>
         var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTLHw2d2RSmlmRc55T8tsI6pw_6BNPPYMLKefLL3QfGOVb6kvcqC9t-VwVRoi7ziBMoQ/exec";
 
-        // Khởi tạo bộ nhớ cục bộ chuẩn (Mật khẩu quản trị mặc định: antin2026)
         if(!localStorage.getItem('adminPass')) {
             localStorage.setItem('adminPass', 'antin2026');
-        }
-        if(!localStorage.getItem('packagesData')) {
-            var defaultPkgs = [
-                {id: "vip_1", name: "Gói VIP Care Tiêu Chuẩn - Chuyên Camera (1 Năm)", price: 1200000},
-                {id: "vip_2", name: "Gói VIP Care Toàn Diện - Camera + Wifi (1 Năm)", price: 1600000},
-                {id: "vip_3", name: "Gói VIP Care VIP - Camera + Wifi + Thiết Bị Điện (1 Năm)", price: 2500000}
-            ];
-            localStorage.setItem('packagesData', JSON.stringify(defaultPkgs));
         }
 
         var enterpriseConfig = {
@@ -719,95 +578,18 @@
         };
 
         function fetchDataFromAppsScript() {
-            showToast("Đang đồng bộ dữ liệu từ Google Sheet thanhtoan_config...");
+            showToast("Đang đồng bộ dữ liệu từ Google Sheet...");
             fetch(APPS_SCRIPT_URL)
                 .then(response => response.json())
                 .then(data => {
-                    if(data.enterprise) {
-                        enterpriseConfig = data.enterprise;
-                        updateEnterpriseUI();
-                    }
                     if(data.adminPass) {
                         localStorage.setItem('adminPass', data.adminPass);
                     }
-                    
-                    var rawPackages = data.goiDichVu || data.packages || data;
-                    if(Array.isArray(rawPackages) && rawPackages.length > 0) {
-                        var mappedPkgs = rawPackages.map((item, idx) => {
-                            let pkgId = "";
-                            let pkgName = "";
-                            let pkgPrice = 0;
-
-                            if (Array.isArray(item)) {
-                                pkgId = item[0] || ("vip_" + (idx + 1));
-                                pkgName = item[1] || item[0];
-                                pkgPrice = Number(item[2] || item[1]) || 0;
-                            } else if (typeof item === 'object' && item !== null) {
-                                pkgId = item.id || item.pkgId || item.maGoi || ("vip_" + (idx + 1));
-                                pkgName = item.name || item.tenGoi || item.tenChiTiet || "Gói dịch vụ";
-                                pkgPrice = Number(item.price || item.gia || item.giaTien) || 0;
-                            }
-                            return { id: pkgId, name: pkgName, price: pkgPrice };
-                        }).filter(p => p.name && p.price > 0);
-
-                        if(mappedPkgs.length > 0) {
-                            localStorage.setItem('packagesData', JSON.stringify(mappedPkgs));
-                        }
-                    }
-                    loadPackagesToUI();
-                    showToast("Đồng bộ dữ liệu thành công từ Google Sheet!");
+                    showToast("Đồng bộ dữ liệu thành công!");
                 })
                 .catch(error => {
-                    console.log("Lỗi đồng bộ Sheet, dùng bộ nhớ đệm:", error);
-                    loadPackagesToUI();
-                    showToast("Đã tải dữ liệu từ bộ nhớ đệm cục bộ.");
+                    console.log("Dùng bộ nhớ đệm cục bộ ổn định.");
                 });
-        }
-
-        function updateEnterpriseUI() {
-            document.getElementById('footerCompanyName').innerText = "🛡️ " + enterpriseConfig.name;
-            document.getElementById('footerCompNameSub').innerText = enterpriseConfig.name;
-            document.getElementById('footerAddress').innerText = enterpriseConfig.address;
-            document.getElementById('footerPhoneDisplay').innerText = enterpriseConfig.phone;
-            document.getElementById('footerZaloLink').innerText = enterpriseConfig.phone;
-            document.getElementById('footerZaloLink').href = enterpriseConfig.zalo;
-            document.getElementById('footerWebLink').innerText = enterpriseConfig.website.replace('https://', '');
-            document.getElementById('footerWebLink').href = enterpriseConfig.website;
-            document.getElementById('footerSloganText').innerText = enterpriseConfig.slogan;
-        }
-
-        function loadPackagesToUI() {
-            var pkgs = JSON.parse(localStorage.getItem('packagesData')) || [];
-            var selectEl = document.getElementById('selectPackage');
-            selectEl.innerHTML = '';
-            
-            if(pkgs.length === 0) {
-                selectEl.innerHTML = `<option value="0" data-pkgid="vip_1" data-name="Chưa có gói">Chưa có gói dịch vụ nào</option>`;
-                return;
-            }
-
-            pkgs.forEach(function(pkg, index) {
-                var opt = document.createElement('option');
-                opt.value = pkg.price;
-                var pkgId = pkg.id || ("vip_" + (index + 1));
-                opt.setAttribute('data-pkgid', pkgId);
-                opt.setAttribute('data-name', pkg.name);
-                opt.text = `${pkgId} — ${pkg.name} — ${Number(pkg.price).toLocaleString('vi-VN')} VNĐ`;
-                selectEl.appendChild(opt);
-            });
-
-            var adminList = document.getElementById('packageListAdmin');
-            if(adminList) {
-                adminList.innerHTML = '';
-                pkgs.forEach(function(pkg, index) {
-                    var pkgId = pkg.id || ("vip_" + (index + 1));
-                    adminList.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:8px 12px; border-radius:8px; margin-bottom:6px;">
-                        <span><b>[${pkgId}]</b> ${pkg.name} — ${Number(pkg.price).toLocaleString('vi-VN')}đ</span>
-                        <button onclick="deletePackage(${index})" style="background:#e74c3c; color:#fff; border:none; padding:5px 9px; border-radius:6px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
-                    </div>`;
-                });
-            }
-            updateQRData();
         }
 
         function updateQRData() {
@@ -828,22 +610,13 @@
             if(customQRImg) {
                 document.getElementById('vietQrImg').src = customQRImg;
             } else {
-                var bankId = "MB"; 
-                var accountNo = enterpriseConfig.phone || "0914060339"; 
-                var template = "compact2";
-                var accountName = "PHAN MINH DUC";
-                var qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(contentCK)}&accountName=${encodeURIComponent(accountName)}`;
+                var qrUrl = `https://img.vietqr.io/image/MB-${enterpriseConfig.phone}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(contentCK)}&accountName=${encodeURIComponent("PHAN MINH DUC")}`;
                 document.getElementById('vietQrImg').src = qrUrl;
             }
 
             var name = document.getElementById('inputName').value.trim() || "Quý Khách";
-            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${name} (SĐT: ${phone}). Tôi muốn đăng ký gói [${pkgId}] ${rawPkgName} với mức phí ${formattedPrice}. Nội dung chuyển khoản: ${contentCK}. Nhờ hệ thống kiểm tra và kích hoạt.`);
+            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${name} (SĐT: ${phone}). Tôi muốn đăng ký gói [${pkgId}] ${rawPkgName} với mức phí ${formattedPrice}. Nội dung chuyển khoản: ${contentCK}.`);
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
-        }
-
-        function toggleAiAssistant() {
-            var bubble = document.getElementById('aiChatBubble');
-            bubble.style.display = (bubble.style.display === 'block') ? 'none' : 'block';
         }
 
         function openAdminLoginModal() {
@@ -860,7 +633,6 @@
             if(user === 'admin' && pass === storedPass) {
                 closeAdminLoginModal();
                 document.getElementById('adminDashboardModal').style.display = 'flex';
-                loadPackagesToUI();
             } else {
                 alert("Sai tên đăng nhập hoặc mật khẩu quản trị! (Mặc định: antin2026)");
             }
@@ -897,34 +669,6 @@
             showToast("Đã chuyển về VietQR tự động qua API!");
             updateQRData();
         }
-        function addNewPackage() {
-            var id = document.getElementById('newPkgId').value.trim() || ("vip_" + (Date.now() % 1000));
-            var name = document.getElementById('newPkgName').value.trim();
-            var price = document.getElementById('newPkgPrice').value.trim();
-            if(!name || !price) {
-                alert("Vui lòng nhập đầy đủ tên gói và giá tiền!");
-                return;
-            }
-            var pkgs = JSON.parse(localStorage.getItem('packagesData')) || [];
-            pkgs.push({id: id, name: name, price: Number(price)});
-            localStorage.setItem('packagesData', JSON.stringify(pkgs));
-            document.getElementById('newPkgId').value = '';
-            document.getElementById('newPkgName').value = '';
-            document.getElementById('newPkgPrice').value = '';
-            loadPackagesToUI();
-            showToast("Đã thêm gói dịch vụ mới thành công!");
-        }
-        function deletePackage(index) {
-            var pkgs = JSON.parse(localStorage.getItem('packagesData')) || [];
-            if(pkgs.length <= 1) {
-                alert("Phải giữ lại ít nhất một gói dịch vụ!");
-                return;
-            }
-            pkgs.splice(index, 1);
-            localStorage.setItem('packagesData', JSON.stringify(pkgs));
-            loadPackagesToUI();
-            showToast("Đã xóa gói dịch vụ!");
-        }
 
         function openVipPaymentModal() {
             var modal = document.getElementById('vipPaymentModal');
@@ -941,14 +685,10 @@
             
             var selectedOption = packageSelect.options[packageSelect.selectedIndex];
             var pkgId = selectedOption ? (selectedOption.getAttribute('data-pkgid') || "vip_1") : "vip_1";
-            var rawPkgName = selectedOption ? (selectedOption.getAttribute('data-name') || "VIP Care") : "VIP Care";
 
             var contentCK = `VIP ${pkgId} ${phoneInput}`;
             document.getElementById('transferSyntaxModal').innerHTML = `Nội dung CK: ${contentCK} <i class="fa-regular fa-copy" style="margin-left: 5px;"></i>`;
             document.getElementById('modalQrImg').src = document.getElementById('vietQrImg').src;
-
-            var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${nameInput} (SĐT: ${phoneInput}). Tôi đã thanh toán số tiền ${formattedPrice} cho gói [${pkgId}] ${rawPkgName}. Nội dung CK: ${contentCK}. Gửi kèm hình ảnh biên lai.`);
-            document.getElementById('zaloConfirmBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
 
             modal.style.display = 'flex';
         }
@@ -983,7 +723,7 @@
         }
 
         window.onload = function() {
-            fetchDataFromAppsScript();
+            updateQRData();
         };
     </script>
 </body>
