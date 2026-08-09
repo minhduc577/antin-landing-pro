@@ -23,7 +23,7 @@
             overflow-x: hidden;
         }
         .main-wrapper {
-            max-width: 850px;
+            max-width: 900px;
             width: 100%;
             background: rgba(26, 28, 41, 0.95);
             border: 2px solid rgba(6, 182, 212, 0.4);
@@ -194,12 +194,12 @@
                     <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-folder-tree mr-1"></i> Danh Sách Dự Án Đang Quản Lý</h3>
                     <p class="text-xs text-gray-400">Chọn dự án để xem chi tiết tiến độ, camera trực tiếp và báo cáo AI</p>
                 </div>
-                <button onclick="showToast('Đang mở form khởi tạo dự án công trình mới...')" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                <button onclick="showToast('Đang mở form khởi tạo dự án công trình mới...')" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-plus"></i> Thêm Dự Án Mới
                 </button>
             </div>
 
-            <!-- Các Thẻ Dự Án (Projects Selector) -->
+            <!-- Các Thẻ Dự Án (Projects Selector - 6 Dự Án) -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <!-- Dự án 1 -->
                 <div id="proj-1" onclick="switchProject(1)" class="project-card-item active bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
@@ -229,6 +229,36 @@
                     </div>
                     <h4 class="text-sm font-bold text-white truncate">Văn Phòng Điều Hành An Tín</h4>
                     <p class="text-[11px] text-gray-400 mt-1"><i class="fa-regular fa-clock mr-1"></i> Cập nhật: 3 ngày trước</p>
+                </div>
+
+                <!-- Dự án 4 (Mới thêm) -->
+                <div id="proj-4" onclick="switchProject(4)" class="project-card-item bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-bold text-cyan-300">DỰ ÁN #04</span>
+                        <span class="text-xs font-black text-emerald-400">64%</span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white truncate">Bệnh Viện Nhi Đồng</h4>
+                    <p class="text-[11px] text-gray-400 mt-1"><i class="fa-regular fa-clock mr-1"></i> Cập nhật: Vừa xong</p>
+                </div>
+
+                <!-- Dự án 5 (Mới thêm) -->
+                <div id="proj-5" onclick="switchProject(5)" class="project-card-item bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-bold text-cyan-300">DỰ ÁN #05</span>
+                        <span class="text-xs font-black text-yellow-400">52%</span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white truncate">Bệnh Viện Đa Khoa Hùng Vương</h4>
+                    <p class="text-[11px] text-gray-400 mt-1"><i class="fa-regular fa-clock mr-1"></i> Cập nhật: Hôm nay</p>
+                </div>
+
+                <!-- Dự án 6 (Mới thêm) -->
+                <div id="proj-6" onclick="switchProject(6)" class="project-card-item bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-bold text-cyan-300">DỰ ÁN #06</span>
+                        <span class="text-xs font-black text-cyan-400">88%</span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white truncate">Chuỗi Hệ Thống Cty Vàng Bạc Đá Quý</h4>
+                    <p class="text-[11px] text-gray-400 mt-1"><i class="fa-regular fa-clock mr-1"></i> Cập nhật: Hôm qua</p>
                 </div>
             </div>
         </div>
@@ -305,7 +335,7 @@
 
         <!-- CHÂN TRANG THÔNG TIN DOANH NGHIỆP & HỆ SINH THÁI AN TÍN -->
         <div class="company-footer">
-            <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH.</h4>
+            <h4>🛡️ AN TÍN – GIẢI PHÁP CÔNG NGHỆ & KỸ THUẬT TOÀN DIỆN CHO MỌI CÔNG TRÌNH.[cite: 11]</h4>
             
             <div class="services-grid">
                 <div class="service-item"><i class="fa-solid fa-video" style="color:#f39c12"></i> Camera an ninh – Giám sát 24/7</div>
@@ -354,7 +384,7 @@
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
 
-        // Dữ liệu mẫu các dự án trong hệ thống quản lý
+        // Dữ liệu mở rộng đầy đủ các dự án trong hệ thống quản lý
         const projectsData = {
             1: {
                 title: "Biệt Thự Nghỉ Dưỡng - Imperia",
@@ -390,6 +420,42 @@
                     { icon: "fa-hammer", color: "orange", title: "Thi công Xây dựng", status: "Hoàn thành 100%", statusColor: "text-emerald-400", iconStyle: "fa-solid fa-circle-check" },
                     { icon: "fa-server", color: "blue", title: "Hệ thống Server & Rack", status: "Hoàn thành 100%", statusColor: "text-emerald-400", iconStyle: "fa-solid fa-circle-check" },
                     { icon: "fa-shield-cat", color: "red", title: "Kiểm tra An ninh & Bàn giao", status: "Đang nghiệm thu (90%)", statusColor: "text-cyan-400", iconStyle: "fa-solid fa-spinner fa-spin" }
+                ]
+            },
+            4: {
+                title: "Bệnh Viện Nhi Đồng",
+                percent: "64%",
+                date: "Khởi công: 10/02/2026",
+                speed: "Đang tối ưu tiến độ",
+                badge: "Dự Án Y Tế Trọng Điểm",
+                stages: [
+                    { icon: "fa-hospital", color: "blue", title: "Hạ tầng Xây dựng Y Tế", status: "Hoàn thành 100%", statusColor: "text-emerald-400", iconStyle: "fa-solid fa-circle-check" },
+                    { icon: "fa-network-wired", color: "cyan", title: "Hệ thống CNTT & Mạng LAN", status: "Đang thi công (70%)", statusColor: "text-cyan-400", iconStyle: "fa-solid fa-spinner fa-spin" },
+                    { icon: "fa-video", color: "purple", title: "Lắp đặt Camera Giám Sát 24/7", status: "Đang triển khai", statusColor: "text-yellow-400", iconStyle: "fa-regular fa-clock" }
+                ]
+            },
+            5: {
+                title: "Bệnh Viện Đa Khoa Hùng Vương",
+                percent: "52%",
+                date: "Khởi công: 01/03/2026",
+                speed: "Đạt chuẩn kỹ thuật",
+                badge: "Dự Án Y Tế Đa Khoa",
+                stages: [
+                    { icon: "fa-building-columns", color: "yellow", title: "Thi công Khung & Sàn", status: "Đã xong 90%", statusColor: "text-emerald-400", iconStyle: "fa-solid fa-circle-check" },
+                    { icon: "fa-bolt", color: "cyan", title: "Hệ Thống Điện & Báo Cháy", status: "Đang lắp đặt (45%)", statusColor: "text-cyan-400", iconStyle: "fa-solid fa-spinner fa-spin" },
+                    { icon: "fa-fingerprint", color: "purple", title: "Kiểm Soát Ra Vào & An Ninh", status: "Chuẩn bị thi công", statusColor: "text-gray-400", iconStyle: "fa-regular fa-clock" }
+                ]
+            },
+            6: {
+                title: "Chuỗi Hệ Thống Cty Vàng Bạc Đá Quý",
+                percent: "88%",
+                date: "Khởi công: 20/01/2026",
+                speed: "Vượt tiến độ 4 ngày",
+                badge: "Dự Án Chuỗi Thương Mại",
+                stages: [
+                    { icon: "fa-gem", color: "yellow", title: "Thiết Kế Nội Thất Trưng Bày", status: "Hoàn thành 100%", statusColor: "text-emerald-400", iconStyle: "fa-solid fa-circle-check" },
+                    { icon: "fa-shield-halved", color: "blue", title: "Hệ Thống Chống Đột Nhập & Báo Cháy", status: "Đã hoàn thành 100%", statusColor: "text-emerald-400", iconStyle: "fa-solid fa-circle-check" },
+                    { icon: "fa-video", color: "green", title: "Camera AI An Ninh Toàn Chuỗi", status: "Đang nghiệm thu (75%)", statusColor: "text-cyan-400", iconStyle: "fa-solid fa-spinner fa-spin" }
                 ]
             }
         };
