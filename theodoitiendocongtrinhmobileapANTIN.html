@@ -174,18 +174,18 @@
         <div class="text-center mb-4">
             <span class="header-badge"><i class="fa-solid fa-shield-halved"></i> AN TÍN SECURITY GATEWAY</span>
             <h2 class="text-lg font-extrabold text-cyan-400 mt-1">Đăng Nhập Quản Trị Hệ Thống</h2>
-            <p class="text-xs text-gray-400">Tài khoản mẫu đã được điền sẵn, chỉ cần bấm nút để mở khóa nhanh!</p>
+            <p class="text-xs text-gray-400">Tài khoản mẫu (admin / manager) đã được điền sẵn, chỉ cần bấm nút để mở khóa nhanh!</p>
         </div>
         <div class="space-y-3">
             <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản...">
+                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản (admin/manager)...">
                 <input type="password" id="loginPass" value="AbC@CbA@13579" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Mật khẩu...">
             </div>
             <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2.5 rounded-xl shadow-lg transition-all text-xs cursor-pointer flex items-center justify-center gap-2">
                 <i class="fa-solid fa-right-to-bracket"></i> Mở Khóa Trình Quản Lý Logic
             </button>
             <div class="flex justify-between items-center pt-1 text-[11px]">
-                <span class="text-gray-400">Khôi phục mặc định?</span>
+                <span class="text-gray-400">Khôi phục mặc định toàn bộ?</span>
                 <button onclick="openResetModal()" class="text-cyan-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-rotate"></i> Reset tài khoản</button>
             </div>
         </div>
@@ -203,7 +203,7 @@
             </div>
             <div id="authActionButtons" class="hidden flex flex-wrap gap-2">
                 <button onclick="openChangePassModal()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
-                    <i class="fa-solid fa-key"></i> Đổi Pass
+                    <i class="fa-solid fa-key"></i> Đổi Pass / Reset Manager
                 </button>
                 <button onclick="handleLogout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                     <i class="fa-solid fa-power-off"></i> Khóa Lại
@@ -359,17 +359,28 @@
         </div>
     </div>
 
-    <!-- MODAL: ĐỔI MẬT KHẨU -->
+    <!-- MODAL: ĐỔI MẬT KHẨU & RESET MANAGER TRONG TRANG QUẢN TRỊ -->
     <div id="changePassModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full">
-            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Đổi Mật Khẩu Quản Trị</h3>
+            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Quản Lý & Đổi Mật Khẩu Tài Khoản</h3>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Mật khẩu mới:</label>
+                    <label class="text-gray-300 font-bold">Chọn tài khoản cần đổi/reset:</label>
+                    <select id="targetAccountSelect" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
+                        <option value="manager">Manager (Quản Lý Dự Án)</option>
+                        <option value="admin">Admin (Quản Trị Hệ Thống)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-gray-300 font-bold">Mật khẩu mới (Đã ẩn bảo mật):</label>
                     <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" placeholder="Nhập mật khẩu mới...">
                 </div>
+                <div class="pt-1 flex items-center justify-between">
+                    <span class="text-gray-400 text-[11px]">Cần reset về mặc định nhanh?</span>
+                    <button type="button" onclick="resetSpecificManagerPass()" class="text-yellow-400 hover:underline font-bold text-[11px]"><i class="fa-solid fa-rotate-right"></i> Reset về AbC@CbA@13579</button>
+                </div>
                 <div class="flex gap-2 mt-4">
-                    <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật</button>
+                    <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật Mật Khẩu</button>
                     <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
             </div>
@@ -555,6 +566,11 @@
         function openChangePassModal() {
             if(!currentUser) { alert("Vui lòng đăng nhập!"); return; }
             document.getElementById('newPassInput').value = "";
+            // Tự động chọn đúng tài khoản đang đăng nhập hoặc mặc định manager
+            let sel = document.getElementById('targetAccountSelect');
+            if(currentUser && currentUser.username) {
+                sel.value = currentUser.username;
+            }
             document.getElementById('changePassModal').classList.remove('hidden');
         }
 
@@ -616,17 +632,29 @@
         }
 
         function submitNewPassword() {
+            let targetUser = document.getElementById('targetAccountSelect').value;
             let newPass = document.getElementById('newPassInput').value.trim();
             if(!newPass) { alert("Vui lòng nhập mật khẩu mới!"); return; }
 
-            let acc = serverAccounts.find(a => a.username === currentUser.username);
+            let acc = serverAccounts.find(a => a.username === targetUser);
             if(acc) {
                 acc.password = newPass;
                 localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
-                showToast(`Đã đổi mật khẩu thành công cho [${currentUser.username}]!`);
+                showToast(`Đã cập nhật mật khẩu thành công cho [${targetUser}]!`);
                 closeModals();
             } else {
                 alert("Không tìm thấy tài khoản để đổi mật khẩu.");
+            }
+        }
+
+        function resetSpecificManagerPass() {
+            let targetUser = document.getElementById('targetAccountSelect').value;
+            let acc = serverAccounts.find(a => a.username === targetUser);
+            if(acc) {
+                acc.password = "AbC@CbA@13579";
+                localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
+                document.getElementById('newPassInput').value = "AbC@CbA@13579";
+                showToast(`Đã reset mật khẩu của [${targetUser}] về: AbC@CbA@13579`);
             }
         }
 
