@@ -334,7 +334,7 @@
         <div class="form-group">
             <label><i class="fa-solid fa-shield-halved"></i> Chọn Gói Dịch Vụ Gia Hạn ([ID gói] — [Tên chi tiết] — [Giá]):</label>
             <select id="selectPackage" onchange="updateQRData()">
-                <option value="0">Đang đồng bộ dữ liệu từ Sheet thanhtoan_config...</option>
+                <option value="0" data-pkgid="vip_1" data-name="Đang đồng bộ dữ liệu">Đang đồng bộ dữ liệu từ Sheet thanhtoan_config...</option>
             </select>
         </div>
 
@@ -595,16 +595,17 @@
             selectEl.innerHTML = '';
             
             if(pkgs.length === 0) {
-                selectEl.innerHTML = `<option value="0">Chưa có gói dịch vụ nào</option>`;
+                selectEl.innerHTML = `<option value="0" data-pkgid="vip_1" data-name="Chưa có gói">Chưa có gói dịch vụ nào</option>`;
                 return;
             }
 
             pkgs.forEach(function(pkg, index) {
                 var opt = document.createElement('option');
                 opt.value = pkg.price;
-                opt.setAttribute('data-pkgid', pkg.id || ("vip_" + (index + 1)));
+                var pkgId = pkg.id || ("vip_" + (index + 1));
+                opt.setAttribute('data-pkgid', pkgId);
                 opt.setAttribute('data-name', pkg.name);
-                opt.text = `${pkg.id || ("vip_" + (index + 1))} — ${pkg.name} — ${Number(pkg.price).toLocaleString('vi-VN')} VNĐ`;
+                opt.text = `${pkgId} — ${pkg.name} — ${Number(pkg.price).toLocaleString('vi-VN')} VNĐ`;
                 selectEl.appendChild(opt);
             });
 
