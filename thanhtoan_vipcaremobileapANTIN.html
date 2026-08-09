@@ -667,8 +667,8 @@
                 icon: "fa-house-laptop",
                 detail: "• Trọn gói toàn bộ hệ thống Camera và Wi-Fi.<br>• Bảo dưỡng định kỳ hệ thống điện thông minh, khóa vân tay, chuông cửa màn hình.<br>• Ưu tiên xử lý sự cố khẩn cấp trong vòng 1-2 giờ với đội ngũ chuyên gia kỹ thuật An Tín."
             }
-            // 👉 Sau này khi bạn thêm dòng dịch vụ mới từ dòng 10, 11... trở xuống ở Sheet thanhtoan_config, 
-            // bạn chỉ cần bổ sung thêm 1 khối object ở đây theo đúng cấu trúc, giao diện web sẽ tự động render đầy đủ!
+            // 👉 Hướng dẫn mở rộng: Khi bạn thêm dòng dịch vụ mới ở Sheet thanhtoan_config (từ dòng 10, 11...), 
+            // bạn chỉ cần thêm một khối object tương tự vào đây, hệ thống web sẽ tự động sinh giao diện và xử lý trọn gói!
         ];
 
         // Hàm tự động khởi tạo và render dữ liệu vào Select Box và Popup Chi tiết
@@ -682,7 +682,7 @@
             containerElement.innerHTML = '';
 
             servicePackagesConfig.forEach((pkg, index) => {
-                // 1. Đổ dữ liệu vào thẻ select (tương ứng nguồn dữ liệu sheet)
+                // 1. Đổ dữ liệu vào thẻ select tương ứng với nguồn cấu hình Sheet cột E (từ dòng 7)
                 var option = document.createElement('option');
                 option.value = pkg.price;
                 option.setAttribute('data-pkgid', pkg.id);
@@ -690,7 +690,7 @@
                 option.innerText = `${pkg.id} — ${pkg.name} — ${pkg.price.toLocaleString('vi-VN')} VNĐ`;
                 selectElement.appendChild(option);
 
-                // 2. Đổ dữ liệu tự động vào popup chi tiết các gói dịch vụ
+                // 2. Đổ dữ liệu tự động vào popup chi tiết các gói dịch vụ (kèm icon và hiệu ứng chuyên nghiệp)
                 var itemDiv = document.createElement('div');
                 itemDiv.style.cssText = `background:rgba(255,255,255,0.04); border-left:4px solid ${pkg.color}; padding:12px 15px; border-radius:0 10px 10px 0; font-size:13px; line-height:1.5;`;
                 itemDiv.innerHTML = `<b style="color:${pkg.color};"><i class="fa-solid ${pkg.icon}"></i> Gói Dòng ${7 + index}: ${pkg.name}</b><br>${pkg.detail}`;
