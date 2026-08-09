@@ -398,6 +398,76 @@
             color: #55efc4;
             text-decoration: underline;
         }
+
+        /* 🚀 NÂNG CẤP MỚI: TRỢ LÝ AI TƯ VẤN THÔNG MINH (TÍCH HỢP TRỰC TIẾP TRONG GIAO DIỆN) */
+        .ai-assistant-card {
+            background: linear-gradient(135deg, rgba(0, 206, 201, 0.08) 0%, rgba(243, 156, 18, 0.08) 100%);
+            border: 1.5px solid rgba(0, 206, 201, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .ai-assistant-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .ai-assistant-header i {
+            font-size: 22px;
+            color: #00cec9;
+            animation: robotSpin 4s linear infinite;
+        }
+        @keyframes robotSpin {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .ai-assistant-header h3 {
+            font-size: 15px;
+            color: #00cec9;
+            font-weight: 800;
+        }
+        .ai-chat-box {
+            background: rgba(15, 16, 22, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 12.5px;
+            color: #dfe6e9;
+            min-height: 60px;
+            max-height: 120px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .ai-actions-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .ai-chip {
+            background: rgba(0, 206, 201, 0.15);
+            border: 1px solid rgba(0, 206, 201, 0.4);
+            color: #00cec9;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .ai-chip:hover {
+            background: #00cec9;
+            color: #0f1016;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -415,6 +485,26 @@
             <span class="header-badge"><i class="fa-solid fa-crown"></i> AN TÍN ECOSYSTEM VIP AI</span>
             <h1>Cổng Thanh Toán & Gia Hạn VIP Care</h1>
             <p class="subtitle">Hệ thống kích hoạt bảo trì, bảo hành thông minh tự động 24/7 qua AI</p>
+        </div>
+
+        <!-- 🚀 PHÁT TRIỂN MỚI: KHUNG TRỢ LÝ AI TƯ VẤN THÔNG MINH NGAY TRONG GIAO DIỆN -->
+        <div class="ai-assistant-card">
+            <div class="ai-assistant-header">
+                <i class="fa-solid fa-robot"></i>
+                <div>
+                    <h3>Trợ Lý AI An Tín Thông Minh 24/7</h3>
+                    <p style="font-size:11px; color:#b2bec3;">Hỗ trợ tư vấn gói cước, giải đáp kỹ thuật ngay lập tức</p>
+                </div>
+            </div>
+            <div class="ai-chat-box" id="aiAssistantResponse">
+                🤖 Chào bạn! Tôi là trợ lý AI An Tín. Bạn cần tôi tư vấn chọn gói VIP Care nào phù hợp nhất với nhu cầu thiết bị tại nhà hoặc công ty của bạn không? Hãy bấm vào các gợi ý bên dưới nhé!
+            </div>
+            <div class="ai-actions-row">
+                <span class="ai-chip" onclick="aiConsultPackage('vip_1')"><i class="fa-solid fa-video"></i> Tư vấn Gói Camera</span>
+                <span class="ai-chip" onclick="aiConsultPackage('vip_2')"><i class="fa-solid fa-network-wired"></i> Tư vấn Gói Camera + Wifi</span>
+                <span class="ai-chip" onclick="aiConsultPackage('vip_3')"><i class="fa-solid fa-house-laptop"></i> Tư vấn Gói Toàn Diện VIP</span>
+                <span class="ai-chip" onclick="aiAutoCheckStatus()"><i class="fa-solid fa-bolt"></i> Kiểm tra SĐT định danh</span>
+            </div>
         </div>
 
         <!-- Form Nhập Thông Tin Định Danh -->
@@ -738,6 +828,40 @@
             var name = document.getElementById('inputName').value.trim() || "Quý Khách";
             var zaloMsg = encodeURIComponent(`Chào An Tín, tôi là ${name} (SĐT: ${phone}). Tôi muốn đăng ký gói [${pkgId}] ${rawPkgName} với mức phí ${formattedPrice}. Nội dung chuyển khoản: ${contentCK}.`);
             document.getElementById('zaloLinkBtn').href = `https://zalo.me/${enterpriseConfig.phone}?text=${zaloMsg}`;
+        }
+
+        // 🚀 CÁC HÀM XỬ LÝ TRỢ LÝ AI TƯ VẤN THÔNG MINH
+        function aiConsultPackage(pkgId) {
+            var select = document.getElementById('selectPackage');
+            for(var i=0; i<select.options.length; i++) {
+                if(select.options[i].getAttribute('data-pkgid') === pkgId) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+            updateQRData();
+            var chatBox = document.getElementById('aiAssistantResponse');
+            if(pkgId === 'vip_1') {
+                chatBox.innerHTML = "💡 <b>AI Gợi ý:</b> Gói <b>VIP Care Tiêu Chuẩn (1.200.000đ)</b> là lựa chọn tối ưu cho gia đình hoặc cửa hàng nhỏ chỉ dùng hệ thống Camera giám sát. Đã tự động chọn gói cho bạn!";
+            } else if(pkgId === 'vip_2') {
+                chatBox.innerHTML = "💡 <b>AI Gợi ý:</b> Gói <b>Toàn Diện Camera + Wifi (1.600.000đ)</b> giúp bạn vừa bảo dưỡng camera vừa tối ưu sóng mạng Wi-Fi không bị rớt mạng. Đã tự động chọn gói cho bạn!";
+            } else if(pkgId === 'vip_3') {
+                chatBox.innerHTML = "💡 <b>AI Gợi ý:</b> Gói <b>VIP Chuyên Sâu (2.500.000đ)</b> dành cho biệt thự, văn phòng cao cấp tích hợp cả Nhà thông minh & Khóa vân tay. Đã tự động chọn gói cho bạn!";
+            }
+            showToast("Đã chọn gói theo tư vấn của AI!");
+        }
+
+        function aiAutoCheckStatus() {
+            var phone = document.getElementById('inputPhone').value.trim();
+            var name = document.getElementById('inputName').value.trim();
+            var chatBox = document.getElementById('aiAssistantResponse');
+            if(!phone || phone.length < 9) {
+                chatBox.innerHTML = "⚠️ <b>AI Cảnh báo:</b> Vui lòng nhập số điện thoại hợp lệ để hệ thống kiểm tra trạng thái định danh giao dịch!";
+                document.getElementById('inputPhone').focus();
+                return;
+            }
+            chatBox.innerHTML = `✅ <b>AI Kiểm tra:</b> Số điện thoại <b>${phone}</b> ${name ? '('+name+')' : ''} đã sẵn sàng khởi tạo mã định danh giao dịch tự động. Bạn có thể quét mã QR bên dưới để thanh toán ngay!`;
+            showToast("Kiểm tra định danh thành công!");
         }
 
         function openPackageDetailsModal() {
