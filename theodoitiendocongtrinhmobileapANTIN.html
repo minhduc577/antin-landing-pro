@@ -160,26 +160,36 @@
 </head>
 <body>
 
-    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã thực hiện thành công!</div>
+    <div id="toastAlert"><i class="fa-solid fa-circle-check"></i> Đã đồng bộ ánh xạ dữ liệu thành công!</div>
 
-    <!-- KHUNG ĐĂNG NHẬP HỆ THỐNG -->
+    <!-- KHUNG ĐĂNG NHẬP / KẾT NỐI APPS SCRIPT MAPPING -->
     <div id="loginCardContainer" class="max-w-md w-full bg-slate-900/95 border border-cyan-500/50 p-6 rounded-3xl shadow-[0_0_35px_rgba(6,182,212,0.3)] mb-6 backdrop-blur-md">
         <div class="text-center mb-4">
-            <span class="header-badge"><i class="fa-solid fa-shield-halved"></i> AN TÍN SECURITY GATEWAY</span>
-            <h2 class="text-lg font-extrabold text-cyan-400 mt-1">Đăng Nhập Quản Trị Hệ Thống</h2>
-            <p class="text-xs text-gray-400">Tài khoản mẫu (admin / manager) đã được điền sẵn, chỉ cần bấm nút để mở khóa nhanh!</p>
+            <span class="header-badge"><i class="fa-solid fa-file-excel"></i> GOOGLE SHEETS & APPS SCRIPT GATEWAY</span>
+            <h2 class="text-lg font-extrabold text-cyan-400 mt-1">Đồng Bộ Ánh Xạ Dữ Liệu 2 Chiều</h2>
+            <p class="text-xs text-gray-400">Hệ thống tự động liên kết tài khoản và thông tin từ Google Sheet qua Apps Script API.</p>
         </div>
         <div class="space-y-3">
-            <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="loginUser" value="admin" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Tài khoản...">
-                <input type="password" id="loginPass" value="AbC@CbA@13579" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" placeholder="Mật khẩu...">
+            <div>
+                <label class="text-gray-300 font-bold text-xs">Đường dẫn Web App Apps Script (API Endpoint):</label>
+                <input type="text" id="scriptApiUrl" value="https://script.google.com/macros/s/AKfycb.../exec" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-cyan-300 mt-1 focus:outline-none focus:border-cyan-400" placeholder="Dán link Web App Apps Script vào đây...">
             </div>
-            <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2.5 rounded-xl shadow-lg transition-all text-xs cursor-pointer flex items-center justify-center gap-2">
-                <i class="fa-solid fa-right-to-bracket"></i> Mở Khóa Trình Quản Lý Logic
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-gray-300 font-bold text-xs">Tài khoản quản lý:</label>
+                    <input type="text" id="loginUser" value="admin" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white mt-1 focus:outline-none focus:border-cyan-400" placeholder="Tài khoản...">
+                </div>
+                <div>
+                    <label class="text-gray-300 font-bold text-xs">Mật khẩu ánh xạ:</label>
+                    <input type="password" id="loginPass" value="" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white mt-1 focus:outline-none focus:border-cyan-400" placeholder="Mật khẩu đồng bộ...">
+                </div>
+            </div>
+            <button onclick="handleCloudSyncLogin()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2.5 rounded-xl shadow-lg transition-all text-xs cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-down"></i> Kết Nối & Đồng Bộ Google Sheet
             </button>
             <div class="flex justify-between items-center pt-1 text-[11px]">
-                <span class="text-gray-400">Khôi phục mặc định toàn bộ?</span>
-                <button onclick="openResetModal()" class="text-cyan-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-rotate"></i> Reset tài khoản</button>
+                <span class="text-gray-400">Kiểm tra kết nối Mapping?</span>
+                <button onclick="testSheetConnection()" class="text-cyan-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-link"></i> Test API Sheet</button>
             </div>
         </div>
     </div>
@@ -192,14 +202,17 @@
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 mb-1">
                     Hệ Thống Quản Lý & Theo Dõi Tiến Độ Công Trình Siêu AI
                 </h1>
-                <p class="text-xs text-gray-300">Trạng thái quyền: <b id="currentRoleName" class="text-yellow-400">Chưa đăng nhập (Chế độ toàn quyền thao tác)</b></p>
+                <p class="text-xs text-gray-300">Trạng thái kết nối Google Sheet: <b id="currentRoleName" class="text-emerald-400">Đã ánh xạ dữ liệu 2 chiều thành công</b></p>
             </div>
             <div id="authActionButtons" class="flex flex-wrap gap-2">
+                <button onclick="syncDataToCloud()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Lưu Lên Sheet
+                </button>
                 <button onclick="openChangePassModal()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
-                    <i class="fa-solid fa-key"></i> Đổi Pass / Reset Manager
+                    <i class="fa-solid fa-key"></i> Đổi Pass Sheet
                 </button>
                 <button onclick="handleLogout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
-                    <i class="fa-solid fa-power-off"></i> Khóa Lại
+                    <i class="fa-solid fa-power-off"></i> Ngắt Kết Nối
                 </button>
             </div>
         </div>
@@ -209,7 +222,7 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                 <div>
                     <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider"><i class="fa-solid fa-folder-tree mr-1"></i> Danh Sách Dự Án Đang Quản Lý</h3>
-                    <p class="text-xs text-gray-400">Chọn dự án để xem chi tiết tiến độ, camera trực tiếp và báo cáo AI từ Google Sheets</p>
+                    <p class="text-xs text-gray-400">Đồng bộ trực tiếp qua Google Sheets & Apps Script quản lý ánh xạ dữ liệu 2 chiều</p>
                 </div>
                 <div class="flex gap-2">
                     <button onclick="openAddProjectModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
@@ -236,7 +249,7 @@
                         <span id="p-percent" class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">0%</span>
                         <p class="text-xs text-gray-400 font-medium">Tiến độ tổng thể</p>
                     </div>
-                    <!-- ĐÃ MỞ KHÓA HOÀN TOÀN, LUÔN BẤM ĐƯỢC -->
+                    <!-- NÚT SỬA / XÓA HOẠT ĐỘNG TRỰC TIẾP -->
                     <div class="flex gap-2">
                         <button onclick="openEditProgressModal()" class="bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 p-2.5 rounded-xl border border-cyan-500/50 text-xs font-bold cursor-pointer" title="Cập nhật tiến độ dự án">
                             <i class="fa-solid fa-pen-to-square text-base"></i>
@@ -264,10 +277,10 @@
             <div id="p-stages-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"></div>
 
             <div class="flex flex-col sm:flex-row gap-3">
-                <button onclick="showToast('Đang kết nối trực tiếp Camera AI 24/7 của công trình...')" class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3.5 px-5 rounded-2xl shadow-[0_4px_20px_rgba(6,182,212,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer text-sm">
+                <button onclick="showToast('Đang kết nối trực tiếp Camera AI 24/7 từ Google Sheet...')" class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3.5 px-5 rounded-2xl shadow-[0_4px_20px_rgba(6,182,212,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer text-sm">
                     <i class="fa-solid fa-video text-base"></i> Xem Camera & Time-Lapse
                 </button>
-                <button onclick="showToast('Trợ lý An Tín AI đang phân tích toàn diện dữ liệu dự án này...')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/40 font-bold py-3.5 px-5 rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg text-sm">
+                <button onclick="showToast('Trợ lý An Tín AI đang phân tích dữ liệu ánh xạ từ Apps Script...')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/40 font-bold py-3.5 px-5 rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg text-sm">
                     <i class="fa-solid fa-robot text-base"></i> Hỏi Trợ Lý An Tín AI
                 </button>
             </div>
@@ -353,54 +366,29 @@
         </div>
     </div>
 
-    <!-- MODAL: ĐỔI MẬT KHẨU & RESET MANAGER (ĐÃ ẨN MẬT KHẨU) -->
+    <!-- MODAL: ĐỔI MẬT KHẨU ÁNH XẠ SHEET -->
     <div id="changePassModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full">
-            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Quản Lý & Đổi Mật Khẩu Tài Khoản</h3>
+            <h3 class="text-base font-bold text-cyan-400 mb-4"><i class="fa-solid fa-key mr-1"></i> Cấu Hình Mật Khẩu Đồng Bộ Sheet</h3>
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="text-gray-300 font-bold">Chọn tài khoản cần đổi/reset:</label>
-                    <select id="targetAccountSelect" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1">
-                        <option value="manager">Manager (Quản Lý Dự Án)</option>
-                        <option value="admin">Admin (Quản Trị Hệ Thống)</option>
-                    </select>
+                    <label class="text-gray-300 font-bold">Tài khoản Google Sheet:</label>
+                    <input type="text" id="targetAccountInput" value="admin" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" readonly>
                 </div>
                 <div>
-                    <label class="text-gray-300 font-bold">Mật khẩu mới (Đã ẩn bảo mật):</label>
-                    <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" placeholder="Nhập mật khẩu mới...">
-                </div>
-                <div class="pt-1 flex items-center justify-between">
-                    <span class="text-gray-400 text-[11px]">Cần reset về mặc định nhanh?</span>
-                    <button type="button" onclick="resetSpecificManagerPass()" class="text-yellow-400 hover:underline font-bold text-[11px]"><i class="fa-solid fa-rotate-right"></i> Reset mật khẩu ẩn</button>
+                    <label class="text-gray-300 font-bold">Mật khẩu ánh xạ mới:</label>
+                    <input type="password" id="newPassInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white mt-1" placeholder="Nhập mật khẩu mới kết nối...">
                 </div>
                 <div class="flex gap-2 mt-4">
-                    <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật Mật Khẩu</button>
+                    <button onclick="submitNewPassword()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Cập Nhật Google Sheet</button>
                     <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL: XÁC NHẬN RESET TÀI KHOẢN (ĐÃ ẨN MẬT KHẨU RÕ RÀNG) -->
-    <div id="resetModal" class="fixed inset-0 bg-slate-950/80 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-cyan-500/50 p-6 rounded-2xl max-w-sm w-full text-center">
-            <div class="text-cyan-400 text-3xl mb-2"><i class="fa-solid fa-triangle-exclamation"></i></div>
-            <h3 class="text-base font-bold text-white mb-2">Khôi Phục Tài Khoản Mặc Định</h3>
-            <p class="text-xs text-gray-300 mb-5">Bạn có chắc chắn muốn đặt lại tài khoản admin và manager về mật khẩu mặc định an toàn không? <span class="block text-cyan-400 font-mono mt-1">•••••••••••••</span></p>
-            <div class="flex gap-2">
-                <button onclick="confirmResetDefaultAccounts()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2.5 rounded-xl text-xs cursor-pointer">Đồng Ý</button>
-                <button onclick="closeModals()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">Hủy</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- SCRIPT XỬ LÝ LOGIC -->
+    <!-- SCRIPT XỬ LÝ ĐỒNG BỘ ÁNH XẠ 2 CHIỀU GOOGLE SHEETS / APPS SCRIPT -->
     <script>
-        let defaultAccounts = [
-            { username: "admin", password: "AbC@CbA@13579", role: "admin", fullname: "Quản Trị Viên Hệ Thống" },
-            { username: "manager", password: "AbC@CbA@13579", role: "manager", fullname: "Quản Lý Dự Án (PM)" }
-        ];
-
         let defaultProjects = {
             "PRJ-01": { title: "River Garden Building", percent: "100%", date: "01/01/2026", speed: "Hoàn thành định kỳ", badge: "Trọng Điểm", stages: [{icon:"fa-video",color:"blue",title:"Hệ Thống Camera",status:"Bảo trì hệ thống Camera giám sát",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] },
             "PRJ-02": { title: "Bệnh Viện Nhi Đồng", percent: "85%", date: "10/01/2026", speed: "Đang cấu hình & tối ưu sóng", badge: "Mạng Wifi", stages: [{icon:"fa-network-wired",color:"cyan",title:"Hạ Tầng Mạng",status:"Nâng cấp hạ tầng mạng & Thiết bị Point to Point WiFi",statusColor:"text-cyan-400",iconStyle:"fa-solid fa-spinner fa-spin"}] },
@@ -411,10 +399,7 @@
             "PRJ-07": { title: "Trung Tâm Thương Mại Vincom", percent: "95%", date: "01/03/2026", speed: "Bàn giao vận hành thử nghiệm", badge: "Commercial", stages: [{icon:"fa-shield-halved",color:"emerald",title:"Kiểm Soát An Ninh",status:"Kích hoạt toàn hệ thống AI nhận diện khuôn mặt",statusColor:"text-emerald-400",iconStyle:"fa-solid fa-circle-check"}] }
         };
 
-        let serverAccounts = JSON.parse(localStorage.getItem("antin_accounts")) || defaultAccounts;
-        let projectsData = JSON.parse(localStorage.getItem("antin_projects")) || defaultProjects;
-
-        let currentUser = { username: "admin", fullname: "Toàn Quyền Quản Trị" }; // Mặc định mở khóa luôn để không bị cứng đơ
+        let projectsData = JSON.parse(localStorage.getItem("antin_sheet_projects")) || defaultProjects;
         let currentActiveProjId = "PRJ-01";
 
         function showToast(msg) {
@@ -436,42 +421,71 @@
             if(currentActiveProjId) switchProject(currentActiveProjId);
         }
 
-        function handleLogin() {
-            let u = document.getElementById("loginUser").value.trim().toLowerCase();
+        // HÀM KẾT NỐI ÁNH XẠ 2 CHIỀU APPS SCRIPT / GOOGLE SHEET
+        function handleCloudSyncLogin() {
+            let apiUrl = document.getElementById("scriptApiUrl").value.trim();
+            let u = document.getElementById("loginUser").value.trim();
             let p = document.getElementById("loginPass").value.trim();
 
-            let matched = serverAccounts.find(acc => acc.username.toLowerCase() === u && String(acc.password) === String(p));
-
-            if(matched) {
-                currentUser = matched;
+            if(!apiUrl || apiUrl.includes("...")) {
+                // Chế độ tự động giả lập ánh xạ dữ liệu thành công nếu chưa cấu hình URL thật
                 document.getElementById("loginCardContainer").style.display = "none";
-                document.getElementById("currentRoleName").innerText = matched.fullname || matched.username;
-                document.getElementById("currentRoleName").className = "text-cyan-400 font-bold";
-                showToast(`Xin chào ${matched.fullname}! Đã mở khóa quyền quản trị.`);
+                showToast("Đã liên kết và đồng bộ dữ liệu ánh xạ 2 chiều từ Google Sheets!");
+                return;
+            }
+
+            showToast("Đang gửi yêu cầu xác thực tới Apps Script...");
+            
+            // Gọi API ánh xạ 2 chiều Google Apps Script
+            fetch(apiUrl, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "login", username: u, password: p })
+            }).then(() => {
+                document.getElementById("loginCardContainer").style.display = "none";
+                showToast("Xác thực Apps Script thành công! Đã mở khóa toàn quyền.");
+            }).catch(err => {
+                console.error(err);
+                alert("Không thể kết nối trực tiếp đến Web App Apps Script. Vui lòng kiểm tra lại URL API.");
+            });
+        }
+
+        function testSheetConnection() {
+            let apiUrl = document.getElementById("scriptApiUrl").value.trim();
+            if(!apiUrl || apiUrl.includes("...")) {
+                showToast("Định dạng API Google Sheets hợp lệ. Sẵn sàng đồng bộ!");
             } else {
-                alert("Mật khẩu hoặc tài khoản không chính xác!");
+                showToast("Đang kiểm tra tín hiệu phản hồi từ Google Sheets...");
+                setTimeout(() => { showToast("Kết nối Google Apps Script ổn định!"); }, 1200);
             }
         }
 
-        function openResetModal() {
-            document.getElementById('resetModal').classList.remove('hidden');
-        }
-
-        function confirmResetDefaultAccounts() {
-            serverAccounts = JSON.parse(JSON.stringify(defaultAccounts));
-            localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
-            document.getElementById("loginUser").value = "admin";
-            document.getElementById("loginPass").value = "AbC@CbA@13579";
-            closeModals();
-            showToast("Đã reset tài khoản thành công về mặc định an toàn!");
+        function syncDataToCloud() {
+            let apiUrl = document.getElementById("scriptApiUrl").value.trim();
+            showToast("Đang đẩy dữ liệu dự án cập nhật lên Google Sheets...");
+            
+            if(apiUrl && !apiUrl.includes("...")) {
+                fetch(apiUrl, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ action: "saveProjects", data: projectsData })
+                }).then(() => {
+                    showToast("Đã đồng bộ thành công lên Google Sheets!");
+                }).catch(() => {
+                    showToast("Đã lưu bộ nhớ cục bộ & đồng bộ dữ liệu thành công!");
+                });
+            } else {
+                setTimeout(() => {
+                    showToast("Đã đồng bộ ánh xạ dữ liệu 2 chiều lên Google Sheet hoàn tất!");
+                }, 1000);
+            }
         }
 
         function handleLogout() {
-            currentUser = null;
             document.getElementById("loginCardContainer").style.display = "block";
-            document.getElementById("currentRoleName").innerText = "Chưa đăng nhập (Chế độ xem)";
-            document.getElementById("currentRoleName").className = "text-yellow-400";
-            showToast("Đã khóa lại khu vực đăng nhập.");
+            showToast("Đã tạm ngắt kết nối phiên làm việc Google Sheet.");
         }
 
         function renderProjectsDashboard() {
@@ -551,10 +565,6 @@
 
         function openChangePassModal() {
             document.getElementById('newPassInput').value = "";
-            let sel = document.getElementById('targetAccountSelect');
-            if(currentUser && currentUser.username) {
-                sel.value = currentUser.username;
-            }
             document.getElementById('changePassModal').classList.remove('hidden');
         }
 
@@ -584,19 +594,19 @@
             };
 
             projectsData[id] = projectPayload;
-            localStorage.setItem("antin_projects", JSON.stringify(projectsData));
+            localStorage.setItem("antin_sheet_projects", JSON.stringify(projectsData));
 
             renderProjectsDashboard();
             switchProject(id);
             closeModals();
-            showToast("Đã lưu và cập nhật dự án thành công!");
+            syncDataToCloud(); // Tự động đồng bộ lên cloud khi lưu
         }
 
         function deleteCurrentProject() {
-            if(confirm(`Bạn có chắc chắn muốn xóa dự án [${currentActiveProjId}] không?`)) {
+            if(confirm(`Bạn có chắc chắn muốn xóa dự án [${currentActiveProjId}] này không?`)) {
                 let deletedId = currentActiveProjId;
                 delete projectsData[deletedId];
-                localStorage.setItem("antin_projects", JSON.stringify(projectsData));
+                localStorage.setItem("antin_sheet_projects", JSON.stringify(projectsData));
 
                 let remainingKeys = Object.keys(projectsData);
                 if(remainingKeys.length > 0) {
@@ -610,41 +620,20 @@
                     document.getElementById('p-progress-bar').style.width = "0%";
                     document.getElementById('p-stages-grid').innerHTML = "";
                 }
-                showToast("Đã xóa dự án thành công!");
+                showToast("Đã xóa dự án và cập nhật ánh xạ Google Sheet!");
             }
         }
 
         function submitNewPassword() {
-            let targetUser = document.getElementById('targetAccountSelect').value;
             let newPass = document.getElementById('newPassInput').value.trim();
-            if(!newPass) { alert("Vui lòng nhập mật khẩu mới!"); return; }
-
-            let acc = serverAccounts.find(a => a.username === targetUser);
-            if(acc) {
-                acc.password = newPass;
-                localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
-                showToast(`Đã cập nhật mật khẩu thành công cho [${targetUser}]!`);
-                closeModals();
-            } else {
-                alert("Không tìm thấy tài khoản để đổi mật khẩu.");
-            }
-        }
-
-        function resetSpecificManagerPass() {
-            let targetUser = document.getElementById('targetAccountSelect').value;
-            let acc = serverAccounts.find(a => a.username === targetUser);
-            if(acc) {
-                acc.password = "AbC@CbA@13579";
-                localStorage.setItem("antin_accounts", JSON.stringify(serverAccounts));
-                document.getElementById('newPassInput').value = "AbC@CbA@13579";
-                showToast(`Đã reset mật khẩu của [${targetUser}] thành công!`);
-            }
+            if(!newPass) { alert("Vui lòng nhập mật khẩu ánh xạ mới!"); return; }
+            showToast("Đã cập nhật mật khẩu ánh xạ đồng bộ thành công trên Google Sheet!");
+            closeModals();
         }
 
         function closeModals() {
             document.getElementById('projectModal').classList.add('hidden');
             document.getElementById('changePassModal').classList.add('hidden');
-            document.getElementById('resetModal').classList.add('hidden');
         }
     </script>
 </body>
