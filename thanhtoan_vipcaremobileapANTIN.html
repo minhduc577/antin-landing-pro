@@ -131,6 +131,19 @@
             padding: 18px;
             margin: 25px 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(243,156,18,0.1) 0%, transparent 70%);
+            animation: rotateGlow 6s linear infinite;
+        }
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         .price-text {
             font-size: 30px;
@@ -139,6 +152,8 @@
             margin: 5px 0;
             text-shadow: 0 0 12px rgba(46, 204, 113, 0.5);
             animation: pricePulse 2s infinite;
+            position: relative;
+            z-index: 1;
         }
         @keyframes pricePulse {
             0% { transform: scale(1); }
@@ -153,6 +168,7 @@
             color: #2d3436;
             margin-bottom: 25px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            position: relative;
         }
         .qr-section img {
             max-width: 220px;
@@ -291,6 +307,11 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: transform 0.2s;
+        }
+        .service-item:hover {
+            transform: translateX(4px);
+            color: #f39c12;
         }
         .slogan-box {
             background: rgba(243, 156, 18, 0.08);
